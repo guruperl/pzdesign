@@ -119,9 +119,11 @@
                         <li>
                             <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> Custom Tags</a>
                         </li>
+                        <!--
                         <li>
-							<a href="report?action=topics"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
+			    <a href="report?action=topics"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
                         </li>
+                        --!>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

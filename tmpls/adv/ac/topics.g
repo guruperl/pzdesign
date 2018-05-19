@@ -1,6 +1,13 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
+<div class="container">
+        <div class="row">
+            <div class="col-lg-11">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      
+
 <form name=f1 class="form" method=post action="ac">
 <input type=hidden name=action value="updateOrder" />
 {{if eq "41" (index .ARGS.entitytype_id 0)}}
@@ -10,8 +17,12 @@
 <input type=hidden name=entitytype_id value="41" />
 <h3>{{index .ARGS.campaign_name 0}}</h3>{{else}}
 <input type=hidden name=entitytype_id value="4" />
-<h3>{{index .ARGS.a_company 0}}</h3>{{end}}
+<font size = 4 >{{index .ARGS.a_company 0}}</font>{{end}}
 
+                    </div>
+                    <div class="panel-body">
+
+ <div style= 'font-size: 17px;'>
 黑白名单设置: <input type=radio name=access_order value="Black" {{if eq `Black` (index .ARGS.access_order 0)}}checked{{end}} />黑名单
 <input type=radio name=access_order value="White" {{if eq `White` (index .ARGS.access_order 0)}}checked{{end}} />白名单
 {{if eq `41` (index .ARGS.entitytype_id 0)}}<input type=radio name=access_order value="Inherit" {{if eq `Inherit` (index .ARGS.access_order 0)}}checked{{end}} />系统默认{{end}}
@@ -51,7 +62,13 @@
 新增网站ID: <input type=text name=other_id size=12 />
 <input type=submit value=" 确定 " />
 </form>
-
+ </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{end}}
 

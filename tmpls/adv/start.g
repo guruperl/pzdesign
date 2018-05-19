@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>派兹SSP广告主管理</title>
+    <title>派兹SSP广告主管理系统</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.html">派兹广告主管理</a>
+                <a class="navbar-brand" href="/index.html">派兹广告主管理系统</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -63,14 +63,14 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="adv?action=edit"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                        <li><a href="adv?action=edit"><i class="fa fa-user fa-fw"></i> 个人中心</a>
                         </li>
-                        <li><a href="adv?action=startpass"><i class="fa fa-gear fa-fw"></i> 密码管理</a>
+                        <li><a href="adv?action=startpass"><i class="fa fa-gear fa-fw"></i> 修改密码</a>
                         </li>
-                        <li><a href="payment?action=topics"><i class="fa fa-money fa-fw"></i> 支付管理</a>
+                        <li><a href="payment?action=topics"><i class="fa fa-money fa-fw"></i> 余额管理</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
+                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -89,7 +89,7 @@
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 								<li>
-                                    <a href="campaign?action=topics">所有活动</a>
+                                    <a href="campaign?action=topics">活动管理</a>
                                 </li>
 								{{ if or (or (or (or (eq .Other.Component `item`) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`) }}{{if .ARGS.campaign_name}}
 								<li>
@@ -120,11 +120,14 @@
                             <a href="ac?action=topics&entitytype_id=4"><i class="fa fa-table fa-fw"></i> 网站黑白名单</a>
                         </li>
                         <li>
-                            <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> 个性化标签</a>
+                            <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> 自定义标签</a>
                         </li>
+                        <!-- 
                         <li>
 							<a href="report?action=topics"><i class="fa fa-edit fa-fw"></i> 财务报告</a>
                         </li>
+                        --!>
+
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

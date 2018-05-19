@@ -5,11 +5,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Last 24 Hours
+                            <h3>Last 24 Hours</h3>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-
+<div style= 'font-size: 17px;'>
 	<canvas class="my-4" id="advChart" width="900" height="380"></canvas>
 
     <!-- Graphs -->
@@ -147,4 +147,5 @@
                 <!-- /.col-lg-6 -->
             </div>
             <!-- /.row -->
+  </div>
 {{ template "footer" }}

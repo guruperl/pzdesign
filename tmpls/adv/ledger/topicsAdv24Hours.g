@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            最新24小时报表
+                            <font size = 4 >最新24小时报表</font>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

@@ -6,7 +6,15 @@
 <form name=form1 class="form" action="adv" method=post>
 <input type=hidden name=action value="update" />
 
-<h3>Change Personal Profile</h3>
+<div class="row">
+                <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3>Change Personal Profile</h3>
+                    </div>
+                    <div class="panel-body">
+
+<div style= 'font-size: 17px;'>
 <div class="table-responsive">
 <table class="table table-striped table-sm">
     <tbody>
@@ -35,6 +43,13 @@
     </tbody>
 </table>
 </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
 
 </form>
 {{end}}

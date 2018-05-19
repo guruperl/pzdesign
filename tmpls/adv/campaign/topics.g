@@ -5,8 +5,9 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            推广活动
+                            <font size = 4 >推广活动</font>
                         </div>
+                        <div style= 'font-size: 17px;'>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -44,5 +45,5 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->
-
+ </div>
 {{ template "footer" }}

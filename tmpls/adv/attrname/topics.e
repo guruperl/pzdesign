@@ -1,7 +1,15 @@
 {{ template "header" .}}
 {{ template "attrnameheader" .}}
 
-<h3>Current List</h3>
+<div class="row">
+                <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                       <font size = 4 >Current List</font>
+                    </div>
+                    <div class="panel-body">
+
+<div style= 'font-size: 17px;'>
 <div class="table-responsive">
 <table class="table table-striped table-sm">
               <thead>
@@ -29,4 +37,13 @@
 </table>
 
 </div>
+</div>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 {{template "footer"}}

@@ -1,6 +1,15 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-11">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+
+
+
 <form name=f1 class="form" method=post action="ac">
 <input type=hidden name=action value="updateOrder" />
 {{if eq "41" (index .ARGS.entitytype_id 0)}}
@@ -12,11 +21,16 @@
 <input type=hidden name=entitytype_id value="4" />
 <h3>{{index .ARGS.a_company 0}}</h3>{{end}}
 
+                    </div>
+                    <div class="panel-body">
+
+<div style= 'font-size: 18px;'>
 Access logic: <input type=radio name=access_order value="Black" {{if eq `Black` (index .ARGS.access_order 0)}}checked{{end}} />Black
 <input type=radio name=access_order value="White" {{if eq `White` (index .ARGS.access_order 0)}}checked{{end}} />White
 {{if eq `41` (index .ARGS.entitytype_id 0)}}<input type=radio name=access_order value="Inherit" {{if eq `Inherit` (index .ARGS.access_order 0)}}checked{{end}} />Inherit{{end}}
 <input onClick="return (confirm('This will delete all existing access list and reset logic. Do you want to continue?')) ? true : false;" type=submit value=" Update " />
 </form>
+
 
 {{if ne `Inherit` (index .ARGS.access_order 0)}}
 
@@ -52,6 +66,12 @@ Add site by ID: <input type=text name=other_id size=12 />
 <input type=submit value=" Add Site " />
 </form>
 
+                   </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {{end}}
 
