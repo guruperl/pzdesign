@@ -1,8 +1,16 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-<h3>Current Sites</h3>
-<div class="table-responsive">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                           Existing Apps and Sites
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
+
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
@@ -26,6 +34,17 @@
 </tr>
 {{end}}{{end}}</tobdy>
 </table>
-</div>
+
+
+
+
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+
 
 {{ template "footer" }}

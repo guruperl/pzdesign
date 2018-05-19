@@ -1,23 +1,41 @@
-{{ define "footer" }}
-
-        </main>
+{{define "footer"}}
+        </div>
+        <!-- animated fadeIn>
       </div>
-    </div>
+      <!-- container-fluid>
+    </main>
+    <aside class="aside-menu">
+    </aside>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="/assets/js/vendor/popper.min.js"></script>
-    <script src="/dist/js/bootstrap.min.js"></script>
+  </div>
+  <footer class="app-footer">
+    <span><a href="http://www.pzadx.com/goto/pub/e/pub?action=startnew">Publisher Membership</a> © 2018 PzAdx.</span>
+    <span class="ml-auto">Powered by <a href="http://www.pzadx.com/">PaiZi Corporation</a></span>
+  </footer>
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-    <script>
-      feather.replace()
-    </script>
+  <!-- Bootstrap and necessary plugins -->
+  <script src="/1.0.8/vendors/js/jquery.min.js"></script>
+  <script src="/1.0.8/vendors/js/popper.min.js"></script>
+  <script src="/1.0.8/vendors/js/bootstrap.min.js"></script>
+  <script src="/1.0.8/vendors/js/pace.min.js"></script>
 
-  </body>
+  <!-- Plugins and scripts required by all views -->
+  <script src="/1.0.8/vendors/js/Chart.min.js"></script>
+
+  <!-- CoreUI Pro main scripts -->
+
+  <script src="/1.0.8/js/app.js"></script>
+
+  <!-- Plugins and scripts required by this views -->
+  <!-- script src="/1.0.8/vendors/js/toastr.min.js"></script -->
+  <!-- script src="/1.0.8/vendors/js/gauge.min.js"></script -->
+  <!-- script src="/1.0.8/vendors/js/moment.min.js"></script -->
+  <!-- script src="/1.0.8/vendors/js/daterangepicker.min.js"></script -->
+
+  <!-- Custom scripts required by this view -->
+  <!-- script src="/1.0.8/js/views/main.js"></script -->
+  <script src="/js/counter.js"></script>
+
+</body>
 </html>
-{{ end }}
+{{end}}
