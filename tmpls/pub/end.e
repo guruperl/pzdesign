@@ -1,8 +1,8 @@
 {{define "footer"}}
         </div>
-        <!-- animated fadeIn>
+        <!-- animated fadeIn -->
       </div>
-      <!-- container-fluid>
+      <!-- container-fluid -->
     </main>
     <aside class="aside-menu">
     </aside>
