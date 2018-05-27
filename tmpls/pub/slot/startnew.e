@@ -1,78 +1,123 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
+          <div class="card">
+            <div class="card-header">
+              Create New
+              <div class="card-actions">
+                <a href="site?action=info">
+                  <small class="text-muted">docs</small>
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+
 <form class="form" action="slot" method=post>
 <input type=hidden name="action" value="insert" />
 <input type=hidden name="site_id"   value="{{index .ARGS.site_id 0}}" />
 <input type=hidden name="site_md5"  value="{{index .ARGS.site_md5 0}}" />
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
 
-<h2>Create New Slot</h2>
-<div class="table-responsive">
-<table class="table table-striped table-sm">
-
-<tr><td>Slot Name:</td><td><input type=text name=slot_name size=40></td></tr>
-<tr><td>Size:</td><td><select size=1 name=size_id>
-<option value="1">Leaderboard</option>
-<option value="2">Square</option>
-<option value="3">Banner</option>
-</select></td></tr>
-
-<tr><td>Language:</td><td>
-<input type=radio name="name=qa_language" value="English" />English
-<input type=radio name="name=qa_language" value="German" />German
-<input type=radio name="name=qa_language" value="French" />French
-<input type=radio name="name=qa_language" value="European" />European
-<input type=radio name="name=qa_language" value="Chinese" />Chinese
-<input type=radio name="name=qa_language" value="Japanese" />Japanese
-<input type=radio name="name=qa_language" value="Korean" />Korean
-<input type=radio name="name=qa_language" value="Asian" />Asian
-<input type=radio name="name=qa_language" value="Arabian" />Arabian
-<input type=radio name="name=qa_language" value="Other" selected />Other
-</td></tr>
-<tr><td>Platform:</td><td>
-<input type=radio name=qa_platform value="Web" checked /><label>Web</label>
-<input type=radio name=qa_platform value="Mobile" /><label>Mobile</label>
-<input type=radio name=qa_platform value="Email" /><label>Email</label>
-<input type=radio name=qa_platform value="Video" /><label>Video</label>
-<input type=radio name=qa_platform value="Device" /><label>Device</label>
-</td></tr>
-<tr><td>Page Level:</td><td>
-<input type=radio name=qa_pagelevel value="Homepage" /><label>Homepage</label>
-<input type=radio name=qa_pagelevel value="Section" /><label>Section</label>
-<input type=radio name=qa_pagelevel value="SubSection" /><label>Sub Section</label>
-<input type=radio name=qa_pagelevel value="Rest" checked /><label>Rest</label>
-</td></tr>
-<tr><td>Clock:</td><td>
-<input type=radio name=qa_clock value="0" checked />Unknown
-<input type=radio name=qa_clock value="1" />1
-<input type=radio name=qa_clock value="2" />2
-<input type=radio name=qa_clock value="3" />3
-<input type=radio name=qa_clock value="4" />4
-<input type=radio name=qa_clock value="5" />5
-<input type=radio name=qa_clock value="6" />6
-<input type=radio name=qa_clock value="7" />7
-<input type=radio name=qa_clock value="8" />8
-<input type=radio name=qa_clock value="9" />9
-<input type=radio name=qa_clock value="10" />10
-<input type=radio name=qa_clock value="11" />11
-<input type=radio name=qa_clock value="12" />12
-</td></tr>
-<tr><td>Vertical Location:</td><td>
-<input type=radio name=qa_yaxis value="ScrollUp" />Scroll Up
-<input type=radio name=qa_yaxis value="ScrollDown" />Scroll Down
-<input type=radio name=qa_yaxis value="ScrollMiddle" />Scroll Middle
-<input type=radio name=qa_yaxis value="Sticky" />Sticky
-<input type=radio name=qa_yaxis value="PopUnder" />Pop Under
-<input type=radio name=qa_yaxis value="JumpScreen" />Jump Screen
-<input type=radio name=qa_yaxis value="Rest" checked />Rest
-</td></tr>
-
-<tr><td colspan=2> &nbsp; </td><td>
-</table>
-<input type=submit value=" Add New Slot " />
-</form>
-
+<div class="form-group row">
+    <label for="inputSlotName" class="col-sm-3 col-form-label">Slot Name:</label>
+    <div class="col-sm-9">
+        <input type=text class="form-control" name="slot_name" placeholder="Name of Slot" />
+    </div>
 </div>
 
+<div class="form-group row">
+    <label for="inputSizeID" class="col-sm-3 col-form-label">Size:</label>
+    <div class="col-sm-4">
+        <select class="form-control" name="size_id">
+<option value=1""></option>
+<option value=1>Half Banner 234x60</option>
+<option value=2>Banner 468x60</option>
+<option value=3>Leaderboard 728x90</option>
+<option value=4>Micro Bar 88x31</option>
+<option value=5>Button 120x60</option>
+<option value=6>Button 120x90</option>
+<option value=7>Button 125x125</option>
+<option value=8>Vertical Banner 120x240</option>
+<option value=9>Skyscraper 120x600</option>
+<option value=10>Wide Skyscraper 160x600</option>
+<option value=11>Vertical Rectangle 240x400</option>
+<option value=12>Small Rectangle 180x150</option>
+<option value=13>Small Square 200x200</option>
+<option value=14>Square 250x250</option>
+<option value=15>3:1 Rectangle 300x100</option>
+<option value=16>Medium Rectangle 300x250</option>
+<option value=17>Large Rectangle 336x280</option>
+<option value=18>Half Page Ad 300x600</option></select>
+    </div>
+    <label for="inputEndx" class="col-sm-1 col-form-label">Type:</label>
+    <div class="col-sm-4">
+        <select class="form-control" name="fl_mime">
+<option value="js">Javascript</option>
+<option value="html">html</option>
+<option value="json">json</option>
+<option value="jpg">jpg</option>
+<option value="gif">gif</option>
+<option value="png">png</option>
+<option value="mp4">mp4</option>
+<option value="swf">swf</option>
+<option value="wmv">wmv</option>
+<option value="flv">flv</option></select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputCost" class="col-sm-12 col-form-label">My Slot Properties</label>
+<input type=hidden name="qa_language" value="Chinese" />
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+
+<div class="form-group row">
+    <label for="inputPlatform" class="col-sm-3 col-form-label">Platform:</label>
+    <div class="col-sm-9">{{ range $item := .Other.qa_platform }}
+<input class="form-check-input" id="qa_{{$item.which}}" type=checkbox name=qa_platform value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputPageLevel" class="col-sm-3 col-form-label">Page Level:</label>
+    <div class="col-sm-9">{{ range $item := .Other.qa_pagelevel }}
+<input class="form-check-input" id="qa_{{$item.which}}" type=checkbox name=qa_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputClock" class="col-sm-3 col-form-label">Clock:</label>
+    <div class="col-sm-9">{{ range $item := .Other.qa_clock }}
+<input class="form-check-input" id="qa_{{$item.which}}" type=checkbox name=qa_clock value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputYaxis" class="col-sm-3 col-form-label">Yaxis:</label>
+    <div class="col-sm-9">{{ range $item := .Other.qa_yaxis }}
+<input class="form-check-input" id="qa_{{$item.which}}" type=checkbox name=qa_yaxis value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-9">
+<button type="submit" class="btn btn-primary">Create Now Slot!</button>
+    </div>
+</div>
+
+</form>
+
+        </div>
+      </div>
+
 {{ template "footer" .}}
+
+</body>
+</html>
+

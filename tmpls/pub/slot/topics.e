@@ -28,3 +28,7 @@
 </div>
 
 {{ template "footer" }}
+
+</body>
+</html>
+

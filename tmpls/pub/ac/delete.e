@@ -4,3 +4,6 @@
 Deleted.
 
 {{template "footer"}}
+</body>
+</html>
+

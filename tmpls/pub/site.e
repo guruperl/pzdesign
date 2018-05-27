@@ -2,8 +2,7 @@
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item active">Dashboard</li>
-        <li class="breadcrumb-item"><a href="">Pay</a></li>
+        <li class="breadcrumb-item active">Site</li>
       </ol>
       <div class="container-fluid">
         <div class="animated fadeIn">

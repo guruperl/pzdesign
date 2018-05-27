@@ -11,3 +11,7 @@ done.
 
 </div>
 [% INCLUDE end.e %]
+
+</body>
+</html>
+

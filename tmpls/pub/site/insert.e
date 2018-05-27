@@ -4,3 +4,6 @@
 <h3>site added.</h3>
 
 {{ template "footer" .}}
+</body>
+</html>
+

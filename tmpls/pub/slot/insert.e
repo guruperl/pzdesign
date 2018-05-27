@@ -4,3 +4,7 @@
 <h3>slot added.</h3>
 
 {{ template "footer" .}}
+
+</body>
+</html>
+

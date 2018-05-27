@@ -56,3 +56,6 @@ Add advertiser by ID: <input type=text name=other_id size=12 />
 {{end}}
 
 {{ template "footer" }}
+</body>
+</html>
+

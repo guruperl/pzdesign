@@ -3,3 +3,6 @@
 
 Updated.
 {{template "footer"}}
+</body>
+</html>
+

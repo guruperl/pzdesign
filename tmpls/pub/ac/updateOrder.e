@@ -3,3 +3,6 @@
 
 Logic order refreshed.
 {{template "footer"}}
+</body>
+</html>
+

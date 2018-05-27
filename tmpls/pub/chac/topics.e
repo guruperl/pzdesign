@@ -42,3 +42,6 @@
 <input type=submit value=" Update Channels " />
 </form>
 {{ template "footer" }}
+</body>
+</html>
+

@@ -29,3 +29,7 @@
 </form>
 
 {{ template "footer" }}
+
+</body>
+</html>
+
