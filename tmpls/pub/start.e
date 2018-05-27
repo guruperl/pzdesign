@@ -136,6 +136,9 @@
             Publisher
           </li>
           <li class="nav-item">
+            <a href="ac?action=topics&entitytype_id=3" class="nav-link"><i class="icon-calculator"></i> Access Control</a>
+          </li>
+          <li class="nav-item">
             <a href="site?action=topics" class="nav-link"><i class="icon-calculator"></i> Apps and Sites</a>
           </li>
           {{ if and ( or (or (eq .Other.Component `slot`) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_name }} {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}<li class="nav-title">
@@ -145,7 +148,7 @@
             <a class="nav-link" href="slot?action=topics&{{$attach}}"><i class="icon-basket"></i> Slots</a>
           </li>
 
-          {{ if .ARGS.slot_name }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-item nav-dropdown">
+          {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"> <i class="nav-icon icon-puzzle"></i> {{index .ARGS.slot_name 0}}</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">

@@ -4,11 +4,6 @@
           <div class="card">
             <div class="card-header">
               Current List
-              <div class="card-actions">
-                <a href="site?action=info">
-                  <small class="text-muted">docs</small>
-                </a>
-              </div>
             </div>
             <div class="card-body">
 

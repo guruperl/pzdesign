@@ -8,13 +8,7 @@
 
 <p> &nbsp; </p>
 
-<h3>Error No. [% error %]: [% errorstr %]</h3>
-
-<p>
-<pre>
-[% logger %]
-</pre>
-</p>
+<h3>Error No. {{ .Code }}: {{ .Errstr }}</h3>
 
 
 </body>

@@ -6,7 +6,7 @@
 
           <div class="card">
             <div class="card-header">
-              Create New
+              Edit {{$item.site_name}}
               <div class="card-actions">
                 <a href="site?action=info">
                   <small class="text-muted">docs</small>
@@ -47,19 +47,10 @@
     <label for="selectSiteQuality" class="col-sm-3 col-form-label">Quality:</label>
     <div class="col-sm-9">
         <div class="card">
-            <div class="card-body">
-<table>
-<tr><th>s_age</th><td>{{$item.s_age}}</td></tr>
-<tr><th>s_control</th><td>{{$item.s_control}}</td></tr>
-<tr><th>s_crowd</th><td>{{$item.s_crowd}}</td></tr>
-<tr><th>s_domain</th><td>{{$item.s_domain}}</td></tr>
-<tr><th>s_internet</th><td>{{$item.s_internet}}</td></tr>
-<tr><th>s_local</th><td>{{$item.s_local}}</td></tr>
-<tr><th>s_popup</th><td>{{$item.s_popup}}</td></tr>
-<tr><th>s_source</th><td>{{$item.s_source}}</td></tr>
-<tr><th>s_traffic</th><td>{{$item.s_traffic}}</td></tr>
-<tr><th>s_visual</th><td>{{$item.s_visual}}</td></tr>
-<tr><th>s_world</th><td>{{$item.s_world}}</td></tr>
+            <div class="card-body">{{$s_attrs := .Other.siteAttrs}}
+<table>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
+<tr><td>{{index $s_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
         </div>
@@ -70,20 +61,15 @@
     <label for="selectCampaignQuality" class="col-sm-3 col-form-label">Accept Campaign:</label>
     <div class="col-sm-9">
         <div class="card">
-            <div class="card-body">
-<table>
-<tr><th>c_act:</th><td>{{$item.c_act}}</td></tr>
-<tr><th>c_content:</th><td>{{$item.c_content}}</td></tr>
-<tr><th>c_download:</th><td>{{$item.c_download}}</td></tr>
-<tr><th>c_postclick:</th><td>{{$item.c_postclick}}</td></tr>
-<tr><th>c_speed:</th><td>{{$item.c_speed}}</td></tr>
-<tr><th>c_visual:</th><td>{{$item.c_visual}}</td></tr>
+            <div class="card-body">{{$c_attrs := .Other.campaignAttrs}}
+<table>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
+<tr><td>{{index $c_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
         </div>
     </div>
 </div>
-
 
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-3 col-form-label">Channels:</label>
@@ -94,21 +80,23 @@
 <tr>
 <th>Name</th>
 <th>Belong&nbsp; </th>
-<th>{{$item.channel_order}}
+<th>&nbsp;
+<input type=radio name=channel_order value="Black" {{if eq "Black" $item.channel_order}}checked{{end}} />Black
+<input type=radio name=channel_order value="White" {{if eq "White" $item.channel_order}}checked{{end}} />White
 </th>
 </tr>
-<tbody>{{ with $item.chac_topics }}{{ range . }}{{if or .chac_id .chbelong_id}}
+<tbody>{{ with $item.chac_topics }}{{ range . }}
 <tr><td>{{.channel_name}}</td>
-<td>{{if .chac_id}}Selected{{end}}</td>
-<td>{{if .chbelong_id}}Selected{{end}}</td>
-</tr>{{end}}{{end}}{{end}}
+<td class="text-center"><input name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
+<td class="text-center"><input name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
+</tr>{{end}}{{end}}
 </tobdy>
 </table>
-            <a class="btn btn-xs btn-warning" href="chac?action=topics&entitytype_id=41&{{$first}}">Check</a>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="form-group row">
     <div class="col-sm-9">

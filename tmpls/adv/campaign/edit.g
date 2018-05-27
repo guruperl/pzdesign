@@ -65,46 +65,31 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-sm-3 col-form-label">本活动质量:</label>
-	<div class="col-sm-9">
-		<div class="panel panel-primary">
-			<div class="panel-body">
-<table>
-<tr><th>c_act:</th><td>{{$item.c_act}}</td></tr>
-<tr><th>c_content:</th><td>{{$item.c_content}}</td></tr>
-<tr><th>c_download:</th><td>{{$item.c_download}}</td></tr>
-<tr><th>c_postclick:</th><td>{{$item.c_postclick}}</td></tr>
-<tr><th>c_speed:</th><td>{{$item.c_speed}}</td></tr>
-<tr><th>c_visual:</th><td>{{$item.c_visual}}</td></tr>
+    <label for="selectCampaignQuality" class="col-sm-3 col-form-label">本活动质量:</label>
+    <div class="col-sm-9">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+<table>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
+<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
-			<a class="btn btn-xs btn-warning" href="chac?action=topics&campaign_id={{$item.campaign_id}}&campaign_md5={{$item.campaign_md5}}&campaign_name={{$item.campaign_name | urlquery }}&entitytype_id=41">查看</a>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="form-group row">
-	<label for="selectSiteQuality" class="col-sm-3 col-form-label">可接受网站质量:</label>
-	<div class="col-sm-9">
-		<div class="panel panel-primary">
-			<div class="panel-body">
-<table>
-<tr><th>s_age</th><td>{{$item.s_age}}</td></tr>
-<tr><th>s_control</th><td>{{$item.s_control}}</td></tr>
-<tr><th>s_crowd</th><td>{{$item.s_crowd}}</td></tr>
-<tr><th>s_domain</th><td>{{$item.s_domain}}</td></tr>
-<tr><th>s_internet</th><td>{{$item.s_internet}}</td></tr>
-<tr><th>s_local</th><td>{{$item.s_local}}</td></tr>
-<tr><th>s_popup</th><td>{{$item.s_popup}}</td></tr>
-<tr><th>s_source</th><td>{{$item.s_source}}</td></tr>
-<tr><th>s_traffic</th><td>{{$item.s_traffic}}</td></tr>
-<tr><th>s_visual</th><td>{{$item.s_visual}}</td></tr>
-<tr><th>s_world</th><td>{{$item.s_world}}</td></tr>
+    <label for="selectSiteQuality" class="col-sm-3 col-form-label">可接受网站质量:</label>
+    <div class="col-sm-9">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+<table>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
+<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
-			<a class="btn btn-xs btn-warning" href="chac?action=topics&campaign_id={{$item.campaign_id}}&campaign_md5={{$item.campaign_md5}}&campaign_name={{$item.campaign_name | urlquery }}&entitytype_id=41">查看</a>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="form-group row">

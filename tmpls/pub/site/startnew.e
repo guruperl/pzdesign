@@ -3,12 +3,7 @@
 
           <div class="card">
             <div class="card-header">
-              Create New
-              <div class="card-actions">
-                <a href="site?action=info">
-                  <small class="text-muted">docs</small>
-                </a>
-              </div>
+              Create New Site
             </div>
             <div class="card-body">
 
@@ -50,9 +45,9 @@
     <label for="selectSiteQuality" class="col-sm-3 col-form-label">Quality:</label>
     <div class="col-sm-9">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body">{{$s_attrs := .Other.siteAttrs}}
 <table>{{range $key, $val := .Other.sites }}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<tr><td>{{index $s_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -64,9 +59,9 @@
     <label for="selectCampaignQuality" class="col-sm-3 col-form-label">Accept Campaign:</label>
     <div class="col-sm-9">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body">{{$c_attrs := .Other.campaignAttrs}}
 <table>{{range $key, $val := .Other.campaigns }}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<tr><td>{{index $c_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
