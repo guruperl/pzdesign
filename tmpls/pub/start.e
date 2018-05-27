@@ -63,7 +63,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
-
+      <li class="nav-item px-3">
+		PzAdx Publisher Management Portal
+      </li>
+	<!--
       <li class="nav-item px-3">
         <a class="nav-link" href="ledger?action=topicsPub24Hours">Dashboard</a>
       </li>
@@ -73,13 +76,14 @@
       <li class="nav-item px-3">
         <a class="nav-link" href="pub?action=edit">Settings</a>
       </li>
+	 -->
     </ul>
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item dropdown d-md-down-none">
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <i class="icon-bell"></i><span class="badge badge-pill badge-danger">1</span>
+          <i class="icon-bell"></i><!-- span class="badge badge-pill badge-danger">1</span -->
         </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+        <!-- div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
           <div class="dropdown-header text-center">
             <strong>You have 1 notification</strong>
           </div>
@@ -88,11 +92,11 @@
               <span aria-hidden="true">&times;</span>
             </button>
 		    New insurance quote
-            <!-- a href="#" class="dropdown-item">
+            <a href="#" class="dropdown-item">
               <i class="icon-chart text-success"></i> New insurance quote
-            </a -->
+            </a>
           </div>
-        </div>
+        </div -->
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -102,20 +106,9 @@
           <div class="dropdown-header text-center">
             <strong>Account</strong>
           </div>
-          <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>
-          <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="badge badge-success">42</span></a>
-          <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">42</span></a>
-          <a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="badge badge-warning">42</span></a>
-          <div class="dropdown-header text-center">
-            <strong>Settings</strong>
-          </div>
-          <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
-          <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
-          <a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-dark">42</span></a>
-          <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
-          <div class="divider"></div>
-          <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
-          <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+          <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> Profile</a>
+          <a class="dropdown-item" href="pub?action=startpass"><i class="fa fa-wrench"></i> Password</a>
+          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> Logout</a>
         </div>
       </li>
       <button class="navbar-toggler aside-menu-toggler" type="button">
@@ -172,22 +165,8 @@
           <li class="nav-title">
             Reports
           </li>
-          <li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-calendar"></i> Finance</a>
-            <ul class="nav-dropdown-items">
-              <li class="nav-item">
-                <a href="pub?action=edit" class="nav-link"><i class="icon-graduation"></i> Graduate</a>
-              </li>
-              <li class="nav-item">
-                <a href="pub?action=edit" class="nav-link"><i class="icon-film"></i> W2's</a>
-              </li>
-             </ul>
-          </li>
-          <li class="nav-title">
-            Service
-          </li>
           <li class="nav-item">
-            <a href="tt?action=suppert" class="nav-link"><i class="icon-support"></i> Support</a>
+             <a href="ledge?action=payment" class="nav-link"><i class="icon-graduation"></i> Incomes</a>
           </li>
         </ul>
       </nav>
