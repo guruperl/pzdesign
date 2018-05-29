@@ -1,11 +1,66 @@
-[% INCLUDE start.e %]
+{{ template "header" }}
+{{ template "advheader" }}
 
-<form action=adv method=post>
-<input type=hidden name=action value='retrieve'>
-<table style="text-align:left">
-<tr><td>Email Address：</td><td><input type=text name=email size=30></td></tr>
-<tr><td colspan=2><input type=submit value="Retrieve"></td></tr>
-</table>
+<form class="form" id="advRetrieve" action=adv method=post>
+<input type=hidden name=action value="retrieve">
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card mx-4">
+          <div class="card-body p-4">
+            <h1>Advertiser Password</h1>
+            <p class="text-muted">Start Retrieving Advertiser's Password</p>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-envelope"></i></span>
+              </div>
+              <input type="text" name=email id="email" class="form-control" placeholder="Email">
+            </div>
+
+            <div class="input-group mb-4">
+            <button type="submit" class="btn btn-block btn-primary">Continue</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
 </form>
 
-[% INCLUDE end.e %]
+{{ template "footer" }}
+
+  <!-- Custom scripts required by form validation-->
+  <script>
+$(function (){
+  $('#advRetrieve').validate({
+    rules: {
+      email: {
+        required: true,
+        email: true
+      }
+    },
+    messages: {
+      email: 'Please enter a valid email address'
+    },
+    errorElement: 'em',
+    errorPlacement: function ( error, element ) {
+      error.addClass( 'invalid-feedback' );
+      if ( element.prop( 'type' ) === 'checkbox' ) {
+        error.insertAfter( element.parent( 'label' ) );
+      } else {
+        error.insertAfter( element );
+      }
+    },
+    highlight: function ( element, errorClass, validClass ) {
+      $( element ).addClass( 'is-invalid' ).removeClass( 'is-valid' );
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $( element ).addClass( 'is-valid' ).removeClass( 'is-invalid' );
+    }
+  });
+});
+  </script>
+
+  </body>
+</html>

@@ -110,7 +110,7 @@
             <strong>Account</strong>
           </div>
           <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> Profile</a>
-          <a class="dropdown-item" href="pub?action=startpass"><i class="fa fa-wrench"></i> Password</a>
+          <a class="dropdown-item" href="pub?action=editpass"><i class="fa fa-wrench"></i> Password</a>
           <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> Logout</a>
         </div>
       </li>

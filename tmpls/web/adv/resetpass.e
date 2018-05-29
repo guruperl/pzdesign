@@ -5,10 +5,9 @@
 	<div class="col-md-6">
 		<div class="card mx-4">
 			<div class="card-body p-4">
-            	<h1>Advertiser Registration</h1>
-            	<p class="text-muted">Comfirm your application</p>
-We sent an email confirmation to your address {{index .ARGS.email 0}}.
-please open it and complete your registration.
+            	<h1>Password Reset</h1>
+            	<p class="text-muted">Advertiser Password Reset Complete!</p>
+Your reset is complete. Please <a href="/goto/adv/e/campaign?action=topics">login here.</a>
 			</div>
 		</div>
 	</div>

@@ -1,9 +1,22 @@
-[% INCLUDE start.e %]
+{{ template "header" .}}
+{{ template "pubheader" .}}
 
-<p>
-Please check your email for lost password.
-</p>
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card mx-4">
+			<div class="card-body p-4">
+            	<h1>Publisher Password</h1>
+            	<p class="text-muted">Check Email!</p>
+				Please check your email to reset password, 
+				if you have valid publisher registration.
+			</div>
+		</div>
+	</div>
+</div>
 
-<div style="clear: both;">&nbsp;</div>
+{{ template "footer" .}}
 
-[% INCLUDE end.e %]
+
+</body>
+</html>
+

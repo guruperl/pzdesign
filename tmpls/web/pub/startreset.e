@@ -1,42 +1,21 @@
 {{ template "header" }}
 {{ template "pubheader" }}
 
-<form class="form" id="pubForm" action=pub method=post>
-<input type=hidden name=action value="insert" />
+<form class="form" id="pubReset" action=pub method=post>
+<input type=hidden name=action value="resetpass">
+<input type=hidden name=pub_id value="{{index .ARGS.pub_id 0}}">
+<input type=hidden name=email value="{{index .ARGS.email 0}}">
+<input type=hidden name=stamp value="{{index .ARGS.stamp 0}}">
+<input type=hidden name=firstname value="{{index .ARGS.firstname 0}}">
+<input type=hidden name=lastname value="{{index .ARGS.lastname 0}}">
+<input type=hidden name=md5 value="{{index .ARGS.md5 0}}">
 
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card mx-4">
           <div class="card-body p-4">
-            <h1>Publisher Registration</h1>
-            <p class="text-muted">Start your registation</p>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-home"></i></span>
-              </div>
-              <input type="text" name=company id="company" class="form-control" placeholder="Your Company">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-              <input type="text" name=firstname id="firstname" class="form-control" placeholder="Firstname">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-              <input type="text" name=lastname id="lastname" class="form-control" placeholder="Lastname">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-envelope"></i></span>
-              </div>
-              <input type="text" name=email id="email" class="form-control" placeholder="Email">
-            </div>
+            <h1>Publisher Password</h1>
+            <p class="text-muted">Reset Publisher's Password</p>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -53,15 +32,7 @@
             </div>
 
             <div class="input-group mb-4">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="agree" name="agree" value="agree"> Please agree to our policy
-                </label>
-              </div>
-            </div>
-
-            <div class="input-group mb-4">
-            <button type="submit" class="btn btn-block btn-primary">Create Account</button>
+            <button type="submit" class="btn btn-block btn-primary">Continue</button>
             </div>
 
           </div>
@@ -75,10 +46,8 @@
   <!-- Custom scripts required by form validation-->
   <script>
 $(function (){
-  $('#pubForm').validate({
+  $('#pubReset').validate({
     rules: {
-      firstname: 'required',
-      lastname: 'required',
       passwd: {
         required: true,
         minlength: 5
@@ -87,16 +56,9 @@ $(function (){
         required: true,
         minlength: 5,
         equalTo: '#passwd'
-      },
-      email: {
-        required: true,
-        email: true
-      },
-      agree: 'required'
+      }
     },
     messages: {
-      firstname: 'Please enter your firstname',
-      lastname: 'Please enter your lastname',
       passwd: {
         required: 'Please provide a password',
         minlength: 'Your password must be at least 5 characters long'
@@ -105,9 +67,7 @@ $(function (){
         required: 'Please provide a password',
         minlength: 'Your password must be at least 5 characters long',
         equalTo: 'Please enter the same password as above'
-      },
-      email: 'Please enter a valid email address',
-      agree: 'Please accept our policy'
+      }
     },
     errorElement: 'em',
     errorPlacement: function ( error, element ) {

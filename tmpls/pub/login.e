@@ -51,7 +51,7 @@
                   <button type="submit" class="btn btn-primary px-4">Login</button>
                 </div>
                 <div class="col-6 text-right">
-                  <a href="/v1/public/e/member?action=retrievepass" class="btn btn-link px-0">Forgot password?</a>
+                  <a href="/goto/web/e/pub?action=startretrieve" class="btn btn-link px-0">Forgot password?</a>
                 </div>
               </div>
             </div>

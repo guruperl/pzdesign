@@ -5,9 +5,9 @@
 	<div class="col-md-6">
 		<div class="card mx-4">
 			<div class="card-body p-4">
-            	<h1>Publisher Registration</h1>
-            	<p class="text-muted">Complete!</p>
-				Your registration is completed. Please <a href="/goto/pub/e/site?action=topics">login here.</a>
+            	<h1>Password Reset</h1>
+            	<p class="text-muted">Publisher Password Reset Complete!</p>
+				Your reset is completed. Please <a href="/goto/pub/e/site?action=topics">login here.</a>
 			</div>
 		</div>
 	</div>

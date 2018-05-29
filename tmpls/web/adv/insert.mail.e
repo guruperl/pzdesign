@@ -1,10 +1,6 @@
-[% email %]：
+Dear {{index .ARGS.firstname 0}} {{index .ARGS.lastname 0}}
 
-Please visit the following website to activate your account:
-http://[% g_server %][% g_script %]/web/e/adv?action=activate&advid=[% advid %]&email=[% email_esc %]&stamp=[% stamp %]&md5=[% md5 %]
+Please visit the following URI to verify your email address and complete the advertiser registration:
+{{index .ARGS.serverUrl 0}}/goto/web/e/adv?action=activate&adv_id={{index .ARGS.adv_id 0}}&email={{index .ARGS.email_esc 0}}&stamp={{index .ARGS.stamp 0}}&md5={{index .ARGS.md5 0}}&firstname={{index .ARGS.firstname_esc 0}}&lastname={{index .ARGS.lastname_esc 0}}
 
-After the account is activated, you can login at:
-http://[% g_server %][% g_script %]/adv/e/campaign
-
-
-[% g_server %]
+PzAdx

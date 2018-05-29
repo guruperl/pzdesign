@@ -1,10 +1,21 @@
-[% INCLUDE start.e %]
+{{ template "header" .}}
+{{ template "advheader" .}}
 
-<p>
-Activated.
-Please <a href="../../adv/e/campaign">login from here</a>.
-</p>
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card mx-4">
+			<div class="card-body p-4">
+            	<h1>Advertiser Registration</h1>
+            	<p class="text-muted">Complete!</p>
+Your registration is complete. Please <a href="/goto/adv/e/campaign?action=topics">login here.</a>
+			</div>
+		</div>
+	</div>
+</div>
 
-<div style="clear: both;">&nbsp;</div>
+{{ template "footer" .}}
 
-[% INCLUDE end.e %]
+
+</body>
+</html>
+
