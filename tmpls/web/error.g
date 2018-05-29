@@ -7,9 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Application Error Page">
   <meta name="keyword" content="Application Error Page">
-  <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-  <title>出版媒体商户出错</title>
+  <title>执行错误</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">
@@ -28,10 +27,10 @@
       <div class="col-md-6">
         <div class="clearfix">
           <h1 class="float-left display-3 mr-4">{{ .Code }}</h1>
-          <h4 class="pt-3">{{if or (or (or (eq .Code 400) (eq .Code 401)) (eq .Code 404)) (eq .Code 403)}}Oops! You're lost.{{else}}Application error.{{end}}</h4>
+          <h4 class="pt-3">{{if or (or (or (eq .Code 400) (eq .Code 401)) (eq .Code 403)) (eq .Code 404)}}Oops! You're lost.{{else}}Application error. Please contact us.{{end}}</h4>
           <p class="text-muted">{{ .Errstr }}</p>
         </div>
-{{if or (or (or (eq .Code 400) (eq .Code 401)) (eq .Code 404)) (eq .Code 403)}}<form>
+<form>
         <div class="input-prepend input-group">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-search"></i></span>
@@ -41,7 +40,7 @@
             <button class="btn btn-info" type="button">Search</button>
           </span>
         </div>
-</form>{{end}}
+</form>
       </div>
     </div>
   </div>

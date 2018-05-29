@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-<h3>site updated.</h3>
+<h3>组更新完成。</h3>
 
 {{ template "footer" .}}
 </body>

@@ -1,8 +1,9 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
-Added.
+<h3>Added.</h3>
 {{template "footer"}}
+
 </body>
 </html>
 

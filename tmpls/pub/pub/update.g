@@ -1,13 +1,18 @@
-[% INCLUDE start.e %]
+{{ template "header" .}}
+{{ template "pubheader" .}}
 
-<div class="ui-layout-west">
-<ul id="treeList">
-    <li><a href="pub?action=edit">修改密码</a></li>
-</ul>
-</div>
-<div class="ui-layout-center">
+{{$item := index .Lists 0}}
 
-修改成功.
+          <div class="card">
+            <div class="card-header">
+              基本个人信息
+            </div>
+            <div class="card-body">
+<h4>更新成功</h4>
+            </div>
+          </div>
 
-</div>
-[% INCLUDE end.e %]
+{{ template "footer" }}
+
+</body>
+</html>

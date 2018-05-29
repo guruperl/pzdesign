@@ -1,12 +1,16 @@
 {{ define "slotheader" }}
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">{{index .ARGS.site_name 0}}</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">公司</li>
+        <li class="breadcrumb-item"><a href="site?action=topics">网址</a></li>
+        <li class="breadcrumb-item active">广告位</li>
+      </ol>
+      <div class="container-fluid">
+        <div class="animated fadeIn">
 
-<button type="button" class="btn btn-sm btn-outline-success and-all-other-classes"> 
-  <a href="slot?action=startnew&&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}" style="color:inherit"> 新增广告位 </a>
-</button>
-
-            </div>
-          </div>
+                        <section class="row">
+                            <div class="col-12">
+                                <h3 class="mb-4">广告位管理</h3>
+                            </div>
+                        </section>
 {{ end }}

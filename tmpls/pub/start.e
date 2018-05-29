@@ -6,9 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Publisher - PzAdx">
-  <meta name="keyword" content="publisher, eic">
-  <meta name="msapplication-TileImage" content="http://www.eic.co/wp-content/uploads/2018/01/cropped-site_icon-270x270.jpg" />
-  <title>PzAdx Publisher - Guaranteeing Maximal Income</title>
+  <meta name="keyword" content="publisher, PzAdx">
+  <title>PzAdx Publisher - Optimizing Income</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/flag-icon.min.css" rel="stylesheet">
@@ -64,7 +63,7 @@
     </button>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
       <li class="nav-item px-3">
-		<strong>PzAdx Publisher</strong>
+		PzAdx Publisher: <em>{{index .ARGS.p_email 0}}</em>
       </li>
 	<!--
       <li class="nav-item px-3">

@@ -1,12 +1,14 @@
 {{ define "ledgerheader" }}
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">周报表</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-
-<button type="button" class="btn btn-sm btn-outline-success and-all-other-classes"> 
-  <a href="#" style="color:inherit"> </a>
-</button>
-
-            </div>
-          </div>
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">公司页</li>
+        <li class="breadcrumb-item active">概况</li>
+      </ol>
+      <div class="container-fluid">
+        <div class="animated fadeIn">
+                        <section class="row">
+                            <div class="col-12">
+                                <h3 class="mb-4">业绩</h3>
+                            </div>
+                        </section>
 {{ end }}

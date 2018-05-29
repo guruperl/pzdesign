@@ -1,12 +1,16 @@
 {{ define "acheader" }}
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">黑白名单管理</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">公司</li>{{if .ARGS.site_id}}
+        <li class="breadcrumb-item"><a href="site?action=topics">网址</a></li>{{end}}
+        <li class="breadcrumb-item active">黑白名单</li>
+      </ol>
+      <div class="container-fluid">
+        <div class="animated fadeIn">
 
-<button type="button" class="btn btn-sm btn-outline-success and-all-other-classes"> 
-  <a href="#" style="color:inherit"> Update </a>
-</button>
-
-            </div>
-          </div>
+                        <section class="row">
+                            <div class="col-12">
+                                <h3 class="mb-4">限制广告商的黑白名单{{if .ARGS.site_id}} 网址: {{index .ARGS.site_name 0}}{{end}}</h3>
+                            </div>
+                        </section>
 {{ end }}

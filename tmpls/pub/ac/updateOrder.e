@@ -1,8 +1,10 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
-Logic order refreshed.
+<h3>Black-white order updated.</h3>
+
 {{template "footer"}}
+
 </body>
 </html>
 

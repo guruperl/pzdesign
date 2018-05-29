@@ -1,67 +1,67 @@
 {{ template "header" }}
-{{ template "advheader" }}
+{{ template "pubheader" }}
 
-<form class="form" id="advForm" action=adv method=post>
+<form class="form" id="pubForm" action=pub method=post>
 <input type=hidden name=action value="insert" />
 
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card mx-4">
           <div class="card-body p-4">
-            <h1>Advertiser Registration</h1>
-            <p class="text-muted">Start your registation</p>
+            <h1>出版商户注册</h1>
+            <p class="text-muted">开始注册</p>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-home"></i></span>
               </div>
-              <input type="text" name=company id="company" class="form-control" placeholder="Your Company">
+              <input type="text" name=company id="company" class="form-control" placeholder="公司名">
             </div>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-user"></i></span>
               </div>
-              <input type="text" name=firstname id="firstname" class="form-control" placeholder="Firstname">
+              <input type="text" name=firstname id="firstname" class="form-control" placeholder="名">
             </div>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-user"></i></span>
               </div>
-              <input type="text" name=lastname id="lastname" class="form-control" placeholder="Lastname">
+              <input type="text" name=lastname id="lastname" class="form-control" placeholder="姓">
             </div>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-envelope"></i></span>
               </div>
-              <input type="text" name=email id="email" class="form-control" placeholder="Email">
+              <input type="text" name=email id="email" class="form-control" placeholder="邮箱地址">
             </div>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" name=passwd id="passwd" class="form-control" placeholder="Password">
+              <input type="password" name=passwd id="passwd" class="form-control" placeholder="密码">
             </div>
 
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" name=confirm id="confirm" class="form-control" placeholder="Repeat password">
+              <input type="password" name=confirm id="confirm" class="form-control" placeholder="再输入密码">
             </div>
 
             <div class="input-group mb-4">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" id="agree" name="agree" value="agree"> Please agree to our policy
+                  <input type="checkbox" id="agree" name="agree" value="agree"> 请同意用户协议
                 </label>
               </div>
             </div>
 
             <div class="input-group mb-4">
-            <button type="submit" class="btn btn-block btn-primary">Create Account</button>
+            <button type="submit" class="btn btn-block btn-primary">提交注册申请</button>
             </div>
 
           </div>
@@ -75,7 +75,7 @@
   <!-- Custom scripts required by form validation-->
   <script>
 $(function (){
-  $('#advForm').validate({
+  $('#pubForm').validate({
     rules: {
       firstname: 'required',
       lastname: 'required',

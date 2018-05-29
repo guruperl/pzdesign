@@ -1,9 +1,10 @@
 {{ template "header" .}}
-{{ template "siteheader" .}}
+{{ template "slotheader" .}}
 
-<h3>site updated.</h3>
+<h3>广告位更新完成。</h3>
 
 {{ template "footer" .}}
+
 </body>
 </html>
 

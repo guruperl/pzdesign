@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
-<h3>添加完成。</h3>
+<h3>黑白名单逻辑次序更新完成</h3>
 
 {{template "footer"}}
 

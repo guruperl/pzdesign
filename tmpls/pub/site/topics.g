@@ -1,31 +1,48 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-<h3>广告位组</h3>
+          <div class="card">
+            <div class="card-header">
+              广告组（网站或移动应用）罗列
+            </div>
+            <div class="card-body">
+
 <div class="table-responsive">
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>广告组名称</th>
-                  <th>广告组URL</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
+                  <th>组名称</th>
+                  <th>URL</th>
+                  <th>上线时间</th>
+                  <th>激活状况</th>
+                  <th colspan=2 class="text-right"><a class="btn btn-info" href="site?action=startnew">提交新组</a> </th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-<td>{{.site_name}}</td><td>{{.site_url}}</td>
-<td><a href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">广告位</a></td>
-<td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">行业设置</a></td>
-<td><a href="ac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">网站黑白名单</a></td>
-<td><a href="site?action=edit&site_id={{.site_id}}">编辑</a></td>
-<td><a onClick="return (confirm('Do you want to remove your site {{.site_name}}?')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
+<td><a href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">{{.site_name}}</a></td>
+<td>{{.site_url}}</td>
+<td>{{.created}}</td>
+<td>{{.active}}</td>
+<td><a class="btn btn-sm btn-primary" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">广告位</a></td>
+<!--
+td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">Channels</a></td>
+<td><a href="ac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">BW</a></td
+-->
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.site_name}}?')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
 </tr>
 {{end}}{{end}}</tobdy>
 </table>
 </div>
 
+            </div>
+            <!-- /.card body -->
+          </div>
+          <!-- /.card -->
+
+
 {{ template "footer" }}
+
+</body>
+</html>
+

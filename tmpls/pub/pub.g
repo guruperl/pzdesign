@@ -1,17 +1,15 @@
 {{ define "pubheader" }}
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h1 class="h2">设置</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-			<!--
-              <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary">Share</button>
-                <button class="btn btn-sm btn-outline-secondary">Export</button>
-              </div>
-              <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar"></span>
-                This week
-              </button>
-			-->
-            </div>
-          </div>
+      <!-- Breadcrumb -->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">公司</li>
+        <li class="breadcrumb-item active">个人设置</li>
+      </ol>
+      <div class="container-fluid">
+        <div class="animated fadeIn">
+
+                        <section class="row">
+                            <div class="col-12">
+                                <h3 class="mb-4">基本设置</h3>
+                            </div>
+                        </section>
 {{ end }}

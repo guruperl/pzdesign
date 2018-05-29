@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
-Deleted.
+<h3>Deleted.</h3>
 
 {{template "footer"}}
 </body>

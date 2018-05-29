@@ -1,15 +1,15 @@
 {{ template "header" }}
-{{ template "advheader" }}
+{{ template "pubheader" }}
 
-<form class="form" id="advRetrieve" action=adv method=post>
+<form class="form" id="pubRetrieve" action=pub method=post>
 <input type=hidden name=action value="retrieve">
 
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card mx-4">
           <div class="card-body p-4">
-            <h1>出版商密码</h1>
-            <p class="text-muted">开始密码找回</p>
+            <h1>找回密码</h1>
+            <p class="text-muted">出版商户找回密码由此开始</p>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -19,7 +19,7 @@
             </div>
 
             <div class="input-group mb-4">
-            <button type="submit" class="btn btn-block btn-primary">Continue</button>
+            <button type="submit" class="btn btn-block btn-primary">提交并继续</button>
             </div>
 
           </div>
@@ -33,7 +33,7 @@
   <!-- Custom scripts required by form validation-->
   <script>
 $(function (){
-  $('#advRetrieve').validate({
+  $('#pubRetrieve').validate({
     rules: {
       email: {
         required: true,

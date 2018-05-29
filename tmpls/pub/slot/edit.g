@@ -1,81 +1,181 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
+{{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}
+{{$item := index .Lists 0}}
+{{$first := print "slot_id=" $item.slot_id "&slot_md5=" $item.slot_md5 "&slot_name=" ($item.slot_name | urlquery)}}
+
+          <div class="card">
+            <div class="card-header">
+              编辑修改此网站的广告位 <em>{{(index .ARGS.site_name 0 | urlquery)}}</em>
+            </div>
+            <div class="card-body">
+
 <form class="form" action="slot" method=post>
-<input type=hidden name="action" value="insert" />
+<input type=hidden name="action" value="update" />
+<input type=hidden name="slot_id"   value="{{$item.slot_id}}" />
 <input type=hidden name="site_id"   value="{{index .ARGS.site_id 0}}" />
 <input type=hidden name="site_md5"  value="{{index .ARGS.site_md5 0}}" />
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
 
-<h2>修改广告位</h2>
-<div class="table-responsive">
-<table class="table table-striped table-sm">
-
-<tr><td>广告位名称:</td><td><input type=text name=slot_name size=40></td></tr>
-<tr><td>尺寸:</td><td><select size=1 name=size_id>
-<option value="1">Leaderboard</option>
-<option value="2">Square</option>
-<option value="3">Banner</option>
-</select></td></tr>
-
-<!--
-<tr><td>Language:</td><td>
-<input type=radio name="name=qa_language" value="English" />English
-<input type=radio name="name=qa_language" value="German" />German
-<input type=radio name="name=qa_language" value="French" />French
-<input type=radio name="name=qa_language" value="European" />European
-<input type=radio name="name=qa_language" value="Chinese" />Chinese
-<input type=radio name="name=qa_language" value="Japanese" />Japanese
-<input type=radio name="name=qa_language" value="Korean" />Korean
-<input type=radio name="name=qa_language" value="Asian" />Asian
-<input type=radio name="name=qa_language" value="Arabian" />Arabian
-<input type=radio name="name=qa_language" value="Other" selected />Other
-</td></tr>-->
-<tr><td>类型:</td><td>
-<input type=radio name=qa_platform value="Web" checked /><label>网站广告</label>
-<input type=radio name=qa_platform value="Mobile" /><label>移动广告</label>
-<input type=radio name=qa_platform value="Email" /><label>邮件广告</label>
-<!--
-<input type=radio name=qa_platform value="Video" /><label>Video</label>
-<input type=radio name=qa_platform value="Device" /><label>Device</label>
--->
-</td></tr>
-<tr><td>广告位所属页面级别:</td><td>
-<input type=radio name=qa_pagelevel value="Homepage" /><label>Homepage</label>
-<input type=radio name=qa_pagelevel value="Section" /><label>Section</label>
-<input type=radio name=qa_pagelevel value="SubSection" /><label>Sub Section</label>
-<input type=radio name=qa_pagelevel value="Rest" checked /><label>Rest</label>
-</td></tr>
-<tr><td>Clock:</td><td>
-<input type=radio name=qa_clock value="0" checked />Unknown
-<input type=radio name=qa_clock value="1" />1
-<input type=radio name=qa_clock value="2" />2
-<input type=radio name=qa_clock value="3" />3
-<input type=radio name=qa_clock value="4" />4
-<input type=radio name=qa_clock value="5" />5
-<input type=radio name=qa_clock value="6" />6
-<input type=radio name=qa_clock value="7" />7
-<input type=radio name=qa_clock value="8" />8
-<input type=radio name=qa_clock value="9" />9
-<input type=radio name=qa_clock value="10" />10
-<input type=radio name=qa_clock value="11" />11
-<input type=radio name=qa_clock value="12" />12
-</td></tr>
-<tr><td>Vertical Location:</td><td>
-<input type=radio name=qa_yaxis value="ScrollUp" />Scroll Up
-<input type=radio name=qa_yaxis value="ScrollDown" />Scroll Down
-<input type=radio name=qa_yaxis value="ScrollMiddle" />Scroll Middle
-<input type=radio name=qa_yaxis value="Sticky" />Sticky
-<input type=radio name=qa_yaxis value="PopUnder" />Pop Under
-<input type=radio name=qa_yaxis value="JumpScreen" />Jump Screen
-<input type=radio name=qa_yaxis value="Rest" checked />Rest
-</td></tr>
-
-<tr><td colspan=2> &nbsp; </td><td>
-</table>
-<input type=submit value=" 保存 " />
-</form>
-
+<div class="form-group row">
+    <label for="inputSlotName" class="col-sm-3 col-form-label">广告位名称:</label>
+    <div class="col-sm-9">
+        <input type=text class="form-control" name="slot_name" value="{{$item.slot_name}}" />
+    </div>
 </div>
 
+<div class="form-group row">
+    <label for="inputSizeID" class="col-sm-3 col-form-label">大小:</label>
+    <div class="col-sm-4">
+        <select class="form-control" name="size_id">
+<option value=""></option>
+<option {{if eq $item.size_id 1}}selected{{end}} value=1>Half Banner 234x60</option>
+<option {{if eq $item.size_id 2}}selected{{end}} value=2>Banner 468x60</option>
+<option {{if eq $item.size_id 3}}selected{{end}} value=3>Leaderboard 728x90</option>
+<option {{if eq $item.size_id 4}}selected{{end}} value=4>Micro Bar 88x31</option>
+<option {{if eq $item.size_id 5}}selected{{end}} value=5>Button 120x60</option>
+<option {{if eq $item.size_id 6}}selected{{end}} value=6>Button 120x90</option>
+<option {{if eq $item.size_id 7}}selected{{end}} value=7>Button 125x125</option>
+<option {{if eq $item.size_id 8}}selected{{end}} value=8>Vertical Banner 120x240</option>
+<option {{if eq $item.size_id 9}}selected{{end}} value=9>Skyscraper 120x600</option>
+<option {{if eq $item.size_id 10}}selected{{end}} value=10>Wide Skyscraper 160x600</option>
+<option {{if eq $item.size_id 11}}selected{{end}} value=11>Vertical Rectangle 240x400</option>
+<option {{if eq $item.size_id 12}}selected{{end}} value=12>Small Rectangle 180x150</option>
+<option {{if eq $item.size_id 13}}selected{{end}} value=13>Small Square 200x200</option>
+<option {{if eq $item.size_id 14}}selected{{end}} value=14>Square 250x250</option>
+<option {{if eq $item.size_id 15}}selected{{end}} value=15>3:1 Rectangle 300x100</option>
+<option {{if eq $item.size_id 16}}selected{{end}} value=16>Medium Rectangle 300x250</option>
+<option {{if eq $item.size_id 17}}selected{{end}} value=17>Large Rectangle 336x280</option>
+<option {{if eq $item.size_id 18}}selected{{end}} value=18>Half Page Ad 300x600</option></select>
+    </div>
+    <label for="inputEndx" class="col-sm-1 col-form-label">发布形式:</label>
+    <div class="col-sm-4">
+        <select class="form-control" name="fl_mime">
+<option {{if eq $item.fl_mime "js"}}selected{{end}} value="js">Javascript</option>
+<option {{if eq $item.fl_mime "html"}}selected{{end}} value="html">html</option>
+<option {{if eq $item.fl_mime "json"}}selected{{end}} value="json">json</option>
+<option {{if eq $item.fl_mime "jpg"}}selected{{end}} value="jpg">jpg</option>
+<option {{if eq $item.fl_mime "git"}}selected{{end}} value="gif">gif</option>
+<option {{if eq $item.fl_mime "png"}}selected{{end}} value="png">png</option>
+<option {{if eq $item.fl_mime "mp4"}}selected{{end}} value="mp4">mp4</option>
+<option {{if eq $item.fl_mime "swf"}}selected{{end}} value="swf">swf</option>
+<option {{if eq $item.fl_mime "wmv"}}selected{{end}} value="wmv">wmv</option>
+<option {{if eq $item.fl_mime "flv"}}selected{{end}} value="flv">flv</option></select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputCost" class="col-sm-12 col-form-label">属性</label>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+
+<div class="form-group row">
+    <label for="inputPlatform" class="col-sm-3 col-form-label">所在平台:</label>
+    <div class="col-sm-9 col-form-label">{{ range $one := .Other.qa_platform }}
+      <div class="form-check form-check-inline mr-1">
+        <input class="form-check-input" type="radio" id="qa_{{$one.which}}" value="{{$one.which}}" name="qa_platform" {{if $one.selected}}checked{{end}}>
+        <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+      </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputPageLevel" class="col-sm-3 col-form-label">页面级别:</label>
+    <div class="col-sm-9 col-form-label">{{ range $one := .Other.qa_pagelevel }}
+		<div class="form-check form-check-inline mr-1">
+           <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_pagelevel value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
+           <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+        </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputClock" class="col-sm-3 col-form-label">时钟位置:</label>
+    <div class="col-sm-9 col-form-label">{{ range $one := .Other.qa_clock }}
+		<div class="form-check form-check-inline mr-1">
+           <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_clock value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
+           <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+        </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputYaxis" class="col-sm-3 col-form-label">上下位置:</label>
+    <div class="col-sm-9">{{ range $one := .Other.qa_yaxis }}
+        <div class="form-check form-check-inline mr-1">
+           <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_yaxis value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
+           <label>{{$one.label}}</label>
+        </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="checkChannels" class="col-sm-3 col-form-label">业务类别:</label>
+    <div class="col-sm-9">
+<table class="table table-sm table-bordered">
+<tr>
+<th></th>
+<th>本属<br />
+<input type=radio id="ch_inherit" name=mychannel {{if eq $item.mychannel "Inherit"}}checked{{end}}  value="Inherit" />默认
+<input type=radio id="ch_own"     name=mychannel {{if eq $item.mychannel "Own"}}checked{{end}} value="Own" />自定义</th>
+<th>接受活动<br>
+<input type=radio id="ac_inherit" name=channel_order {{if eq $item.channel_order "Inherit"}}checked{{end}} value="Inherit" />默认
+<input type=radio id="ac_black" name=channel_order {{if eq $item.channel_order "Black"}}checked{{end}} value="Black" />黑
+<input type=radio id="ac_white" name=channel_order {{if eq $item.channel_order "White"}}checked{{end}} value="White" />白
+</th>
+</tr>
+<tbody>{{ with $item.chac_topics }}{{ range . }}
+<tr><td>{{.channel_name}}</td>
+<td class="text-center"><input name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
+<td class="text-center"><input name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
+</tr>{{end}}{{end}}
+</tobdy>
+</table>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-9">
+<button type="submit" class="btn btn-primary">保存并更新</button>
+    </div>
+</div>
+
+</form>
+
+        </div>
+      </div>
+
 {{ template "footer" .}}
+<script>
+$(document).ready(function(){
+    {{if eq $item.mychannel "Inherit"}}$("input[name='belong_ids']").hide(){{end}}
+    {{if eq $item.channel_order "Inherit"}}$("input[name='ac_ids']").hide(){{end}}
+    $("#ch_inherit").click(function(){
+        $("input[name='belong_ids']").hide()
+    });
+    $("#ch_own").click(function(){
+        $("input[name='belong_ids']").show()
+    });
+    $("#ac_inherit").click(function(){
+        $("input[name='ac_ids']").hide()
+    });
+    $("#ac_black").click(function(){
+        $("input[name='ac_ids']").show()
+    });
+    $("#ac_white").click(function(){
+        $("input[name='ac_ids']").show()
+    });
+});
+</script>
+
+
+</body>
+</html>
+
