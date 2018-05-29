@@ -9,7 +9,7 @@
 
   </div>
   <footer class="app-footer">
-    <span><a href="http://www.pzadx.com/goto/pub/e/pub?action=startnew">出版媒体商平台</a> © 2018 PzAdx.</span>
+    <span><a href="http://www.pzadx.com/goto/pub/e/pub?action=startnew">媒体商平台</a> © 2018 PzAdx.</span>
     <span class="ml-auto">Powered by <a href="http://www.pzadx.com/">南京派兹科技有限公司</a></span>
   </footer>
 

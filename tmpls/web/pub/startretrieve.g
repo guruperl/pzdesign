@@ -9,7 +9,7 @@
         <div class="card mx-4">
           <div class="card-body p-4">
             <h1>找回密码</h1>
-            <p class="text-muted">出版商户找回密码由此开始</p>
+            <p class="text-muted">媒体商户由此开始</p>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">

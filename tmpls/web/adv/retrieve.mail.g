@@ -1,5 +1,5 @@
 {{ $item := index .Lists 0 }}
-出版商 {{$item.firstname}} {{$item.lastname}}:
+媒体商 {{$item.firstname}} {{$item.lastname}}:
 
 你好!
 

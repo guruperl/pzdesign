@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5, h6, button {
           </li>
 
           <li class="nav-title">
-            出版商
+            媒体商
           </li>
           <li class="nav-item">
             <a href="ac?action=topics&entitytype_id=3" class="nav-link"><i class="icon-shield"></i> 黑白名单</a>

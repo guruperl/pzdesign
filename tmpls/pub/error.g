@@ -9,7 +9,7 @@
   <meta name="keyword" content="Application Error Page">
   <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-  <title>出版媒体商户出错</title>
+  <title>媒体商户出错</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">

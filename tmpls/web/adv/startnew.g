@@ -55,7 +55,7 @@
             <div class="input-group mb-4">
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" id="agree" name="agree" value="agree"> 请统一我们的用户协议
+                  <input type="checkbox" id="agree" name="agree" value="agree"> 请接受我们的用户协议
                 </label>
               </div>
             </div>
