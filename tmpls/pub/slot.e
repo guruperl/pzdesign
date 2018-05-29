@@ -2,8 +2,8 @@
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">Home</li>
-        <li class="breadcrumb-item active">Site</li>
-        <li class="breadcrumb-item"><a href="">Slot</a></li>
+        <li class="breadcrumb-item"><a href="site?action=topics">Sites</a></li>
+        <li class="breadcrumb-item active">Slot</li>
       </ol>
       <div class="container-fluid">
         <div class="animated fadeIn">

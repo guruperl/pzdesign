@@ -1,14 +1,12 @@
 {{ template "header" .}}
 {{ template "ledgerheader" .}}
 
-			<div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3>Last 24 Hours</h3>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
+          <div class="card">
+            <div class="card-header">
+              Income of the Last 24 Hours
+            </div>
+            <div class="card-body">
+
 <div style= 'font-size: 17px;'>
 	<canvas class="my-4" id="advChart" width="900" height="380"></canvas>
 
@@ -59,22 +57,15 @@
       });
     </script>
 						</div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
 
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Performance by Top Slots
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
+          <div class="card">
+            <div class="card-header">
+              Performance by Top Slots 
+            </div>
+            <div class="card-body">
+
                             <div class="table-responsive">
                                 <table class="table table-hover">
 <thead><tr>
@@ -101,19 +92,14 @@
                             </div>
                             <!-- /.table-responsive -->
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
 	
-				<div class="col-lg-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Performance by Top Campaigns
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
+          <div class="card">
+            <div class="card-header">
+              Performance by Top Campaigns
+            </div>
+            <div class="card-body">
+
                             <div class="table-responsive">
                                 <table class="table table-hover">
 <thead><tr>
@@ -138,16 +124,8 @@
 </tbody>
 </table>
                             </div>
-                            <!-- /.table-responsive -->
                         </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-  </div>
 {{ template "footer" }}
 
 </body>

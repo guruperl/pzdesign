@@ -64,7 +64,7 @@
     </button>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
       <li class="nav-item px-3">
-		PzAdx Publisher Management Portal
+		<strong>PzAdx Publisher</strong>
       </li>
 	<!--
       <li class="nav-item px-3">
@@ -80,10 +80,12 @@
     </ul>
     <ul class="nav navbar-nav ml-auto">
       <li class="nav-item dropdown d-md-down-none">
+        <i class="icon-bell"></i>
+        <!--
         <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <i class="icon-bell"></i><!-- span class="badge badge-pill badge-danger">1</span -->
+          <i class="icon-bell"></i><span class="badge badge-pill badge-danger">1</span>
         </a>
-        <!-- div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
           <div class="dropdown-header text-center">
             <strong>You have 1 notification</strong>
           </div>
@@ -96,7 +98,8 @@
               <i class="icon-chart text-success"></i> New insurance quote
             </a>
           </div>
-        </div -->
+        </div>
+        -->
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -129,44 +132,34 @@
             Publisher
           </li>
           <li class="nav-item">
-            <a href="ac?action=topics&entitytype_id=3" class="nav-link"><i class="icon-calculator"></i> Access Control</a>
+            <a href="ac?action=topics&entitytype_id=3" class="nav-link"><i class="icon-shield"></i> Access Control</a>
           </li>
           <li class="nav-item">
-            <a href="site?action=topics" class="nav-link"><i class="icon-calculator"></i> Apps and Sites</a>
+            <a href="site?action=topics" class="nav-link"><i class="icon-screen-smartphone"></i> Apps and Sites</a>
           </li>
-          {{ if and ( or (or (eq .Other.Component `slot`) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_name }} {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}<li class="nav-title">
+          {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_name }} {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}<li class="nav-title">
             {{index .ARGS.site_name 0}}
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="slot?action=topics&{{$attach}}"><i class="icon-basket"></i> Slots</a>
+            <a class="nav-link" href="site?action=edit&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-magic-wand"></i> Edit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> Slots</a>
           </li>
 
           {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="#"> <i class="nav-icon icon-puzzle"></i> {{index .ARGS.slot_name 0}}</a>
-            <ul class="nav-dropdown-items">
-              <li class="nav-item">
-                <a class="nav-link" href="slot?action=edit&{{$small}}&{{$attach}}"> <i class="nav-icon icon-puzzle"></i> Edit</a>
-              </li>
-              <li class="nav-item">
-                 <a class="nav-link" href="chac?action=topics&entitytype_id=32&{{$small}}&{{$attach}}"> <i class="nav-icon icon-puzzle"></i> Channels</a>
-              </li>
-            </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="slot?action=edit&{{$small}}&{{$attach}}"> <i class="icon-arrow-right"></i> {{index .ARGS.slot_name 0}}</a>
           </li>{{end}} 
 
           <li class="nav-item">
-            <a class="nav-link" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-basket"></i> Access Control</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="chac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-basket"></i> Channels</a>
+            <a class="nav-link" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> Access Control</a>
           </li>{{end}}
-          <!-- li class="nav-item">
-            <a class="nav-link" href="ac?action=topics&entitytype_id=3"><i class="icon-speedometer"></i> Access Control</a>
-          </li -->
           <li class="nav-title">
             Reports
           </li>
           <li class="nav-item">
-             <a href="ledge?action=payment" class="nav-link"><i class="icon-graduation"></i> Incomes</a>
+             <a href="ledge?action=payment" class="nav-link"><i class="icon-chart"></i> Incomes</a>
           </li>
         </ul>
       </nav>

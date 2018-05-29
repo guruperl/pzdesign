@@ -6,7 +6,7 @@
 
           <div class="card">
             <div class="card-header">
-              Edit {{$item.site_name}}
+              Edit <em>{{$item.site_name}}</em>
               <div class="card-actions">
                 <a href="site?action=info">
                   <small class="text-muted">docs</small>
@@ -100,7 +100,7 @@
 
 <div class="form-group row">
     <div class="col-sm-9">
-<button type="submit" class="btn btn-primary">Create Now !</button>
+<button type="submit" class="btn btn-primary">Save and Update!</button>
     </div>
 </div>
 

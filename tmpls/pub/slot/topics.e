@@ -4,7 +4,7 @@
 
           <div class="card">
             <div class="card-header">
-              Current List
+              Current List of <em>{{index .ARGS.site_name 0}}</em>
             </div>
             <div class="card-body">
 

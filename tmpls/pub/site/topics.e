@@ -20,7 +20,7 @@
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-<td><a href="site?action=edit&site_id={{.site_id}}">{{.site_name}}</a></td>
+<td><a href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">{{.site_name}}</a></td>
 <td>{{.site_url}}</td>
 <td>{{.created}}</td>
 <td>{{.active}}</td>

@@ -72,7 +72,7 @@
     <label for="inputPlatform" class="col-sm-3 col-form-label">Platform:</label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_platform }}
       <div class="form-check form-check-inline mr-1">
-        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if $item.default}}checked{{end}}>
+        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if eq "Web" $item.which}}checked{{end}}>
         <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
       </div>{{end}}
     </div>

@@ -7,7 +7,7 @@
 
           <div class="card">
             <div class="card-header">
-              Create New Slot
+              Edit Slot of <em>{{(index .ARGS.site_name 0 | urlquery)}}</em>
             </div>
             <div class="card-body">
 
