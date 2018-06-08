@@ -34,6 +34,18 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+<style>
+html, body {
+  font-family: "SimSun","宋体";
+}
+h1, h2, h3, h4, h5, h6, button {
+  font-family: "Microsoft YaHei","微软雅黑","SimHei","黑体";
+}
+.nav {
+  font-family: "Microsoft YaHei","微软雅黑","SimHei","黑体";
+}
+</style>
+
 </head>
 
 <body>
@@ -91,15 +103,17 @@
 								<li>
                                     <a href="campaign?action=topics">活动管理</a>
                                 </li>
-								{{ if and (or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.campaign_name}}
-								<li>
-									<a href="#">{{index .ARGS.campaign_name 0}} <span class="fa arrow"></span></a>
+								{{ if and (or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.campaign_name}}<li>
+                                 	<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">{{index .ARGS.campaign_name 0}}</a>
+                                </li>
+								<li>	
+									<a href="#">点击展开 <span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
                                     	<li>
-                                    		<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">编辑修改</a>
+                                    		<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">创意</a>
                                 		</li>
                                     	<li>
-                                    		<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">创意</a>
+                                    		<a href="item?action=startnew&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">添加创意</a>
                                 		</li>
                                 		<li>
                                     		<a href="balance?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">预算控制</a>
