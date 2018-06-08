@@ -1,6 +1,9 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
+{{$cAttrs := .Other.campaignAttrs}}
+{{$sAttrs := .Other.siteAttrs}}
+
 {{$item := index .Lists 0}}
 
             <div class="row">
@@ -26,7 +29,7 @@
 <div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">Frequency Cap:</label>
 	<div class="col-sm-9">
-<table>
+<table class="table-bordered table-condensed">
 <tr><th>Type</th><th>Number</th><th>Period</th><th>Throttle</th></tr>
 <tr><td>Impressions: </td>
 <td><input type=text name=cpm_fc value="{{$item.cpm_fc}}" size=3></td>
@@ -48,7 +51,7 @@
 </div>
 
 <div class="form-group row">
-	<label for="tableBudget" class="col-sm-3 col-form-label">Budgeting:</label>
+	<label for="tableBudget" class="col-sm-3 col-form-label">Budget:</label>
 	<div class="col-sm-9">
 		<a class="btn btn-xs btn-warning" href="balance?action=topics&campaign_id={{$item.campaign_id}}&campaign_md5={{$item.campaign_md5}}&campaign_name={{$item.campaign_name | urlquery }}&entitytype_id=41">Check</a>
 	</div>
@@ -69,8 +72,13 @@
     <div class="col-sm-9">
         <div class="panel panel-primary">
             <div class="panel-body">
-<table>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<table class="table table-condensed">
+    <colgroup>
+            <col class="col-md-3">
+            <col class="col-md-9">
+    </colgroup>
+    <tbody>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
+<tr><td class="text-right">{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -83,8 +91,13 @@
     <div class="col-sm-9">
         <div class="panel panel-primary">
             <div class="panel-body">
-<table>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<table class="table table-condensed">
+    <colgroup>
+            <col class="col-md-3">
+            <col class="col-md-9">
+    </colgroup>
+    <tbody>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
+<tr><td class="text-right">{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -97,7 +110,7 @@
     <div class="col-sm-9">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table>
+<table class="table-bordered table-condensed">
 <tr>
 <th>Name</th>
 <th>Belong&nbsp; </th>
@@ -118,6 +131,8 @@
 </div>
 
 <div class="form-group row">
+	<div class="col-sm-3">
+	</div>
 	<div class="col-sm-9">
 <button type="submit" class="btn btn-primary">Update Now!</button>
 	</div>

@@ -1,6 +1,9 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
+{{$cAttrs := .Other.campaignAttrsChinese }}
+{{$sAttrs := .Other.siteAttrsChinese }}
+
 {{$item := index .Lists 0}}
 
             <div class="row">
@@ -26,7 +29,7 @@
 <div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">频次控制:</label>
 	<div class="col-sm-9">
-<table>
+<table class="table-bordered table-condensed">
 <tr><th>类型</th><th>数值</th><th>周期</th><th>间隔</th></tr>
 <tr><td>曝光次数: </td>
 <td><input type=text name=cpm_fc value="{{$item.cpm_fc}}" size=3></td>
@@ -69,8 +72,13 @@
     <div class="col-sm-9">
         <div class="panel panel-primary">
             <div class="panel-body">
-<table>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<table class="table table-condensed">
+    <colgroup>
+            <col class="col-md-3">
+            <col class="col-md-9">
+    </colgroup>
+    <tbody>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
+<tr><td class="text-right">{{index $cAttrs $key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -83,8 +91,13 @@
     <div class="col-sm-9">
         <div class="panel panel-primary">
             <div class="panel-body">
-<table>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<table class="table table-condensed">
+    <colgroup>
+            <col class="col-md-3">
+            <col class="col-md-9">
+    </colgroup>
+    <tbody>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
+<tr><td class="text-right">{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -97,12 +110,11 @@
     <div class="col-sm-9">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table>
+<table class="table table-bordered table-condensed">
 <tr>
 <th>行业名</th>
-<th>所属行业&nbsp; </th>
-<th>黑白次序: {{$item.channel_order}}
-</th>
+<th>所属行业</th>
+<th>黑白次序: {{$item.channel_order}} </th>
 </tr>
 <tbody>{{ with $item.chac_topics }}{{ range . }}{{if or .chac_id .chbelong_id}}
 <tr><td>{{.channel_name}}</td>
@@ -118,8 +130,10 @@
 </div>
 
 <div class="form-group row">
+	<div class="col-sm-3">
+	</div>
 	<div class="col-sm-9">
-<button type="submit" class="btn btn-primary">更新!</button>
+<button type="submit" class="btn btn-primary">保存!</button>
 	</div>
 </div>
 

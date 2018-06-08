@@ -56,7 +56,7 @@ h1,h2,h3,h4,h5,h6{font-size:100%;}
 <body>
 
 <FORM METHOD="POST" ACTION="/goto/admin/e/login">
-<INPUT TYPE="HIDDEN" NAME="{{ .Other.Go_uri_name }}" VALUE="{{ .Other.go_uri }}">
+<INPUT TYPE="HIDDEN" NAME="{{ .Go_uri_name }}" VALUE="{{ .go_uri }}">
 	<div class="loginPanel">
 		<div class="x-box-tl">
 			<div class="x-box-tr">
@@ -65,7 +65,7 @@ h1,h2,h3,h4,h5,h6{font-size:100%;}
 			</div>
 		</div>
 
-		<div class="x-box-ml"{{ .Other.Errorstr }}>
+		<div class="x-box-ml"{{ .Errorstr }}>
 			<div class="x-box-mr">
 				<div class="x-box-mc" style="height: 173px;">
 					<table id="j_id2:j_id5" cellspacing="3px" style="width:100%">
@@ -74,7 +74,7 @@ h1,h2,h3,h4,h5,h6{font-size:100%;}
 							<label>Login：</label>
 						</td>
 						<td colspan="2">
-							<label><INPUT TYPE="TEXT"     NAME="{{ .Other.Login }}" size=20 style="width: 212px;" class="x-form-text"></label>
+							<label><INPUT TYPE="TEXT"     NAME="{{ .Login }}" size=20 style="width: 212px;" class="x-form-text"></label>
 						</td>
 						</tr>
 						<tr>
@@ -82,7 +82,7 @@ h1,h2,h3,h4,h5,h6{font-size:100%;}
 							<label>Password：</label>
 						</td>
 						<td colspan="2">
-							<label><INPUT TYPE="PASSWORD" NAME="{{ .Other.Password }}" size=20 style="width: 212px;" class="x-form-text"></label>
+							<label><INPUT TYPE="PASSWORD" NAME="{{ .Password }}" size=20 style="width: 212px;" class="x-form-text"></label>
 						</td>
 						</tr>
 												<tr>
@@ -90,7 +90,7 @@ h1,h2,h3,h4,h5,h6{font-size:100%;}
 							&nbsp;</td>
 						<td style="padding-right: 20px;">
 							<label><INPUT TYPE="SUBMIT" VALUE=" Log In "></label><label style="color:red"></label>
-							<label style="color:red">&nbsp;&nbsp;&nbsp;&nbsp;{{ .Other.Errorstr }}</label>
+							<label style="color:red">&nbsp;&nbsp;&nbsp;&nbsp;{{ .Errorstr }}</label>
 						</td>
 						</tr>
 						</table>

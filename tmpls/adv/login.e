@@ -43,16 +43,16 @@
                     </div>
                     <div class="panel-body">
                         <form role="form" METHOD="POST" ACTION="/goto/adv/e/login">
-							<INPUT TYPE="HIDDEN" NAME="{{ .Other.Go_uri_name }}" VALUE="{{ .Other.go_uri }}">
+							<INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
                             <fieldset>
 								<div class="alert alert-success">
-                                {{ .Other.Errorstr }}
+                                {{ .Errorstr }}
                             	</div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="{{ .Other.Login }}" type="email" autofocus>
+                                    <input class="form-control" placeholder="E-mail" name="{{.Login}}" type="email" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="{{ .Other.Password }}" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="{{ .Password }}" type="password" value="">
                                 </div>
                                 <!-- div class="checkbox">
                                     <label>

@@ -8,10 +8,9 @@
                 <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                       <h3>Change Password</h3>
+                       Change Password
                     </div>
                     <div class="panel-body">
-<div style= 'font-size: 17px;'>
 
 <div class="table-responsive">
 <table class="table table-striped table-sm">
@@ -28,7 +27,7 @@
 <td><input type=password name=confirm size=10 /></td>
 </tr>
 <tr>
-<td colspan=2><input type=submit value="Change Now!" /></td>
+<td colspan=2><input  class="btn btn-primary" type=submit value="Change Now" /></td>
 </tr>
 	</tbody>
 </table>
@@ -38,7 +37,6 @@
             </div>
         </div>
     </div>
-</div>
 
 </form>
 

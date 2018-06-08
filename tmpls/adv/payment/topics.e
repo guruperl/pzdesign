@@ -1,20 +1,18 @@
 {{ template "header" .}}
 {{ template "paymentheader" .}}
 
-<h3>Your current balance: {{$self := index .Other.adv_edit 0}}{{$self.balance}}</h3>
-<br>
+<h4>Your current balance: {{$self := index .Other.adv_edit 0}}{{$self.balance}}</h4>
 
 <div class="row">
-                <div class="col-lg-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                      <h3>Payments</h3>
-                    </div>
-                    <div class="panel-body">
-<div style= 'font-size: 17px;'>
+	<div class="col-lg-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Payment History
+			</div>
+			<div class="panel-body">
 
 <div class="table-responsive">
-<table class="table table-striped table-sm">
+<table class="table table-striped table-condensed">
 <thead><tr>
 <th>Type</th>
 <th>ID</th>
@@ -34,36 +32,38 @@
 </table>
 </div>
 
-<form class="form" method="post" action="payment">
-<input type=hidden name="action" value="insert" />
-<pre>
-Pay Method: <select name=paytype_id><option value="1">Cash</option><option value="2">Debt</option>{{if .Other}}{{if .Other.paymethods}}{{range $item := .Other.paymethods}}<option value="{{$item.paytype_id}}_{{$item.entity_id}}_{{$item.entity_md5}}">{{$item.paytype_value}} {{$item.id}}</option>{{end}}{{end}}{{end}}</select>
-Amount: <input type=text name=amount />
-</pre>
-<input type=submit value=" Add to My Account " />
-</form>
-              </div>
-            </div>
-        </div>
-    </div>
+		<form class="form" method="post" action="payment">
+			<input type=hidden name="action" value="insert" />
 
-
-<div class="row">
-                <div class="col-lg-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                       <h3>New Pay Method</h3>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">
+						<label class="form-check-label">Pay Method:</label>
+                        <input class="form-check-input" type=radio name=paytype_id value="1"><label class="form-check-label">Cash</label>
+                        <input class="form-check-input" type=radio name=paytype_id value="2"><label class="form-check-label">Debt</label>
+                        {{if .Other}}{{if .Other.paymethods}}{{range $item := .Other.paymethods}}<input class="form-check-input" type=radio name=paytype_id value="{{$item.paytype_id}}_{{$item.entity_id}}_{{$item.entity_md5}}"><label class="form-check-label">{{$item.paytype_value}} {{$item.id}}</label>{{end}}{{end}}{{end}}
                     </div>
-                    <div class="panel-body">
-<pre>
-<a href="cc?action=startnew"><font size=4>New Credit Card</font></a>
-<a href="cheque?action=startnew"><font size=4>New Cheque</font></a>
-<a href="wechat?action=startnew"><font size=4>New Wechat Pay</font></a>
-<a href="alipay?action=startnew"><font size=4>New Alipay</font></a>
-</pre>
-              </div>
+                </div>
             </div>
-        </div>
-    </div>
+
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">
+						<label class="form-check-label">Amount:</label>
+                        <input class="form-check-input" type=text name=amount placeholder="100.0">
+						<input class="btn btn-primary" type=submit value="Add to My Account" />
+					</div>
+            	</div>
+            </div>
+		</form>
+
+<a class="btn btn-sm" href="cc?action=startnew">New Credit Card</a>
+<a class="btn btn-sm" href="cheque?action=startnew">New Cheque</a>
+<a class="btn btn-sm" href="wechat?action=startnew">New Wechat Pay</a>
+<a class="btn btn-sm" href="alipay?action=startnew">New Alipay</a>
+        	</div>
+    	</div>
+	</div>
 </div>
+
 {{template "footer"}}

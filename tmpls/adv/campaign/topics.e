@@ -5,12 +5,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3>Active Campaigns</h3>
+                            Active Campaigns
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-<div style= 'font-size: 17px;'>
 <table class="table table-striped table-nordered table-hover">
               <thead>
                 <tr>
@@ -26,7 +25,7 @@
               <tbody>{{ with .Lists }}{{ range . }}
 <tr {{if eq .active "New"}}class="warning"{{else if eq .active "Pause"}}class="danger"{{else}}{{end}}>
 {{$small := print "campaign_id=" .campaign_id "&campaign_md5=" .campaign_md5 "&campaign_name=" (.campaign_name | urlquery)}}
-<td><a href="campaign?action=edit&campaign_id={{.campaign_id}}">{{.campaign_name}}</a></td>
+<td><a href="campaign?action=edit&{{$small}}">{{.campaign_name}}</a></td>
 <td>{{.created}}</td>
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>

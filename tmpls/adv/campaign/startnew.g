@@ -1,6 +1,9 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
+{{$cAttrs := .Other.campaignAttrsChinese }}
+{{$sAttrs := .Other.siteAttrsChinese }}
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
@@ -23,7 +26,7 @@
 <div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">频次控制:</label>
 	<div class="col-sm-9">
-<table>
+<table class="table-bordered table-condensed">
 <tr><th>类型</th><th>数值</th><th>周期</th><th>间隔</th></tr>
 <tr><td>曝光次数: </td>
 <td><input type=text name=cpm_fc size=3></td>
@@ -47,7 +50,7 @@
 <div class="form-group row">
 	<label for="tableBudget" class="col-sm-3 col-form-label">预算:</label>
 	<div class="col-sm-9">
-<table>
+<table class="table-bordered table-condensed">
 <tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr>
 <tr><td>全部: </td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
@@ -81,9 +84,15 @@
 	<div class="col-sm-9">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table>{{range $key, $val := .Other.campaigns }}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<table class="table table-condensed">
+	<colgroup>
+            <col class="col-md-3">
+            <col class="col-md-9">
+	</colgroup>
+    <tbody>{{range $key, $val := .Other.campaigns }}
+<tr><td class="text-right">{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
+	</tbody>
 </table>
 			</div>
 		</div>
@@ -95,9 +104,15 @@
 	<div class="col-sm-9">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table>{{range $key, $val := .Other.sites }}
-<tr><th>{{$key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<table class="table table-condensed">
+    <colgroup>
+            <col class="col-md-3">
+            <col class="col-md-9">
+    </colgroup>
+    <tbody>{{range $key, $val := .Other.sites }}
+<tr><td class="text-right">{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
+	</tbody>
 </table>
 			</div>
 		</div>
@@ -131,8 +146,10 @@
 </div>
 
 <div class="form-group row">
+	<div class="col-sm-3">
+	</div>
 	<div class="col-sm-9">
-<button type="submit" class="btn btn-primary">保存！</button>
+<button type="submit" class="btn btn-primary">提交！</button>
 	</div>
 </div>
 

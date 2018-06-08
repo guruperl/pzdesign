@@ -1,18 +1,24 @@
-[% INCLUDE start.e %]
+{{template "header" .}}
+{{template "campaignheader" .}}
 
-<div class="ui-layout-west">
-<ul id="treeList">
-        <li><a href="campaign?action=edit&campaignid=[% campaignid %]&campaignname_esc=[% campaignname_esc %]">[% campaignname %]</a>
-            <p></p>
-            <ul>
-            <li><a href="item?action=edit&itemid=[% insert.0.itemid %]&campaignid=[% campaignid %]&campaignmd5=[% campaignmd5 %]&campaignname_esc=[% campaignname_esc %]">[% itemname %]</a></li>
-        </ul></li>
-</ul>
-</div>
-<div class="ui-layout-center">
 
-新建成功.
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            新建成功
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            {{index .ARGS.item_name 0}} added.
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+            </div>
+            <!-- /.row -->
 
-</div>
+{{template "footer" .}}
 
-[% INCLUDE end.e %]

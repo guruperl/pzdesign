@@ -1,5 +1,14 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
-Logic order refreshed.
+           <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            Logic order has been updated.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 {{template "footer"}}

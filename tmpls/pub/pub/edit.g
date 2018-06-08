@@ -12,18 +12,13 @@
 <form name=form1 class="form" action="pub" method=post>
 <input type=hidden name=action value="update" />
 
-
 <div class="form-group row">
-    <label for="inputFirstName" class="col-sm-3 col-form-label">名:</label>
-    <div class="col-sm-8">
-        <input type=text class="form-control" name=firstname value="{{$item.firstname}}" />
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputLastName" class="col-sm-3 col-form-label">姓:</label>
-    <div class="col-sm-8">
+    <label for="inputFirstName" class="col-sm-3 col-form-label">姓名:</label>
+    <div class="col-sm-2">
         <input type=text class="form-control" name=lastname value="{{$item.lastname}}" />
+    </div>
+    <div class="col-sm-6">
+        <input type=text class="form-control" name=firstname value="{{$item.firstname}}" />
     </div>
 </div>
 
@@ -56,7 +51,7 @@
     <div class="col-sm-2">
         <select class="form-control" name=state_id>
 <option value=""></option>{{range .Other.address_states}}{{with .}}
-<option {{if eq .state_id $item.state_id}}selected{{end}} value={{.state_id}}>{{.state_name}}</option>
+<option {{if $item.state_id}}{{if eq .state_id $item.state_id}}selected{{end}}{{end}} value={{.state_id}}>{{.state_name}}</option>
 {{end}}{{end}}</select>
     </div>
 </div>

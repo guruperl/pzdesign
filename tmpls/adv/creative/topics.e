@@ -1,5 +1,6 @@
 {{$attach := print "campaign_id=" (index .ARGS.campaign_id 0) "&campaign_md5=" (index .ARGS.campaign_md5 0) "&campaign_name=" (index .ARGS.campaign_name 0 | urlquery)}}
 {{$second := print "item_id=" (index .ARGS.item_id 0) "&item_md5=" (index .ARGS.item_md5 0) "&item_name=" (index .ARGS.item_name 0 | urlquery)}}
+{{$mime := index .ARGS.qa_mime 0}}
 
 {{ template "header" .}}
 {{ template "creativeheader" .}}
@@ -31,7 +32,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-body">
-{{if eq (index $.ARGS.qa_mime 0) "html"}}{{.content}}{{else if eq (index $.ARGS.qa_mime 0) "js"}}<script>{{.content}}</script>{{else}}{{.content}}{{end}}
+{{if eq $mime "html"}}{{.content}}{{else if eq $mime "js"}}<script>{{.content}}</script>{{else if eq $mime "video"}}<video controls><source src="{{.content}}"></video>{{else}}<img src="{{.content}}" />{{end}}
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -45,6 +46,23 @@
 </table>
                             </div>
                             <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                          Add New Creative
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
 
 <form class="form" method=post action="creative" enctype="multipart/form-data">
 <input type=hidden name=action value="insert" />
@@ -54,8 +72,7 @@
 <input type=hidden name=item_id value="{{index .ARGS.item_id 0}}" />
 <input type=hidden name=item_md5 value="{{index .ARGS.item_md5 0}}" />
 <input type=hidden name=item_name value="{{index .ARGS.item_name 0}}" />
-
-<h4>New Creative</h4>
+<input type=hidden name=qa_mime value="{{index .ARGS.qa_mime 0}}" />
 
 <div class="form-group row">
     <label for="inputCreativeName" class="col-sm-3 col-form-label">Creative Name:</label>
@@ -68,11 +85,29 @@
     </div>
 </div>
 
+{{if or (eq "image" $mime) (eq "video" $mime) }}
+<input type=hidden name=content value="MEDIA_1" />
+
 <div class="form-group row">
-    <label for="inputContent" class="col-sm-3 col-form-label">Content ({{index .ARGS.qa_mime 0}}):</label>
+    <label for="inputMedias" class="col-sm-3 col-form-label">Upload {{$mime}}:</label>
+    <div class="col-sm-9">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+<label for="inputMedias" class="col-sm-3 col-form-label">MEDIA:</label>
+<div class="col-sm-9">
+<input type=file class="form-control" name="media_1" />
+</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{else}}
+
+<div class="form-group row">
+    <label for="inputContent" class="col-sm-3 col-form-label">Content ({{$mime}}):</label>
     <div class="col-sm-9">
 		<textarea name=content class="form-control" rows="4">
-{{if eq (index .ARGS.qa_mime 0) "js"}}document.write('<a href="LANDING"><img src="MEDIA_1" /></a>'){{else if eq (index .ARGS.qa_mime 0) "html"}}<script>document.write('<a href="LANDING"><img src="MEDIA_1" /></a></script>'){{end}}
+{{if eq $mime "js"}}document.write('<a href="LANDING"><img src="MEDIA_1" /></a>'){{else}}<a href="LANDING"><img src="MEDIA_1" /></a>{{end}}
 		</textarea>
 	</div>
 </div>
@@ -88,8 +123,6 @@
 <input type=file class="form-control" name="media_1" />
 </div>
 	
-{{if or (or (eq (index .ARGS.qa_mime 0) "js") (eq (index .ARGS.qa_mime 0) "html")) (eq (index .ARGS.qa_mime 0) "json")}}
-
 <label for="inputMedias" class="col-sm-3 col-form-label">MEDIA_2:</label>
 <div class="col-sm-9">
 <input type=file class="form-control" name="media_2" />
@@ -109,15 +142,16 @@
 <div class="col-sm-9">
 <input type=file class="form-control" name="media_5" />
 </div>
-{{end}}	
 			</div>
 		</div>
 	</div>
 </div>
-
+{{end}}
 <div class="form-group row">
+    <div class="col-sm-3">
+	</div>
     <div class="col-sm-9">
-<button type="submit" class="btn btn-primary">Finish Now Creative!</button>
+<button type="submit" class="btn btn-primary"> Add Now! </button>
     </div>
 </div>
 

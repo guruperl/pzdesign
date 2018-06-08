@@ -19,62 +19,33 @@
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
 
 <div class="form-group row">
-    <label for="inputSlotName" class="col-sm-3 col-form-label">Slot Name:</label>
-    <div class="col-sm-9">
+    <label for="inputSlotName" class="col-sm-2 col-form-label">Slot Name:</label>
+    <div class="col-sm-10">
         <input type=text class="form-control" name="slot_name" value="{{$item.slot_name}}" />
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputSizeID" class="col-sm-3 col-form-label">Size:</label>
-    <div class="col-sm-4">
-        <select class="form-control" name="size_id">
-<option value=""></option>
-<option {{if eq $item.size_id 1}}selected{{end}} value=1>Half Banner 234x60</option>
-<option {{if eq $item.size_id 2}}selected{{end}} value=2>Banner 468x60</option>
-<option {{if eq $item.size_id 3}}selected{{end}} value=3>Leaderboard 728x90</option>
-<option {{if eq $item.size_id 4}}selected{{end}} value=4>Micro Bar 88x31</option>
-<option {{if eq $item.size_id 5}}selected{{end}} value=5>Button 120x60</option>
-<option {{if eq $item.size_id 6}}selected{{end}} value=6>Button 120x90</option>
-<option {{if eq $item.size_id 7}}selected{{end}} value=7>Button 125x125</option>
-<option {{if eq $item.size_id 8}}selected{{end}} value=8>Vertical Banner 120x240</option>
-<option {{if eq $item.size_id 9}}selected{{end}} value=9>Skyscraper 120x600</option>
-<option {{if eq $item.size_id 10}}selected{{end}} value=10>Wide Skyscraper 160x600</option>
-<option {{if eq $item.size_id 11}}selected{{end}} value=11>Vertical Rectangle 240x400</option>
-<option {{if eq $item.size_id 12}}selected{{end}} value=12>Small Rectangle 180x150</option>
-<option {{if eq $item.size_id 13}}selected{{end}} value=13>Small Square 200x200</option>
-<option {{if eq $item.size_id 14}}selected{{end}} value=14>Square 250x250</option>
-<option {{if eq $item.size_id 15}}selected{{end}} value=15>3:1 Rectangle 300x100</option>
-<option {{if eq $item.size_id 16}}selected{{end}} value=16>Medium Rectangle 300x250</option>
-<option {{if eq $item.size_id 17}}selected{{end}} value=17>Large Rectangle 336x280</option>
-<option {{if eq $item.size_id 18}}selected{{end}} value=18>Half Page Ad 300x600</option></select>
+    <label for="inputSizeID" class="col-sm-2 col-form-label">Size:</label>
+    <div class="col-sm-2">
+        <input type=text class="form-control" name="w" value="{{$item.w}}" />
     </div>
-    <label for="inputEndx" class="col-sm-1 col-form-label">Type:</label>
+    <div class="col-sm-2">
+        <input type=text class="form-control" name="h" value="{{$item.w}}" />
+    </div>
+    <label for="inputType" class="col-sm-1 col-form-label">Type:</label>
     <div class="col-sm-4">
-        <select class="form-control" name="fl_mime">
+        <select class="form-control" multiple name="fl_mime">
 <option {{if eq $item.fl_mime "js"}}selected{{end}} value="js">Javascript</option>
 <option {{if eq $item.fl_mime "html"}}selected{{end}} value="html">html</option>
-<option {{if eq $item.fl_mime "json"}}selected{{end}} value="json">json</option>
-<option {{if eq $item.fl_mime "jpg"}}selected{{end}} value="jpg">jpg</option>
-<option {{if eq $item.fl_mime "git"}}selected{{end}} value="gif">gif</option>
-<option {{if eq $item.fl_mime "png"}}selected{{end}} value="png">png</option>
-<option {{if eq $item.fl_mime "mp4"}}selected{{end}} value="mp4">mp4</option>
-<option {{if eq $item.fl_mime "swf"}}selected{{end}} value="swf">swf</option>
-<option {{if eq $item.fl_mime "wmv"}}selected{{end}} value="wmv">wmv</option>
-<option {{if eq $item.fl_mime "flv"}}selected{{end}} value="flv">flv</option></select>
+<option {{if eq $item.fl_mime "image"}}selected{{end}} value="image">Image</option>
+<option {{if eq $item.fl_mime "video"}}selected{{end}} value="video">Video</option></select>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputCost" class="col-sm-12 col-form-label">Slot Properties</label>
-</div>
-
-<div class="panel panel-primary">
-    <div class="panel-body">
-
-<div class="form-group row">
-    <label for="inputPlatform" class="col-sm-3 col-form-label">Platform:</label>
-    <div class="col-sm-9 col-form-label">{{ range $one := .Other.qa_platform }}
+    <label for="inputPlatform" class="col-sm-2 col-form-label">Platform:</label>
+    <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_platform }}
       <div class="form-check form-check-inline mr-1">
         <input class="form-check-input" type="radio" id="qa_{{$one.which}}" value="{{$one.which}}" name="qa_platform" {{if $one.selected}}checked{{end}}>
         <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
@@ -83,8 +54,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-3 col-form-label">Page Level:</label>
-    <div class="col-sm-9 col-form-label">{{ range $one := .Other.qa_pagelevel }}
+    <label for="inputPageLevel" class="col-sm-2 col-form-label">Page Level:</label>
+    <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_pagelevel }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_pagelevel value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
            <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
@@ -93,8 +64,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputClock" class="col-sm-3 col-form-label">Clock:</label>
-    <div class="col-sm-9 col-form-label">{{ range $one := .Other.qa_clock }}
+    <label for="inputClock" class="col-sm-2 col-form-label">Clock:</label>
+    <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_clock }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_clock value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
            <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
@@ -103,8 +74,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputYaxis" class="col-sm-3 col-form-label">Yaxis:</label>
-    <div class="col-sm-9">{{ range $one := .Other.qa_yaxis }}
+    <label for="inputYaxis" class="col-sm-2 col-form-label">Yaxis:</label>
+    <div class="col-sm-10">{{ range $one := .Other.qa_yaxis }}
         <div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_yaxis value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
            <label>{{$one.label}}</label>
@@ -113,8 +84,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-3 col-form-label">Channels:</label>
-    <div class="col-sm-9">
+    <label for="checkChannels" class="col-sm-2 col-form-label">Channels:</label>
+    <div class="col-sm-10">
 <table class="table table-sm table-bordered">
 <tr>
 <th></th>
@@ -138,11 +109,10 @@
 </div>
 
 
-    </div>
-</div>
-
 <div class="form-group row">
-    <div class="col-sm-9">
+    <div class="col-sm-2">
+	</div>
+    <div class="col-sm-10">
 <button type="submit" class="btn btn-primary">Save and Update</button>
     </div>
 </div>

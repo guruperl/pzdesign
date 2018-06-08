@@ -25,26 +25,26 @@
 
 <body class="app flex-row align-items-center">
   <div class="container">
-<FORM METHOD="POST" ACTION="{{ .Other.Login_name }}">
-<INPUT TYPE="HIDDEN" NAME="{{ .Other.Go_uri_name }}" VALUE="{{ .Other.Uri }}" />
+<FORM METHOD="POST" ACTION="{{ .Login_name }}">
+<INPUT TYPE="HIDDEN" NAME="{{ .Go_uri_name }}" VALUE="{{ .Go_uri }}" />
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card-group">
           <div class="card p-4">
             <div class="card-body">
               <h1>Login</h1>
-              <p class="text-muted">{{.Other.Errorstr}}</p>
+              <p class="text-muted">{{.Errorstr}}</p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-user"></i></span>
                 </div>
-                <input type="text" class="form-control" name="{{ .Other.Login }}" placeholder="Email">
+                <input type="text" class="form-control" name="{{ .Login }}" placeholder="Email">
               </div>
               <div class="input-group mb-4">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-lock"></i></span>
                 </div>
-                <input type="password" class="form-control" NAME="{{ .Other.Password }}" placeholder="Password">
+                <input type="password" class="form-control" NAME="{{ .Password }}" placeholder="Password">
               </div>
               <div class="row">
                 <div class="col-6">

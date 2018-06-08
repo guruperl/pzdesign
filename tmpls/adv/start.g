@@ -91,10 +91,13 @@
 								<li>
                                     <a href="campaign?action=topics">活动管理</a>
                                 </li>
-								{{ if or (or (or (or (eq .Other.Component `item`) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`) }}{{if .ARGS.campaign_name}}
+								{{ if and (or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.campaign_name}}
 								<li>
 									<a href="#">{{index .ARGS.campaign_name 0}} <span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level">
+                                    	<li>
+                                    		<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">编辑修改</a>
+                                		</li>
                                     	<li>
                                     		<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">创意</a>
                                 		</li>
@@ -112,7 +115,7 @@
                                 		</li>
 									</ul>
 								</li>
-								{{end}}{{end}}
+								{{end}}
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

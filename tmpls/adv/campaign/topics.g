@@ -5,9 +5,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <font size = 4 >推广活动</font>
+                            推广活动
                         </div>
-                        <div style= 'font-size: 17px;'>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -25,8 +24,8 @@
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-{{$small := print "campaign_id=" .campaign_id "&campaign_md5=" .campaign_md5 "&campaign_name=" (.campaign_name | urlquery)}}
-<td><a href="campaign?action=edit&campaign_id={{.campaign_id}}">{{.campaign_name}}</a></td>
+{{$small := print "campaign_id=" .campaign_id "&campaign_md5=" .campaign_md5 "&campaign_name=" (.campaign_name | urlquery )}}
+<td><a href="campaign?action=edit&{{$small}}">{{.campaign_name}}</a></td>
 <td>{{.created}}</td>
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>

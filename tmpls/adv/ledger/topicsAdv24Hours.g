@@ -5,59 +5,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <font size = 4 >最新24小时报表</font>
+                            最新24小时报表
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-
-	<canvas class="my-4" id="advChart" width="900" height="380"></canvas>
-
-    <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-    <script>
-      var ctx = document.getElementById("advChart");
-      var advChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: [{{range $index, $item := .Lists}}{{if $index}},{{end}}"{{$item.hours}}"{{end}}],
-          datasets: [{
-			yAxisID: 'y1',
-			label: "曝光量",
-            data: [{{range $index, $item := .Lists}}{{if $index}},{{end}}{{$item.imps}}{{end}}],
-            backgroundColor: '#007bff',
-            borderColor: '#007bff',
-			fill: false
-          },{
-			yAxisID: 'y2',
-            label: "点击数",
-            data: [{{range $index, $item := .Lists}}{{if $index}},{{end}}{{$item.clis}}{{end}}],
-            backgroundColor: '#ff7b00',
-            borderColor: '#ff7b00',
-            fill: false
-          },{
-            yAxisID: 'y2',
-            label: "花费",
-            data: [{{range $index, $item := .Lists}}{{if $index}},{{end}}{{$item.spend}}{{end}}],
-            backgroundColor: '#ff007b',
-            borderColor: '#ff007b',
-            fill: false
-          }]
-        },
-        options: {
-			responsive: true,
-            scales: { yAxes: [{
-						ticks: { beginAtZero: false },
-						position: 'left',
-						id: 'y1' },{
-						gridLines: { drawOnChartArea: false },
-						ticks: { beginAtZero: false },
-						position: 'right',
-						id: 'y2' }]
-					},
-            legend: { display: true }
-        }
-      });
-    </script>
+{{template "canvas1" .}}
 						</div>
                         <!-- /.panel-body -->
                     </div>
@@ -80,11 +32,11 @@
 <thead><tr>
 <th>创意名</th>
 <th>花费</th>
-<th>曝光次数</th>
-<th>点击次数</th>
-<th>平均CPM</th>
-<th>平均CPC</th>
-<th>平均CTR</th>
+<th>曝光数</th>
+<th>点击数</th>
+<th>CPM</th>
+<th>CPC</th>
+<th>CTR</th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsAdvTopItems}}{{range .}}
 <tr>
@@ -117,13 +69,14 @@
                             <div class="table-responsive">
                                 <table class="table table-hover">
 <thead><tr>
-<th>广告位名称</th>
+<th>广告位</th>
 <th>花费</th>
-<th>曝光次数</th>
-<th>点击次数</th>
-<th>平均CPM</th>
-<th>平均CPC</th>
-<th>平均CTR</th>
+<th>曝光数</th>
+<th>点击数</th>
+<th>CPM</th>
+<th>CPC</th>
+<th>CTR</th>
+<th> </th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsAdvTopSlots}}{{range .}}
 <tr>
@@ -134,6 +87,7 @@
 <td>{{.cpm | printf "%.2f"}}</td>
 <td>{{.cpc | printf "%.4f"}}</td>
 <td>{{.ctr}}</td>
+<td><a class="btn btn-sm btn-circle btn-danger" href="ac?action=insert&entitytype_id=4&othertype_id=31&other_id={{.site_id}}">屏蔽</a></td>
 </tr>{{end}}{{end}}
 </tbody>
 </table>

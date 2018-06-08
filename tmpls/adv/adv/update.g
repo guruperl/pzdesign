@@ -1,14 +1,16 @@
-[% INCLUDE start.e %]
-<meta charset="utf-8">
-<div class="ui-layout-west">
-<ul id="treeList">
-    <li><a href='adv?action=edit'>返回修改个人信息</a></li>
-</ul>
-</div>
-<div class="ui-layout-center">
+{{ template "header" .}}
+{{ template "advheader" .}}
 
-修改完成.
+<!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            修改完毕
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-</div>
-
-[% INCLUDE end.e %]
+{{template "footer"}}

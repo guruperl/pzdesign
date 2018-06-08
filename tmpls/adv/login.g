@@ -42,22 +42,18 @@
                         <h3 class="panel-title">广告主登录入口</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" METHOD="POST" ACTION="/goto/adv/e/login">
-							<INPUT TYPE="HIDDEN" NAME="{{ .Other.Go_uri_name }}" VALUE="{{ .Other.go_uri }}">
+                        <form role="form" METHOD="POST" ACTION="/goto/adv/g/login">
+							<INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
                             <fieldset>
 								<div class="alert alert-success">
-                                {{ .Other.Errorstr }}
+                                {{ .Errorstr }}
                             	</div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="请输入账号" name="{{ .Other.Login }}" type="email" autofocus>
+                                    <input class="form-control" placeholder="请输入账号" name="{{.Login}}" type="email" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="请输入密码" name="{{ .Other.Password }}" type="password" value="">
+                                    <input class="form-control" placeholder="请输入密码" name="{{.Password}}" type="password" value="">
                                 </div>
-                                <!-- div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">记住密码                                    </label>
-                                </div -->
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" class="btn btn-lg btn-success btn-block">登录</button>
                             </fieldset>

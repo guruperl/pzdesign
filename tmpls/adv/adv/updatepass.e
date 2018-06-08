@@ -1,14 +1,14 @@
-[% INCLUDE start.e %]
+{{ template "header" .}}
+{{ template "advheader" .}}
 
-<div class="ui-layout-west">
-<ul id="treeList">
-    <li><a href='adv?action=edit'>Edit Account</a></li>
-</ul>
-</div>
-<div class="ui-layout-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            Done.
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-done.
-
-</div>
-
-[% INCLUDE end.e %]
+{{template "footer"}}

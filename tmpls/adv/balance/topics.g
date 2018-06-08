@@ -1,9 +1,18 @@
 {{ template "header" .}}
 {{ template "balanceheader" .}}
 
-{{if .ARGS.total_balance_id}}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+						总预算
+                    </div>
+                    <div class="panel-body">
+
 <form name=total class="form" method=post action="balance">
-<input type=hidden name=action value="update" />
+{{if .ARGS.total_balance_id}}<input type=hidden name=action value="update" />
+{{else}}<input type=hidden name=action value="insert">
+<input type=hidden name=which value="total_balance_id">{{end}}
 <input type=hidden name=entitytype_id value="{{ index .ARGS.entitytype_id 0}}" />
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
@@ -12,16 +21,16 @@
 <input type=hidden name=item_md5 value="{{index .ARGS.item_md5 0}}" />
 <input type=hidden name=item_name value="{{index .ARGS.item_name 0}}" />{{end}}
 
-<h3>总花费</h3>
+{{if .ARGS.total_balance_id}}
 <div class="table-responsive">{{ with .Lists }}{{ range . }}{{if eq "total_balance_id" .which}}
 <table class="table table-striped table-sm">
-<thead> <tr> <th> </th> <th>预算</th> <th>曝光量</th> <th>点击量</th> <th> </th> </tr> </thead>
+<thead> <tr> <th> </th> <th>费用预算</th> <th>曝光次数</th> <th>点击次数</th> <th> </th> </tr> </thead>
 <tbody> <tr>
 <td>预计值: </td>
-<td><input type=text name=limit_spend value="{{ .limit_spend}}" /></td>
-<td><input type=text name=limit_imp value="{{ .limit_imp}}" /></td>
-<td><input type=text name=limit_cli value="{{ .limit_cli}}" /></td>
-<td><input type=hidden name=balance_id value={{.balance_id}} /><input type=submit value="保存" /></td>
+<td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}" /></td>
+<td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}" /></td>
+<td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}" /></td>
+<td><input type=hidden name=balance_id value={{.balance_id}} /><input class="btn btn-sm" type=submit value="保存" /></td>
 </tr> <tr>
 <td>实际值: </td>
 <td>{{ .current_spend}}</td>
@@ -31,14 +40,40 @@
 </tr> </tobdy>
 </table>{{end}}{{end}}{{end}}
 </div>
-</form>
+
 {{else}}
-<h4><a href="balance?action=startnew&entitytype_id={{index .ARGS.entitytype_id 0}}&which=total_balance_id&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery}}{{if eq "42" (index .ARGS.entitytype_id 0)}}&item_id={{index .ARGS.item_id 0}}&item_md5={{index .ARGS.item_md5 0}}&item_name={{index .ARGS.item_name 0 | urlquery}}{{end}}">增加总预算</a></h4>
+
+<div class="table-responsive">
+<table class="table table-striped table-sm">
+<thead> <tr> <th>费用预算</th> <th>曝光次数</th> <th>点击次数</th> <th> </th> </tr> </thead>
+<tbody> <tr>
+<td><input type=text size=8 name=limit_spend /></td>
+<td><input type=text size=8 name=limit_imp /></td>
+<td><input type=text size=8 name=limit_cli /></td>
+<td><button type=submit class="btn btn-primary btn-sm">添加</button></td>
+</tr> </tobdy>
+</table>
+</div>
 {{end}}
 
-{{if .ARGS.daily_balance_id}}
+</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+						日预算
+                    </div>
+                    <div class="panel-body">
+
 <form name=daily class="form" method=post action="balance">
-<input type=hidden name=action value="update" />
+{{if .ARGS.daily_balance_id}}<input type=hidden name=action value="update" />
+{{else}}<input type=hidden name=action value="insert" />
+<input type=hidden name=which value="daily_balance_id" />{{end}}
 <input type=hidden name=entitytype_id value="{{ index .ARGS.entitytype_id 0}}" />
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
@@ -47,16 +82,17 @@
 <input type=hidden name=item_md5 value="{{index .ARGS.item_md5 0}}" />
 <input type=hidden name=item_name value="{{index .ARGS.item_name 0}}" />{{end}}
 
-<h3>日预算</h3>
+{{if .ARGS.daily_balance_id}}
+
 <div class="table-responsive">{{ with .Lists }}{{ range . }}{{if eq "daily_balance_id" .which}}
 <table class="table table-striped table-sm">
-<thead> <tr><th> </th> <th>预算</th> <th>曝光量</th> <th>点击量</th><th> </th> </tr> </thead>
+<thead> <tr><th> </th> <th>费用预算</th> <th>曝光次数</th> <th>点击次数</th><th> </th> </tr> </thead>
 <tbody> <tr>
 <td>预计值</td>
-<td><input type=text name=limit_spend value="{{ .limit_spend}}" /></td>
-<td><input type=text name=limit_imp value="{{ .limit_imp}}" /></td>
-<td><input type=text name=limit_cli value="{{ .limit_cli}}" /></td>
-<td><input type=hidden name=balance_id value={{.balance_id}} /><input type=submit value="保存" /></td>
+<td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}"></td>
+<td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}"></td>
+<td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}"></td>
+<td><input type=hidden name=balance_id value={{.balance_id}}><input class="btn btn-sm" type=submit value="保存"></td>
 </tr> <tr>
 <td>实际值:</td>
 <td>{{ .current_spend}}</td>
@@ -66,9 +102,27 @@
 </tr> </tobdy>
 </table>{{end}}{{end}}{{end}}
 </div>
-</form>
+
 {{else}}
-<h4><a href="balance?action=startnew&entitytype_id={{index .ARGS.entitytype_id 0}}&which=daily_balance_id&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery}}{{if eq "42" (index .ARGS.entitytype_id 0)}}&item_id={{index .ARGS.item_id 0}}&item_md5={{index .ARGS.item_md5 0}}&item_name={{index .ARGS.item_name 0 | urlquery}}{{end}}">增加日预算</a></h4>
+
+<div class="table-responsive">
+<table class="table table-striped table-sm">
+<thead> <tr> <th>费用预算</th> <th>曝光次数</th> <th>点击次数</th> <th> </th> </tr> </thead>
+<tbody> <tr>
+<td><input type=text size=8 name=limit_spend></td>
+<td><input type=text size=8 name=limit_imp></td>
+<td><input type=text size=8 name=limit_cli></td>
+<td><button type=submit class="btn btn-primary btn-sm">添加</button></td>
+</tr> </tobdy>
+</table>
+</div>
+
 {{end}}
+
+</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 {{ template "footer" }}

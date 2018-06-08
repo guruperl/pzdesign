@@ -1,6 +1,14 @@
 {{ template "header" .}}
 {{ template "chacheader" .}}
 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        {{index .ARGS.campaign_name 0}}
+                    </div>
+                    <div class="panel-body">
+
 <form class="form" method=post action="chac">
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
@@ -8,9 +16,8 @@
 <input type=hidden name=entitytype_id value="41" />
 <input type=hidden name=action value="update" />
 
-<h3>{{index .ARGS.campaign_name 0}}</h3>
 <div class="table-responsive">
-<table class="table table-striped table-sm">
+<table class="table table-striped table-condensed">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -29,6 +36,11 @@
 </tobdy>
 </table>
 </div>
-<input type=submit value=" Update Channels " />
+<input class="btn btn-primary" type=submit value=" Update Channels " />
 </form>
+
+</div>
+</div>
+</div>
+</div>
 {{ template "footer" }}

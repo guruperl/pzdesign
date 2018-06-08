@@ -1,102 +1,130 @@
 {{template "header" .}}
 {{template "targetnameheader" .}}
 
-<style>
-.tab-pane {
+{{$pzAttrs := .Other.pzAttrsChinese}}
+{{ $dAttrs := .Other.dAttrsChinese }}
 
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-radius: 0px 0px 5px 5px;
-    padding: 10px;
-}
-
-.nav-tabs {
-    margin-bottom: 0;
-}
-#exTab2 h3 {
-  color : white;
-  background-color: #428bca;
-  padding : 5px 15px;
-}
-#exTab2 ul li {
-  padding : 5px 5px;
-}
-</style>
-
-<h3>{{index .ARGS.campaign_name 0}}</h3>
+<!-- /.row -->
+			<div class="row">
+				<div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            {{index .ARGS.campaign_name 0}}
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
 <form class="form" method=post action=targetname>
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
 <input type=hidden name=campaign_name value="{{index .ARGS.campaign_name 0}}" />
 <input type=hidden name=action value="insert" />
 
-<div id="exTab2" class="container">	
-	<ul class="nav nav-tabs">
-		<li class="nav-item active"><a href="#1" data-toggle="tab">地域定向</a>
-		</li>
-		<li class="nav-item"><a href="#2" data-toggle="tab">系统平台定向</a>
-		</li>
-		<li class="nav-item"><a href="#3" data-toggle="tab">人群定向</a>
-		</li>
-		<li class="nav-item"><a href="#4" data-toggle="tab">自定义标签定向</a>
-		</li>
-		<li class="nav-item"><a href="#5" data-toggle="tab">投放时间定向</a>
-		</li>
-	</ul>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#t1" data-toggle="tab">地域定向</a>
+                                </li>
+                                <li><a href="#t2" data-toggle="tab">系统平台</a>
+                                </li>
+                                <li><a href="#t3" data-toggle="tab">人群</a>
+                                </li>
+                                <li><a href="#t4" data-toggle="tab">自定义标签</a>
+                                </li>
+                                <li><a href="#t5" data-toggle="tab">时间定向</a>
+                                </li>
+                            </ul>
 
 	<div class="tab-content">
-		<div class="tab-pane active" id="1">
-			<h3>省</h3>
-<select name=state multiple>{{range $k, $v := .Other.state}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
+		<div class="tab-pane fade in active" id="t1">
+            <h3>省</h3>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= .Other.state}}
+                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>
 
 			<h3>市</h3>
-{{range $key, $val := .Other.city}}<h4>{{$key}}</h4>
-<select name=city multiple>{{range $k, $v := $val}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
-{{end}}
+			<div class="row">
+				{{range $key, $val := .Other.city}}<div class="col-sm-2"><h4>{{$key}}</h4>
+					<select name=city multiple>{{range $k, $v := $val}}
+						<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
+					</select>
+				</div>{{end}}
+			</div>
 		</div>
-		<div class="tab-pane" id="2">
-			<h3>系统平台定向</h3>
-{{range $key, $val := .Other.pzua}}<h4>{{$key}}</h4>
-<select name={{$key}} multiple>{{range $k, $v := $val}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
-{{end}}
+
+		<div class="tab-pane fade" id="t2">
+			{{range $key, $val := .Other.pzua}}<h4>{{index $pzAttrs $key}}</h4>
+			<select name={{$key}} multiple>{{range $k, $v := $val}}
+				<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
+			</select>{{end}}
 		</div>
-		<div class="tab-pane" id="3">
-			<h3>地域定向</h3>
-{{range $key, $val := .Other.demo}}<h4>{{$key}}</h4>
-<select name="{{$key}}" multiple>{{range $k, $v := $val}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
-{{end}}
+
+		<div class="tab-pane fade" id="t3">
+			{{range $key, $val := .Other.demo}}<h4>{{index $dAttrs $key}}</h4>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= $val}}
+                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>{{end}}
 		</div>
-		<div class="tab-pane" id="4">
+
+		<div class="tab-pane fade" id="t4">
 			<h3>自定义标签定向</h3>
-{{range $key, $val := .Other.custom}}<h4>{{$key}}</h4>
-<select name="{{$key}}"  multiple>{{range $k, $v := $val}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
-{{end}}
+			{{range $key, $val := .Other.custom}}<h4>{{$key}}</h4>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= $val}}
+                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>{{end}}
 		</div>
-		<div class="tab-pane" id="5">
-			<h3>星期</h3>
-<select name="weekday" multiple>{{range $k, $v:= .Other.weekday}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
-			<h3>时间</h3>
-<select name="weekhour" multiple>{{range $k, $v:= .Other.weekhour}}
-<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-</select>
+
+		<div class="tab-pane fade" id="t5">
+			<h4>工作日定向</h4>
+			<div class="form-group row">
+			    <div class="col-sm-12">
+			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekday}}
+						<input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+						<label class="form-check-label">{{index $v 0}}</label>{{end}}
+					</div>
+				</div>
+			</div>
+
+			<h4>小时定向</h4>
+			<div class="form-group row">
+			    <div class="col-sm-12">
+			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekhour}}
+						<input class="form-check-input" type=checkbox name=weekhour value="{{$k}}" {{if index $v 1}}checked{{end}}>
+						<label class="form-check-label">{{index $v 0}}</label>{{end}}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-</div>
 
-<input type=submit value=" 保存 " />
+<p> </p>
+							<div class="row">
+								<div class="col-sm-2">
+								</div>
+								<div class="col-sm-4">
+									<button class="btn btn-primary btn-lg btn-block" type=submit>保存</button>
+								</div>
+								<div class="col-sm-6">
+								</div>
+							</div>
 </form>
+
+						</div>
+					</div>
+				</div>
+			</div>
 
 {{template "footer"}}
