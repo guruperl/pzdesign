@@ -65,8 +65,8 @@ Access logic: <input type=radio name=access_order value="Black" {{if eq `Black` 
               Add New Advertisers
             </div>
             <div class="card-body">
-
-<form name=f2 class="form" method=post action="ac">
+Please add black or white advertisers from the performance report pages.
+<!--form name=f2 class="form" method=post action="ac">
 <input type=hidden name=action value="insert" />
 <input type=hidden name=othertype_id value="4" />
 {{if eq "31" (index .ARGS.entitytype_id 0)}}
@@ -77,7 +77,7 @@ Access logic: <input type=radio name=access_order value="Black" {{if eq `Black` 
 <input type=hidden name=entitytype_id value="3" />{{end}}
 Advertiser ID: <input type=text name=other_id size=12 />
 <button type=submit class="btn btn-sm btn-primary">Add Advertiser</button>
-</form>
+</form -->
             </div>
           </div>
 

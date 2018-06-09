@@ -14,34 +14,41 @@
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
 
 <div class="form-group row">
-    <label for="inputSlotName" class="col-sm-2 col-form-label">Slot Name:</label>
-    <div class="col-sm-10">
+    <label for="inputSlotName" class="col-sm-2 col-form-label text-right">Slot Name:</label>
+    <div class="col-sm-4">
         <input type=text class="form-control" name="slot_name" placeholder="Name of Slot" />
     </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputSizeID" class="col-sm-2 col-form-label">Size:</label>
+    <label for="inputSizeID" class="col-sm-2 col-form-label text-right">Size:</label>
     <div class="col-sm-2">
         <input type=text class="form-control" name="w" placeholder="width" />
     </div>
     <div class="col-sm-2">
         <input type=text class="form-control" name="h" placeholder="height" />
     </div>
-    <label for="inputType" class="col-sm-2 col-form-label">Type:</label>
-    <div class="col-sm-4">
-        <select class="form-control" multiple name="fl_mime">
-<option selected value="js">Javascript</option>
-<option selected value="html">html</option>
-<option selected value="image">Image</option>
-<option selected value="video">Video</option></select>
+</div>
+
+<div class="form-group row">
+    <label for="inputType" class="col-sm-2 col-form-label text-right">Type:</label>
+    <div class="col-sm-10 col-form-label">
+		<div class="form-check form-check-inline mr-1">
+        <input type=checkbox checked class="form-check-input" name="fl_mime" value="js">Javascript
+		</div>
+		<div class="form-check form-check-inline mr-1">
+		<input type=checkbox         class="form-check-input" name="fl_mime" value="html">html
+		</div>
+		<div class="form-check form-check-inline mr-1">
+		<input type=checkbox checked class="form-check-input" name="fl_mime" value="image">Image
+		</div>
+		<div class="form-check form-check-inline mr-1">
+		<input type=checkbox         class="form-check-input" name="fl_mime" value="video">Video
+		</div>
     </div>
 </div>
 
 <input type=hidden name="qa_language" value="Chinese" />
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-2 col-form-label">Platform:</label>
+    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">Platform:</label>
     <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_platform }}
       <div class="form-check form-check-inline mr-1">
         <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if eq "Web" $item.which}}checked{{end}}>
@@ -51,7 +58,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-2 col-form-label">Page Level:</label>
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">Page Level:</label>
     <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_pagelevel }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} >
@@ -61,7 +68,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputClock" class="col-sm-2 col-form-label">Clock:</label>
+    <label for="inputClock" class="col-sm-2 col-form-label text-right">Clock:</label>
     <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_clock }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_clock value="{{$item.which}}" {{if $item.default}}checked{{end}} >
@@ -71,7 +78,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputYaxis" class="col-sm-2 col-form-label">Yaxis:</label>
+    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">Yaxis:</label>
     <div class="col-sm-10">{{ range $item := .Other.qa_yaxis }}
         <div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_yaxis value="{{$item.which}}" {{if $item.default}}checked{{end}} >
@@ -81,7 +88,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-2 col-form-label">Channels:</label>
+    <label for="checkChannels" class="col-sm-2 col-form-label text-right">Channels:</label>
     <div class="col-sm-10">
 <table class="table table-sm table-bordered">
 <tr>

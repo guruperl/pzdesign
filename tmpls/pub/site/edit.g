@@ -1,6 +1,9 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
+{{$cAttrs := .Other.campaignAttrsChinese }}
+{{$sAttrs := .Other.siteAttrsChinese }}
+
 {{$item := index .Lists 0}}
 {{$first := print "site_id=" $item.site_id "&site_md5=" $item.site_md5 "&site_name=" ($item.site_name | urlquery)}}
 
@@ -15,22 +18,19 @@
 <input type=hidden name="site_id" value="{{$item.site_id}}" />
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-3 col-form-label">广告组名:</label>
-	<div class="col-sm-9">
+	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">广告组名:</label>
+	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_name value="{{$item.site_name}}" />
 	</div>
-</div>
-
-<div class="form-group row">
-	<label for="inputSiteURL" class="col-sm-3 col-form-label">网址URL:</label>
-	<div class="col-sm-9">
+	<label for="inputSiteURL" class="col-sm-2 col-form-label text-right">网址URL:</label>
+	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_url placeholder="网站 URL" value="{{$item.site_url}}" />
 	</div>
 </div>
 
 <div class="form-group row">
-    <label for="inputAccessOrder" class="col-sm-3 col-form-label">黑白名单设置:</label>
-    <div class="col-sm-9">
+    <label for="inputAccessOrder" class="col-sm-2 col-form-label text-right">黑白名单设置:</label>
+    <div class="col-sm-10">
         <div class="form-check form-check-inline">
 			{{$item.access_order}}
             <a class="btn btn-xs btn-warning" href="ac?action=topics&entitytype_id=31&{{$first}}">查看</a>
@@ -39,12 +39,12 @@
 </div>
 
 <div class="form-group row">
-    <label for="selectSiteQuality" class="col-sm-3 col-form-label">本组质量:</label>
-    <div class="col-sm-9">
+    <label for="selectSiteQuality" class="col-sm-2 col-form-label text-right">本组质量:</label>
+    <div class="col-sm-10">
         <div class="card">
-            <div class="card-body">{{$s_attrs := .Other.siteAttrs}}
+            <div class="card-body">
 <table>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
-<tr><td>{{index $s_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<tr><td>{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -53,12 +53,12 @@
 </div>
 
 <div class="form-group row">
-    <label for="selectCampaignQuality" class="col-sm-3 col-form-label">可接受活动:</label>
-    <div class="col-sm-9">
+    <label for="selectCampaignQuality" class="col-sm-2 col-form-label text-right">可接受活动:</label>
+    <div class="col-sm-10">
         <div class="card">
-            <div class="card-body">{{$c_attrs := .Other.campaignAttrs}}
+            <div class="card-body">
 <table>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
-<tr><td>{{index $c_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
+<tr><td>{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
@@ -67,17 +67,17 @@
 </div>
 
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-3 col-form-label">业务分类:</label>
-    <div class="col-sm-9">
+    <label for="checkChannels" class="col-sm-2 col-form-label" text-right>行业分类:</label>
+    <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
 <table>
 <tr>
-<th>名称</th>
+<th>行业名</th>
 <th>本属于&nbsp; </th>
 <th>&nbsp;
-<input type=radio name=channel_order value="Black" {{if eq "Black" $item.channel_order}}checked{{end}} />黑
-<input type=radio name=channel_order value="White" {{if eq "White" $item.channel_order}}checked{{end}} />白
+<input type=radio name=channel_order value="Black" {{if eq "Black" $item.channel_order}}checked{{end}} />黑名单
+<input type=radio name=channel_order value="White" {{if eq "White" $item.channel_order}}checked{{end}} />白名单
 </th>
 </tr>
 <tbody>{{ with $item.chac_topics }}{{ range . }}
@@ -94,7 +94,9 @@
 
 
 <div class="form-group row">
-    <div class="col-sm-9">
+    <div class="col-sm-2">
+	</div>
+    <div class="col-sm-10">
 <button type="submit" class="btn btn-primary">保存并更新</button>
     </div>
 </div>

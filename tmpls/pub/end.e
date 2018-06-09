@@ -35,5 +35,4 @@
   <!-- Custom scripts required by this view -->
   <!-- script src="/1.0.8/js/views/main.js"></script -->
   <script src="/js/counter.js"></script>
-
 {{end}}

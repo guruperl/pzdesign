@@ -65,8 +65,8 @@
               添加黑或白名单
             </div>
             <div class="card-body">
-
-<form name=f2 class="form" method=post action="ac">
+请在报表页面上添加广告商到黑白名单。
+<!--form name=f2 class="form" method=post action="ac">
 <input type=hidden name=action value="insert" />
 <input type=hidden name=othertype_id value="4" />
 {{if eq "31" (index .ARGS.entitytype_id 0)}}
@@ -77,7 +77,7 @@
 <input type=hidden name=entitytype_id value="3" />{{end}}
 广告商代码: <input type=text name=other_id size=12 />
 <button type=submit class="btn btn-sm btn-primary">添加</button>
-</form>
+</form-->
             </div>
           </div>
 
