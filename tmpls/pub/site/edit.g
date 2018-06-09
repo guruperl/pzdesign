@@ -71,7 +71,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>
+<table class="table table-sm table-condensed table-bordered">
 <tr>
 <th>行业名</th>
 <th>本属于&nbsp; </th>

@@ -15,7 +15,7 @@
                   <th>URL</th>
                   <th>上线时间</th>
                   <th>激活状况</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-info" href="site?action=startnew">提交新组</a> </th>
+                  <th colspan=2 class="text-right"><a class="btn btn-info" href="site?action=startnew">添加App或网站</a> </th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}

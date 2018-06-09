@@ -90,7 +90,7 @@
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-2 col-form-label text-right">Channels:</label>
     <div class="col-sm-10">
-<table class="table table-sm table-bordered">
+<table class="table table-sm table-condensed table-bordered">
 <tr>
 <th></th>
 <th>My Channel<br />

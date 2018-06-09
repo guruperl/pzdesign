@@ -75,7 +75,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>
+<table class="table table-sm table-condensed table-bordered">
 <tr>
 <th>Name</th>
 <th>Belong&nbsp; </th>

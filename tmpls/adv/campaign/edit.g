@@ -110,7 +110,7 @@
     <div class="col-sm-9">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table class="table table-bordered table-condensed">
+<table class="table table-sm table-bordered table-condensed">
 <tr>
 <th>行业名</th>
 <th>所属行业</th>

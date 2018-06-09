@@ -1,7 +1,11 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-<h3>site added.</h3>
+          <div class="card">
+            <div class="card-body">
+<h4>site added.</h4>
+	</div>
+	</div>
 
 {{ template "footer" .}}
 </body>

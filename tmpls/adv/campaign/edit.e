@@ -110,7 +110,7 @@
     <div class="col-sm-9">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table class="table-bordered table-condensed">
+<table class="table table-sm table-bordered table-condensed">
 <tr>
 <th>Name</th>
 <th>Belong&nbsp; </th>
