@@ -88,7 +88,7 @@
 								<li>
                                     <a href="campaign?action=topics">List Campaigns</a>
                                 </li>
-								{{ if or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`) }}{{if .ARGS.campaign_name}}<li>
+								{{ if or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`) }}{{if .ARGS.campaign_id}}<li>
 									<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">{{index .ARGS.campaign_name 0}}</a>
 								</li>
 								<li>

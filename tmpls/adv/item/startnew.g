@@ -48,14 +48,9 @@
         <input type=text class="form-control" name="h" placeholder="高">
 	</div>
     <label for="inputEndx" class="col-sm-2 col-form-label text-right">媒体类:</label>
-    <div class="col-sm-4">
-        <select class="form-control" name="qa_mime">
-<option value="js">Javascript</option>
-<option value="html">页面</option>
-<option value="image" selected>图片</option>
-<option value="video">视频</option></select>
+    <div class="col-sm-4">{{ range $item := .Other.qa_mime }}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
-
 </div>
 
 <div class="form-group row">

@@ -47,14 +47,10 @@
     <div class="col-sm-2">
         <input type=text class="form-control" name="h" placeholder="height">
     </div>
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">Type:</label>
-    <div class="col-sm-4">
-		<select class="form-control" name="qa_mime">
-<option value="js">Javascript</option>
-<option value="html">html</option>
-<option value="image" selected>Image</option>
-<option value="video">Video</option></select>
-	</div>
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">Mime:</label>
+    <div class="col-sm-4">{{ range $item := .Other.qa_mime }}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
+    </div>
 </div>
 
 <div class="form-group row">

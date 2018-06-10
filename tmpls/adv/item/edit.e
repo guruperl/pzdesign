@@ -53,12 +53,8 @@
     </div>
 
     <label for="inputEndx" class="col-sm-2 col-form-label text-right">Mime:</label>
-    <div class="col-sm-4">
-        <select class="form-control" name="qa_mime">
-<option {{if eq $item.qa_mime "js"}}selected{{end}} value="js">Javascript</option>
-<option {{if eq $item.qa_mime "html"}}selected{{end}} value="html">html</option>
-<option {{if eq $item.qa_mime "image"}}selected{{end}} value="image">Image</option>
-<option {{if eq $item.qa_mime "video"}}selected{{end}} value="video">Video</option></select>
+    <div class="col-sm-4">{{ range $item := .Other.qa_mime }}
+<input class="form-check-input" type=checkbox name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
     </div>
 </div>
 

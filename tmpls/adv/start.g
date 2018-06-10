@@ -103,7 +103,7 @@ h1, h2, h3, h4, h5, h6, button {
 								<li>
                                     <a href="campaign?action=topics">活动管理</a>
                                 </li>
-								{{ if and (or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.campaign_name}}<li>
+								{{ if and (or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.campaign_id }}<li>
                                  	<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">{{index .ARGS.campaign_name 0}}</a>
                                 </li>
 								<li>	
