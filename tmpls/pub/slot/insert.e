@@ -1,7 +1,11 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
-<h3>slot added.</h3>
+          <div class="card">
+            <div class="card-body">
+Slot added.
+	</div>
+</div>
 
 {{ template "footer" .}}
 

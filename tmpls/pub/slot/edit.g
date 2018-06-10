@@ -20,7 +20,7 @@
 
 <div class="form-group row">
     <label for="inputSlotName" class="col-sm-2 col-form-label text-right">广告位名称:</label>
-    <div class="col-sm-10">
+    <div class="col-sm-4">
         <input type=text class="form-control" name="slot_name" value="{{$item.slot_name}}" />
     </div>
     <label for="inputSizeID" class="col-sm-2 col-form-label text-right">尺寸:</label>
@@ -33,20 +33,12 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputType" class="col-sm-2 col-form-label text-right">发布形式:</label>
-    <div class="col-sm-10  col-form-label">
-		<div class="form-check form-check-inline mr-1">
-		<input class="form-check-input" type="checkbox" name="fl_mime" {{if eq $item.fl_mime "js"}}checked{{end}} value="js">Javascript
-		</div>
-		<div class="form-check form-check-inline mr-1">
-		<input class="form-check-input" type="checkbox" name="fl_mime" {{if eq $item.fl_mime "html"}}checked{{end}} value="html">页面
-		</div>
-		<div class="form-check form-check-inline mr-1">
-		<input class="form-check-input" type="checkbox" name="fl_mime" {{if eq $item.fl_mime "image"}}checked{{end}} value="image">图片
-		</div>
-		<div class="form-check form-check-inline mr-1">
-		<input class="form-check-input" type="checkbox" name="fl_mime" {{if eq $item.fl_mime "video"}}checked{{end}} value="video">视频
-		</div>
+    <label for="inputType" class="col-sm-2 col-form-label text-right">媒体类别:</label>
+    <div class="col-sm-10 col-form-label">{{ range $one := .Other.fl_mime }}
+      <div class="form-check form-check-inline mr-1">
+        <input class="form-check-input" type="checkbox" value="{{$one.which}}" name="fl_mime" {{if $one.selected}}checked{{end}}>
+        <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+      </div>{{end}}
     </div>
 </div>
 

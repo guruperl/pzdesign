@@ -1,7 +1,12 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
-<h3>广告位添加成功。</h3>
+
+          <div class="card">
+            <div class="card-body">
+广告位添加成功。
+    </div>
+</div>
 
 {{ template "footer" .}}
 

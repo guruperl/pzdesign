@@ -12,6 +12,7 @@
 <input type=hidden name="site_id"   value="{{index .ARGS.site_id 0}}" />
 <input type=hidden name="site_md5"  value="{{index .ARGS.site_md5 0}}" />
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
+<input type=hidden name="qa_language" value="Chinese" />
 
 <div class="form-group row">
     <label for="inputSlotName" class="col-sm-2 col-form-label text-right">广告位名称:</label>
@@ -26,26 +27,16 @@
         <input type=text class="form-control" name="h" placeholder="高" />
 	</div>
 </div>
+
 <div class="form-group row">
-    <label for="inputType" class="col-sm-2 col-form-label text-right">发布形式:</label>
-    <div class="col-sm-10  col-form-label">
-		<div class="form-check form-check-inline mr-1">
-        <input type=checkbox checked class="form-check-input" name="fl_mime" value="js">Javascript
-		</div>
-		<div class="form-check form-check-inline mr-1">
-        <input type=checkbox         class="form-check-input" name="fl_mime" value="html">页面
-		</div>
-		<div class="form-check form-check-inline mr-1">
-        <input type=checkbox checked class="form-check-input" name="fl_mime" value="image">图片
-		</div>
-		<div class="form-check form-check-inline mr-1">
-        <input type=checkbox         class="form-check-input" name="fl_mime" value="video">视频
-		</div>
+    <label for="inputType" class="col-sm-2 col-form-label text-right">媒体类别:</label>
+    <div class="col-sm-10 col-form-label">{{ range $item := .Other.fl_mime }}
+        <div class="form-check form-check-inline mr-1">
+        <input type=checkbox class="form-check-input" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
+        <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+        </div>{{end}}
     </div>
 </div>
-
-<input type=hidden name="qa_language" value="Chinese" />
-
 
 <div class="form-group row">
     <label for="inputPlatform" class="col-sm-2 col-form-label text-right">所在媒体平台:</label>

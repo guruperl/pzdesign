@@ -1,7 +1,12 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
-<h3>slot updated.</h3>
+
+          <div class="card">
+            <div class="card-body">
+Slot updated.
+    </div>
+</div>
 
 {{ template "footer" .}}
 

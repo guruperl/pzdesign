@@ -1,7 +1,13 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
-<h3>广告位更新完成。</h3>
+
+          <div class="card">
+            <div class="card-body">
+广告位更新完成。
+    </div>
+</div>
+
 
 {{ template "footer" .}}
 

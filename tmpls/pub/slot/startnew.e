@@ -28,20 +28,12 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputType" class="col-sm-2 col-form-label text-right">Type:</label>
-    <div class="col-sm-10 col-form-label">
+    <label for="inputType" class="col-sm-2 col-form-label text-right">Mime Accepted:</label>
+    <div class="col-sm-10 col-form-label">{{ range $item := .Other.fl_mime }}
 		<div class="form-check form-check-inline mr-1">
-        <input type=checkbox checked class="form-check-input" name="fl_mime" value="js">Javascript
-		</div>
-		<div class="form-check form-check-inline mr-1">
-		<input type=checkbox         class="form-check-input" name="fl_mime" value="html">html
-		</div>
-		<div class="form-check form-check-inline mr-1">
-		<input type=checkbox checked class="form-check-input" name="fl_mime" value="image">Image
-		</div>
-		<div class="form-check form-check-inline mr-1">
-		<input type=checkbox         class="form-check-input" name="fl_mime" value="video">Video
-		</div>
+        <input type=checkbox class="form-check-input" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
+		<label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+		</div>{{end}}
     </div>
 </div>
 
@@ -51,7 +43,7 @@
     <label for="inputPlatform" class="col-sm-2 col-form-label text-right">Platform:</label>
     <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_platform }}
       <div class="form-check form-check-inline mr-1">
-        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if eq "Web" $item.which}}checked{{end}}>
+        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if $item.default}}checked{{end}}>
         <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
       </div>{{end}}
     </div>
