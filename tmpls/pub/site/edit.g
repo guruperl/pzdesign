@@ -33,7 +33,7 @@
     <div class="col-sm-10">
         <div class="form-check form-check-inline">
 			{{$item.access_order}}
-            <a class="btn btn-xs btn-warning" href="ac?action=topics&entitytype_id=31&{{$first}}">查看</a>
+            <a class="btn btn-sm btn-warning" href="ac?action=topics&entitytype_id=31&{{$first}}">查看</a>
         </div>
     </div>
 </div>
