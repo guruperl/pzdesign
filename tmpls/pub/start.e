@@ -77,6 +77,12 @@
           <li class="nav-item">
             <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> Apps and Sites</a>
           </li>
+          <li class="nav-item">
+            <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> Create App or Site</a>
+          </li>
+          <li class="nav-item">
+            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> Access Control</a>
+          </li>
 
           {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_id }} {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}<li class="nav-title">
             {{index .ARGS.site_name 0}}
@@ -88,10 +94,10 @@
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> Slots</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `ac`) (eq $a `topics`) }}active{{end}}" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> Access Control</a>
+            <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&{{$attach}}"><i class="icon-pencil"></i> Create Slot</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&{{$attach}}"><i class="icon-pencil"></i> Create Slot</a>
+            <a class="nav-link {{if and (eq $c `ac`) (eq $a `topics`) }}active{{end}}" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> Access Control</a>
           </li>
           {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-title">
             {{index .ARGS.slot_name 0}}
@@ -100,12 +106,7 @@
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `edit`) }}active{{end}}" href="slot?action=edit&{{$small}}&{{$attach}}"> <i class="icon-arrow-right"></i> Edit</a>
           </li>{{end}} 
           {{end}}
-          <li class="nav-item">
-            <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> Create App or Site</a>
-          </li>
-          <li class="nav-item">
-            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> Access Control</a>
-          </li>
+
 
           <li class="nav-title">
             Reports

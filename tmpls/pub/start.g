@@ -88,21 +88,28 @@ h1, h2, h3, h4, h5, h6, button {
           <li class="nav-item">
             <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> Apps和网站</a>
           </li>
+          <li class="nav-item">
+            <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> 添加App或网站</a>
+          </li>
+          <li class="nav-item">
+            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> 黑白名单</a>
+          </li>
+
 
           {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_id }} {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}<li class="nav-title">
-            {{index .ARGS.site_name 0}}
+            {{index .ARGS.site_name 0}} <i class="icon-arrow-down mt-4"></i>
           </li>
           <li class="nav-item">
             <a class="nav-link {{if and (eq $c `site`) (eq $a `edit`) }}active{{end}}" href="site?action=edit&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-magic-wand"></i> 编辑</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> 所属广告位</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `ac`) (eq $a `topics`) }}active{{end}}" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> 黑白名单</a>
+            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> 下属广告位</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&{{$attach}}"><i class="icon-pencil"></i> 添加广告位</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{if and (eq $c `ac`) (eq $a `topics`) }}active{{end}}" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> 黑白名单</a>
           </li>
 
           {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-title">
@@ -112,12 +119,7 @@ h1, h2, h3, h4, h5, h6, button {
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `edit`) }}active{{end}}" href="slot?action=edit&{{$small}}&{{$attach}}"> <i class="icon-arrow-right"></i> 编辑</a>
           </li>{{end}} 
           {{end}}
-          <li class="nav-item">
-            <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> 添加App或网站</a>
-          </li>
-          <li class="nav-item">
-            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> 黑白名单</a>
-          </li>
+
 
           <li class="nav-title">
             报表
