@@ -1,7 +1,5 @@
 {{define "header"}}
-{{$c := .Other.Component}}
-{{$a := .Other.Action}}
-<!DOCTYPE html>
+<!DOCTYPE html> {{$c := .Other.Component}} {{$a := .Other.Action}}
 <html lang="en">
 <head>
   <meta charset="utf-8">
