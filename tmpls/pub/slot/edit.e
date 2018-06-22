@@ -7,7 +7,7 @@
 
           <div class="card">
             <div class="card-header">
-              Edit Slot of <em>{{(index .ARGS.site_name 0 | urlquery)}}</em>
+              Edit Slot of <em>{{(index .ARGS.site_name 0)}}</em>
             </div>
             <div class="card-body">
 

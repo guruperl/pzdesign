@@ -21,14 +21,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-user"></i></span>
               </div>
-              <input type="text" name=firstname id="firstname" class="form-control" placeholder="名">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-              <input type="text" name=lastname id="lastname" class="form-control" placeholder="姓">
+              <input type="text" name=lastname id="lastname" class="form-control" placeholder="姓名">
             </div>
 
             <div class="input-group mb-3">

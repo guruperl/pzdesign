@@ -2,6 +2,7 @@
 {{$serverUrl := index .ARGS.serverUrl 0}}
 {{ template "header" .}}
 {{ template "slotheader" .}}
+{{$site_str := index .ARGS.site_str 0}}
 
           <div class="card">
             <div class="card-header">
@@ -38,8 +39,8 @@
 </table>
 </div>
 
-{{ range .Lists }}
-<div class="modal fade" id="modal{{.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modal{{.slot_id}}Label" aria-hidden="true">
+{{ range $item := .Lists }}
+<div class="modal fade" id="modal{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modal{{$item.slot_id}}Label" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -56,18 +57,18 @@
 &lt;/head&gt;
 &lt;body&gt;
 ...
-&lt;div id=&quot;pz-{{.site_id}}-{{.slot_id}}&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;pz-{{$item.code}}&quot;&gt;&lt;/div&gt;
 ...
 &lt;/body&gt;
 &lt;script&gt;
-loadAds({
-	site_id: {{.site_id}},
+pzLoadAds({
+	platform: 'browser',
+	site: '{{$site_str}}',
 	adUnits: [{
-		platform: 'browser',
-		code: 'pz-{{.site_id}}-{{.slot_id}}',
-		slot_id: {{.slot_id}},
+		code: 'pz-{{$item.code}}',
+		slot: '{{$item.slot_str}}',
 		mediaTypes: {
-			{{.mediaType}}: { sizes:[{{.w}}, {{.h}}] }
+{{$item.mediaTypes}}
 		}
 	}]
 })
