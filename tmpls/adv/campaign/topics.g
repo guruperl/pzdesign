@@ -18,7 +18,7 @@
                   <th>预算</th>
                   <th>总曝光</th>
                   <th>总点击</th>
-                  <td colspan=3 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">创建活动</a>
+                  <td colspan=4 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">创建活动</a>
 </td>
                 </tr>
               </thead>
@@ -30,7 +30,8 @@
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
-<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">所属创意</a></td>
+<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">已有创意</a></td>
+<td><a class="btn btn-sm btn-info" href="item?action=startnew&{{$small}}">添加创意</a></td>
 <td><a class="btn btn-sm btn-success" href="targetname?action=topics&{{$small}}">标签定向</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('您确定要删除活动（{{.campaign_name}}）吗？')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
 </tr>

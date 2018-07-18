@@ -70,7 +70,7 @@
 			<label class="form-check-label" for="ao_black">Black</label>
 			<input class="form-check-input" type="radio" name="access_order" id="ao_white" value="White">
 			<label class="form-check-label" for="ao_white">White</label>
-			<input class="form-check-input" type="radio" name="access_order" id="ao_inherit" value="Inherit">
+			<input class="form-check-input" type="radio" name="access_order" id="ao_inherit" checked value="Inherit">
 			<label class="form-check-label" for="ao_inherit">Inherit</label>
 		</div>
 		<p id="myP" class="hidden">

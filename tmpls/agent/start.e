@@ -21,7 +21,7 @@
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Administrator</a>
     <div class="navbar-brand">
-Welcome&nbsp; <em>{{index .ARGS.admin_login 0}}</em> ! Your ID&nbsp; <em>{{index .ARGS.admin_id 0}}</em>.
+Welcome&nbsp; <em>{{index .ARGS.agent_login 0}}</em> ! Your ID&nbsp; <em>{{index .ARGS.agent_id 0}}</em>.
 	</div>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
