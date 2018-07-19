@@ -1,6 +1,7 @@
 {{$attach := print "campaign_id=" (index .ARGS.campaign_id 0) "&campaign_md5=" (index .ARGS.campaign_md5 0) "&campaign_name=" (index .ARGS.campaign_name 0 | urlquery)}}
 {{$second := print "item_id=" (index .ARGS.item_id 0) "&item_md5=" (index .ARGS.item_md5 0) "&item_name=" (index .ARGS.item_name 0 | urlquery)}}
 {{$mime := index .ARGS.qa_mime 0}}
+{{$active := index .ARGS.active 0}}
 
 {{ template "header" .}}
 {{ template "creativeheader" .}}
@@ -41,7 +42,7 @@
                             </div>
                             <!-- /.modal -->
 </td>
-<td><a class="btn btn-sm btn-danger" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a></td>
+<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
 </tr>{{end}}{{end}}
 </table>
                             </div>
@@ -53,6 +54,12 @@
                 </div>
                 <!-- /.col-lg-6 -->
             </div>
+
+
+
+{{if eq (index .ARGS.active 0) "Prepare"}}
+
+
 
 			<div class="row">
                 <div class="col-lg-12">
@@ -170,5 +177,11 @@
                 </div>
                 <!-- /.col-lg-6 -->
 			</div>
+
+
+
+{{end}}
+
+
 
 {{template "footer"}}

@@ -18,8 +18,8 @@
 
   <body>
 
-                        <form role="form" METHOD="POST" ACTION="/goto/admin/e/login">
-                            <INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
+	<form role="form" METHOD="POST" ACTION="/goto/agent/e/login">
+	<INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
 <div class="container-fluid">
 	<h2>Login</h2>
 	<div class="row">
@@ -50,7 +50,7 @@
 		</div>
     </div>
 </div>
-                        </form>
+	</form>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

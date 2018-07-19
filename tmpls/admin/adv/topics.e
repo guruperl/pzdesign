@@ -19,7 +19,7 @@
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
 				<td><a href="adv?action=edit&adv_id={{.adv_id}}">{{.email}}</a></td>
-				<td>{{.firstname}} {{.lastname}}</td>
+				<td>{{.firstname}}</td>
 				<td>{{.company}}</td>
 				<td>{{.active}}</td>
 				<td>{{.balance}}</td>

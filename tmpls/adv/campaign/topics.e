@@ -18,7 +18,7 @@
 		          <th>Budget</th>	
 		          <th>Impres</th>	
 		          <th>Clicks</th>	
-                  <td colspan=3 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">New Campaign</a>
+                  <td colspan=4 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">New Campaign</a>
 </td>
                 </tr>
               </thead>
@@ -31,6 +31,7 @@
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
 <td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">Items</a></td>
+<td><a class="btn btn-sm btn-info" href="item?action=startnew&{{$small}}">Add Item</a></td>
 <td><a class="btn btn-sm btn-success" href="targetname?action=topics&{{$small}}">Audience</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.campaign_name}}?')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">Del</a></td>
 </tr>
