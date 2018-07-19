@@ -16,7 +16,7 @@
 <thead><tr>
 <th>创意名</th>
 <th>价格</th>
-<th>投放平台</th>
+<th>状态</th>
 <th>媒体类</th>
 <th>时间</th>
 <th colspan=3 class="text-right"><a class="btn btn-info" href="item?action=startnew&{{$attach}}">新建创意</a></th>
@@ -26,10 +26,10 @@
 <tr {{if eq .active "New"}}class="warning"{{else if eq .active "Pause"}}class="danger"{{else}}{{end}}>
 <td><a href="item?action=edit&{{$attach}}&{{$second}}">{{.item_name}}</a></td>
 <td>{{.cost}} {{.cost_type}}</td>
-<td>{{.fl_platform}}</td>
+<td>{{.active}}{{if eq .active "Prepare"}} <a class="btn btn-sm btn-primary" href="item?action=review&item_id={{.item_id}}&active=New&{{$attach}}">送审</a>{{end}}</td>
 <td>{{.qa_mime}}</td>
-<td>{{.startx}}:{{.endx}}</td>
-<td><a class="btn btn-sm btn-primary" href="creative?action=topics&{{$attach}}&{{$second}}&qa_mime={{.qa_mime}}&size_id={{.size_id}}&item_click={{.item_click|urlquery}}">物料管理</a></td>
+<td>{{.startx}}/{{.endx}}</td>
+<td><a class="btn btn-sm btn-primary" href="creative?action=topics&{{$attach}}&{{$second}}&active={{.active}}&qa_mime={{.qa_mime}}&size_id={{.size_id}}&item_click={{.item_click|urlquery}}">物料管理</a></td>
 <td><a class="btn btn-sm btn-success" href="balance?action=topics&{{$attach}}&{{$second}}&entitytype_id=42">预算控制</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.campaign_name}}?')) ? true : false;" href="item?action=delete&{{$attach}}&{{$second}}">删除</a></td>
 </tr>{{end}}{{end}}
