@@ -51,9 +51,9 @@
     <div class="col-sm-2">
         <input type=text class="form-control" name="h" value="{{$item.h}}">
     </div>
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">接受媒体类:</label>
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">媒体类:</label>
     <div class="col-sm-4">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=checkbox name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 

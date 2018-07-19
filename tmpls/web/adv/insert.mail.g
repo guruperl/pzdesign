@@ -1,4 +1,4 @@
-广告商 {{index .ARGS.firstname 0}} {{index .ARGS.lastname 0}}:
+广告商 {{index .ARGS.firstname 0}}：
 
 你好！
 

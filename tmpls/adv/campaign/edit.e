@@ -29,7 +29,7 @@
 <div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">Frequency Cap:</label>
 	<div class="col-sm-9">
-<table class="table-bordered table-condensed">
+<table class="table table-sm table-bordered table-condensed">
 <tr><th>Type</th><th>Number</th><th>Period</th><th>Throttle</th></tr>
 <tr><td>Impressions: </td>
 <td><input type=text name=cpm_fc value="{{$item.cpm_fc}}" size=3></td>

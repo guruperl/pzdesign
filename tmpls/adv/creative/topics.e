@@ -32,7 +32,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-body">
-{{if eq $mime "html"}}{{.content}}{{else if eq $mime "js"}}<script>{{.content}}</script>{{else if eq $mime "video"}}<video controls><source src="{{.content}}"></video>{{else}}<img src="{{.content}}" />{{end}}
+{{if eq $mime "html"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,{{.content}}"></iframe>{{else if eq $mime "js"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,<script>{{.content}}</script>"></iframe>{{else if eq $mime "video"}}<video controls><source src="{{.content}}"></video>{{else}}<img src="{{.content}}" />{{end}}
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -107,7 +107,7 @@
     <label for="inputContent" class="col-sm-3 col-form-label">Content ({{$mime}}):</label>
     <div class="col-sm-9">
 		<textarea name=content class="form-control" rows="4">
-{{if eq $mime "js"}}document.write('<a href="LANDING"><img src="MEDIA_1" /></a>'){{else}}<a href="LANDING"><img src="MEDIA_1" /></a>{{end}}
+{{if eq $mime "js"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href="LANDING"><img src='MEDIA_1'></a>{{end}}
 		</textarea>
 	</div>
 </div>

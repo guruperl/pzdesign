@@ -1,4 +1,4 @@
-商户 {{index .ARGS.lastname 0}}{{index .ARGS.firstname 0}}:
+商户 {{index .ARGS.lastname 0}}：
 
 您好！
 

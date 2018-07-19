@@ -54,7 +54,7 @@
 
     <label for="inputEndx" class="col-sm-2 col-form-label text-right">Mime:</label>
     <div class="col-sm-4">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=checkbox name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
     </div>
 </div>
 

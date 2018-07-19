@@ -36,7 +36,7 @@
 {{if eq `41` (index .ARGS.entitytype_id 0)}}
 <input class="form-check-input" type=radio name=access_order value="Inherit" {{if eq `Inherit` (index .ARGS.access_order 0)}}checked{{end}} />
 <label class="form-check-label">系统默认</label>{{end}}
-<button class="form-check-input btn btn-sm btn-primary" onClick="return (confirm('这将删除所有现有的访问列表和重置逻辑。您确定要>继续吗？')) ? true : false;" type=submit>更改</button>
+<button class="form-check-input btn btn-sm btn-primary" onClick="return (confirm('这将删除所有现有的访问列表和重置逻辑。您确定要继续吗？')) ? true : false;" type=submit>更改</button>
         </div>
     </div>
 </div>

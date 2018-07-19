@@ -7,7 +7,7 @@
 			<div class="card-body p-4">
             	<h1>媒体商户注册成功</h1>
             	<p class="text-muted">完成!</p>
-				注册成功，由此<a href="/goto/pub/e/site?action=topics">登入</a>。
+				注册成功，由此<a href="/goto/pub/g/site?action=topics">登入</a>。
 			</div>
 		</div>
 	</div>
