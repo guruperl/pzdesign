@@ -44,7 +44,7 @@
 		<tbody>
 			<td><input class="form-input" type=text name=login></td>
 			<td><input class="form-input" type=text name=passwd></td>
-			<td><input class="form-input" type=radio name=level value=1>1 <input class="form-input" type=radio name=level value=2>2</td>
+			<td><input class="form-input" type=radio name=level value=1>1 <input class="form-input" type=radio name=level value=2>2 <input class="form-input" type=radio name=level value=3>both</td>
 			<td><input class="form-input" type=text name=notes></td>
 			<td><input class="form-input" type=radio name=active value=Yes>Yes <input class="form-input" type=radio name=active value=New>New</td>
 			<td><button type="submit" class="btn btn-sm btn-primary">Add</button></td>

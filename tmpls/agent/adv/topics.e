@@ -13,7 +13,7 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="campaign?action=topics&adv_id={{.adv_id}}&adv_md5={{.adv_md5}}">{{.firstname}} {{.lastname}}</a></td>
+				<td><a href="campaign?action=topics&adv_id={{.adv_id}}&adv_md5={{.adv_md5}}">{{.firstname}}</a></td>
 				<td>{{.company}}</td>
 				<td>{{.active}}</td>
 			</tr>{{end}}{{end}}
