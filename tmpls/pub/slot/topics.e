@@ -16,22 +16,17 @@
                 <tr>
                   <th>Name</th>
                   <th>Platform</th>
-                  <th>Pagelevel</th>
-                  <th>Clock</th>
-                  <th>Y-Axis</th>
                   <th>Active</th>
                   <th>Since</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-info" href="slot?action=startnew&{{$attach}}">Create New</a> </th>
+                  <th colspan=3 class="text-right"><a class="btn btn-info" href="slot?action=startnew&{{$attach}}">Create New</a> </th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }} {{$small := print "slot_id=" .slot_id "&slot_md5=" .slot_md5 "&slot_name=" (.slot_name | urlquery)}}
 <tr><td><a href="slot?action=edit&{{$attach}}&{{$small}}">{{.slot_name}}</a></td>
 <td>{{.qa_platform}}</td>
-<td>{{.qa_pagelevel}}</td>
-<td>{{.qa_clock}}</td>
-<td>{{.qa_yaxis}}</td>
 <td>{{.active}}</td>
 <td>{{.created}}</td>
+<td><a class="btn btn-sm btn-success" href="white?action=topics&slot_id={{$small}}">Review Ads</a></td>
 <td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Code</button></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">Del</a></td>
 {{end}}</tobdy>
