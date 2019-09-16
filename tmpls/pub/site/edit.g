@@ -32,7 +32,7 @@
     <label for="inputAccessOrder" class="col-sm-2 col-form-label text-right">黑白名单设置:</label>
     <div class="col-sm-10">
         <div class="form-check form-check-inline">
-			{{$item.access_order}}
+			{{$item.access_order_g}}
             <a class="btn btn-sm btn-warning" href="ac?action=topics&entitytype_id=31&{{$first}}">查看</a>
         </div>
     </div>
@@ -43,7 +43,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
+<table>{{range $key, $val := .Other.sitesChinese }}{{$obs := index $item $key}}
 <tr><td>{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
@@ -57,7 +57,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
+<table>{{range $key, $val := .Other.campaignsChinese }}{{$obs := index $item $key}}
 <tr><td>{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
@@ -81,7 +81,7 @@
 </th>
 </tr>
 <tbody>{{ with $item.chac_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
+<tr><td>{{.channel_name_g}}</td>
 <td class="text-center"><input name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}

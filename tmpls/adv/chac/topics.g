@@ -29,7 +29,7 @@
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
+<tr><td>{{.channel_name_g}}</td>
 <td><input name=belong_ids type=checkbox {{if .chbelong_id}}checked{{end}} value="{{.channel_id}}" /></td>
 <td><input name=ac_ids type=checkbox {{if .chac_id}}checked{{end}} value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}

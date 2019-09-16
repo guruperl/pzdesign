@@ -33,7 +33,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 <style>
 html, body {
   font-family: "SimSun","宋体";
@@ -43,6 +42,12 @@ h1, h2, h3, h4, h5, h6, button {
 }
 .nav {
   font-family: "Microsoft YaHei","微软雅黑","SimHei","黑体";
+}
+.nav-compact {
+	font-size: small
+}
+.nav-compact-sm {
+	font-size: smaller
 }
 </style>
 
@@ -98,41 +103,36 @@ h1, h2, h3, h4, h5, h6, button {
                             <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <a href="campaign?action=topics"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动</a>
+						</li>
+{{ if and (or (or (or (or (or (or (eq .Other.Component `ac`)) (eq .Other.Component `campaign`)) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) .ARGS.campaign_md5}}
+						<li>
+                            <ul class="nav nav-second-level nav-compact-sm">
 								<li>
-                                    <a href="campaign?action=topics">活动管理</a>
-                                </li>
-								{{ if and (or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.campaign_md5 }}<li>
                                  	<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">{{index .ARGS.campaign_name 0}}</a>
                                 </li>
-								<li>	
-									<a href="#">点击展开 <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-                                    	<li>
-                                    		<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">创意</a>
-                                		</li>
-                                    	<li>
-                                    		<a href="item?action=startnew&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">添加创意</a>
-                                		</li>
-                                		<li>
-                                    		<a href="balance?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">预算控制</a>
-                                		</li>
-                                		<li>
-                                    		<a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">标签定向</a>
-                                		</li>
-                                		<li>
-                                    		<a href="chac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">行业定向</a>
-										</li>
-                                		<li>
-                                    		<a href="ac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">黑白名单</a>
-                                		</li>
-									</ul>
+                                <li>
+                                 	<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">创意</a>
+                                </li>
+                                <li>
+                                    <a href="item?action=startnew&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">添加创意</a>
+                                </li>
+                                <li>
+                                 	<a href="balance?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">预算控制</a>
+                                </li>
+                                <li>
+                                   	<a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">标签定向</a>
+                                </li>
+                                <li>
+                                	<a href="chac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">行业定向</a>
 								</li>
-								{{end}}
+                               	<li>
+                                   	<a href="ac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">活动黑白名单</a>
+                             	</li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+						{{end}}
                         <li>
                             <a href="ac?action=topics&entitytype_id=4"><i class="fa fa-table fa-fw"></i> 网站黑白名单</a>
                         </li>

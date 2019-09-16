@@ -37,7 +37,7 @@
     <div class="col-sm-10 col-form-label">{{ range $one := .Other.fl_mime }}
       <div class="form-check form-check-inline mr-1">
         <input class="form-check-input" type="checkbox" value="{{$one.which}}" name="fl_mime" {{if $one.selected}}checked{{end}}>
-        <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+        <label class="form-check-label" for="inline-radio1">{{$one.label_chinese}}</label>
       </div>{{end}}
     </div>
 </div>
@@ -47,7 +47,7 @@
     <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_platform }}
       <div class="form-check form-check-inline mr-1">
         <input class="form-check-input" type="radio" id="qa_{{$one.which}}" value="{{$one.which}}" name="qa_platform" {{if $one.selected}}checked{{end}}>
-        <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+        <label class="form-check-label" for="inline-radio1">{{$one.label_chinese}}</label>
       </div>{{end}}
     </div>
 </div>
@@ -57,7 +57,7 @@
     <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_pagelevel }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_pagelevel value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
-           <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+           <label class="form-check-label" for="inline-radio1">{{$one.label_chinese}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -67,7 +67,7 @@
     <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_clock }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_clock value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
-           <label class="form-check-label" for="inline-radio1">{{$one.label}}</label>
+           <label class="form-check-label" for="inline-radio1">{{$one.label_chinese}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -77,7 +77,7 @@
     <div class="col-sm-10">{{ range $one := .Other.qa_yaxis }}
         <div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_yaxis value="{{$one.which}}" {{if $one.selected }}checked{{end}} >
-           <label>{{$one.label}}</label>
+           <label>{{$one.label_chinese}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -98,7 +98,7 @@
 </th>
 </tr>
 <tbody>{{ with $item.chac_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
+<tr><td>{{.channel_name_g}}</td>
 <td class="text-center"><input name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}

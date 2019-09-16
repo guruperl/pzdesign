@@ -1,6 +1,7 @@
 {{ define "footer" }}
 
-
+		</div>
+		<!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
 

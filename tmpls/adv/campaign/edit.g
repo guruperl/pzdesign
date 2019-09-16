@@ -61,7 +61,7 @@
 	<label for="inputAccessOrder" class="col-sm-3 col-form-label">黑白名单:</label>
 	<div class="col-sm-9">
 		<div class="form-check form-check-inline">
-			{{$item.access_order}}
+			{{$item.access_order_g}}
 			<a class="btn btn-xs btn-warning" href="ac?action=topics&campaign_id={{$item.campaign_id}}&campaign_md5={{$item.campaign_md5}}&campaign_name={{$item.campaign_name | urlquery }}&entitytype_id=41">查看</a>
 		</div>
 	</div>
@@ -77,7 +77,7 @@
             <col class="col-md-3">
             <col class="col-md-9">
     </colgroup>
-    <tbody>{{range $key, $val := .Other.campaigns }}{{$obs := index $item $key}}
+    <tbody>{{range $key, $val := .Other.campaignsChinese }}{{$obs := index $item $key}}
 <tr><td class="text-right">{{index $cAttrs $key}}:</th><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
@@ -96,7 +96,7 @@
             <col class="col-md-3">
             <col class="col-md-9">
     </colgroup>
-    <tbody>{{range $key, $val := .Other.sites }}{{$obs := index $item $key}}
+    <tbody>{{range $key, $val := .Other.sitesChinese }}{{$obs := index $item $key}}
 <tr><td class="text-right">{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option {{if eq $k $obs}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
@@ -114,7 +114,7 @@
 <tr>
 <th>行业名</th>
 <th>所属行业</th>
-<th>黑白次序: {{$item.channel_order}} </th>
+<th>黑白次序: {{$item.channel_order_g}} </th>
 </tr>
 <tbody>{{ with $item.chac_topics }}{{ range . }}{{if or .chac_id .chbelong_id}}
 <tr><td>{{.channel_name}}</td>

@@ -56,14 +56,14 @@
 		</div>
 
 		<div class="tab-pane fade" id="t2">
-			{{range $key, $val := .Other.pzua}}<h4>{{index $pzAttrs $key}}</h4>
+			{{range $key, $val := .Other.pzuaChinese}}<h4>{{index $pzAttrs $key}}</h4>
 			<select name={{$key}} multiple>{{range $k, $v := $val}}
 				<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
 			</select>{{end}}
 		</div>
 
 		<div class="tab-pane fade" id="t3">
-			{{range $key, $val := .Other.demo}}<h4>{{index $dAttrs $key}}</h4>
+			{{range $key, $val := .Other.demoChinese}}<h4>{{index $dAttrs $key}}</h4>
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
@@ -91,7 +91,7 @@
 			<h4>工作日定向</h4>
 			<div class="form-group row">
 			    <div class="col-sm-12">
-			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekday}}
+			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekdayChinese}}
 						<input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
 						<label class="form-check-label">{{index $v 0}}</label>{{end}}
 					</div>

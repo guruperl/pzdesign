@@ -89,7 +89,7 @@
             <col class="col-md-3">
             <col class="col-md-9">
 	</colgroup>
-    <tbody>{{range $key, $val := .Other.campaigns }}
+    <tbody>{{range $key, $val := .Other.campaignsChinese }}
 <tr><td class="text-right">{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 	</tbody>
@@ -109,7 +109,7 @@
             <col class="col-md-3">
             <col class="col-md-9">
     </colgroup>
-    <tbody>{{range $key, $val := .Other.sites }}
+    <tbody>{{range $key, $val := .Other.sitesChinese }}
 <tr><td class="text-right">{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 	</tbody>
@@ -134,7 +134,7 @@
 </th>
 </tr>
 <tbody>{{ with .Other.channel_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
+<tr><td>{{.channel_name_g}}</td>
 <td class="text-center"><input name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}

@@ -49,7 +49,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>{{range $key, $val := .Other.sites }}
+<table>{{range $key, $val := .Other.sitesChinese }}
 <tr><td>{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
@@ -63,7 +63,7 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>{{range $key, $val := .Other.campaigns }}
+<table>{{range $key, $val := .Other.campaignsChinese }}
 <tr><td>{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
 <option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
@@ -88,7 +88,7 @@
 </th>
 </tr>
 <tbody>{{ with .Other.channel_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
+<tr><td>{{.channel_name_g}}</td>
 <td class="text-center"><input name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}

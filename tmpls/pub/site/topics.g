@@ -3,7 +3,7 @@
 
           <div class="card">
             <div class="card-header">
-              广告组（网站或移动应用）罗列
+              媒体组罗列
             </div>
             <div class="card-body">
 

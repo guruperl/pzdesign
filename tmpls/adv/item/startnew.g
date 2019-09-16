@@ -103,7 +103,7 @@
 <div class="form-group row">
     <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">页面级别:</label>
     <div class="col-sm-10">{{ range $item := .Other.fl_pagelevel }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
