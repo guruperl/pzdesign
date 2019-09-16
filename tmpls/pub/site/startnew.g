@@ -3,10 +3,12 @@
 
 {{$cAttrs := .Other.campaignAttrsChinese }}
 {{$sAttrs := .Other.siteAttrsChinese }}
+{{$cDefault := .Other.campaignsDefault }}
+{{$sDefault := .Other.sitesDefault }}
 
           <div class="card">
             <div class="card-header">
-              添加广告位组（网站或移动应用）
+              添加媒体（广告位组）
             </div>
             <div class="card-body">
 
@@ -14,18 +16,18 @@
 <input type=hidden name="action" value="insert">
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">组名称:</label>
+	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">媒体名称:</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=site_name placeholder="网站名称" />
+		<input type=text class="form-control" name=site_name placeholder="媒体名称" />
 	</div>
-	<label for="inputSiteURL" class="col-sm-2 col-form-label text-right">网址:</label>
+	<label for="inputSiteURL" class="col-sm-2 col-form-label text-right"> 介绍网址:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_url placeholder="网站URL" />
 	</div>
 </div>
 
 <div class="form-group row">
-    <label for="inputAccessOrder" class="col-sm-2 col-form-label text-right">黑白名单:</label>
+    <label for="inputAccessOrder" class="col-sm-2 col-form-label text-right">黑白名单方式:</label>
     <div class="col-sm-4">
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="access_order" id="ao_black" value="Black">
@@ -49,9 +51,9 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>{{range $key, $val := .Other.sitesChinese }}
+<table>{{range $key, $val := .Other.sitesChinese }}{{$default := index $sDefault $key}}
 <tr><td>{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
-<option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
+<option {{if eq $k $default}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
         </div>
@@ -63,9 +65,9 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-<table>{{range $key, $val := .Other.campaignsChinese }}
+<table>{{range $key, $val := .Other.campaignsChinese }}{{$default := index $cDefault $key}}
 <tr><td>{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
-<option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
+<option {{if eq $k $default}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 </table>
             </div>
         </div>

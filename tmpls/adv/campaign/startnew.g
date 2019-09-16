@@ -3,6 +3,8 @@
 
 {{$cAttrs := .Other.campaignAttrsChinese }}
 {{$sAttrs := .Other.siteAttrsChinese }}
+{{$cDefault := .Other.campaignsDefault }}
+{{$sDefault := .Other.sitesDefault }}
 
             <div class="row">
                 <div class="col-lg-12">
@@ -89,9 +91,9 @@
             <col class="col-md-3">
             <col class="col-md-9">
 	</colgroup>
-    <tbody>{{range $key, $val := .Other.campaignsChinese }}
+    <tbody>{{range $key, $val := .Other.campaignsChinese }}{{$default := index $cDefault $key}}
 <tr><td class="text-right">{{index $cAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
-<option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
+<option {{if eq $k $default}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 	</tbody>
 </table>
 			</div>
@@ -109,9 +111,9 @@
             <col class="col-md-3">
             <col class="col-md-9">
     </colgroup>
-    <tbody>{{range $key, $val := .Other.sitesChinese }}
+    <tbody>{{range $key, $val := .Other.sitesChinese }}{{$default := index $sDefault $key}}
 <tr><td class="text-right">{{index $sAttrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
-<option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
+<option {{if eq $k $default}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 	</tbody>
 </table>
 			</div>
@@ -125,7 +127,7 @@
 		<div class="panel panel-primary">
 			<div class="panel-body">
 <table class="table table-condensed table-sm table-bordered">
-<tr>
+hbtr>
 <th>行业名</th>
 <th>所属行业&nbsp; </th>
 <th>&nbsp; 

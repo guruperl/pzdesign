@@ -6,7 +6,7 @@
 
           <div class="card">
             <div class="card-header">
-              如下网站的所用广告位：<em>{{index .ARGS.site_name 0}}</em>
+              媒体<em>{{index .ARGS.site_name 0}}</em>下所有广告位
             </div>
             <div class="card-body">
 

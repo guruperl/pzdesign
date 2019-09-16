@@ -101,7 +101,7 @@ h1, h2, h3, h4, h5, h6, button {
             <a class="nav-link {{if and (eq $c `site`) (eq $a `edit`) }}active{{end}}" href="site?action=edit&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-magic-wand"></i> 编辑</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> 下属广告位</a>
+            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> 所有广告位</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&{{$attach}}"><i class="icon-pencil"></i> 添加广告位</a>

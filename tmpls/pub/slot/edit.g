@@ -7,7 +7,7 @@
 
           <div class="card">
             <div class="card-header">
-              编辑修改此网站的广告位 <em>{{(index .ARGS.site_name 0)}}</em>
+              编辑修改此广告位 <em>{{(index .ARGS.slot_name 0)}}</em>
             </div>
             <div class="card-body">
 

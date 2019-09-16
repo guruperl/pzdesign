@@ -9,7 +9,7 @@
 
           <div class="card">
             <div class="card-header">
-              编辑修改 <em>{{$item.site_name}}</em>
+              编辑媒体 <em>{{$item.site_name}}</em>
             </div>
             <div class="card-body">
 
@@ -18,11 +18,11 @@
 <input type=hidden name="site_id" value="{{$item.site_id}}" />
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">广告组名:</label>
+	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">媒体名:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_name value="{{$item.site_name}}" />
 	</div>
-	<label for="inputSiteURL" class="col-sm-2 col-form-label text-right">网址URL:</label>
+	<label for="inputSiteURL" class="col-sm-2 col-form-label text-right">介绍网址:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_url placeholder="网站 URL" value="{{$item.site_url}}" />
 	</div>
