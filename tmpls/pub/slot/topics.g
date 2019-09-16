@@ -1,5 +1,6 @@
 {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}
 {{$serverUrl := index .ARGS.serverUrl 0}}
+{{$serverScript := index .ARGS.serverScript 0}}
 {{ template "header" .}}
 {{ template "slotheader" .}}
 {{$site_str := index .ARGS.site_str 0}}
@@ -18,7 +19,7 @@
                   <th>平台</th>
                   <th>激活状况</th>
                   <th>上线时间</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-info" href="slot?action=startnew&{{$attach}}">填加广告位</a> </th>
+                  <th colspan=4 class="text-right"><a class="btn btn-info" href="slot?action=startnew&{{$attach}}">填加广告位</a> </th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
@@ -29,6 +30,7 @@
 <td>{{.created}}</td>
 <td><a class="btn btn-sm btn-success" href="white?action=topics&&{{$small}}">广告审查</a></td>
 <td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">广告码</button></td>
+<td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API码</button></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">删除</a></td>
 {{end}}</tobdy>
 
@@ -79,8 +81,57 @@ pzLoadAds({
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="modalAPI{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modalAPI{{$item.slot_id}}Label" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">API广告码</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+POST下列JSON请求至{{$serverScript}}:
+                <pre><code>
+{
+    platform: ‘sdk’,
+    site: '{{$site_str}}', 
+    ua: 'ANY_UA_STRING',
+    ip: 'ANY_IP_STRING',
+    adUnits: [{
+        code: 'pz-{{$item.code}}',
+        slot: '{{$item.slot_str}}',
+        mediaTypes: {
+{{$item.mediaTypes}}
+        }
+    }]
+}
+                </code></pre>
+获取如下JSON:
+                <pre><code>
+[{
+        code: 'pz-{{$item.code}}',
+        slot: '{{$item.slot_str}}',
+        html: ‘DYNAMICAL_HTML’,
+        click: 'DYNAMICAL_CLICK_URL',
+        notification: ‘DYNAMICAL_NOTIFICATION_URL’
+}]
+                </code></pre>
+其中 code，slot 与送来的参数一样。html 表示在此显示广告的HTML代码，开发者需解析后获取广告物料。
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 {{end}}
 
             </div>
