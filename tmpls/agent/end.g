@@ -1,5 +1,5 @@
 {{ define "footer" }}
-
+<h6>&copy; 派兹 2019</h6>
         </main>
       </div>
     </div>

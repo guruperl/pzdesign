@@ -6,7 +6,8 @@
 	<table class="table table-striped table-sm">
     	<thead>
         <tr>
-            <th>媒体名称</th>
+            <th>名称</th>
+            <th>媒体公司</th>
         	<th>URL</th>
 			<th>状态</th>
             <th>入网时间</th>
@@ -16,13 +17,14 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="site?action=edit&site_id={{.site_id}}">{{.site_name}}</a></td>
+				<td><a href="slot?action=topics&site_id={{.site_id}}&site_name={{.site_name|urlquery}}">{{.site_name}}</a></td>
+				<td>{{.company}}</td>
 				<td>{{.site_url}}</td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>
 {{if eq .active "New"}}<a class="btn btn-sm btn-primary" href="site?action=update&active=Yes&site_id={{.site_id}}">激活</a>{{end}}
-{{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="site?action=update&active=No&site_id={{.site_id}}">拉黑</a>{{end}}
+{{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="site?action=update&active=No&site_id={{.site_id}}">拿下</a>{{end}}
 {{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="site?action=update&active=Yes&site_id={{.site_id}}">重新激活</a>{{end}}
 </td>
 				<td><a href="site?action=delete&site_id={{.site_id}}">删除</a></td>

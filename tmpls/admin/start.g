@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, button {
 
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">管理员</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">派兹系统管理员</a>
     <div class="navbar-brand">
 &nbsp; 欢迎 <em>{{index .ARGS.admin_login 0}}</em> ! 您的ID: <em>{{index .ARGS.admin_id 0}}</em> &nbsp;
 	</div>
@@ -53,27 +53,27 @@ h1, h2, h3, h4, h5, h6, button {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link{{ if eq .Other.Component `payment` }} active{{end}}" href="payment?action=topics">
-                  <span data-feather="shopping-cart"></span>
-                  付费记录 {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
                   <span data-feather="package"></span>
                   广告主 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
-                  <span data-feather="cast"></span>
-                  媒体商户 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
+                <a class="nav-link{{ if eq .Other.Component `payment` }} active{{end}}" href="payment?action=topics">
+                  <span data-feather="shopping-cart"></span>
+                  付费记录 {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `campaign` }} active{{end}}" href="campaign?action=topics">
                   <span data-feather="flag"></span>
                   广告活动 {{ if eq .Other.Component "campaign" }}<span class="sr-only">(current)</span>{{ end }}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
+                  <span data-feather="cast"></span>
+                  媒体商户 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
