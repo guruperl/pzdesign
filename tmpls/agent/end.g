@@ -1,7 +1,5 @@
 {{ define "footer" }}
 
-<hr>
-<h6>&copy; Paizi 2019</h6>
         </main>
       </div>
     </div>

@@ -22,8 +22,7 @@
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">充值方式:</label>
                         <input class="form-check-input" type=radio name=paytype_id value="1"><label class="form-check-label">现金</label>
-                        <input class="form-check-input" type=radio name=paytype_id value="2"><label class="form-check-label">欠债</label>
-                        {{if .Other}}{{if .Other.paymethods}}{{range $item := .Other.paymethods}}<input class="form-check-input" type=radio name=paytype_id value="{{$item.paytype_id}}_{{$item.entity_id}}_{{$item.entity_md5}}"><label class="form-check-label">{{$item.paytype_value}} {{$item.id}}</label>{{end}}{{end}}{{end}}
+                        <input class="form-check-input" type=radio name=paytype_id value="2"><label class="form-check-label">贷款</label>
                     </div>
                 </div>
             </div>
@@ -46,19 +45,18 @@
 <div class="table-responsive">
 <table class="table table-striped table-sm">
 <thead><tr>
+<th>充值ID</th>
 <th>充值方式</th>
-<th>充值记录id</th>
 <th>充值金额</th>
 <th>创建时间</th>
 <th>充值状态</th>
 </tr></thead>
-<tbody>{{with .Lists}}{{range .}}
-<td>{{.paytype_id}}</td>
-<td>{{.entity_id}}</td>
+<tbody>{{with .Lists}}{{range .}}{{$second := print "payment_id=" .payment_id "&payment_md5=" .payment_md5}}
+<td><a href="payment?action=edit&{{$second}}">{{.payment_id}}</a></td>
+<td>{{.paytype_value}}</td>
 <td>{{.amount}}</td>
 <td>{{.created}}</td>
-{{$second := print "payment_id=" .payment_id "&payment_md5=" .payment_md5}}
-<td><a href="payment?action=edit&{{$second}}">View</a></td>
+<td>{{.status}}</td>
 </tr>{{end}}{{end}}
 </tbody>
 </table>

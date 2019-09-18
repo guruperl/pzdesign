@@ -1,6 +1,6 @@
 {{ template "header" .}}
-{{ template "campaignheader" .}}
+{{ template "advheader" .}}
 
-Deleted
+更新
 
 {{ template "footer" .}}

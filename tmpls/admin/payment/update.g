@@ -1,6 +1,6 @@
 {{ template "header" .}}
-{{ template "campaignheader" .}}
+{{ template "paymentheader" .}}
 
-Deleted
+更新成功
 
 {{ template "footer" .}}

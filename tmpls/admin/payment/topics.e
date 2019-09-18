@@ -17,7 +17,7 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="adv?action=edit&adv_id={{.adv_id}}">{{.email}}, {{.firstname}} {{.lastname}}</a></td>
+				<td><a href="adv?action=edit&adv_id={{.adv_id}}">{{.sender_name}}</a></td>
 				<td><a href="payment?action=edit&payment_id={{.payment_id}}">{{.amount}}</a></td>
 				<td>{{.paytype_value}}</td>
 				<td>{{.status}}</td>

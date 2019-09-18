@@ -2,6 +2,15 @@
 
 		</div>
 		<!-- /#page-wrapper -->
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>版权所有 &copy; 南京派兹 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
     </div>
     <!-- /#wrapper -->
 

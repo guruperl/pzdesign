@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
-Deleted
+Updated
 
 {{ template "footer" .}}
