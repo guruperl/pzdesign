@@ -25,7 +25,7 @@
                                 </li>
                                 <li><a href="#t2" data-toggle="tab">系统平台</a>
                                 </li>
-                                <li><a href="#t3" data-toggle="tab">人群</a>
+                                <li><a href="#t3" data-toggle="tab">人口属性</a>
                                 </li>
                                 <li><a href="#t4" data-toggle="tab">自定义标签</a>
                                 </li>
@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.state}}
-                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name=state value="{{$k}}" {{if index $v 1}}checked{{end}}>
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
@@ -55,11 +55,16 @@
 			</div>
 		</div>
 
-		<div class="tab-pane fade" id="t2">
-			{{range $key, $val := .Other.pzuaChinese}}<h4>{{index $pzAttrs $key}}</h4>
-			<select name={{$key}} multiple>{{range $k, $v := $val}}
-				<option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-			</select>{{end}}
+		<div class="tab-pane fade" id="t2">{{range $key, $val := .Other.pzuaChinese}}
+			<h4>{{index $pzAttrs $key}}</h4>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v := $val}}
+						<input class="form-check-input" type=checkbox name={{$key}} {{if index $v 1}}checked{{end }} value="{{$k}}">
+						<label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>{{end}}
 		</div>
 
 		<div class="tab-pane fade" id="t3">
@@ -67,7 +72,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
@@ -80,7 +85,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>

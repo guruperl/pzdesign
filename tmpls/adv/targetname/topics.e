@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.state}}
-                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name="state" value="{{$k}}" {{if index $v 1}}checked{{end}}>
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
@@ -67,7 +67,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
