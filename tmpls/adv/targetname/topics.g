@@ -3,7 +3,7 @@
 
 {{$pzAttrs := .Other.pzAttrsChinese}}
 {{ $dAttrs := .Other.dAttrsChinese }}
-{{ $dAofei := .Other.dAofei }}
+{{ $second := .Other.second }}
 
 <!-- /.row -->
 			<div class="row">
@@ -31,17 +31,22 @@
                             </ul>
 
 	<div class="tab-content">
-		<div class="tab-pane fade" id="t6">
-			{{range $key, $val := .Other.first}}<h4>{{$key}}</h4>
+		<div class="tab-pane fade" id="t6">{{range $key, $val := .Other.first}}{{$top := index $second $key}}
+			<h3>{{$key}}</h3>
+			{{range $k, $v:= $val}}{{$sub := index $v 0}}<h4>
+				<input class="form-check-input" type=checkbox name="scene" value="{{$k}}" {{if index $v 1}}checked{{end}}>
+				<label class="form-check-label">{{$sub}}</label>
+			</h4>{{if $top}}{{$ending := index $top $sub}}
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name="scene" value="{{$k}}" {{if index $v 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
-                    </div>
-                </div>
-            </div>{{end}}
-		</div>
+                    <div class="form-check form-check-inline">{{range $x, $y:= $ending}}
+                        <input class="form-check-input" type=checkbox name="scene" value="{{$x}}" {{if index $y 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $y 0}}</label>
+					{{end}}</div>
+				</div>
+			</div>{{end}}
+            {{end}}
+		{{end}}</div>
 
 		<div class="tab-pane fade in active" id="t1">
             <h3>省</h3>
