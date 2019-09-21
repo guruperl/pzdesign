@@ -3,6 +3,7 @@
 
 {{$pzAttrs := .Other.pzAttrsChinese}}
 {{ $dAttrs := .Other.dAttrsChinese }}
+{{ $dAofei := .Other.dAofei }}
 
 <!-- /.row -->
 			<div class="row">
@@ -21,19 +22,27 @@
 
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#t1" data-toggle="tab">地域定向</a>
-                                </li>
-                                <li><a href="#t2" data-toggle="tab">系统平台</a>
-                                </li>
-                                <li><a href="#t3" data-toggle="tab">人口属性</a>
-                                </li>
-                                <li><a href="#t4" data-toggle="tab">自定义标签</a>
-                                </li>
-                                <li><a href="#t5" data-toggle="tab">时间定向</a>
-                                </li>
+<li class="active"><a href="#t1" data-toggle="tab">地域定向</a></li>
+<li><a href="#t5" data-toggle="tab">时间定向</a></li>
+<li><a href="#t2" data-toggle="tab">系统平台</a></li>
+<li><a href="#t3" data-toggle="tab">人口属性</a></li>
+<li><a href="#t6" data-toggle="tab">场景营销</a></li>
+<li><a href="#t4" data-toggle="tab">自定义标签</a></li>
                             </ul>
 
 	<div class="tab-content">
+		<div class="tab-pane fade" id="t6">
+			{{range $key, $val := .Other.first}}<h4>{{$key}}</h4>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= $val}}
+                        <input class="form-check-input" type=checkbox name="scene" value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>{{end}}
+		</div>
+
 		<div class="tab-pane fade in active" id="t1">
             <h3>省</h3>
             <div class="form-group row">
@@ -53,6 +62,16 @@
 					</select>
 				</div>{{end}}
 			</div>
+
+            <h3>运营商</h3>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= .Other.isp}}
+                        <input class="form-check-input" type=checkbox name=isp value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>
 		</div>
 
 		<div class="tab-pane fade" id="t2">{{range $key, $val := .Other.pzuaChinese}}
