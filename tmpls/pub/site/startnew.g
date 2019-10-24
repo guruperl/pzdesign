@@ -85,7 +85,7 @@
     <div class="col-sm-2">
 	</div>
     <div class="col-sm-10">
-<button type="submit" class="btn btn-primary">提交广告组!</button>
+<button type="submit" class="btn btn-primary">提交新媒体</button>
     </div>
 </div>
 

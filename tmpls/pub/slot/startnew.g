@@ -29,22 +29,22 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputType" class="col-sm-2 col-form-label text-right">媒体类别:</label>
-    <div class="col-sm-10 col-form-label">{{ range $item := .Other.fl_mime }}
-        <div class="form-check form-check-inline mr-1">
-        <input type=checkbox class="form-check-input" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
-        <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
-        </div>{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">所在媒体平台:</label>
+    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">所在平台:</label>
     <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_platform }}
       <div class="form-check form-check-inline mr-1">
         <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if eq "Web" $item.which}}checked{{end}}>
         <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
       </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputType" class="col-sm-2 col-form-label text-right">接受媒体类:</label>
+    <div class="col-sm-10 col-form-label">{{ range $item := .Other.fl_mime }}
+        <div class="form-check form-check-inline mr-1">
+        <input type=checkbox class="form-check-input" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
+        <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
+        </div>{{end}}
     </div>
 </div>
 
