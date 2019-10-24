@@ -83,32 +83,6 @@
 </div>
 
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-2 col-form-label text-right">行业类别:</label>
-    <div class="col-sm-10">
-<table class="table table-sm table-condensed table-bordered">
-<tr>
-<th></th>
-<th>本属<br />
-<input type=radio id="ch_inherit" name=mychannel {{if eq $item.mychannel "Inherit"}}checked{{end}}  value="Inherit" />默认
-<input type=radio id="ch_own"     name=mychannel {{if eq $item.mychannel "Own"}}checked{{end}} value="Own" />自定义</th>
-<th>接受行业<br>
-<input type=radio id="ac_inherit" name=channel_order {{if eq $item.channel_order "Inherit"}}checked{{end}} value="Inherit" />默认
-<input type=radio id="ac_black" name=channel_order {{if eq $item.channel_order "Black"}}checked{{end}} value="Black" />黑
-<input type=radio id="ac_white" name=channel_order {{if eq $item.channel_order "White"}}checked{{end}} value="White" />白
-</th>
-</tr>
-<tbody>{{ with $item.chac_topics }}{{ range . }}
-<tr><td>{{.channel_name_g}}</td>
-<td class="text-center"><input name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
-<td class="text-center"><input name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
-</tr>{{end}}{{end}}
-</tobdy>
-</table>
-    </div>
-</div>
-
-
-<div class="form-group row">
     <div class="col-sm-2">
 	</div>
     <div class="col-sm-10">
@@ -122,27 +96,6 @@
       </div>
 
 {{ template "footer" .}}
-<script>
-$(document).ready(function(){
-    {{if eq $item.mychannel "Inherit"}}$("input[name='belong_ids']").hide(){{end}}
-    {{if eq $item.channel_order "Inherit"}}$("input[name='ac_ids']").hide(){{end}}
-    $("#ch_inherit").click(function(){
-        $("input[name='belong_ids']").hide()
-    });
-    $("#ch_own").click(function(){
-        $("input[name='belong_ids']").show()
-    });
-    $("#ac_inherit").click(function(){
-        $("input[name='ac_ids']").hide()
-    });
-    $("#ac_black").click(function(){
-        $("input[name='ac_ids']").show()
-    });
-    $("#ac_white").click(function(){
-        $("input[name='ac_ids']").show()
-    });
-});
-</script>
 
 
 </body>

@@ -11,7 +11,7 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>组名称</th>
+                  <th>媒体名称</th>
                   <th>URL</th>
                   <th>上线时间</th>
                   <th>激活状况</th>

@@ -127,7 +127,7 @@
 		<div class="panel panel-primary">
 			<div class="panel-body">
 <table class="table table-condensed table-sm table-bordered">
-hbtr>
+<tr>
 <th>行业名</th>
 <th>所属行业&nbsp; </th>
 <th>&nbsp; 

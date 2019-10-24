@@ -80,32 +80,6 @@
 </div>
 
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-2 col-form-label text-right">Channels:</label>
-    <div class="col-sm-10">
-<table class="table table-sm table-condensed table-bordered">
-<tr>
-<th></th>
-<th>My Channel<br />
-<input type=radio id="ch_inherit" name=mychannel checked value="Inherit" />Inherit
-<input type=radio id="ch_own"     name=mychannel value="Own" />Own</th>
-<th>Access Control<br>
-<input type=radio id="ac_inherit" name=channel_order checked value="Inherit" />Inherit
-<input type=radio id="ac_black" name=channel_order value="Black" />Black
-<input type=radio id="ac_white" name=channel_order value="White" />White
-</th>
-</tr>
-<tbody>{{ with .Other.channel_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
-<td class="text-center"><input name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
-<td class="text-center"><input name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
-</tr>{{end}}{{end}}
-</tobdy>
-</table>
-    </div>
-</div>
-
-
-<div class="form-group row">
     <div class="col-sm-2">
 	</div>
     <div class="col-sm-10">
@@ -119,27 +93,6 @@
       </div>
 
 {{ template "footer" .}}
-<script>
-$(document).ready(function(){
-	$("input[name='belong_ids']").hide()
-	$("input[name='ac_ids']").hide()
-    $("#ch_inherit").click(function(){
-        $("input[name='belong_ids']").hide()
-    });
-    $("#ch_own").click(function(){
-        $("input[name='belong_ids']").show()
-    });
-    $("#ac_inherit").click(function(){
-        $("input[name='ac_ids']").hide()
-    });
-    $("#ac_black").click(function(){
-        $("input[name='ac_ids']").show()
-    });
-    $("#ac_white").click(function(){
-        $("input[name='ac_ids']").show()
-    });
-});
-</script>
 
 
 </body>
