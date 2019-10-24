@@ -27,7 +27,6 @@
 <td><a class="btn btn-sm btn-primary" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">所有广告位</a></td>
 <!--
 td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">Channels</a></td>
-<td><a href="ac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">BW</a></td
 -->
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.site_name}}?')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
 </tr>

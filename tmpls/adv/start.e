@@ -80,7 +80,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="adv?action=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Campaigns<span class="fa arrow"></span></a>
@@ -109,9 +109,9 @@
                                 		<li>
                                     		<a href="chac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Channels</a>
 										</li>
-                                		<li>
+                                		<!-- li>
                                     		<a href="ac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Access Control</a>
-                                		</li>
+                                		</li -->
 									</ul>
 								</li>
 								{{end}}{{end}}
@@ -124,11 +124,9 @@
                         <li>
                             <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> Custom Tags</a>
                         </li>
-                        <!--
                         <li>
-			    <a href="report?action=topics"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
+			    <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
                         </li>
-                        --!>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

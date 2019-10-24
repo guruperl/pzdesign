@@ -64,7 +64,7 @@
 	</div>
 </div>
 
-<div class="form-group row">
+<!-- div class="form-group row">
 	<label for="inputAccessOrder" class="col-sm-3 col-form-label">黑白名单:</label>
 	<div class="col-sm-9">
 		<div class="form-check form-check-inline">
@@ -79,7 +79,7 @@
 			<input class="form-control" name="other_ids" placeholder="网站ID，用英文逗号分开" />
 		</p>
 	</div>
-</div>
+</div -->
 
 <div class="form-group row">
 	<label for="selectCampaignQuality" class="col-sm-3 col-form-label">本活动质量:</label>

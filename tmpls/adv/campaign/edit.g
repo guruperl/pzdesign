@@ -57,7 +57,7 @@
 	</div>
 </div>
 
-<div class="form-group row">
+<!-- div class="form-group row">
 	<label for="inputAccessOrder" class="col-sm-3 col-form-label">黑白名单:</label>
 	<div class="col-sm-9">
 		<div class="form-check form-check-inline">
@@ -65,7 +65,7 @@
 			<a class="btn btn-xs btn-warning" href="ac?action=topics&campaign_id={{$item.campaign_id}}&campaign_md5={{$item.campaign_md5}}&campaign_name={{$item.campaign_name | urlquery }}&entitytype_id=41">查看</a>
 		</div>
 	</div>
-</div>
+</div -->
 
 <div class="form-group row">
     <label for="selectCampaignQuality" class="col-sm-3 col-form-label">本活动质量:</label>

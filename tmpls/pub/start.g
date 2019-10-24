@@ -77,7 +77,7 @@ h1, h2, h3, h4, h5, h6, button {
       <nav class="sidebar-nav">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `ledger`) (eq $a `topicsPub24Hours`) }}active{{end}}" href="ledger?action=topicsPub24Hours"><i class="icon-speedometer"></i> 会员汇总</a>
+            <a class="nav-link {{if and (eq $c `pub`) (eq $a `dashboard`) }}active{{end}}" href="pub?action=dashboard"><i class="icon-speedometer"></i> 会员汇总</a>
           </li>
 
           <li class="nav-title">
@@ -90,7 +90,7 @@ h1, h2, h3, h4, h5, h6, button {
             <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> 添加新媒体</a>
           </li>
           <li class="nav-item">
-            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> 广告商黑白名单</a>
+            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> 广告审核</a>
           </li>
 
 
@@ -106,9 +106,6 @@ h1, h2, h3, h4, h5, h6, button {
           <li class="nav-item">
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&{{$attach}}"><i class="icon-pencil"></i> 添加广告位</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `ac`) (eq $a `topics`) }}active{{end}}" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> 黑白名单</a>
-          </li>
 
           {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-title">
             {{index .ARGS.slot_name 0}}
@@ -123,7 +120,7 @@ h1, h2, h3, h4, h5, h6, button {
             报表
           </li>
           <li class="nav-item">
-             <a href="ledge?action=payment" class="nav-link"><i class="icon-chart"></i> 收入</a>
+             <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> 收入</a>
           </li>
         </ul>
       </nav>

@@ -22,26 +22,6 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputAccessOrder" class="col-sm-2 col-form-label">Access Order:</label>
-    <div class="col-sm-4">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="access_order" id="ao_black" value="Black">
-            <label class="form-check-label" for="ao_black">Black</label>
-            <input class="form-check-input" type="radio" name="access_order" id="ao_white" value="White">
-            <label class="form-check-label" for="ao_white">White</label>
-            <input class="form-check-input" type="radio" name="access_order" id="ao_inherit" checked value="Inherit">
-            <label class="form-check-label" for="ao_inherit">Inherit</label>
-        </div>
-	</div>
-	<label class="col-sm-2 col-form-label">Advertiser IDs:</label>
-	<div class="col-sm-4">
-        <span id="myP" class="invisible">
-            <input class="form-control" name="other_ids" placeholder="advertiser IDs separated by comma" />
-        </span>
-    </div>
-</div>
-
-<div class="form-group row">
     <label for="selectSiteQuality" class="col-sm-2 col-form-label">Quality:</label>
     <div class="col-sm-10">
         <div class="card">

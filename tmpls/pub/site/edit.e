@@ -29,16 +29,6 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputAccessOrder" class="col-sm-2 col-form-label text-right">Access Control:</label>
-    <div class="col-sm-10">
-        <div class="form-check form-check-inline">
-			{{$item.access_order}}
-            <a class="btn btn-sm btn-warning" href="ac?action=topics&entitytype_id=31&{{$first}}">Check</a>
-        </div>
-    </div>
-</div>
-
-<div class="form-group row">
     <label for="selectSiteQuality" class="col-sm-2 col-form-label text-right">Site Quality:</label>
     <div class="col-sm-10">
         <div class="card">

@@ -27,26 +27,6 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputAccessOrder" class="col-sm-2 col-form-label text-right">黑白名单方式:</label>
-    <div class="col-sm-4">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="access_order" id="ao_black" value="Black">
-            <label class="form-check-label" for="ao_black">黑名单</label>
-            <input class="form-check-input" type="radio" name="access_order" id="ao_white" value="White">
-            <label class="form-check-label" for="ao_white">白名单</label>
-            <input class="form-check-input" type="radio" name="access_order" id="ao_inherit" checked value="Inherit">
-            <label class="form-check-label" for="ao_inherit">默认</label>
-        </div>
-	</div>
-    <label for="inputAdvID" class="col-sm-2 col-form-label text-right">广告商代码:</label>
-	<div class="col-sm-4">
-        <span id="myP" class="invisible">
-            <input class="form-control" name="other_ids" placeholder="输入广告商代码，用英文逗号分开" />
-        </span>
-    </div>
-</div>
-
-<div class="form-group row">
     <label for="selectSiteQuality" class="col-sm-2 col-form-label text-right">网站质量:</label>
     <div class="col-sm-10">
         <div class="card">

@@ -63,18 +63,18 @@
 </table>
 </div>
 
-<h5>可在业绩报表里添加网站</h5>
+<h5>可在业绩报表里添加媒体或网站</h5>
 <!--
 <form name=f2 class="form" method=post action="ac">
 <input type=hidden name=action value="insert" />
-<input type=hidden name=othertype_id value="31" />
 {{if eq "41" (index .ARGS.entitytype_id 0)}}
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
 <input type=hidden name=campaign_name value="{{index .ARGS.campaign_name 0}}" />
 <input type=hidden name=entitytype_id value="41" />{{else}}
 <input type=hidden name=entitytype_id value="4" />{{end}}
-新增网站ID: <input type=text name=other_id size=12 />
+选择：<input type=radio name=othertype_id value=3>媒体 <input type=radio name=othertype_id value=31>网站
+它的ID: <input type=text name=other_id size=12 />
 <input type=submit value=" 确定 " />
 </form>
 -->

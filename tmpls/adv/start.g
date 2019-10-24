@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6, button {
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
+                            <a href="adv?action=dashboard"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
                         </li>
                         <li>
                             <a href="campaign?action=topics"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动</a>
@@ -126,9 +126,9 @@ h1, h2, h3, h4, h5, h6, button {
                                 <li>
                                 	<a href="chac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">行业定向</a>
 								</li>
-                               	<li>
+                               	<!-- li>
                                    	<a href="ac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">活动黑白名单</a>
-                             	</li>
+                             	</li -->
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -139,11 +139,9 @@ h1, h2, h3, h4, h5, h6, button {
                         <li>
                             <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> 自定义标签</a>
                         </li>
-                        <!-- 
                         <li>
-							<a href="report?action=topics"><i class="fa fa-edit fa-fw"></i> 财务报告</a>
+							<a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> 财务报告</a>
                         </li>
-                        --!>
 
                     </ul>
                 </div>

@@ -68,7 +68,7 @@
       <nav class="sidebar-nav">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `ledger`) (eq $a `topicsPub24Hours`) }}active{{end}}" href="ledger?action=topicsPub24Hours"><i class="icon-speedometer"></i> Dashboard </a>
+            <a class="nav-link {{if and (eq $c `pub`) (eq $a `dashboard`) }}active{{end}}" href="pub?action=dashboard"><i class="icon-speedometer"></i> Dashboard </a>
           </li>
 
           <li class="nav-title">
@@ -96,9 +96,6 @@
           <li class="nav-item">
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&{{$attach}}"><i class="icon-pencil"></i> Create Slot</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `ac`) (eq $a `topics`) }}active{{end}}" href="ac?action=topics&entitytype_id=31&{{$attach}}"><i class="icon-shield"></i> Access Control</a>
-          </li>
           {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-title">
             {{index .ARGS.slot_name 0}}
           </li>
@@ -112,7 +109,7 @@
             Reports
           </li>
           <li class="nav-item">
-             <a href="ledge?action=payment" class="nav-link"><i class="icon-chart"></i> Incomes</a>
+             <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> Incomes</a>
           </li>
         </ul>
       </nav>
