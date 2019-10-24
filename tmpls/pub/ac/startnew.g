@@ -5,7 +5,7 @@
 
           <div class="card">
             <div class="card-header">
-              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}媒体商户{{index .ARGS.p_company 0}}{{end}}</em>审核
+              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}媒体商户{{index .ARGS.p_company 0}}{{end}}</em>的创意审核
             </div>
             <div class="card-body">
 
@@ -29,7 +29,6 @@
 
 
 
-{{if .Lists}}
           <div class="card">
             <div class="card-header">
               <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}商户{{index .ARGS.p_company 0}}{{end}}</em>目前的黑白名单
@@ -40,25 +39,43 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>广告商公司</th>
-                  <th>URL</th>
+                  <th>公司</th>
                   <th>广告活动</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
-<tr><td>{{.company}}</td>
-<td>{{.url}}</td>
-<td>{{.campaign_name}}</td>
-<td><a href="ac?action=delete&ac_id={{.ac_id}}&{{if eq (index $args.entitytype_id 0) "3"}}entitytype_id=3{{else}}{{ print `entytitype_id=31&site_id=` (index $args.site_id 0) `&site_md5=` (index $args.site_md5 0) `&site_name=` (index $args.site_name 0 | urlquery) }}{{end}}">Del</a></td>
+<tr><td>{{.adv_name}}</td>
+<!--
+<td><a href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}">{{.campaign_name}}</a></td>
+-->
+<td><a href="javascript:void(0);" data-title="{{.campaign_name}}" data-href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}" class="openPopup">{{.campaign_name}}</a></td>
+<td><input type=checkbox name=ac_id value="{{.ac_id}}"></td>
 </tr>{{end}}{{end}}
 </tobdy>
 </table>
 </div>
             </div>
           </div>
-{{end}}
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">物料</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+    <!-- Modal content-->
+  </div>
+</div>
+<!-- /Modal -->
 
           <div class="card">
             <div class="card-header">
@@ -80,14 +97,19 @@
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header">
-              <a class="btn btn-primary" href="ac?action=startnew&entitytype_id={{index .ARGS.entitytype_id 0}}">在线查看广告主创意</a>
-            </div>
-		  </div>
-
-
 {{ template "footer" }}
+<script>
+  $(document).ready(function(){
+    $('.openPopup').on('click',function(){
+      var dataTITLE = $(this).attr('data-title');
+      var dataURL = $(this).attr('data-href');
+      $('.modal-title').html(dataTITLE);
+      $('.modal-body').load(dataURL,function(){
+        $('#myModal').modal({show:true});
+      });
+    }); 
+  });
+</script>
 </body>
 </html>
 
