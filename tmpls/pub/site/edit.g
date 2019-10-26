@@ -1,17 +1,8 @@
-{{ template "header" .}}
-{{ template "siteheader" .}}
-
 {{$cAttrs := .Other.campaignAttrsChinese }}
 {{$sAttrs := .Other.siteAttrsChinese }}
 
 {{$item := index .Lists 0}}
 {{$first := print "site_id=" $item.site_id "&site_md5=" $item.site_md5 "&site_name=" ($item.site_name | urlquery)}}
-
-          <div class="card">
-            <div class="card-header">
-              编辑媒体 <em>{{$item.site_name}}</em>
-            </div>
-            <div class="card-body">
 
 <form method=post action=site>
 <input type=hidden name="action" value="update" />
@@ -104,12 +95,3 @@
 </div>
 
 </form>
-
-
-        </div>
-      </div>
-{{ template "footer" .}}
-
-</body>
-</html>
-

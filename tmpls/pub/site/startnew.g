@@ -1,16 +1,7 @@
-{{ template "header" .}}
-{{ template "siteheader" .}}
-
 {{$cAttrs := .Other.campaignAttrsChinese }}
 {{$sAttrs := .Other.siteAttrsChinese }}
 {{$cDefault := .Other.campaignsDefault }}
 {{$sDefault := .Other.sitesDefault }}
-
-          <div class="card">
-            <div class="card-header">
-              添加媒体（广告位组）
-            </div>
-            <div class="card-body">
 
 <form class=form class="form" action="site" method=post>
 <input type=hidden name="action" value="insert">
@@ -99,26 +90,3 @@
 </div>
 
 </form>
-
-
-        </div>
-      </div>
-{{ template "footer" .}}
-
-<script>
-$(document).ready(function(){
-    $("#ao_inherit").click(function(){
-        $("#myP").addClass('invisible');
-    });
-    $("#ao_black").click(function(){
-        $("#myP").removeClass('invisible');
-    });
-    $("#ao_white").click(function(){
-        $("#myP").removeClass('invisible');
-    });
-});
-</script>
-
-</body>
-</html>
-
