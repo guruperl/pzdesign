@@ -30,7 +30,7 @@
 <td>{{.created}}</td>
 <td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">广告码</button></td>
 <td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API码</button></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">删除</a></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确信删除此广告位{{.slot_name}}吗？此操作不可更改。')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">删除</a></td>
 {{end}}</tobdy>
 
 </table>
@@ -42,7 +42,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title">应用网页广告码放置</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
@@ -74,7 +74,7 @@ pzLoadAds({
                 </code></pre>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
               </div>
             </div>
             <!-- /.modal-content -->
@@ -122,7 +122,7 @@ POST下列JSON请求至{{$serverScript}}:
 其中 code，slot 与送来的参数一样。html 表示在此显示广告的HTML代码，开发者需解析后获取广告物料。
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
               </div>
             </div>
             <!-- /.modal-content -->

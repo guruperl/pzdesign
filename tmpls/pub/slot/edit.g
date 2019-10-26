@@ -43,7 +43,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputType" class="col-sm-2 col-form-label text-right">接受媒体类:</label>
+    <label for="inputType" class="col-sm-2 col-form-label text-right">可投放类:</label>
     <div class="col-sm-10 col-form-label">{{ range $one := .Other.fl_mime }}
       <div class="form-check form-check-inline mr-1">
         <input class="form-check-input" type="checkbox" value="{{$one.which}}" name="fl_mime" {{if $one.selected}}checked{{end}}>
@@ -53,7 +53,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">页面级别:</label>
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">前后级别:</label>
     <div class="col-sm-10 col-form-label">{{ range $one := .Other.qa_pagelevel }}
 		<div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=radio name=qa_pagelevel value="{{$one.which}}" {{if $one.selected }}checked{{end}} >

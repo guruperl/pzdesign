@@ -9,7 +9,8 @@
 
                         <section class="row">
                             <div class="col-12">
-                                <h3 class="mb-4">本账号下所有媒体</h3>
+                                <h3 class="mb-4">媒体管理</h3>
                             </div>
                         </section>
+
 {{ end }}
