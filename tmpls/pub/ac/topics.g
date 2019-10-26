@@ -82,7 +82,7 @@
 
           <div class="card">
             <div class="card-header">
-              <a class="btn btn-primary" href="ac?action=startnew&entitytype_id={{index .ARGS.entitytype_id 0}}">在线查看广告主创意</a>
+              <a class="btn btn-primary" href="ac?action=startnew&entitytype_id={{index .ARGS.entitytype_id 0}}">在线查看广告主</a>
             </div>
 		  </div>
 

@@ -18,8 +18,7 @@
                   <th>预算</th>
                   <th>总曝光</th>
                   <th>总点击</th>
-                  <td colspan=4 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">创建活动</a>
-</td>
+                  <th colspan=4 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">创建活动</a></th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}

@@ -35,26 +35,30 @@
             </div>
             <div class="card-body">
 
+<form name=f2 class="form" method=post action="ac">
+<input type=hidden name=entitytype_id value="{{index .ARGS.entitytype_id 0}}" />
+<input type=hidden name=action value="inserts" />
 <div class="table-responsive">
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
                   <th>公司</th>
+                  <th></th>
                   <th>广告活动</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr><td>{{.adv_name}}</td>
-<!--
-<td><a href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}">{{.campaign_name}}</a></td>
--->
+<td><input type=checkbox name=adv_ids {{if .othertype_id}}{{if eq 4 .othertype_id}}checked{{end}}{{end}} value="{{.adv_id}}"></td>
 <td><a href="javascript:void(0);" data-title="{{.campaign_name}}" data-href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}" class="openPopup">{{.campaign_name}}</a></td>
-<td><input type=checkbox name=ac_id value="{{.ac_id}}"></td>
+<td><input type=checkbox name=campaign_ids {{if .othertype_id}}{{if eq 41 .othertype_id}}checked{{end}}{{end}} value="{{.campaign_id}}"></td>
 </tr>{{end}}{{end}}
 </tobdy>
 </table>
 </div>
+<button type="submit" class="btn btn-primary">提交审核结果</button>
+</form>
             </div>
           </div>
 
@@ -76,26 +80,6 @@
   </div>
 </div>
 <!-- /Modal -->
-
-          <div class="card">
-            <div class="card-header">
-              添加审核名单
-            </div>
-            <div class="card-body">
-<form name=f2 class="form" method=post action="ac">
-<input type=hidden name=action value="insert" />
-{{if eq "31" (index .ARGS.entitytype_id 0)}}
-<input type=hidden name=site_id value="{{index .ARGS.site_id 0}}" />
-<input type=hidden name=site_md5 value="{{index .ARGS.site_md5 0}}" />
-<input type=hidden name=site_name value="{{index .ARGS.site_name 0}}" />
-<input type=hidden name=entitytype_id value="31" />{{else}}
-<input type=hidden name=entitytype_id value="3" />{{end}}
-选择：<input type=radio name=othertype_id value="4" />广告商 <input type=radio name=othertype_id value="41" />广告活动
-其代码: <input type=text name=other_id size=12 />
-<button type=submit class="btn btn-sm btn-primary">添加</button>
-</form>
-            </div>
-          </div>
 
 {{ template "footer" }}
 <script>
