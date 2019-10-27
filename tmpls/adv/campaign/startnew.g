@@ -2,6 +2,12 @@
 {{$sAttrs := .Other.siteAttrsChinese }}
 {{$cDefault := .Other.campaignsDefault }}
 {{$sDefault := .Other.sitesDefault }}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        新建广告活动
+                    </div>
+                    <div class="panel-body">
+
 
 <form class=form method=post action=campaign>
 <input type=hidden name="action" value="insert" />
@@ -116,7 +122,7 @@
 <th>行业名</th>
 <th>本属行业</th>
 <th>要求发布媒体行业：
-<input class="form-control-inline" type=radio name=channel_order value="Black" />黑名单
+<input class="form-control-inline" type=radio name=channel_order value="Black" checked />黑名单
 <input class="form-control-inline" type=radio name=channel_order value="White" />白名单
 </th>
 </tr>
@@ -143,3 +149,6 @@
 </div>
 
 </form>
+
+	</div>
+</div>

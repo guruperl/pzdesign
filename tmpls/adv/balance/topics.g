@@ -1,8 +1,3 @@
-{{ template "header" .}}
-{{ template "balanceheader" .}}
-
-        <div class="row">
-            <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
 						总预算
@@ -27,10 +22,10 @@
 <thead> <tr> <th> </th> <th>费用预算</th> <th>曝光次数</th> <th>点击次数</th> <th> </th> </tr> </thead>
 <tbody> <tr>
 <td>预计值: </td>
-<td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}" /></td>
-<td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}" /></td>
-<td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}" /></td>
-<td><input type=hidden name=balance_id value={{.balance_id}} /><input class="btn btn-sm" type=submit value="保存" /></td>
+<td><input type=text size=8 name=limit_spend value="{{if .limit_spend}}{{ .limit_spend}}{{end}}" /></td>
+<td><input type=text size=8 name=limit_imp value="{{if .limit_imp}}{{ .limit_imp}}{{end}}" /></td>
+<td><input type=text size=8 name=limit_cli value="{{if .limit_cli}}{{ .limit_cli}}{{end}}" /></td>
+<td><input type=hidden name=balance_id value={{.balance_id}} /><input class="btn btn-sm btn-primary" type=submit value="保存" /></td>
 </tr> <tr>
 <td>实际值: </td>
 <td>{{ .current_spend}}</td>
@@ -89,10 +84,10 @@
 <thead> <tr><th> </th> <th>费用预算</th> <th>曝光次数</th> <th>点击次数</th><th> </th> </tr> </thead>
 <tbody> <tr>
 <td>预计值</td>
-<td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}"></td>
-<td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}"></td>
-<td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}"></td>
-<td><input type=hidden name=balance_id value={{.balance_id}}><input class="btn btn-sm" type=submit value="保存"></td>
+<td><input type=text size=8 name=limit_spend value="{{if .limit_spend}}{{ .limit_spend}}{{end}}"></td>
+<td><input type=text size=8 name=limit_imp value="{{if .limit_imp}}{{ .limit_imp}}{{end}}"></td>
+<td><input type=text size=8 name=limit_cli value="{{if .limit_cli}}{{ .limit_cli}}{{end}}"></td>
+<td><input type=hidden name=balance_id value={{.balance_id}}><input class="btn btn-sm btn-primary" type=submit value="保存"></td>
 </tr> <tr>
 <td>实际值:</td>
 <td>{{ .current_spend}}</td>
@@ -122,7 +117,3 @@
 </form>
 			</div>
 		</div>
-	</div>
-</div>
-
-{{ template "footer" }}

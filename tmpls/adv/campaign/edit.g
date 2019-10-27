@@ -3,6 +3,12 @@
 
 {{$item := index .Lists 0}}
 
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        修改广告活动
+                    </div>
+                    <div class="panel-body">
+
 <form method=post action=campaign>
 <input type=hidden name="action" value="update" />
 <input type=hidden name="campaign_id" value="{{$item.campaign_id}}" />
@@ -10,17 +16,17 @@
 <div class="form-group row">
 	<label for="inputCampaigName" class="col-sm-2 col-form-label">活动名称:</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name="campaign_name" value="{{$item.campaign_name}}" placeholder="Name of Campaign" />
+		<input type=text class="form-control" name="campaign_name" value="{{$item.campaign_name}}">
 	</div>
 	<label for="inputPageCap" class="col-sm-2 col-form-label">单页创意数:</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control-sm" name="page_cap" value="{{$item.page_cap}}" placeholder="campaign items on a page" />
+		<input type=text class="form-control-sm" name="page_cap" value="{{$item.page_cap}}">
 	</div>
 </div>
 
 <div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-2 col-form-label">参数设置：</label>
-	<div class="col-sm-5">
+	<div class="col-sm-6">
         <div class="panel panel-primary">
             <div class="panel-body">
 频次控制
@@ -28,12 +34,12 @@
 <table class="table-sm table-bordered table-condensed">
 <tr><th>类型</th><th>数值</th><th>周期</th><th>间隔</th></tr>
 <tr><td>曝光次数: </td>
-<td><input type=text name=cpm_fc value="{{$item.cpm_fc}}" size=3></td>
-<td><input type=text name=cpm_length value="{{$item.cpm_length}}" size=6>分钟</td>
-<td><input type=text name=cpm_throttle value="{{$item.cpm_throttle}}" size=6>分钟</td></tr>
+<td><input type=text name=cpm_fc value="{{if $item.cpm_fc}}{{$item.cpm_fc}}{{end}}" size=3></td>
+<td><input type=text name=cpm_length value="{{if $item.cpm_length}}{{$item.cpm_length}}{{end}}" size=6>分钟</td>
+<td><input type=text name=cpm_throttle value="{{if $item.cpm_throttle}}{{$item.cpm_throttle}}{{end}}" size=6>分钟</td></tr>
 <tr><td>点击次数: </td>
-<td><input type=text name=cpc_fc value="{{$item.cpc_fc}}" size=3></td>
-<td><input type=text name=cpc_length value="{{$item.cpc_fc}}" size=6>分钟</td>
+<td><input type=text name=cpc_fc value="{{if $item.cpc_fc}}{{$item.cpc_fc}}{{end}}" size=3></td>
+<td><input type=text name=cpc_length value="{{if $item.cpc_length}}{{$item.cpc_length}}{{end}}" size=6>分钟</td>
 <td></td></tr>
 </table>
 </div>
@@ -41,19 +47,20 @@
         </div>
 	</div>
 
-    <div class="col-sm-5">
+    <div class="col-sm-4">
         <div class="panel panel-primary">
             <div class="panel-body">
             活动总预算
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
-<tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr>
-<tr><td>全部: </td><td><input type=text name=limit_spend value="{{$item.limit_spend}}" size=8 /></td>
-<td><input type=text name=limit_imp value="{{$item.limit_imp}}" size=8 /></td>
-<td><input type=text name=limit_cli value="{{$item.limit_cli}}" size=8 /></td></tr>
-<tr><td>每天: </td><td><input type=text name=daily_spend value="{{$item.daily_spend}}" size=8 /></td>
-<td><input type=text name=daily_imp value="{{$item.daily_imp}}" size=8 /></td>
-<td><input type=text name=daily_cli value="{{$item.daily_cli}}" size=8 /></td></tr>
+<thead><tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr></thead>
+<tbody>{{range $one := $item.balance_topics}}
+<tr><td>{{if eq $one.which "total_balance_id"}}全部{{else}}每天{{end}}: </td>
+<td>{{$one.limit_spend}}</td>
+<td>{{$one.limit_imp}}</td>
+<td>{{$one.limit_cli}}</td>
+</tr>
+{{end}}</tbody>
 </table>
 </div>
             </div>
@@ -140,3 +147,6 @@
 </div>
 
 </form>
+
+	</div>
+</div>

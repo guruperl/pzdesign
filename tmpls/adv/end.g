@@ -42,7 +42,7 @@ $(document).ready(function(){
 });
 
   $(document).ready(function(){
-    $('#startnewPopup,#editPopup').on('click',function(){
+    $('#startnewPopup,#editPopup,#balancePopup,#creativePopup').on('click',function(){
       var dataTITLE = $(this).attr('data-title');
       var dataURL = $(this).attr('data-href');
       $('#d-title').html(dataTITLE);
