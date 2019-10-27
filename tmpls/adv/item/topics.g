@@ -11,6 +11,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+
                             <div class="table-responsive">
 								<table class="table table-striped table-nordered table-hover">
 <thead><tr>
@@ -43,6 +44,7 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->
+			</div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
