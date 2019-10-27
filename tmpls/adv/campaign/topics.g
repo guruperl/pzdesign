@@ -18,20 +18,20 @@
                   <th>预算</th>
                   <th>总曝光</th>
                   <th>总点击</th>
-                  <th colspan=4 class="text-right"><a class="btn btn-info" href="campaign?action=startnew">创建活动</a></th>
+                  <th colspan=4 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告活动" data-href="campaign?action=startnew" id="startnewPopup">创建活动</a>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
 {{$small := print "campaign_id=" .campaign_id "&campaign_md5=" .campaign_md5 "&campaign_name=" (.campaign_name | urlquery )}}
-<td><a href="campaign?action=edit&{{$small}}">{{.campaign_name}}</a></td>
+<td><a href="javascript:void(0);" data-title="活动更新：{{.campaign_name}}" data-href="campaign?action=edit&{{$small}}" id="editPopup">{{.campaign_name}}</a></td>
 <td>{{.created}}</td>
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
-<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">已有创意</a></td>
-<td><a class="btn btn-sm btn-info" href="item?action=startnew&{{$small}}">添加创意</a></td>
-<td><a class="btn btn-sm btn-success" href="targetname?action=topics&{{$small}}">标签定向</a></td>
+<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">所有创意</a></td>
+<td><a class="btn btn-sm btn-info" href="balance?action=topics&{{$small}}&entitytype_id=41">活动预算</a></td>
+<td><a class="btn btn-sm btn-success" href="targetname?action=topics&{{$small}}">人群定向</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('您确定要删除活动（{{.campaign_name}}）吗？')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
 </tr>
 {{end}}{{end}}</tobdy>
@@ -45,4 +45,25 @@
                 </div>
                 <!-- /.col-lg-6 -->
  </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="d-title" class="modal-title">广告活动</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div id="d-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+    <!-- Modal content-->
+  </div>
+</div>
+<!-- /Modal -->
+
 {{ template "footer" }}

@@ -1,33 +1,29 @@
-{{ template "header" .}}
-{{ template "campaignheader" .}}
-
 {{$cAttrs := .Other.campaignAttrsChinese }}
 {{$sAttrs := .Other.siteAttrsChinese }}
 {{$cDefault := .Other.campaignsDefault }}
 {{$sDefault := .Other.sitesDefault }}
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            新建活动
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-
-<form method=post action=campaign>
+<form class=form method=post action=campaign>
 <input type=hidden name="action" value="insert" />
 
 <div class="form-group row">
-	<label for="inputCampaigName" class="col-sm-3 col-form-label">活动名称:</label>
-	<div class="col-sm-9">
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">活动名称：</label>
+	<div class="col-sm-4">
 		<input type=text class="form-control" name=campaign_name placeholder="名称" />
+	</div>
+	<label for="inputPageCap" class="col-sm-2 col-form-label">单页创意数:</label>
+	<div class="col-sm-4">
+		<input type=text class="form-control" name=page_cap placeholder="最多不超过" />
 	</div>
 </div>
 
 <div class="form-group row">
-	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">频次控制:</label>
-	<div class="col-sm-9">
+	<label for="tableFrequencyCap" class="col-sm-2 col-form-label">参数设置：</label>
+	<div class="col-sm-5">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+频次控制
+<div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
 <tr><th>类型</th><th>数值</th><th>周期</th><th>间隔</th></tr>
 <tr><td>曝光次数: </td>
@@ -39,20 +35,17 @@
 <td><input type=text name=cpc_length size=6>分钟</td>
 <td></td></tr>
 </table>
-	</div>
 </div>
-
-<div class="form-group row">
-	<label for="inputPageCap" class="col-sm-3 col-form-label">单页创意数:</label>
-	<div class="col-sm-9">
-		<input type=text class="form-control-sm" name=page_cap placeholder="最多不超过" />
+			</div>
+		</div>
 	</div>
-</div>
 
-<div class="form-group row">
-	<label for="tableBudget" class="col-sm-3 col-form-label">预算:</label>
-	<div class="col-sm-9">
-<table class="table-bordered table-condensed">
+	<div class="col-sm-5">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+			活动总预算
+<div class="table-responsive">
+<table class="table-sm table-bordered table-condensed">
 <tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr>
 <tr><td>全部: </td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
@@ -61,32 +54,21 @@
 <td><input type=text name=daily_imp size=8 /></td>
 <td><input type=text name=daily_cli size=8 /></td></tr>
 </table>
+</div>
+			</div>
+		</div>
 	</div>
+
 </div>
 
-<!-- div class="form-group row">
-	<label for="inputAccessOrder" class="col-sm-3 col-form-label">黑白名单:</label>
-	<div class="col-sm-9">
-		<div class="form-check form-check-inline">
-			<input class="form-check-input" type="radio" name="access_order" id="ao_black" value="Black">
-			<label class="form-check-label" for="ao_black">黑名单</label>
-			<input class="form-check-input" type="radio" name="access_order" id="ao_white" value="White">
-			<label class="form-check-label" for="ao_white">白名单</label>
-			<input class="form-check-input" type="radio" name="access_order" id="ao_inherit" checked value="Inherit">
-			<label class="form-check-label" for="ao_inherit">系统默认</label>
-		</div>
-		<p id="myP" class="hidden">
-			<input class="form-control" name="other_ids" placeholder="网站ID，用英文逗号分开" />
-		</p>
-	</div>
-</div -->
-
 <div class="form-group row">
-	<label for="selectCampaignQuality" class="col-sm-3 col-form-label">本活动质量:</label>
-	<div class="col-sm-9">
+	<label for="selectCampaignQuality" class="col-sm-2 col-form-label">质量控制：</label>
+	<div class="col-sm-5">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table class="table table-condensed">
+本广告活动质量
+<div class="table-responsive">
+<table class="table-sm table-condensed table-striped">
 	<colgroup>
             <col class="col-md-3">
             <col class="col-md-9">
@@ -96,17 +78,17 @@
 <option {{if eq $k $default}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 	</tbody>
 </table>
+</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="form-group row">
-	<label for="selectSiteQuality" class="col-sm-3 col-form-label">可接受网站质量:</label>
-	<div class="col-sm-9">
+	<div class="col-sm-5">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table class="table table-condensed">
+要求媒体的质量
+<div class="table-responsive">
+<table class="table-sm table-condensed table-striped">
     <colgroup>
             <col class="col-md-3">
             <col class="col-md-9">
@@ -116,32 +98,37 @@
 <option {{if eq $k $default}}selected{{end}} value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
 	</tbody>
 </table>
+</div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-3 col-form-label">行业设置:</label>
-    <div class="col-sm-9">
+    <label for="checkChannels" class="col-sm-2 col-form-label">行业匹配：</label>
+    <div class="col-sm-10">
 		<div class="panel panel-primary">
 			<div class="panel-body">
-<table class="table table-condensed table-sm table-bordered">
+<div class="table-responsive">
+<table class="table-condensed table-sm table-striped">
+<thead>
 <tr>
 <th>行业名</th>
-<th>所属行业&nbsp; </th>
-<th>&nbsp; 
-<input type=radio name=channel_order value="Black" />行业黑名单
-<input type=radio name=channel_order value="White" />白名单
+<th>本属行业</th>
+<th>要求发布媒体行业：
+<input class="form-control-inline" type=radio name=channel_order value="Black" />黑名单
+<input class="form-control-inline" type=radio name=channel_order value="White" />白名单
 </th>
 </tr>
+</thead>
 <tbody>{{ with .Other.channel_topics }}{{ range . }}
 <tr><td>{{.channel_name_g}}</td>
-<td class="text-center"><input name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
-<td class="text-center"><input name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
+<td class="text-center"><input class="form-control-inline" name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
+<td class="text-center"><input class="form-control-inline" name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}
 </tobdy>
 </table>
+</div>
 			</div>
 		</div>
 	</div>
@@ -156,13 +143,3 @@
 </div>
 
 </form>
-
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-{{template "footer"}}

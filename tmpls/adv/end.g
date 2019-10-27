@@ -40,6 +40,18 @@ $(document).ready(function(){
         $("#myP").removeClass('hidden');
     });
 });
+
+  $(document).ready(function(){
+    $('#startnewPopup,#editPopup').on('click',function(){
+      var dataTITLE = $(this).attr('data-title');
+      var dataURL = $(this).attr('data-href');
+      $('#d-title').html(dataTITLE);
+      $('#d-body').load(dataURL,function(){
+        $('#myModal').modal({show:true});
+      });
+    });
+  });
+
 </script>
 
 

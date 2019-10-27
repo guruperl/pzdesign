@@ -15,7 +15,7 @@
                   <th>URL</th>
                   <th>上线时间</th>
                   <th>激活状况</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="新填新媒体" data-href="site?action=startnew" id="startnewPopup">添加新的媒体</a> </th>
+                  <th colspan=2 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加媒体" data-href="site?action=startnew" id="startnewPopup">添加新的媒体</a> </th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
