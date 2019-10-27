@@ -73,7 +73,7 @@
 <h5>创意预算：</h5>
 <div class="table-responsive">
 <table class="table-sm table-condensed table-striped">
-<thead><tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr></thead>
+<thead><tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr></thead>
 <tbody>
 <tr><td>全部: </td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
@@ -100,28 +100,28 @@
 
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">媒体平台:</label>
-    <div class="col-sm-4">{{ range $item := .Other.fl_platform }}
+    <label for="inputPlatform" class="col-sm-1 col-form-label text-right">平台:</label>
+    <div class="col-sm-5">{{ range $item := .Other.fl_platform }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_platform value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">广告位深度:</label>
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">前后深度:</label>
     <div class="col-sm-4">{{ range $item := .Other.fl_pagelevel }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputClock" class="col-sm-2 col-form-label text-right">页面方向:</label>
     <div class="col-sm-10">{{ range $item := .Other.fl_clock }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_clock value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}点{{end}}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_clock value="{{$item.which}}" checked />{{$item.label_chinese}}点{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputYaxis" class="col-sm-2 col-form-label text-right">上下位置:</label>
     <div class="col-sm-10">{{ range $item := .Other.fl_yaxis }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_yaxis value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_yaxis value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 

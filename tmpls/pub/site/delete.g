@@ -3,7 +3,7 @@
 
          <div class="card">
             <div class="card-body">
-<h4>媒体更新完成。</h4>
+<h4>媒体删除完成。</h4>
         </div>
         </div>
 

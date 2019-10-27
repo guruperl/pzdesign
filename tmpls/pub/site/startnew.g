@@ -63,8 +63,8 @@
 <th>行业名</th>
 <th>本属行业</th>
 <th>要求广告活动行业：
-<input class="form-control-inline" type=radio name=channel_order value="Black" />黑名单
-<input class="form-control-inline" type=radio name=channel_order value="White" />白名单
+<input class="form-control-inline" type=radio name=channel_order value="Black" checked>黑名单
+<input class="form-control-inline" type=radio name=channel_order value="White">白名单
 </th>
 </tr>
 </thead>

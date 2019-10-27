@@ -31,11 +31,11 @@
 <div class="form-group row">
     <label for="inputStartx" class="col-sm-2 col-form-label text-right">起始时间:</label>
     <div class="col-sm-4">
-        <input type=text class="form-control" name="startx" value="{{$item.startx}}">
+        <input type=text class="form-control" name="startx" value="{{if $item.startx}}{{$item.startx}}{{end}}">
     </div>
     <label for="inputEndx" class="col-sm-2 col-form-label text-right">截止时间:</label>
     <div class="col-sm-4">
-        <input type=text class="form-control" name="endx" value="{{$item.endx}}">
+        <input type=text class="form-control" name="endx" value="{{if $item.endx}}{{$item.endx}}{{end}}">
     </div>
 </div>
 
@@ -77,7 +77,7 @@
             创意预算
 <div class="table-responsive">
 <table class="table-sm table-stripe table-condensed">
-<thead><tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr></thead>
+<thead><tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr></thead>
 <tbody>{{range $one := $item.balance_topics}}
 <tr><td>{{if eq $one.which "total_balance_id"}}全部{{else}}每天{{end}}: </td>
 <td>{{$one.limit_spend}}</td>
@@ -101,12 +101,12 @@
 	<div class="panel-body">
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">平台:</label>
-    <div class="col-sm-4">{{ range $item := .Other.fl_platform }}
+    <label for="inputPlatform" class="col-sm-1 col-form-label text-right">平台:</label>
+    <div class="col-sm-5">{{ range $item := .Other.fl_platform }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_platform value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">页面级别:</label>
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">前后深度:</label>
     <div class="col-sm-4">{{ range $item := .Other.fl_pagelevel }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
