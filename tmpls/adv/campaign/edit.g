@@ -26,18 +26,18 @@
 
 <div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-2 col-form-label">参数设置：</label>
-	<div class="col-sm-6">
+	<div class="col-sm-5">
         <div class="panel panel-primary">
             <div class="panel-body">
 频次控制
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
-<tr><th>类型</th><th>数值</th><th>周期</th><th>间隔</th></tr>
-<tr><td>曝光次数: </td>
+<tr><th>类型</th><th>次数</th><th>周期</th><th>间隔</th></tr>
+<tr><td>曝光: </td>
 <td><input type=text name=cpm_fc value="{{if $item.cpm_fc}}{{$item.cpm_fc}}{{end}}" size=3></td>
 <td><input type=text name=cpm_length value="{{if $item.cpm_length}}{{$item.cpm_length}}{{end}}" size=6>分钟</td>
 <td><input type=text name=cpm_throttle value="{{if $item.cpm_throttle}}{{$item.cpm_throttle}}{{end}}" size=6>分钟</td></tr>
-<tr><td>点击次数: </td>
+<tr><td>点击: </td>
 <td><input type=text name=cpc_fc value="{{if $item.cpc_fc}}{{$item.cpc_fc}}{{end}}" size=3></td>
 <td><input type=text name=cpc_length value="{{if $item.cpc_length}}{{$item.cpc_length}}{{end}}" size=6>分钟</td>
 <td></td></tr>
@@ -47,13 +47,13 @@
         </div>
 	</div>
 
-    <div class="col-sm-4">
+    <div class="col-sm-5">
         <div class="panel panel-primary">
             <div class="panel-body">
             活动总预算
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
-<thead><tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr></thead>
+<thead><tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr></thead>
 <tbody>{{range $one := $item.balance_topics}}
 <tr><td>{{if eq $one.which "total_balance_id"}}全部{{else}}每天{{end}}: </td>
 <td>{{$one.limit_spend}}</td>

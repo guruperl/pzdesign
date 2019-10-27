@@ -54,7 +54,7 @@
 <tr><td>{{.company}}</td>
 <td>{{.url}}</td>
 <td>{{.campaign_name}}</td>
-<td><a class="btn btn-sm btn-danger" href="ac?action=delete&ac_id={{.ac_id}}&{{if eq (index $args.entitytype_id 0) "3"}}entitytype_id=3{{else}}{{ print `entytitype_id=31&site_id=` (index $args.site_id 0) `&site_md5=` (index $args.site_md5 0) `&site_name=` (index $args.site_name 0 | urlquery) }}{{end}}">删除</a></td>
+<td><a onClick="return (confirm('确认删除此栏目？')) ? true : false;" class="btn btn-sm btn-danger" href="ac?action=delete&ac_id={{.ac_id}}&{{if eq (index $args.entitytype_id 0) "3"}}entitytype_id=3{{else}}{{ print `entytitype_id=31&site_id=` (index $args.site_id 0) `&site_md5=` (index $args.site_md5 0) `&site_name=` (index $args.site_name 0 | urlquery) }}{{end}}">删除</a></td>
 </tr>{{end}}{{end}}
 </tobdy>
 </table>

@@ -31,12 +31,12 @@
 频次控制
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
-<tr><th>类型</th><th>数值</th><th>周期</th><th>间隔</th></tr>
-<tr><td>曝光次数: </td>
+<tr><th>类型</th><th>次数</th><th>周期</th><th>间隔</th></tr>
+<tr><td>曝光: </td>
 <td><input type=text name=cpm_fc size=3></td>
 <td><input type=text name=cpm_length size=6>分钟</td>
 <td><input type=text name=cpm_throttle size=6>分钟</td></tr>
-<tr><td>点击次数: </td>
+<tr><td>点击: </td>
 <td><input type=text name=cpc_fc size=3></td>
 <td><input type=text name=cpc_length size=6>分钟</td>
 <td></td></tr>
@@ -52,7 +52,7 @@
 			活动总预算
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
-<tr><th> </th><th>花费</th><th>曝光量</th><th>点击</th></tr>
+<tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
 <tr><td>全部: </td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
 <td><input type=text name=limit_cli size=8 /></td></tr>

@@ -39,7 +39,7 @@
                             </div>
                             <!-- /.modal -->
 </td>
-<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
+<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" onClick="return (confirm('确认要删除此物料吗？此操作不可更改。')) ? true : false;" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
 </tr>{{end}}{{end}}
 </table>
                             </div>

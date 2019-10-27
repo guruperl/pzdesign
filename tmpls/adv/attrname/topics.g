@@ -24,7 +24,7 @@
 <tr>
 <td>{{.attrname}}</td>
 <td>{{.value}}</td>
-<td><a href="attrname?action=delete&attrname_id={{.attrname_id }}">删除</a></td>
+<td><a onClick="return (confirm('确认删除此标签？')) ? true : false;" href="attrname?action=delete&attrname_id={{.attrname_id }}">删除</a></td>
 </tr>
 {{end}}{{end}}</tbody>
 <tr>
