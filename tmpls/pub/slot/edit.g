@@ -66,7 +66,7 @@ MIME:</label>
 </div>
 
 <div class="form-group row">
-    <label for="inputYaxis" class="col-sm-3 col-form-label text-right">可接受广告形式:</label>
+    <label for="inputYaxis" class="col-sm-3 col-form-label text-right">可接受广告特点:</label>
     <div class="col-sm-9">{{ range $one := .Other.fl_creative }}
         <div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="qa_{{$one.which}}" type=checkbox name=fl_creative value="{{$one.which}}" {{if $one.selected }}checked{{end}} >

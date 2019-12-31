@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<div class="form-group row">
+<!-- div class="form-group row">
     <label for="selectCampaignQuality" class="col-sm-2 col-form-label">质量控制:</label>
     <div class="col-sm-5">
         <div class="panel panel-primary">
@@ -107,7 +107,7 @@
             </div>
         </div>
     </div>
-</div>
+</div -->
 
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-2 col-form-label">行业匹配：</label>

@@ -18,7 +18,7 @@
 <th>创意名</th>
 <th>价格</th>
 <th>审核</th>
-<th>媒体类</th>
+<th>MIME类</th>
 <th>时间</th>
 <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加创意" data-href="item?action=startnew&{{$attach}}" id="startnewPopup">新建创意</a></th>
 </tr></thead>

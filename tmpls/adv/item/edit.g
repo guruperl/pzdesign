@@ -53,18 +53,15 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-4 col-form-label text-right">媒体类:</label>
-    <div class="col-sm-8">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
+    <label for="inputEndx" class="col-sm-4 col-form-label text-right">价格:</label>
+    <div class="col-sm-4">
+        <input type=text class="form-control" name="cost" value="{{if $item.cost}}{{$item.cost}}{{end}}">
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-4 col-form-label text-right">价格:</label>
-    <div class="col-sm-3">
-        <input type=text class="form-control" name="cost" value="{{if $item.cost}}{{$item.cost}}{{end}}">
-    </div>
-    <div class="col-sm-5">
+    <label for="costType" class="col-sm-4 col-form-label text-right">计费方式:</label>
+    <div class="col-sm-8">
 <input type=radio name=cost_type {{if eq $item.cost_type "CPD"}}checked{{end}} value=CPD>CPD
 <input type=radio name=cost_type {{if eq $item.cost_type "CPM"}}checked{{end}} value=CPM>CPM
 <input type=radio name=cost_type {{if eq $item.cost_type "CPC"}}checked{{end}} value=CPC>CPC
@@ -74,11 +71,13 @@
 
 	</div>
 	<div class="col-sm-6">
-            创意预算
+<div class="form-group row">
+    <div class="col-sm-12">
+
 <div class="table-responsive">
-<table class="table-sm table-stripe table-condensed">
-<thead><tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr></thead>
-<tbody>{{range $one := $item.balance_topics}}
+<table class="table-sm table-condensed">
+<tbody><tr><th class="col-sm-4 col-form-label text-right">创意预算: </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
+{{range $one := $item.balance_topics}}
 <tr><td>{{if eq $one.which "total_balance_id"}}全部{{else}}每天{{end}}: </td>
 <td>{{$one.limit_spend}}</td>
 <td>{{$one.limit_imp}}</td>
@@ -89,40 +88,45 @@
 </div>
     </div>
 </div>
-
-
-<div class="form-group row">
-	<div class="col-sm-1"> </div>
-    <label for="inputCost" class="col-sm-11 col-form-label">本创意需要投放在如下
-广告位上</label>
+	</div>
 </div>
 
 <div class="panel panel-primary">
 	<div class="panel-body">
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-1 col-form-label text-right">平台:</label>
-    <div class="col-sm-5">{{ range $item := .Other.fl_device }}
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">创意MIME类
+:</label>
+    <div class="col-sm-10">{{ range $item := .Other.qa_mime }}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">创意特点:</label>
+    <div class="col-sm-10">{{ range $item := .Other.fl_creative }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">可投放设备平台:</label>
+    <div class="col-sm-10">{{ range $item := .Other.fl_device }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_device value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
+</div>
 
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">前后深度:</label>
-    <div class="col-sm-4">{{ range $item := .Other.fl_position }}
+<div class="form-group row">
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">需要投放位置:</label>
+    <div class="col-sm-10">{{ range $item := .Other.fl_position }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_position value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputClock" class="col-sm-2 col-form-label text-right">页面方向:</label>
+    <label for="inputClock" class="col-sm-2 col-form-label text-right">需要投放环境:</label>
     <div class="col-sm-10">{{ range $item := .Other.fl_content }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_content value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">上下位置:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_creative }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
