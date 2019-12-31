@@ -19,7 +19,7 @@
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
 				<td><a href="slot?action=edit&slot_id={{.slot_id}}">{{.slot_name}}</a></td>
-				<td>{{.qa_platform}}</td>
+				<td>{{.qa_device}}</td>
 				<td>{{.w}}x{{.h}}</td>
 				<td>{{.fl_mime}}</td>
 				<td>{{.active}}</td>

@@ -83,29 +83,29 @@
 
 <div class="form-group row">
     <label for="inputPlatform" class="col-sm-2 col-form-label text-right">Platform:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_platform }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_platform value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.fl_device }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_device value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">Page Level:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_pagelevel }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.fl_position }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_position value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputClock" class="col-sm-2 col-form-label text-right">Clock:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_clock }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_clock value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.fl_content }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_content value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputYaxis" class="col-sm-2 col-form-label text-right">Yaxis:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_yaxis }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_yaxis value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.fl_creative }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
     </div>
 </div>
 

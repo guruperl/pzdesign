@@ -16,17 +16,17 @@
               <thead>
                 <tr>
                   <th>广告位名</th>
-                  <th>平台</th>
-                  <th>激活状况</th>
+                  <th>设备平台</th>
+                  <th>激活</th>
                   <th>上线时间</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="新填广告位" data-href="slot?action=startnew&{{$attach}}" id="startnewPopup">填加广告位</a></th>
+                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="新添加广告位" data-href="slot?action=startnew&{{$attach}}" id="startnewPopup">添加广告位</a></th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
 {{$small := print "slot_id=" .slot_id "&slot_md5=" .slot_md5 "&slot_name=" (.slot_name | urlquery)}}
 <tr><td><a href="javascript:void(0);" data-title="广告位更新：{{.slot_name}}" data-href="slot?action=edit&{{$attach}}&{{$small}}" id="editPopup">{{.slot_name}}</a></td>
-<td>{{.qa_platform_g}}</td>
-<td>{{.active}}</td>
+<td>{{.qa_device_g}}</td>
+<td>{{if eq "Yes" .active}}&check; {{else if eq "No" .active}}&#10007;{{else}}&check;{{end}}</td>
 <td>{{.created}}</td>
 <td><button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">广告码</button></td>
 <td><button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API码</button></td>
@@ -138,7 +138,7 @@ POST下列JSON请求至{{$serverScript}}:
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">

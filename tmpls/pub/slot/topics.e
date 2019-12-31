@@ -23,7 +23,7 @@
               </thead>
               <tbody>{{ range .Lists }} {{$small := print "slot_id=" .slot_id "&slot_md5=" .slot_md5 "&slot_name=" (.slot_name | urlquery)}}
 <tr><td><a href="slot?action=edit&{{$attach}}&{{$small}}">{{.slot_name}}</a></td>
-<td>{{.qa_platform}}</td>
+<td>{{.qa_device}}</td>
 <td>{{.active}}</td>
 <td>{{.created}}</td>
 <td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Code</button></td>

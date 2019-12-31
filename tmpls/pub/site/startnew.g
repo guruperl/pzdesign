@@ -17,7 +17,7 @@
 	</div>
 </div>
 
-<div class="form-group row">
+<!-- div class="form-group row">
     <label for="selectSiteQuality" class="col-sm-2 col-form-label text-right">质量控制：</label>
     <div class="col-sm-5">
         <div class="card">
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-</div>
+</div -->
 
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-2 col-form-label text-right">行业匹配：</label>

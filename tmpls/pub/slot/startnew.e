@@ -41,9 +41,9 @@
 
 <div class="form-group row">
     <label for="inputPlatform" class="col-sm-2 col-form-label text-right">Platform:</label>
-    <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_platform }}
+    <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_device }}
       <div class="form-check form-check-inline mr-1">
-        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if $item.default}}checked{{end}}>
+        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_device" {{if $item.default}}checked{{end}}>
         <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
       </div>{{end}}
     </div>
@@ -51,9 +51,9 @@
 
 <div class="form-group row">
     <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">Page Level:</label>
-    <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_pagelevel }}
+    <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_position }}
 		<div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} >
+           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_position value="{{$item.which}}" {{if $item.default}}checked{{end}} >
            <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
         </div>{{end}}
     </div>
@@ -61,9 +61,9 @@
 
 <div class="form-group row">
     <label for="inputClock" class="col-sm-2 col-form-label text-right">Clock:</label>
-    <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_clock }}
+    <div class="col-sm-10 col-form-label">{{ range $item := .Other.qa_content }}
 		<div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_clock value="{{$item.which}}" {{if $item.default}}checked{{end}} >
+           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_content value="{{$item.which}}" {{if $item.default}}checked{{end}} >
            <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
         </div>{{end}}
     </div>
@@ -71,9 +71,9 @@
 
 <div class="form-group row">
     <label for="inputYaxis" class="col-sm-2 col-form-label text-right">Yaxis:</label>
-    <div class="col-sm-10">{{ range $item := .Other.qa_yaxis }}
+    <div class="col-sm-10">{{ range $item := .Other.qa_creative }}
         <div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_yaxis value="{{$item.which}}" {{if $item.default}}checked{{end}} >
+           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_creative value="{{$item.which}}" {{if $item.default}}checked{{end}} >
            <label>{{$item.label}}</label>
         </div>{{end}}
     </div>

@@ -101,27 +101,27 @@
 
 <div class="form-group row">
     <label for="inputPlatform" class="col-sm-1 col-form-label text-right">平台:</label>
-    <div class="col-sm-5">{{ range $item := .Other.fl_platform }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_platform value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
+    <div class="col-sm-5">{{ range $item := .Other.fl_device }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_device value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 
     <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">前后深度:</label>
-    <div class="col-sm-4">{{ range $item := .Other.fl_pagelevel }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_pagelevel value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
+    <div class="col-sm-4">{{ range $item := .Other.fl_position }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_position value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputClock" class="col-sm-2 col-form-label text-right">页面方向:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_clock }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_clock value="{{$item.which}}" checked />{{$item.label_chinese}}点{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.fl_content }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_content value="{{$item.which}}" checked />{{$item.label_chinese}}点{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputYaxis" class="col-sm-2 col-form-label text-right">上下位置:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_yaxis }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_yaxis value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.fl_creative }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 

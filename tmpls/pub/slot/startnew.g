@@ -20,17 +20,45 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-3 col-form-label text-right">所在平台:</label>
-    <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_platform }}
+    <label for="inputPlatform" class="col-sm-3 col-form-label text-right">设备平台:</label>
+    <div class="col-sm-9 col-form-label">广告位在何种硬件设备上？</div>
+    <label class="col-sm-3 col-form-label text-right"></label>
+    <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_device }}
       <div class="form-check form-check-inline mr-1">
-        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_platform" {{if eq "Web" $item.which}}checked{{end}}>
+        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_device" {{if $item.default}}checked{{end}}>
         <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
       </div>{{end}}
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputType" class="col-sm-3 col-form-label text-right">可投放类:</label>
+    <label for="inputPageLevel" class="col-sm-3 col-form-label text-right">广告位位置:</label>
+    <div class="col-sm-9 col-form-label">广告位在屏幕上的位置？</div>
+    <label class="col-sm-3 col-form-label text-right"></label>
+    <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_position }}
+		<div class="form-check form-check-inline mr-1">
+           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_position value="{{$item.which}}" {{if $item.default}}checked{{end}} >
+           <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
+        </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputClock" class="col-sm-3 col-form-label text-right">周边内容:</label>
+    <div class="col-sm-9 col-form-label">所属内容，或者周边为何种环境？</div>
+    <label class="col-sm-3 col-form-label text-right"></label>
+    <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_content }}
+		<div class="form-check form-check-inline mr-1">
+           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_content value="{{$item.which}}" {{if $item.default}}checked{{end}} >
+           <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
+        </div>{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputType" class="col-sm-3 col-form-label text-right">可接受广告MIME:</label>
+    <div class="col-sm-9 col-form-label">所能接受的各种广告MIME类。多选</div>
+    <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.fl_mime }}
         <div class="form-check form-check-inline mr-1">
         <input type=checkbox class="form-check-input" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
@@ -40,30 +68,12 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-3 col-form-label text-right">前后等级:</label>
-    <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_pagelevel }}
-		<div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_pagelevel value="{{$item.which}}" {{if $item.default}}checked{{end}} >
-           <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
-        </div>{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputClock" class="col-sm-3 col-form-label text-right">时钟位置:</label>
-    <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_clock }}
-		<div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_clock value="{{$item.which}}" {{if $item.default}}checked{{end}} >
-           <label class="form-check-label" for="inline-radio1">{{$item.label_chinese}}</label>
-        </div>{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputYaxis" class="col-sm-3 col-form-label text-right">上下位置:</label>
-    <div class="col-sm-9">{{ range $item := .Other.qa_yaxis }}
+    <label for="inputYaxis" class="col-sm-3 col-form-label text-right">可接受广告形式:</label>
+    <div class="col-sm-9">所能接受的各种广告形式。多选。如果不接受特殊形式，选普通类即可</div>
+    <label class="col-sm-3 col-form-label text-right"></label>
+    <div class="col-sm-9">{{ range $item := .Other.fl_creative }}
         <div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_yaxis value="{{$item.which}}" {{if $item.default}}checked{{end}} >
+           <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.default}}checked{{end}} >
            <label>{{$item.label_chinese}}</label>
         </div>{{end}}
     </div>
