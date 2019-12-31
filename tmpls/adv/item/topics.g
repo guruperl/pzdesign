@@ -17,7 +17,7 @@
 <thead><tr>
 <th>创意名</th>
 <th>价格</th>
-<th>状态</th>
+<th>审核</th>
 <th>媒体类</th>
 <th>时间</th>
 <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加创意" data-href="item?action=startnew&{{$attach}}" id="startnewPopup">新建创意</a></th>
@@ -27,7 +27,7 @@
 <tr {{if eq .active "New"}}class="warning"{{else if eq .active "Pause"}}class="danger"{{else}}{{end}}>
 <td><a href="javascript:void(0);" data-title="更新创意：{{.item_name}}" data-href="item?action=edit&{{$attach}}&{{$second}}" id="editPopup">{{.item_name}}</a></td>
 <td>{{.cost}} {{.cost_type}}</td>
-<td>{{if eq .active "Prepare"}} <a class="btn btn-sm btn-success" onClick="return (confirm('一旦送审，物料将无法再做修改。请添加完物料之后再送审。确认送审吗？')) ? true : false;" href="item?action=review&item_id={{.item_id}}&active=New&{{$attach}}">送审</a>{{else}}{{.active}}{{end}}</td>
+<td>{{if eq .active "Prepare"}} <a class="btn btn-sm btn-success" onClick="return (confirm('一旦送审，物料将无法再做修改。请添加完物料之后再送审。确认送审吗？')) ? true : false;" href="item?action=review&item_id={{.item_id}}&active=New&{{$attach}}">送审</a>{{else if eq .active "Yes"}}通过{{else}}{{.active}}{{end}}</td>
 <td>{{.qa_mime}}</td>
 <td>{{.startx}}/{{.endx}}</td>
 <td><a class="btn btn-sm btn-primary" href="javascript:void(0);" data-title="物料管理：{{.item_name}}" data-href="creative?action=topics&{{$attach}}&{{$second}}&active={{.active}}&qa_mime={{.qa_mime}}&size_id={{.size_id}}&item_click={{.item_click|urlquery}}" id="creativePopup">物料管理</a></td>
