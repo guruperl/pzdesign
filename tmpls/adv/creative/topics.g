@@ -30,7 +30,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-body">
-{{if eq $mime "html"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,{{.content}}"></iframe>{{else if eq $mime "js"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,<script>{{.content}}</script>"></iframe>{{else if eq $mime "video"}}<video controls><source src="{{.content}}"></video>{{else}}<img src="{{.content}}" />{{end}}
+{{if eq $mime "H5Mime"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,{{.content}}"></iframe>{{else if eq $mime "JSMime"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,<script>{{.content}}</script>"></iframe>{{else if eq $mime "VideoMime"}}<video controls><source src="{{.content}}"></video>{{else}}<img src="{{.content}}" />{{end}}
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -79,8 +79,8 @@
 
 
 <div class="form-group row">
-    <label for="inputCreativeName" class="col-sm-3 col-form-label">物料名称：</label>
-    <div class="col-sm-5">
+    <label for="inputCreativeName" class="col-sm-2 col-form-label">物料名称：</label>
+    <div class="col-sm-6">
         <input type=text class="form-control" name="creative_name" placeholder="" />
     </div>
 	<label for="inputWeight" class="col-sm-2 col-form-label">投放比重:</label>
@@ -89,7 +89,7 @@
     </div>
 </div>
 
-{{if or (eq "image" $mime) (eq "video" $mime) }}
+{{if or (eq "ImageMime" $mime) (eq "VideoMime" $mime) }}
 <input type=hidden name=content value="MEDIA_1" />
 
 <div class="form-group row">
@@ -111,17 +111,17 @@
 {{else}}
 
 <div class="form-group row">
-    <label for="inputContent" class="col-sm-3 col-form-label">物料表达 ({{$mime}}):</label>
-    <div class="col-sm-9">
+    <label for="inputContent" class="col-sm-2 col-form-label">物料表达 ({{$mime}}):</label>
+    <div class="col-sm-10">
 		<textarea name=content class="form-control" rows="4">
-{{if eq $mime "js"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href='LANDING'><img src='MEDIA_1'></a>{{end}}
+{{if eq $mime "JSMime"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href='LANDING'><img src='MEDIA_1'></a>{{end}}
 		</textarea>
 	</div>
 </div>
 
 <div class="form-group row">
-    <label for="inputMedias" class="col-sm-3 col-form-label">上传物料 (可上传多个):</label>
-    <div class="col-sm-9">
+    <label for="inputMedias" class="col-sm-2 col-form-label">上传物料 (可上传多个):</label>
+    <div class="col-sm-10">
         <div class="panel panel-primary">
             <div class="panel-body">
 
@@ -130,7 +130,7 @@
 <input type=file class="form-control" name="media_1" />
 </div>
 	
-{{if or (or (eq (index .ARGS.qa_mime 0) "js") (eq (index .ARGS.qa_mime 0) "html")) (eq (index .ARGS.qa_mime 0) "json")}}
+{{if or (or (eq $mime "JSMime") (eq $mime "H5Mime")) (eq $mime "JsonMime")}}
 
 <label for="inputMedias" class="col-sm-3 col-form-label">物料2:</label>
 <div class="col-sm-9">
@@ -159,9 +159,9 @@
 {{end}}
 
 <div class="form-group row">
-    <div class="col-sm-3">
+    <div class="col-sm-2">
 	</div>
-    <div class="col-sm-9">
+    <div class="col-sm-10">
 <button type="submit" class="btn btn-primary"> 提交 </button>
     </div>
 </div>

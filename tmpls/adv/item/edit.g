@@ -104,8 +104,8 @@
 
 <div class="form-group row">
     <label for="inputYaxis" class="col-sm-2 col-form-label text-right">创意特点:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_creative }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
+    <div class="col-sm-10">{{ range $item := .Other.qa_creative }}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=qa_creative value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
@@ -117,16 +117,16 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">需要投放位置:</label>
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">投放位置:</label>
     <div class="col-sm-10">{{ range $item := .Other.fl_position }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_position value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputClock" class="col-sm-2 col-form-label text-right">需要投放环境:</label>
+    <label for="inputClock" class="col-sm-2 col-form-label text-right">投放环境:</label>
     <div class="col-sm-10">{{ range $item := .Other.fl_content }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_content value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label}}{{end}}
+<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_content value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 

@@ -99,24 +99,24 @@
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
     <div class="col-sm-10">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label_chinese}}{{end}}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if eq $item.which "H5Mime"}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputYaxis" class="col-sm-2 col-form-label text-right">创意特点:</label>
-    <div class="col-sm-10">一般请选普通类</div>
+    <div class="col-sm-10">一般性创意，请选普通类</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
     <div class="col-sm-10">{{ range $item := .Other.qa_creative }}
-<input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_creative value="{{$item.which}}" checked />{{$item.label_chinese}}{{end}}
+<input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_creative value="{{$item.which}}" {{if eq $item.which "AttrUnknown"}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputPlatform" class="col-sm-2 col-form-label text-right">可投放设备平台:</label>
-    <div class="col-sm-10">本创意允许投放到何种硬件设备上？多选</div>
+    <div class="col-sm-10">本创意投放到何种硬件设备上？多选</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
@@ -126,8 +126,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">需要投放位置:</label>
-    <div class="col-sm-10">希望投放在页面上那些位置，多选</div>
+    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">投放位置:</label>
+    <div class="col-sm-10">选择投放在页面哪些位置上？多选</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
@@ -137,8 +137,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputClock" class="col-sm-2 col-form-label text-right">需要投放环境:</label>
-    <div class="col-sm-10">希望投放页面的内容为？</div>
+    <label for="inputClock" class="col-sm-2 col-form-label text-right">投放环境:</label>
+    <div class="col-sm-10">选择投放页面的内容。多选</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"></label>
