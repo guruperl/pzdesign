@@ -23,7 +23,7 @@
 				<td>{{.active}}</td>
 				<td>{{.startx}}</td>
 				<td>
-{{if ne .active "Yes"}}<a class="btn btn-sm btn-primary" href="item?action=authen&item_id={{.item_id}}&active={{if eq $next `2`}}Pass2{{else}}Yes{{end}}&{{$attach}}">激活</a>
+{{if ne .active "Yes"}}<a class="btn btn-sm btn-primary" href="item?action=authen&item_id={{.item_id}}&active={{if eq $next `1`}}Pass2{{else}}Yes{{end}}&{{$attach}}">激活</a>
 <a class="btn btn-sm btn-warning" href="item?action=authen&item_id={{.item_id}}&active=No&{{$attach}}">终止</a>{{end}}
 </td>
 			</tr>{{end}}{{end}}
