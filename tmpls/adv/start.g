@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5, h6, button {
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="adv?action=dashboard"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
+                            <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
                         </li>
                         <li>
                             <a href="campaign?action=topics"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动</a>
