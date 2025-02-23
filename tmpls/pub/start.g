@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="媒体广告系统- PzAdx">
+  <meta name="description" content="媒体广告系统- W8M">
   <meta name="keyword" content="媒体广告系统">
   <title>派兹媒体系统 - 为每个广告位谋求最大收益</title>
 

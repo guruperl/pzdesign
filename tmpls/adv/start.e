@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Advertiser Management - PzAdx</title>
+    <title>Advertiser Management - W8M</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.html">Advertiser at PzAdx</a>
+                <a class="navbar-brand" href="/index.html">Advertiser at W8M</a>
             </div>
             <!-- /.navbar-header -->
 

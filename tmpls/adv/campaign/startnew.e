@@ -133,7 +133,7 @@
 </th>
 </tr>
 <tbody>{{ with .Other.channel_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
+<tr><td>{{.full_name}}</td>
 <td class="text-center"><input name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}

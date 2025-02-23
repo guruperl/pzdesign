@@ -9,8 +9,8 @@
 
   </div>
   <footer class="app-footer">
-    <span><a href="http://www.pzadx.com/goto/pub/e/pub?action=startnew">Publisher Membership</a> © 2018 PzAdx.</span>
-    <span class="ml-auto">Powered by <a href="http://www.pzadx.com/">PaiZi Corporation</a></span>
+    <span><a href="/goto/pub/e/pub?action=startnew">Publisher Membership</a> © 2018 W8M.</span>
+    <span class="ml-auto">Powered by <a href="/">W8M Corporation</a></span>
   </footer>
 
   <!-- Bootstrap and necessary plugins -->

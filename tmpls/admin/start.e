@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/admin/favicon.ico">
 
-    <title>PzAdx Administrative Management</title>
+    <title>W8M Administrative Management</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">

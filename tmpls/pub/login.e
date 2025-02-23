@@ -10,7 +10,7 @@
   <meta name="keyword" content="Membership Login">
   <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-  <title>Please login to PzAdx Publisher Area</title>
+  <title>Please login to W8M Publisher Area</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">

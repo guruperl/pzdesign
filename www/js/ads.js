@@ -14,7 +14,7 @@ function pzLoadAds(data) {
 			}
 		}
 	};
-	let url = "http://www.pzadx.com/pz";
+	let url = "/pz";
 	xhttp.open("POST", url, true);
 	xhttp.setRequestHeader("Content-Type", "application/json");
 	xhttp.withCredentials = "true";
