@@ -3,6 +3,7 @@
 {{$mime := index .ARGS.qa_mime 0}}
 {{$active := index .ARGS.active 0}}
 
+
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
@@ -30,7 +31,7 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-body">
-{{if eq $mime "H5Mime"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,{{.content}}"></iframe>{{else if eq $mime "JSMime"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,<script>{{.content}}</script>"></iframe>{{else if eq $mime "VideoMime"}}<video controls><source src="{{.content}}"></video>{{else}}<img src="{{.content}}" />{{end}}
+{{if eq $mime "JSMime"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,<script>{{.content}}</script>"></iframe>{{else}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,{{.content}}"></iframe>{{end}}
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -56,8 +57,6 @@
 
 {{if eq (index .ARGS.active 0) "Prepare"}}
 
-
-
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
@@ -67,7 +66,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
-<form class="form" method=post action="creative" enctype="multipart/form-data">
+<form name=newcreative class="form" method=post action="creative">
 <input type=hidden name=action value="insert" />
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
@@ -81,82 +80,22 @@
 <div class="form-group row">
     <label for="inputCreativeName" class="col-sm-2 col-form-label">物料名称：</label>
     <div class="col-sm-6">
-        <input type=text class="form-control" name="creative_name" placeholder="" />
+        <input id="inputCreativeName" type=text class="form-control" name="creative_name" placeholder="" />
     </div>
 	<label for="inputWeight" class="col-sm-2 col-form-label">投放比重:</label>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="weight" placeholder="0.5" />
+        <input id="inputWeight" type=text class="form-control" name="weight" placeholder="0.5" />
     </div>
 </div>
-
-{{if or (eq "ImageMime" $mime) (eq "VideoMime" $mime) }}
-<input type=hidden name=content value="MEDIA_1" />
-
-<div class="form-group row">
-    <label for="inputMedias" class="col-sm-3 col-form-label">上传 （{{$mime}}）:</label>
-    <div class="col-sm-9">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-
-<label for="inputMedias" class="col-sm-3 col-form-label">物料:</label>
-<div class="col-sm-9">
-<input type=file class="form-control" name="media_1" />
-</div>
-	
-			</div>
-		</div>
-	</div>
-</div>
-
-{{else}}
 
 <div class="form-group row">
     <label for="inputContent" class="col-sm-2 col-form-label">物料表达 ({{$mime}}):</label>
     <div class="col-sm-10">
-		<textarea name=content class="form-control" rows="4">
+		<textarea id="inputContent" name=content class="form-control" rows="4">
 {{if eq $mime "JSMime"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href='LANDING'><img src='MEDIA_1'></a>{{end}}
 		</textarea>
 	</div>
 </div>
-
-<div class="form-group row">
-    <label for="inputMedias" class="col-sm-2 col-form-label">上传物料 (可上传多个):</label>
-    <div class="col-sm-10">
-        <div class="panel panel-primary">
-            <div class="panel-body">
-
-<label for="inputMedias" class="col-sm-3 col-form-label">物料1:</label>
-<div class="col-sm-9">
-<input type=file class="form-control" name="media_1" />
-</div>
-	
-{{if or (or (eq $mime "JSMime") (eq $mime "H5Mime")) (eq $mime "JsonMime")}}
-
-<label for="inputMedias" class="col-sm-3 col-form-label">物料2:</label>
-<div class="col-sm-9">
-<input type=file class="form-control" name="media_2" />
-</div>
-	
-<label for="inputMedias" class="col-sm-3 col-form-label">物料3:</label>
-<div class="col-sm-9">
-<input type=file class="form-control" name="media_3" />
-</div>
-	
-<label for="inputMedias" class="col-sm-3 col-form-label">物料4:</label>
-<div class="col-sm-9">
-<input type=file class="form-control" name="media_4" />
-</div>
-	
-<label for="inputMedias" class="col-sm-3 col-form-label">物料5:</label>
-<div class="col-sm-9">
-<input type=file class="form-control" name="media_5" />
-</div>
-{{end}}	
-			</div>
-		</div>
-	</div>
-</div>
-{{end}}
 
 <div class="form-group row">
     <div class="col-sm-2">
@@ -175,6 +114,5 @@
                 <!-- /.col-lg-6 -->
 			</div>
 
-
-
 {{end}}
+
