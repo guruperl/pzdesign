@@ -19,8 +19,8 @@
 
   <body>
 
-                        <form role="form" METHOD="POST" ACTION="/goto/admin/g/login">
-                            <INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
+  <form role="form" METHOD="POST" ACTION="/goto/admin/g/{{ .LoginName }}">
+  <INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
 <div class="container-fluid">
 	<h2>后台管理员登陆</h2>
 	<div class="row">

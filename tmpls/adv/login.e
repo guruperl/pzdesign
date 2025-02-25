@@ -42,8 +42,8 @@
                         <h3 class="panel-title">Please Sign In</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" METHOD="POST" ACTION="/goto/adv/e/login">
-							<INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
+         <form role="form" METHOD="POST" ACTION="/goto/adv/e/{{ .LoginName }}">
+	<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
                             <fieldset>
 								<div class="alert alert-success">
                                 {{ .Errorstr }}

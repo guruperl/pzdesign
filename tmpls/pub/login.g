@@ -25,8 +25,8 @@
 
 <body class="app flex-row align-items-center">
   <div class="container">
-<FORM METHOD="POST" ACTION="{{ .Login_name }}">
-<INPUT TYPE="HIDDEN" NAME="{{ .Go_uri_name }}" VALUE="{{ .Go_uri }}" />
+<FORM METHOD="POST" ACTION="{{ .LoginName }}">
+<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}" />
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card-group">

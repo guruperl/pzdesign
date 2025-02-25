@@ -18,8 +18,8 @@
 
   <body>
 
-	<form role="form" METHOD="POST" ACTION="/goto/agent/e/login">
-	<INPUT TYPE="HIDDEN" NAME="go_uri" VALUE="{{ .Go_uri }}">
+	<form role="form" METHOD="POST" ACTION="/goto/agent/e/{{ .LoginName }}">
+	<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
 <div class="container-fluid">
 	<h2>Login</h2>
 	<div class="row">
