@@ -62,7 +62,7 @@
 <div class="form-group row">
     <label for="costType" class="col-sm-4 col-form-label text-right">计费方式:</label>
     <div class="col-sm-8">
-<input type=radio name=cost_type {{if eq $item.cost_type "CPD"}}checked{{end}} value=CPD>CPD
+<input type=radio name=cost_type {{if eq $item.cost_type "ROI"}}checked{{end}} value=ROI>ROI
 <input type=radio name=cost_type {{if eq $item.cost_type "CPM"}}checked{{end}} value=CPM>CPM
 <input type=radio name=cost_type {{if eq $item.cost_type "CPC"}}checked{{end}} value=CPC>CPC
 <input type=radio name=cost_type {{if eq $item.cost_type "CPA"}}checked{{end}} value=CPA>CPA

@@ -117,11 +117,11 @@
 <th>{{$item.channel_order}}
 </th>
 </tr>
-<tbody>{{ with $item.chac_topics }}{{ range . }}{{if or .chac_id .chbelong_id}}
-<tr><td>{{.channel_name}}</td>
-<td>{{if .chac_id}}Selected{{end}}</td>
-<td>{{if .chbelong_id}}Selected{{end}}</td>
-</tr>{{end}}{{end}}{{end}}
+<tbody>{{ with .Other.channel_topics }}{{ range . }}
+<tr><td>{{.channel_name_g}}</td>
+<td class="text-center"><input class="form-control-inline" name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
+<td class="text-center"><input class="form-control-inline" name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
+</tr>{{end}}{{end}}
 </tobdy>
 </table>
             <a class="btn btn-xs btn-warning" href="chac?action=topics&campaign_id={{$item.campaign_id}}&campaign_md5={{$item.campaign_md5}}&campaign_name={{$item.campaign_name | urlquery }}&entitytype_id=41">Check</a>

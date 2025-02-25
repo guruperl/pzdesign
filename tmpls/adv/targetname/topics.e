@@ -40,7 +40,7 @@
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.state}}
                         <input class="form-check-input" type=checkbox name="state" value="{{$k}}" {{if index $v 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $v 0}}  {{index $v 3}}{{index $v 2}}</label>{{end}}
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>

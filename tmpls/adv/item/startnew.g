@@ -58,7 +58,7 @@
 <div class="form-group row">
     <label for="costType" class="col-sm-4 col-form-label text-right">计费方式:</label>
     <div class="col-sm-8">
-<input type=radio name=cost_type value=CPD>CPD
+<input type=radio name=cost_type value=ROI>ROI
 <input type=radio name=cost_type value=CPM>CPM
 <input type=radio name=cost_type value=CPC>CPC
 <input type=radio name=cost_type value=CPA>CPA
@@ -99,7 +99,7 @@
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
     <div class="col-sm-10">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if eq $item.which "H5Mime"}}checked{{end}} />{{$item.label_chinese}}{{end}}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if eq $item.which "XHTMLBanner"}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>
 </div>
 
