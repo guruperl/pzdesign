@@ -7,15 +7,17 @@
     	<thead>
         <tr>
         	<th>Name</th>
-			<th>Active</th>
+        	<th>Company</th>
+		<th>Active</th>
             <th>Since</th>
             <th></th>
-            <th></th>
+            <!-- th></th -->
         </tr>
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
 				<td><a href="campaign?action=edit&campaign_id={{.campaign_id}}">{{.campaign_name}}</a></td>
+				<td>{{.company}}</td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>
@@ -25,7 +27,7 @@
 <a class="btn btn-sm btn-warning" href="campaign?action=update&active=No&campaign_id={{.campaign_id}}">Deactivate</a>{{end}}
 {{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="campaign?action=update&active=Yes&campaign_id={{.campaign_id}}">Re-Activate</a>{{end}}
 </td>
-				<td><a href="campaign?action=delete&campaign_id={{.campaign_id}}">Del</a></td>
+				<!-- td><a href="campaign?action=delete&campaign_id={{.campaign_id}}">Del</a></td -->
 			</tr>{{end}}{{end}}
 		</tbody>
 	</table>

@@ -12,7 +12,6 @@
             <th>Since</th>
             <th></th>
             <th></th>
-            <th></th>
         </tr>
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
@@ -23,11 +22,10 @@
 				<td>{{.created}}</td>
 				<td>
 {{if eq .active "New"}}<a class="btn btn-sm btn-primary" href="pub?action=update&active=Yes&pub_id={{.pub_id}}">Activate</a>{{end}}
-{{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="pub?action=update&active=No&pub_id={{.pub_id}}">Deactivate</a>{{end}}
-{{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="pub?action=update&active=Yes&pub_id={{.pub_id}}">Re-Activate</a>{{end}}
+{{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="pub?action=takedown&active=No&pub_id={{.pub_id}}">Deactivate</a>{{end}}
+{{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="pub?action=takedown&active=Yes&pub_id={{.pub_id}}">Re-Activate</a>{{end}}
 </td>
 				<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=pub&email={{.email | urlquery}}" target="_blank">As</a></td>
-				<td><a href="pub?action=delete&pub_id={{.pub_id}}">Del</a></td>
 			</tr>{{end}}{{end}}
 		</tbody>
 	</table>

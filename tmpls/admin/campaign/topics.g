@@ -8,10 +8,10 @@
         <tr>
         	<th>活动名</th>
         	<th>公司</th>
-			<th>状态</th>
+		<th>状态</th>
             <th>入网时间</th>
             <th></th>
-            <th></th>
+            <!-- th></th -->
         </tr>
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
@@ -28,7 +28,7 @@
 <a class="btn btn-sm btn-warning" href="campaign?action=update&active=No&campaign_id={{.campaign_id}}">拿下</a>{{end}}
 {{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="campaign?action=update&active=Yes&campaign_id={{.campaign_id}}">重新激活</a>{{end}}
 </td>
-				<td><a href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
+				<!-- td><a href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td-->
 			</tr>{{end}}{{end}}
 		</tbody>
 	</table>
