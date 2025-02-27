@@ -7,9 +7,9 @@
 <input type=hidden name="action" value="insert">
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">媒体名称：</label>
+	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">App名/网站名：</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=site_name placeholder="媒体名称" />
+		<input type=text class="form-control" name=site_name placeholder="名称" />
 	</div>
 	<label for="inputSiteURL" class="col-sm-2 col-form-label text-right"> 介绍网址：</label>
 	<div class="col-sm-4">
@@ -17,12 +17,12 @@
 	</div>
 </div>
 
-<!-- div class="form-group row">
+<div class="form-group row">
     <label for="selectSiteQuality" class="col-sm-2 col-form-label text-right">质量控制：</label>
     <div class="col-sm-5">
         <div class="card">
 			<div class="card-header">
-				本媒体质量
+				本站质量
 			</div>
             <div class="card-body">
 <div class="table-responsive">
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-</div -->
+</div>
 
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-2 col-form-label text-right">行业匹配：</label>
@@ -85,7 +85,7 @@
     <div class="col-sm-2">
 	</div>
     <div class="col-sm-10">
-<button type="submit" class="btn btn-primary">提交新媒体</button>
+<button type="submit" class="btn btn-primary">提交新站</button>
     </div>
 </div>
 

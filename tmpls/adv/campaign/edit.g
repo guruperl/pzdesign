@@ -28,8 +28,8 @@
 	<label for="tableFrequencyCap" class="col-sm-2 col-form-label">参数设置：</label>
 	<div class="col-sm-5">
         <div class="panel panel-primary">
+<div class="panel-heading">频次控制</div>
             <div class="panel-body">
-频次控制
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
 <tr><th>类型</th><th>次数</th><th>周期</th><th>间隔</th></tr>
@@ -49,17 +49,18 @@
 
     <div class="col-sm-5">
         <div class="panel panel-primary">
+<div class="panel-heading">活动总预算</div>
             <div class="panel-body">
-            活动总预算
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
-<thead><tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr></thead>
-<tbody>{{range $one := $item.balance_topics}}
-<tr><td>{{if eq $one.which "total_balance_id"}}全部{{else}}每天{{end}}: </td>
-<td>{{$one.limit_spend}}</td>
-<td>{{$one.limit_imp}}</td>
-<td>{{$one.limit_cli}}</td>
-</tr>
+<thead><tr><th>类型</th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr></thead>
+<tbody>{{range $one := $item.balance_topics}}{{if eq $one.which "total_balance_id"}}
+<tr><td>全部: </td><td><input type=text name=limit_spend value="{{$one.limit_spend}}" size=8 /></td>
+<td><input type=text name=limit_imp value="{{$one.limit_imp}}" size=8 /></td>
+<td><input type=text name=limit_cli value="{{$one.limit_cli}}" size=8 /></td></tr>{{else}}
+<tr><td>每天: </td><td><input type=text name=daily_spend value="{{$one.limit_spend}}" size=8 /></td>
+<td><input type=text name=daily_imp value="{{$one.limit_imp}}" size=8 /></td>
+<td><input type=text name=daily_cli value="{{$one.limit_cli}}" size=8 /></td></tr>{{end}}
 {{end}}</tbody>
 </table>
 </div>
@@ -68,12 +69,12 @@
     </div>
 </div>
 
-<!-- div class="form-group row">
+<div class="form-group row">
     <label for="selectCampaignQuality" class="col-sm-2 col-form-label">质量控制:</label>
     <div class="col-sm-5">
         <div class="panel panel-primary">
+<div class="panel-heading">本广告活动质量</div>
             <div class="panel-body">
-本广告活动质量
 <div class="table-responsive">
 <table class="table-sm table-condensed table-striped">
     <colgroup>
@@ -91,8 +92,8 @@
 
     <div class="col-sm-5">
         <div class="panel panel-primary">
+<div class="panel-heading">要求媒体的质量</div>
             <div class="panel-body">
-要求媒体的质量
 <div class="table-responsive">
 <table class="table-sm table-condensed table-striped">
     <colgroup>
@@ -107,7 +108,7 @@
             </div>
         </div>
     </div>
-</div -->
+</div>
 
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-2 col-form-label">行业匹配：</label>

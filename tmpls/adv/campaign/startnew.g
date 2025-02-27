@@ -27,8 +27,8 @@
 	<label for="tableFrequencyCap" class="col-sm-2 col-form-label">参数设置：</label>
 	<div class="col-sm-5">
         <div class="panel panel-primary">
+<div class="panel-heading">个人频次控制</div>
             <div class="panel-body">
-频次控制
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
 <tr><th>类型</th><th>次数</th><th>周期</th><th>间隔</th></tr>
@@ -48,8 +48,8 @@
 
 	<div class="col-sm-5">
         <div class="panel panel-primary">
+<div class="panel-heading">活动总预算</div>
             <div class="panel-body">
-			活动总预算
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
 <tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
@@ -67,12 +67,12 @@
 
 </div>
 
-<!-- div class="form-group row">
+<div class="form-group row">
 	<label for="selectCampaignQuality" class="col-sm-2 col-form-label">质量控制：</label>
 	<div class="col-sm-5">
 		<div class="panel panel-primary">
+<div class="panel-heading">本广告活动质量</div>
 			<div class="panel-body">
-本广告活动质量
 <div class="table-responsive">
 <table class="table-sm table-condensed table-striped">
 	<colgroup>
@@ -91,8 +91,8 @@
 
 	<div class="col-sm-5">
 		<div class="panel panel-primary">
+<div class="panel-heading">要求媒体的质量</div>
 			<div class="panel-body">
-要求媒体的质量
 <div class="table-responsive">
 <table class="table-sm table-condensed table-striped">
     <colgroup>
@@ -108,7 +108,7 @@
 			</div>
 		</div>
 	</div>
-</div -->
+</div>
 
 <div class="form-group row">
     <label for="checkChannels" class="col-sm-2 col-form-label">行业匹配：</label>

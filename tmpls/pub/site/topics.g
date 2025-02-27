@@ -15,7 +15,7 @@
                   <th>URL</th>
                   <th>上线时间</th>
                   <th>激活状况</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加媒体" data-href="site?action=startnew" id="startnewPopup">添加新的媒体</a> </th>
+                  <th colspan=2 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加新站" data-href="site?action=startnew" id="startnewPopup">添加新App或网站</a> </th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
@@ -43,7 +43,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="d-title" class="modal-title">媒体</h4>
+        <h4 id="d-title" class="modal-title">站</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div id="d-body" class="modal-body"></div>

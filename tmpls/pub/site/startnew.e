@@ -3,7 +3,7 @@
 
           <div class="card">
             <div class="card-header">
-              Create New Site
+              Create New App or Site
             </div>
             <div class="card-body">
 
@@ -11,7 +11,7 @@
 <input type=hidden name="action" value="insert">
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-2 col-form-label">Site Name:</label>
+	<label for="inputSiteName" class="col-sm-2 col-form-label">App/Site Name:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_name placeholder="Site Name" />
 	</div>

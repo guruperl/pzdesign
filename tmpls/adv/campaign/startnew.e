@@ -24,7 +24,7 @@
 </div>
 
 <div class="form-group row">
-	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">Frequency Cap:</label>
+	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">Frequency Cap per person:</label>
 	<div class="col-sm-9">
 <table class="table-sm table-bordered table-condensed">
 <tr><th>Type</th><th>Number</th><th>Period</th><th>Throttle</th></tr>
