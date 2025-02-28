@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5, h6, button {
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `site` }} active{{end}}" href="site?action=topics">
                   <span data-feather="grid"></span>
-                  媒体 {{ if eq .Other.Component "site" }}<span class="sr-only">(current)</span>{{ end }}
+                  App站 {{ if eq .Other.Component "site" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
             </ul>

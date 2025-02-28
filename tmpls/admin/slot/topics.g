@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-<h3>媒体{{index .ARGS.site_name 0}}下的广告位</h3>
+<h3>站{{index .ARGS.site_name 0}}下的广告位</h3>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
     	<thead>
