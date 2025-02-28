@@ -18,7 +18,7 @@
 	<div class="col-sm-4">
 		<input type=text class="form-control" name="campaign_name" value="{{$item.campaign_name}}">
 	</div>
-	<label for="inputPageCap" class="col-sm-2 col-form-label">单页创意数:</label>
+	<label for="inputPageCap" class="col-sm-2 col-form-label">单页Ad Group数:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control-sm" name="page_cap" value="{{$item.page_cap}}">
 	</div>

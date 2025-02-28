@@ -23,14 +23,14 @@
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            最火创意
+                            最火Ad Group
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-hover">
 <thead><tr>
-<th>创意名</th>
+<th>名称</th>
 <th>花费</th>
 <th>曝光数</th>
 <th>点击数</th>

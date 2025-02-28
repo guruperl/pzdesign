@@ -17,7 +17,7 @@
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=campaign_name placeholder="名称" />
 	</div>
-	<label for="inputPageCap" class="col-sm-2 col-form-label">单页创意数:</label>
+	<label for="inputPageCap" class="col-sm-2 col-form-label">单页Ad Group数:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=page_cap placeholder="最多不超过" />
 	</div>

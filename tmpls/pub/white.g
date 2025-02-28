@@ -9,7 +9,7 @@
 
                         <section class="row">
                             <div class="col-12">
-                                <h3 class="mb-4">广告物料候选审查</h3>
+                                <h3 class="mb-4">广告素材候选审查</h3>
                             </div>
                         </section>
 {{ end }}

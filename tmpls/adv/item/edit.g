@@ -4,7 +4,7 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        修改广告活动的创意之一：{{$item.item_name}}
+                        修改 {{$item.item_name}}
                     </div>
                     <div class="panel-body">
 
@@ -18,7 +18,7 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">创意名称:</label>
+    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">名称:</label>
     <div class="col-sm-4">
         <input type=text class="form-control" name="item_name" value="{{$item.item_name}}">
     </div>
@@ -76,7 +76,7 @@
 
 <div class="table-responsive">
 <table class="table-sm table-condensed">
-<tbody><tr><th class="col-sm-4 col-form-label text-right">创意预算: </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
+<tbody><tr><th class="col-sm-4 col-form-label text-right">预算规划: </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
 {{range $one := $item.balance_topics}}
 <tr><td>{{if eq $one.which "total_balance_id"}}全部{{else}}每天{{end}}: </td>
 <td>{{$one.limit_spend}}</td>
@@ -95,7 +95,7 @@
 	<div class="panel-body">
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">创意MIME类
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">MIME类
 :</label>
     <div class="col-sm-10">{{ range $item := .Other.qa_mime }}
 <input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
@@ -103,7 +103,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">创意特点:</label>
+    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">特点:</label>
     <div class="col-sm-10">{{ range $item := .Other.qa_creative }}
 <input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=qa_creative value="{{$item.which}}" {{if $item.selected}}checked{{end}} />{{$item.label_chinese}}{{end}}
     </div>

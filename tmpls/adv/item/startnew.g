@@ -1,6 +1,6 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        添加创意
+                        添加Ad Group
                     </div>
                     <div class="panel-body">
 
@@ -14,7 +14,7 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">创意名称:</label>
+    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">名称:</label>
     <div class="col-sm-4">
         <input type=text class="form-control" name="item_name" placeholder="名" />
     </div>
@@ -73,7 +73,7 @@
 		<div class="table-responsive">
 			<table class="table-sm table-condensed">
 <tbody>
-<tr><th class="col-sm-4 col-form-label text-right">创意预算: </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
+<tr><th class="col-sm-4 col-form-label text-right">预算规划: </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
 <tr><td class="col-sm-4 col-form-label text-right">全部: </td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
 <td><input type=text name=limit_cli size=8 /></td></tr>
@@ -93,8 +93,8 @@
     <div class="panel-body">
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">创意MIME类:</label>
-    <div class="col-sm-10">本创意的MIME归属类型。PC上显示广告选H5类型</div>
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">MIME类:</label>
+    <div class="col-sm-10">本Ad Group的MIME归属类型。PC上显示广告选H5类型</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
@@ -104,8 +104,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">创意特点:</label>
-    <div class="col-sm-10">一般性创意，请选普通类</div>
+    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">特点:</label>
+    <div class="col-sm-10">一般性Ad Group，请选普通类</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
@@ -116,7 +116,7 @@
 
 <div class="form-group row">
     <label for="inputPlatform" class="col-sm-2 col-form-label text-right">可投放设备平台:</label>
-    <div class="col-sm-10">本创意投放到何种硬件设备上？多选</div>
+    <div class="col-sm-10">本Ad Group投放到何种硬件设备上？多选</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>

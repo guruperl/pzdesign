@@ -8,16 +8,16 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                          活动： {{index .ARGS.campaign_name 0}}  创意：{{index .ARGS.item_name 0}}  
+                          活动： {{index .ARGS.campaign_name 0}}  &nbsp; / &nbsp; Ad Group：{{index .ARGS.item_name 0}}  
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
 <table class="table table-striped table-nordered table-hover">
 <thead><tr>
-<th>物料名</th>
+<th>素材名</th>
 <th>投放比重</th>
-<th>物料地址</th>
+<th>素材地址</th>
 <th></th>
 <th></th>
 </tr></thead>
@@ -40,7 +40,7 @@
                             </div>
                             <!-- /.modal -->
 </td>
-<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" onClick="return (confirm('确认要删除此物料吗？此操作不可更改。')) ? true : false;" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
+<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" onClick="return (confirm('确认要删除此素材吗？此操作不可更改。')) ? true : false;" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
 </tr>{{end}}{{end}}
 </table>
                             </div>
@@ -61,7 +61,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                          新增物料
+                          新增素材
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -78,7 +78,7 @@
 
 
 <div class="form-group row">
-    <label for="inputCreativeName" class="col-sm-2 col-form-label">物料名称：</label>
+    <label for="inputCreativeName" class="col-sm-2 col-form-label">素材名称：</label>
     <div class="col-sm-6">
         <input id="inputCreativeName" type=text class="form-control" name="creative_name" placeholder="" />
     </div>
@@ -89,7 +89,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputContent" class="col-sm-2 col-form-label">物料表达 ({{$mime}}):</label>
+    <label for="inputContent" class="col-sm-2 col-form-label">素材表达 ({{$mime}}):</label>
     <div class="col-sm-10">
 		<textarea id="inputContent" name=content class="form-control" rows="4">
 {{if eq $mime "JSMime"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href='LANDING'><img src='MEDIA_1'></a>{{end}}

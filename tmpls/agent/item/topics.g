@@ -10,7 +10,7 @@
     	<thead>
         <tr>
         	<th>名称</th>
-        	<th>详细物料</th>
+        	<th>详细素材</th>
 			<th>激活状况</th>
             <th>入网时间</th>
             <th></th>

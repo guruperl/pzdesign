@@ -5,7 +5,7 @@
 
           <div class="card">
             <div class="card-header">
-              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}媒体商户{{index .ARGS.p_company 0}}{{end}}</em>的创意审核
+              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}媒体商户{{index .ARGS.p_company 0}}{{end}}</em>的Ad Group审核
             </div>
             <div class="card-body">
 
@@ -68,7 +68,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">物料</h4>
+        <h4 class="modal-title">素材</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body"></div>

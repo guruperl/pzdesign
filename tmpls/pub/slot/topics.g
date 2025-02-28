@@ -119,7 +119,7 @@ POST下列JSON请求至{{$serverScript}}:
         notification: ‘DYNAMICAL_NOTIFICATION_URL’
 }]
                 </code></pre>
-其中 code，slot 与送来的参数一样。html 表示在此显示广告的HTML代码，开发者需解析后获取广告物料。
+其中 code，slot 与送来的参数一样。html 表示在此显示广告的HTML代码，开发者需解析后获取广告素材。
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>

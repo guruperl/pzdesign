@@ -1,7 +1,7 @@
 <div class="table-responsive">
 <table class="table table-striped table-nordered table-hover">
 <thead><tr>
-<th>创意名</th>
+<th>名称</th>
 <th>价格</th>
 <th>状态</th>
 <th>媒体类</th>

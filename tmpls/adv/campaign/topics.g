@@ -29,7 +29,7 @@
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
-<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">所有创意</a></td>
+<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">Ad Groups</a></td>
 <td><a class="btn btn-sm btn-info" href="javascript:void(0);" data-title="活动预算：{{.campaign_name}}" data-href="balance?action=topics&{{$small}}&entitytype_id=41" id="balancePopup">活动预算</a></td>
 <td><a class="btn btn-sm btn-success" href="targetname?action=topics&{{$small}}">人群定向</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('您确定要删除活动（{{.campaign_name}}）吗？此操作不可更改。')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>

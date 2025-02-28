@@ -5,7 +5,7 @@
 
           <div class="card">
             <div class="card-header">
-			候选广告物料审查
+			候选广告素材审查
             </div>
             <div class="card-body">
 
@@ -20,7 +20,7 @@
               <thead>
                 <tr>
                   <th>广告活动</th>
-                  <th>物料名</th>
+                  <th>素材名</th>
                   <th></th>
                   <th>选择</th>
                 </tr>
