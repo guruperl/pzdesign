@@ -10,7 +10,7 @@
 
                         <section class="row">
                             <div class="col-12">
-                                <h3 class="mb-4">媒体{{index .ARGS.site_name 0}}的广告位管理</h3>
+                                <h3 class="mb-4">广告位管理</h3>
                             </div>
                         </section>
 {{ end }}

@@ -18,6 +18,9 @@
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
 <input type=hidden name=campaign_name value="{{index .ARGS.campaign_name 0}}" />
+<input type=hidden name=item_id value="{{index .ARGS.item_id 0}}" />
+<input type=hidden name=item_md5 value="{{index .ARGS.item_md5 0}}" />
+<input type=hidden name=item_name value="{{index .ARGS.item_name 0}}" />
 <input type=hidden name=action value="insert" />
 
                             <!-- Nav tabs -->

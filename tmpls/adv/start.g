@@ -114,9 +114,9 @@ h1, h2, h3, h4, h5, h6, button {
                                 <li>
                                  	<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Ad Groups</a>
                                 </li>
-                                <li>
+                                <!-- li>
                                    	<a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">人群定向</a>
-                                </li>
+                                </li -->
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
