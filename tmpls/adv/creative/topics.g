@@ -16,6 +16,7 @@
 <table class="table table-striped table-nordered table-hover">
 <thead><tr>
 <th>素材名</th>
+<th>尺寸<th>
 <th>投放比重</th>
 <th>素材地址</th>
 <th></th>
@@ -23,6 +24,7 @@
 </tr></thead>
 <tbody>{{with .Lists}}{{range .}}
 <td>{{.creative_name}}</td>
+<td>{{.w}} x {{.h}}</td>
 <td>{{.weight}}</td>
 <td><textarea class="form-control" rows=4>{{.content}}</textarea></td>
 <td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#myModal{{.creative_id}}">预览</button>
@@ -78,18 +80,26 @@
 
 
 <div class="form-group row">
-    <label for="inputCreativeName" class="col-sm-2 col-form-label">素材名称：</label>
-    <div class="col-sm-6">
+    <label for="inputCreativeName" class="col-sm-1 col-form-label">名称：</label>
+    <div class="col-sm-2">
         <input id="inputCreativeName" type=text class="form-control" name="creative_name" placeholder="" />
     </div>
-	<label for="inputWeight" class="col-sm-2 col-form-label">投放比重:</label>
+    <label for="inputCreativeName" class="col-sm-1 col-form-label">尺寸：</label>
+    <div class="col-sm-2">
+        <input id="inputW" type=text class="form-control" name="w" placeholder="" />
+    </div>
+    <label for="inputCreativeName" class="col-sm-1 col-form-label">x</label>
+    <div class="col-sm-2">
+        <input id="inputW" type=text class="form-control" name="h" placeholder="" /> 
+    </div>
+	<label for="inputWeight" class="col-sm-1 col-form-label">比重:</label>
     <div class="col-sm-2">
         <input id="inputWeight" type=text class="form-control" name="weight" placeholder="0.5" />
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputContent" class="col-sm-2 col-form-label">素材表达 ({{$mime}}):</label>
+    <label for="inputContent" class="col-sm-2 col-form-label">素材表达:</label>
     <div class="col-sm-10">
 		<textarea id="inputContent" name=content class="form-control" rows="4">
 {{if eq $mime "JSMime"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href='LANDING'><img src='MEDIA_1'></a>{{end}}

@@ -29,27 +29,30 @@
 <li><a href="#t5" data-toggle="tab">时间定向</a></li>
 <li><a href="#t2" data-toggle="tab">系统平台</a></li>
 <li><a href="#t3" data-toggle="tab">人口属性</a></li>
-<li><a href="#t6" data-toggle="tab">场景营销</a></li>
+<li><a href="#t6" data-toggle="tab">行业投放</a></li>
 <li><a href="#t4" data-toggle="tab">自定义标签</a></li>
                             </ul>
 
 	<div class="tab-content">
-		<div class="tab-pane fade" id="t6">{{range $key, $val := .Other.first}}{{$top := index $second $key}}
-			<h3>{{$key}}</h3>
-			{{range $k, $v:= $val}}{{$sub := index $v 0}}<h4>
-				<input class="form-check-input" type=checkbox name="scene" value="{{$k}}" {{if index $v 1}}checked{{end}}>
-				<label class="form-check-label">{{$sub}}</label>
-			</h4>{{if $top}}{{$ending := index $top $sub}}
+		<div class="tab-pane fade" id="t6">
+			<h3>所要媒体行业</h3>
+			<div class="form-group row">
+                <div class="col-sm-12">
+					<input class="form-control-inline" type=radio name=channel_order value="Black" {{if eq "Black" .Other.channel_order}}checked{{end}} />黑名单
+					<input type=radio name=channel_order value="White" {{if eq "White" .Other.channel_order}}checked{{end}} />白名单
+				</div>
+			</div>
+			{{ with .Other.chac_topics }}{{ range . }}
             <div class="form-group row">
                 <div class="col-sm-12">
-                    <div class="form-check form-check-inline">{{range $x, $y:= $ending}}
-                        <input class="form-check-input" type=checkbox name="scene" value="{{$x}}" {{if index $y 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $y 0}}</label>
-					{{end}}</div>
+                    <div class="form-check form-check-inline">
+                       <input class="form-control-inline" name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" />
+                        <label class="form-check-label">{{.channel_name_g}}</label>
+					</div>
 				</div>
 			</div>{{end}}
             {{end}}
-		{{end}}</div>
+		</div>
 
 		<div class="tab-pane fade in active" id="t1">
             <h3>省</h3>
@@ -104,6 +107,16 @@
                     </div>
                 </div>
             </div>{{end}}
+
+			<h4>投放平台所用语言？</h4>
+			<div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{ range $item := .Other.fl_language }}
+                        <input class="form-check-input"  type=checkbox name=fl_language value="{{$item.which}}" {{if $item.selected}}checked{{end}} />
+                        <label class="form-check-label">{{$item.label_chinese}}</label>{{end}}
+                    </div>
+                </div>
+            </div>
 		</div>
 
 		<div class="tab-pane fade" id="t4">
@@ -120,6 +133,15 @@
 		</div>
 
 		<div class="tab-pane fade" id="t5">
+			<h4>当地时间获固定时区</h4>
+			<div class="form-group row">
+                                <div class="col-sm-2">
+                                        <select name=utcoffset size=1>
+						<option {{if eq .Other.utcoffsetFound "false"}}selected{{end}} value="">当地时间</option>{{range $k, $v := .Other.utcoffset}}
+                                                <option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
+                                        </select>
+                                </div>
+                        </div>
 			<h4>工作日定向</h4>
 			<div class="form-group row">
 			    <div class="col-sm-12">
@@ -133,8 +155,8 @@
 			<h4>小时定向</h4>
 			<div class="form-group row">
 			    <div class="col-sm-12">
-			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekhour}}
-						<input class="form-check-input" type=checkbox name=weekhour value="{{$k}}" {{if index $v 1}}checked{{end}}>
+			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.fullhour}}
+						<input class="form-check-input" type=checkbox name=fullhour value="{{$k}}" {{if index $v 1}}checked{{end}}>
 						<label class="form-check-label">{{index $v 0}}</label>{{end}}
 					</div>
 				</div>

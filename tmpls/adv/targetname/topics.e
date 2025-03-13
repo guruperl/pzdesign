@@ -101,8 +101,8 @@
 			<h4>Hours</h4>
 			<div class="form-group row">
 			    <div class="col-sm-12">
-			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekhour}}
-						<input class="form-check-input" type=checkbox name=weekhour value="{{$k}}" {{if index $v 1}}checked{{end}}>
+			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.fullhour}}
+						<input class="form-check-input" type=checkbox name=fullhour value="{{$k}}" {{if index $v 1}}checked{{end}}>
 						<label class="form-check-label">{{index $v 0}}</label>{{end}}
 					</div>
 				</div>
