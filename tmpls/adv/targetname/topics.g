@@ -1,8 +1,6 @@
 {{template "header" .}}
 {{template "targetnameheader" .}}
 
-{{$pzAttrs := .Other.pzAttrsChinese}}
-{{ $dAttrs := .Other.dAttrsChinese }}
 {{ $second := .Other.second }}
 
 <!-- /.row -->
@@ -86,37 +84,39 @@
 		</div>
 
 		<div class="tab-pane fade" id="t2">{{range $key, $val := .Other.pzuaChinese}}
-			<h4>{{index $pzAttrs $key}}</h4>
+			<h4>{{$key}}</h4>
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v := $val}}
-						<input class="form-check-input" type=checkbox name={{$key}} {{if index $v 1}}checked{{end }} value="{{$k}}">
+						<input class="form-check-input" type=checkbox name={{$key}} {{if index $v 1}}checked{{end }} value="{{$k}}" />
 						<label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>{{end}}
 		</div>
 
-		<div class="tab-pane fade" id="t3">
-			{{range $key, $val := .Other.demoChinese}}<h4>{{index $dAttrs $key}}</h4>
+		<div class="tab-pane fade" id="t3">{{range $key, $val := .Other.demoChinese}}
+			<h4>{{$key}}</h4>
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <input class="form-check-input" type=checkbox name="{{$key}}" {{if index $v 1}}checked{{end}} value="{{$k}}" />
                         <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>{{end}}
+		</div>
 
-			<h4>投放平台所用语言？</h4>
-			<div class="form-group row">
+		<div class="tab-pane fade" id="t5">{{range $key, $val := .Other.dtChinese}}
+			<h4>{{$key}}</h4>
+            <div class="form-group row">
                 <div class="col-sm-12">
-                    <div class="form-check form-check-inline">{{ range $item := .Other.fl_language }}
-                        <input class="form-check-input"  type=checkbox name=fl_language value="{{$item.which}}" {{if $item.selected}}checked{{end}} />
-                        <label class="form-check-label">{{$item.label_chinese}}</label>{{end}}
+                    <div class="form-check form-check-inline">{{range $k, $v:= $val}}
+                        <input class="form-check-input" type={{if eq $key "utcoffset"}}radio{{else}}checkbox{{end}} name="{{$key}}" {{if index $v 1}}checked{{end}} value="{{$k}}" />
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
-            </div>
+            </div>{{end}}
 		</div>
 
 		<div class="tab-pane fade" id="t4">
@@ -132,36 +132,6 @@
             </div>{{end}}
 		</div>
 
-		<div class="tab-pane fade" id="t5">
-			<h4>当地时间获固定时区</h4>
-			<div class="form-group row">
-                                <div class="col-sm-2">
-                                        <select name=utcoffset size=1>
-						<option {{if eq .Other.utcoffsetFound "false"}}selected{{end}} value="">当地时间</option>{{range $k, $v := .Other.utcoffset}}
-                                                <option {{if index $v 1}}selected{{end }} value="{{$k}}">{{index $v 0}}</option>{{end}}
-                                        </select>
-                                </div>
-                        </div>
-			<h4>工作日定向</h4>
-			<div class="form-group row">
-			    <div class="col-sm-12">
-			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.weekdayChinese}}
-						<input class="form-check-input" type=checkbox name=weekday value="{{$k}}" {{if index $v 1}}checked{{end}}>
-						<label class="form-check-label">{{index $v 0}}</label>{{end}}
-					</div>
-				</div>
-			</div>
-
-			<h4>小时定向</h4>
-			<div class="form-group row">
-			    <div class="col-sm-12">
-			        <div class="form-check form-check-inline">{{range $k, $v:= .Other.fullhour}}
-						<input class="form-check-input" type=checkbox name=fullhour value="{{$k}}" {{if index $v 1}}checked{{end}}>
-						<label class="form-check-label">{{index $v 0}}</label>{{end}}
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 
 <p> </p>

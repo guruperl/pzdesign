@@ -22,13 +22,18 @@
 </div>
 
 <div class="form-group row">
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">外部编号:</label>
+<p>(Bundle: For mobile apps in Google Play Store, these should be bundle or package names e.g. com.foo.mygame. For apps in Apple App Store, these should be a numeric ID. For web, this should be site's domain name.)</p>
+<p>(质监图片: URL without cache-busting to an image that is representative
+of the content of the campaign for ad quality/safety checking)</p>
+</div>
+<div class="form-group row">
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">Bundle/Domain:</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=foreign_id placeholder="编号 可不填" />
+		<input type=text class="form-control" name=foreign_id placeholder="编号必填" />
 	</div>
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">应用链接：</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">质监图片：</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=extlink placeholder="应用市场链接或落地页" />
+		<input type=text class="form-control" name=iurl placeholder="IURL" />
 	</div>
 </div>
 

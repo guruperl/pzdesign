@@ -13,6 +13,13 @@
 <input type=hidden name=action value="update" />
 
 <div class="form-group row">
+    <label for="inputDomain" class="col-sm-3 col-form-label">域名:</label>
+    <div class="col-sm-8">
+        <input type=text class="form-control" name=domain value="{{$item.domain}}" />
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="inputFirstName" class="col-sm-3 col-form-label">姓名:</label>
     <div class="col-sm-2">
         <input type=text class="form-control" name=lastname value="{{$item.lastname}}" />

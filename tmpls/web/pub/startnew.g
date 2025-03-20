@@ -8,8 +8,15 @@
       <div class="col-md-6">
         <div class="card mx-4">
           <div class="card-body p-4">
-            <h1>媒体商户注册</h1>
+            <h1>ADX商户注册</h1>
             <p class="text-muted">开始注册</p>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-star"></i></span>
+              </div>
+              <input type="text" name=domain id="domain" class="form-control" placeholder="some.adx.kom">
+            </div>
+
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-home"></i></span>

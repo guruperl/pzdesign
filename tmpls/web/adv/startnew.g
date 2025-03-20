@@ -12,6 +12,13 @@
             <p class="text-muted">开始注册</p>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
+                <span class="input-group-text"><i class="icon-star"></i></span>
+              </div>
+              <input type="text" name=company id="domain" class="form-control" placeholder="advertiser.kom">
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-home"></i></span>
               </div>
               <input type="text" name=company id="company" class="form-control" placeholder="公司名">

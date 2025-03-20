@@ -25,13 +25,13 @@
 </div>
 
 <div class="form-group row">
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">外部编号:</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">Bundle/Domain:</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=foreign_id value="{{$item.foreign_id}}" />
 	</div>
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">应用链接：</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">质监图片：</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=extlink value="{{$item.extlink}}" />
+		<input type=text class="form-control" name=iurl value="{{$item.iurl}}" />
 	</div>
 </div>
 
