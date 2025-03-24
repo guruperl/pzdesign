@@ -14,7 +14,8 @@
               <thead>
                 <tr>
                   <th>活动名称</th>
-				  <th>创建日期</th>
+		  <th>类型</th>
+		  <th>创建日期</th>
                   <th>预算</th>
                   <th>曝光</th>
                   <th>点击</th>
@@ -25,6 +26,7 @@
 <tr>
 {{$small := print "campaign_id=" .campaign_id "&campaign_md5=" .campaign_md5 "&campaign_name=" (.campaign_name | urlquery )}}
 <td><a href="javascript:void(0);" data-title="活动更新：{{.campaign_name}}" data-href="campaign?action=edit&{{$small}}" id="editPopup">{{.campaign_name}}</a></td>
+<td>{{.target_type}}</td>
 <td>{{.created}}</td>
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
