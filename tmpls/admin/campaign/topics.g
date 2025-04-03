@@ -7,10 +7,12 @@
     	<thead>
         <tr>
         	<th>活动名</th>
+        	<th>分类</th>
         	<th>公司</th>
-		<th>状态</th>
+        	<th>Bundle</th>
             <th>入网时间</th>
-            <th></th>
+		<th>状态</th>
+            <th>（限时段更新）</th>
             <th></th>
         </tr>
         </thead>
@@ -18,9 +20,11 @@
 			<tr>
 				<!-- td><a href="campaign?action=edit&campaign_id={{.campaign_id}}">{{.campaign_name}}</a></td -->
 				<td><a href="item?action=topics&campaign_id={{.campaign_id}}&campaign_name={{.campaign_name|urlquery}}">{{.campaign_name}}</a></td>
-				<td>{{.company}}</td>
-				<td>{{.active}}</td>
+				<td>{{.target_type}}</td>
+				<td>{{.domain}}</td>
+				<td>{{.foreign_id}}</td>
 				<td>{{.created}}</td>
+				<td>{{.active}}</td>
 				<td>
 {{if eq .active "New"}}<a class="btn btn-sm btn-primary" href="campaign?action=update&active=Yes&campaign_id={{.campaign_id}}">激活</a>{{end}}
 {{if eq .active "Yes"}}<a class="btn btn-sm btn-info" href="campaign?action=update&active=Pause&campaign_id={{.campaign_id}}">暂停</a> <a class="btn btn-sm btn-danger" href="campaign?action=update&active=No&campaign_id={{.campaign_id}}">拿下</a>{{end}}

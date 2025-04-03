@@ -16,7 +16,7 @@
 <table class="table table-striped table-nordered table-hover">
 <thead><tr>
 <th>素材名</th>
-<th>尺寸<th>
+<th>尺寸</th>
 <th>投放比重</th>
 <th>素材地址</th>
 <th></th>
@@ -26,21 +26,21 @@
 <td>{{.creative_name}}</td>
 <td>{{.w}} x {{.h}}</td>
 <td>{{.weight}}</td>
-<td><textarea class="form-control" rows=4>{{.content}}</textarea></td>
+<td>{{.content}}</td>
 <td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#myModal{{.creative_id}}">预览</button>
 <!-- Modal -->
-                            <div class="modal fade" id="myModal{{.creative_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-{{if eq $mime "JSMime"}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,<script>{{.content}}</script>"></iframe>{{else}}<iframe frameborder=0 src="data:text/html; charset=UTF-8,{{.content}}"></iframe>{{end}}
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
+	<div class="modal fade" id="myModal{{.creative_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+<iframe frameborder=0 src="{{.content}}"></iframe>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 </td>
 <td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" onClick="return (confirm('确认要删除此素材吗？此操作不可更改。')) ? true : false;" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
 </tr>{{end}}{{end}}
@@ -68,7 +68,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
-<form name=newcreative class="form" method=post action="creative">
+<form name=newcreative class="form" method=post action="creative" enctype="multipart/form-data">
 <input type=hidden name=action value="insert" />
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
@@ -100,10 +100,20 @@
 
 <div class="form-group row">
     <label for="inputContent" class="col-sm-2 col-form-label">素材表达:</label>
-    <div class="col-sm-10">
-		<textarea id="inputContent" name=content class="form-control" rows="4">
-{{if eq $mime "JSMime"}}document.write("<a href='LANDING'><img src='MEDIA_1'></a>"){{else}}<a href='LANDING'><img src='MEDIA_1'></a>{{end}}
+    <div class="col-sm-8">
+		<textarea id="inputContent" name=content class="form-control" rows="2">
+http://www.creative.site/sample.png
 		</textarea>
+	</div>
+	<div class="col-sm-2">
+	</div>
+</div>
+<div class="form-group row">
+    <label for="inputContent" class="col-sm-2 col-form-label">或上传图片:</label>
+	<div class="col-sm-8">
+		<input type=file class="form-control" name="media_1" />
+	</div>
+	<div class="col-sm-2">
 	</div>
 </div>
 
