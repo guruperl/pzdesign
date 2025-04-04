@@ -1,14 +1,12 @@
 {{ template "header" .}}
 {{ template "pubheader" .}}
 
-<h3>所有媒体商家</h3>
+<h3>所有ADX记录</h3>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
     	<thead>
         <tr>
-            <th>邮箱</th>
-            <th>联系人</th>
-        	<th>公司</th>
+            <th>域名</th>
 			<th>状态</th>
             <th>入网时间</th>
             <th></th>
@@ -17,9 +15,7 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="pub?action=edit&pub_id={{.pub_id}}">{{.email}}</a></td>
-				<td>{{.firstname}} {{.lastname}}</td>
-				<td>{{.company}}</td>
+				<td><a href="pub?action=edit&pub_id={{.pub_id}}">{{.domain}}</a></td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>

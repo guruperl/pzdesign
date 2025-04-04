@@ -7,9 +7,7 @@
     	<thead>
         <tr>
             <th>广告位名</th>
-            <th>平台</th>
-            <th>大小</th>
-            <th>接受格式</th>
+            <th>大小（所有尺寸）</th>
 			<th>状态</th>
             <th>入网时间</th>
             <th></th>
@@ -19,9 +17,7 @@
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
 				<td><a href="slot?action=edit&slot_id={{.slot_id}}">{{.slot_name}}</a></td>
-				<td>{{.qa_device}}</td>
-				<td>{{.w}}x{{.h}}</td>
-				<td>{{.fl_mime}}</td>
+				<td>{{.w}}x{{.h}} （举例）</td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>

@@ -17,7 +17,7 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="slot?action=topics&site_id={{.site_id}}&site_name={{.site_name|urlquery}}">{{.site_name}}</a></td>
+				<td><a href="slot?action=topics&pub_id={{.pub_id}}&site_id={{.site_id}}&site_name={{.site_name|urlquery}}">{{.site_name}}</a></td>
 				<td>{{.company}}</td>
 				<td>{{.site_url}}</td>
 				<td>{{.active}}</td>

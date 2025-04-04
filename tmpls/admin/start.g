@@ -73,7 +73,7 @@ h1, h2, h3, h4, h5, h6, button {
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
                   <span data-feather="cast"></span>
-                  媒体商户 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
+                  ADX流量源 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">

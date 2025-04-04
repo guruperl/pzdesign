@@ -33,7 +33,7 @@
 
 	<div class="tab-content">
 		<div class="tab-pane fade" id="t6">
-			<h3>所要媒体行业</h3>
+			<h3>流量源所属行业</h3>
 			<div class="form-group row">
                 <div class="col-sm-12">
 					<input class="form-control-inline" type=radio name=channel_order value="Black" {{if eq "Black" .Other.channel_order}}checked{{end}} />黑名单
@@ -53,6 +53,16 @@
 		</div>
 
 		<div class="tab-pane fade in active" id="t1">
+            <h3>国家</h3>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= .Other.country}}
+                        <input class="form-check-input" type=checkbox name=country value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+            </div>
+
             <h3>省</h3>
             <div class="form-group row">
                 <div class="col-sm-12">
