@@ -12,7 +12,7 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-<form class="form" method=post action=targetname>
+<form name=form1 class="form" method=post action=targetname>
 <input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
 <input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
 <input type=hidden name=campaign_name value="{{index .ARGS.campaign_name 0}}" />
@@ -28,10 +28,47 @@
 <li><a href="#t2" data-toggle="tab">系统平台</a></li>
 <li><a href="#t3" data-toggle="tab">人口属性</a></li>
 <li><a href="#t6" data-toggle="tab">行业投放</a></li>
+<li><a href="#t7" data-toggle="tab">包名或域名</a></li>
 <li><a href="#t4" data-toggle="tab">自定义标签</a></li>
                             </ul>
 
 	<div class="tab-content">
+    	<div class="tab-pane fade" id="t7">
+			<h3>流量类型定向</h3>
+			<h4>流量类型</h4>
+            <div class="form-group row">
+				<div class="col-sm-12">
+                    <div class="form-check form-check-inline">
+						<input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App,Web"}}checked{{end }} value="App,Web" />
+						<label class="form-check-label">All</label>
+						<input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App"}}checked{{end }} value="App" />
+						<label class="form-check-label">App</label>
+						<input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "Web"}}checked{{end }} value="Web" />
+						<label class="form-check-label">网站</label>
+                    </div>
+                </div>
+            </div>
+			<h4>流量源</h4>
+            <div class="form-group row">
+				<div class="col-sm-12">
+                    <div class="form-check form-check-inline">
+						<input class="form-check-input" type=radio name=acess_order {{if eq .Other.orderSiteTypes "White"}}checked{{end }} value="White" />
+						<label class="form-check-label">白名单</label>
+						<input class="form-check-input" type=radio name=access_order {{if eq .Other.orderSiteTypes "Black"}}checked{{end }} value="Black" />
+						<label class="form-check-label">黑名单</label>
+                        <input class="form-check-input" type=radio name=access_order {{if eq .Other.orderSiteTypes "Inherit"}}checked{{end }} value="Inherit" />
+						<label class="form-check-label">跟随广告活动的设置</label>
+                    </div>
+                </div>{{range $k, $v := .Other.aclChinese}}
+                <div class="col-sm-12">
+                    <div class="form-check form-check-inline">
+						<input class="form-check-input" type=checkbox name=site_id {{if index $v 0}}checked{{end }} value="{{$k}}" />
+						<label class="form-check-label">{{index $v 1}} <em>{{index $v 2 }}</em>  <strong style="color:red">{{index $v 3}}</strong></label>
+                    </div>
+                </div>{{end}}
+            </div>
+		</div>
+        
 		<div class="tab-pane fade" id="t6">
 			<h3>流量源所属行业</h3>
 			<div class="form-group row">
@@ -130,7 +167,9 @@
 		</div>
 
 		<div class="tab-pane fade" id="t4">
-			<h3>自定义标签定向</h3>
+
+            <h3>自定义标签定向</h3>
+            <h4>（请首先点左边栏目里的“自定义标签”，设置新标签名称和可选择值）</h4>
 			{{range $key, $val := .Other.custom}}<h4>{{$key}}</h4>
             <div class="form-group row">
                 <div class="col-sm-12">
@@ -140,6 +179,18 @@
                     </div>
                 </div>
             </div>{{end}}
+<p> &nbsp </p>
+			<h4>已经上传标签 （请点下面的“上传按钮”单独上传）</h4>
+	        <div class="form-group row">
+	            <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= .Other.uploadChinese}}
+                    	<input class="form-check-input" type=checkbox name="uploads" {{if index $v 1}}checked{{end}} value="{{$k}}" />
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+			</div>
+			            
+
 		</div>
 
 	</div>
@@ -155,7 +206,44 @@
 								</div>
 							</div>
 </form>
-
+<p> &nbsp </p>
+<p> &nbsp </p>
+<p> &nbsp </p>
+<p> &nbsp </p>
+<form name=form1 class="form" method=post action=targetname enctype="multipart/form-data">
+<input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
+<input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
+<input type=hidden name=campaign_name value="{{index .ARGS.campaign_name 0}}" />
+<input type=hidden name=item_id value="{{index .ARGS.item_id 0}}" />
+<input type=hidden name=item_md5 value="{{index .ARGS.item_md5 0}}" />
+<input type=hidden name=item_name value="{{index .ARGS.item_name 0}}" />
+<input type=hidden name=action value="upload" />
+<div class="form-group row">
+    <label for="inputContent" class="col-sm-12 col-form-label">
+    上传文件每行一条，不要超过1万条。此条目匹配将被优先选择。</label>
+</div>
+<div class="form-group row">
+    <label for="inputContent" class="col-sm-1 col-form-label">文件类别</label>  
+    <div class="col-sm-2">
+        <select class=form-control" size=1 name=marker>
+            <option value="buyerid">Buyer ID</option>
+            <option value="userid">User ID</option>
+            <option value="ip">IP</option>
+            <option value="did">设备 ID</option>
+            <option value="dpid">设备平台 ID</option>
+            <option value="mac">MAC</option>
+        </select>
+    </div>
+    <div class="col-sm-3">
+        <input type=file class="form-control" name="media_1" />
+    </div>
+    <div class="col-sm-2">
+        <button class="btn btn-primary btn-sm btn-block" type=submit>上传</button>
+    </div>
+    <div class="col-sm-4">
+    </div>
+</div>
+</form>
 						</div>
 					</div>
 				</div>

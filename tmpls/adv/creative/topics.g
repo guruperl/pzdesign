@@ -99,6 +99,22 @@
 </div>
 
 <div class="form-group row">
+    <label for="inputRandomChoices" class="col-sm-3 col-form-label">选择下面其中一种:</label>
+    <div class="col-sm-1">
+        <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=1 />
+    </div>
+    <label for="inputRandom1" class="col-sm-2 col-form-label">素材表达</label>
+    <div class="col-sm-1">
+        <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=2 />
+    </div>
+    <label for="inputRandom1" class="col-sm-2 col-form-label">上传图片</label> 
+    <div class="col-sm-1">
+        <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=3 />
+    </div>
+    <label for="inputRandom1" class="col-sm-2 col-form-label">原生广告</label>
+</div>
+
+<div class="form-group row">
     <label for="inputContent" class="col-sm-2 col-form-label">素材表达:</label>
     <div class="col-sm-8">
 		<textarea id="inputContent" name=content class="form-control" rows="2">
@@ -112,6 +128,30 @@ http://www.creative.site/sample.png
     <label for="inputContent" class="col-sm-2 col-form-label">或上传图片:</label>
 	<div class="col-sm-8">
 		<input type=file class="form-control" name="media_1" />
+	</div>
+	<div class="col-sm-2">
+	</div>
+</div>
+<div class="form-group row">
+    <label for="inputContent" class="col-sm-2 col-form-label">或原生广告:</label>
+	<div class="col-sm-8">
+		<table class="table table-nordered table-hover">
+<tr>
+<th>标题（50字）</th><td><input type=text class="form-control" name="title" placeholder="" /> </td>
+</tr>
+<tr>
+<th>描述（255字）</th><td><input type=text class="form-control" name="description" placeholder="" /> </td>
+</tr>
+<tr>
+<th>配文CTA（50字）</th><td><input type=text class="form-control" name="cta" placeholder="" /> </td>
+</tr>
+<tr>
+<th>ICON地址</th><td><input type=text class="form-control" name="iconImg" placeholder="" /> </td>
+</tr>
+<tr>
+<th>MAIN IMAGE地址</th><td><input type=text class="form-control" name="mainImg" placeholder="" /> </td>
+</tr>
+        </table>
 	</div>
 	<div class="col-sm-2">
 	</div>

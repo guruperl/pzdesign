@@ -18,13 +18,41 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">名称:</label>
-    <div class="col-sm-4">
+    <label for="inputCampaigName" class="col-sm-1 col-form-label text-right">名称</label>
+    <div class="col-sm-3">
         <input type=text class="form-control" name="item_name" placeholder="名" />
     </div>
+    <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
+    <div class="col-sm-3">
+        <input type=radio name=cost_type value=ROI>ROI
+        <input type=radio name=cost_type value=CPM>CPM
+        <input type=radio name=cost_type value=CPC>CPC
+        <input type=radio name=cost_type value=CPA>CPA
+	</div>
+    <label for="inputEndx" class="col-sm-1 col-form-label text-right">价格</label>
+    <div class="col-sm-2">
+        <input type=text class="form-control" name="cost" placeholder="1.23" />
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">落地页:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="item_click" placeholder="http://www.LANDING.PAGE/" />
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="item_click">落地 URL，可使用宏</textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">显示监控:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="imp_url">显示监控 URL，可使用宏。多选时用英文逗号分开</textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监控:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="click_url">点击监控 URL，可使用宏。多选时用英文逗号分开</textarea>
     </div>
 </div>
 
@@ -38,21 +66,6 @@
         <input type=text class="form-control" name="endx" value="">
     </div>
 </div>
-
-<div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">价格:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="cost" placeholder="1.23" />
-    </div>
-    <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
-    <div class="col-sm-4">
-<input type=radio name=cost_type value=ROI>ROI
-<input type=radio name=cost_type value=CPM>CPM
-<input type=radio name=cost_type value=CPC>CPC
-<input type=radio name=cost_type value=CPA>CPA
-	</div>
-</div>
-
 
 
 <div class="form-group row">

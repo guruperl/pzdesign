@@ -21,13 +21,41 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">名称:</label>
-    <div class="col-sm-4">
+    <label for="inputCampaigName" class="col-sm-1 col-form-label text-right">名称:</label>
+    <div class="col-sm-3">
         <input type=text class="form-control" name="item_name" value="{{$item.item_name}}">
     </div>
+    <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
+    <div class="col-sm-3">
+<input type=radio name=cost_type {{if eq $item.cost_type "ROI"}}checked{{end}} value=ROI>ROI
+<input type=radio name=cost_type {{if eq $item.cost_type "CPM"}}checked{{end}} value=CPM>CPM
+<input type=radio name=cost_type {{if eq $item.cost_type "CPC"}}checked{{end}} value=CPC>CPC
+<input type=radio name=cost_type {{if eq $item.cost_type "CPA"}}checked{{end}} value=CPA>CPA
+	</div>
+    <label for="inputEndx" class="col-sm-1 col-form-label text-right">价格:</label>
+    <div class="col-sm-2">
+        <input type=text class="form-control" name="cost" value="{{$item.cost}}" />
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">落地页:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="item_click" value="{{$item.item_click}}">
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="item_click">{{$item.item_click}}</textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">显示监控:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="imp_url">{{$item.imp_url}}</textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监控:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="click_url">{{$item.click_url}}</textarea>
     </div>
 </div>
 
@@ -41,21 +69,6 @@
         <input type=text class="form-control" name="endx" value="{{ if $item.endx }}{{$item.endx}}{{end}}">
     </div>
 </div>
-
-<div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">价格:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="cost" value="{{$item.cost}}" />
-    </div>
-    <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
-    <div class="col-sm-4">
-<input type=radio name=cost_type {{if eq $item.cost_type "ROI"}}checked{{end}} value=ROI>ROI
-<input type=radio name=cost_type {{if eq $item.cost_type "CPM"}}checked{{end}} value=CPM>CPM
-<input type=radio name=cost_type {{if eq $item.cost_type "CPC"}}checked{{end}} value=CPC>CPC
-<input type=radio name=cost_type {{if eq $item.cost_type "CPA"}}checked{{end}} value=CPA>CPA
-	</div>
-</div>
-
 
 
 <div class="form-group row">
