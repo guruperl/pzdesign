@@ -1,5 +1,5 @@
 {{ template "header" .}}
-{{ template "targetnameheader" .}}
+{{ template "attrnameheader" .}}
 
 <!-- /.row -->
             <div class="row">

@@ -180,7 +180,7 @@
                 </div>
             </div>{{end}}
 <p> &nbsp </p>
-			<h4>已经上传标签 （请点下面的“上传按钮”单独上传）</h4>
+			<h4>已经上传标签定向</h4>
 	        <div class="form-group row">
 	            <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.uploadChinese}}
@@ -206,44 +206,7 @@
 								</div>
 							</div>
 </form>
-<p> &nbsp </p>
-<p> &nbsp </p>
-<p> &nbsp </p>
-<p> &nbsp </p>
-<form name=form1 class="form" method=post action=targetname enctype="multipart/form-data">
-<input type=hidden name=campaign_id value="{{index .ARGS.campaign_id 0}}" />
-<input type=hidden name=campaign_md5 value="{{index .ARGS.campaign_md5 0}}" />
-<input type=hidden name=campaign_name value="{{index .ARGS.campaign_name 0}}" />
-<input type=hidden name=item_id value="{{index .ARGS.item_id 0}}" />
-<input type=hidden name=item_md5 value="{{index .ARGS.item_md5 0}}" />
-<input type=hidden name=item_name value="{{index .ARGS.item_name 0}}" />
-<input type=hidden name=action value="upload" />
-<div class="form-group row">
-    <label for="inputContent" class="col-sm-12 col-form-label">
-    上传文件每行一条，不要超过1万条。此条目匹配将被优先选择。</label>
-</div>
-<div class="form-group row">
-    <label for="inputContent" class="col-sm-1 col-form-label">文件类别</label>  
-    <div class="col-sm-2">
-        <select class=form-control" size=1 name=marker>
-            <option value="buyerid">Buyer ID</option>
-            <option value="userid">User ID</option>
-            <option value="ip">IP</option>
-            <option value="did">设备 ID</option>
-            <option value="dpid">设备平台 ID</option>
-            <option value="mac">MAC</option>
-        </select>
-    </div>
-    <div class="col-sm-3">
-        <input type=file class="form-control" name="media_1" />
-    </div>
-    <div class="col-sm-2">
-        <button class="btn btn-primary btn-sm btn-block" type=submit>上传</button>
-    </div>
-    <div class="col-sm-4">
-    </div>
-</div>
-</form>
+
 						</div>
 					</div>
 				</div>
