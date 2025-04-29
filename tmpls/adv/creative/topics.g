@@ -99,7 +99,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputRandomChoices" class="col-sm-3 col-form-label">选择下面其中一种:</label>
+    <label for="inputRandomChoices" class="col-sm-2 col-form-label">选择物料:</label>
     <div class="col-sm-1">
         <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=1 />
     </div>
@@ -107,11 +107,15 @@
     <div class="col-sm-1">
         <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=2 />
     </div>
-    <label for="inputRandom1" class="col-sm-2 col-form-label">上传图片</label> 
+    <label for="inputRandom1" class="col-sm-1 col-form-label">图片</label> 
     <div class="col-sm-1">
         <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=3 />
     </div>
-    <label for="inputRandom1" class="col-sm-2 col-form-label">原生广告</label>
+    <label for="inputRandom1" class="col-sm-1 col-form-label">视频</label> 
+    <div class="col-sm-1">
+        <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=4 />
+    </div>
+    <label for="inputRandom1" class="col-sm-1 col-form-label">原生</label>
 </div>
 
 <div class="form-group row">
@@ -128,6 +132,14 @@ http://www.creative.site/sample.png
     <label for="inputContent" class="col-sm-2 col-form-label">或上传图片:</label>
 	<div class="col-sm-8">
 		<input type=file class="form-control" name="media_1" />
+	</div>
+	<div class="col-sm-2">
+	</div>
+</div>
+<div class="form-group row">
+    <label for="inputContent" class="col-sm-2 col-form-label">或上传视频:</label>
+	<div class="col-sm-8">
+		<input type=file class="form-control" name="media_2" />
 	</div>
 	<div class="col-sm-2">
 	</div>

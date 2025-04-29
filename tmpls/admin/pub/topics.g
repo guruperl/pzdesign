@@ -6,7 +6,10 @@
 	<table class="table table-striped table-sm">
     	<thead>
         <tr>
+			<th>Pub ID</td>
             <th>域名</th>
+			<th>QPS</th>
+			<th>实到QPS</th>
 			<th>状态</th>
             <th>入网时间</th>
             <th></th>
@@ -15,7 +18,10 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="pub?action=edit&pub_id={{.pub_id}}">{{.domain}}</a></td>
+				<td><a href="pub?action=edit&pub_id={{.pub_id}}">{{.pub_id}}</a></td>
+				<td>{{.domain}}</td>
+				<td>{{.limit_imp}}</td>
+				<td>{{.current_imp}}</td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>
@@ -25,6 +31,18 @@
 </td>
 				<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=pub&email={{.email | urlquery}}" target="_blank">As</a></td>
 			</tr>{{end}}{{end}}
+			<tr>
+			<th colspan=8>添加 ADX</th>
+			</tr>
+			<tr><form class="form" action=pub method=post>
+			<input type=hidden name=action value="insert" />
+			<input type=hidden name=active value="Yes" />
+			<td> </td>
+			<td><input class="form-input" type=text name=domain /></td>
+			<td><input class="form-input" type=text name=limit_imp /></td>
+			<td><input class="form-input" type=hidden name=current_imp value=0 /></td>
+			<td colspan=4><button type="submit" class="btn btn-sm btn-primary">添加</td>
+			</form></tr>
 		</tbody>
 	</table>
 </div>

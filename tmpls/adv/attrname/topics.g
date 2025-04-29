@@ -47,7 +47,7 @@
          <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                      自定义标签列表
+                      自定义标签
                     </div>
                     <div class="panel-body">
 

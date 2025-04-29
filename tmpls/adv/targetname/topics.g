@@ -29,7 +29,7 @@
 <li><a href="#t3" data-toggle="tab">人口属性</a></li>
 <li><a href="#t6" data-toggle="tab">行业投放</a></li>
 <li><a href="#t7" data-toggle="tab">包名或域名</a></li>
-<li><a href="#t4" data-toggle="tab">自定义标签</a></li>
+<li><a href="#t4" data-toggle="tab">标签投放</a></li>
                             </ul>
 
 	<div class="tab-content">
@@ -167,9 +167,19 @@
 		</div>
 
 		<div class="tab-pane fade" id="t4">
+			<h3>上传标签定向</h3>
+	        <div class="form-group row">
+	            <div class="col-sm-12">
+                    <div class="form-check form-check-inline">{{range $k, $v:= .Other.uploadChinese}}
+                    	<input class="form-check-input" type=checkbox name="uploads" {{if index $v 1}}checked{{end}} value="{{$k}}" />
+                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                    </div>
+                </div>
+			</div>
 
+<p> &nbsp </p>
             <h3>自定义标签定向</h3>
-            <h4>（请首先点左边栏目里的“自定义标签”，设置新标签名称和可选择值）</h4>
+            <h4>（从左边栏目里的“标签管理/自定义标签列表”，设置标签名和可选值）</h4>
 			{{range $key, $val := .Other.custom}}<h4>{{$key}}</h4>
             <div class="form-group row">
                 <div class="col-sm-12">
@@ -179,22 +189,12 @@
                     </div>
                 </div>
             </div>{{end}}
-<p> &nbsp </p>
-			<h4>已经上传标签定向</h4>
-	        <div class="form-group row">
-	            <div class="col-sm-12">
-                    <div class="form-check form-check-inline">{{range $k, $v:= .Other.uploadChinese}}
-                    	<input class="form-check-input" type=checkbox name="uploads" {{if index $v 1}}checked{{end}} value="{{$k}}" />
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
-                    </div>
-                </div>
-			</div>
-			            
 
 		</div>
 
 	</div>
 
+<p> &nbsp </p>
 <p> </p>
 							<div class="row">
 								<div class="col-sm-2">

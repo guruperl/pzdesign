@@ -125,7 +125,7 @@ h1, h2, h3, h4, h5, h6, button {
                             <a href="ac?action=topics&entitytype_id=4"><i class="fa fa-table fa-fw"></i> 网站黑白名单</a>
                         </li>
                         <li>
-                            <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> 自定义标签</a>
+                            <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> 标签管理</a>
                         </li>
                         <li>
 							<a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> 财务报告</a>
