@@ -32,7 +32,7 @@
         <div class="card-group">
           <div class="card p-4">
             <div class="card-body">
-              <h1>ADX登入</h1>
+              <h1>流量源公司登入</h1>
               <p class="text-muted">{{.Errorstr}}</p>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
