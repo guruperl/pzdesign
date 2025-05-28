@@ -3,7 +3,7 @@
 
           <div class="card">
             <div class="card-header">
-              媒体组罗列
+              流量源组罗列
             </div>
             <div class="card-body">
 
@@ -11,7 +11,7 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>媒体名称</th>
+                  <th>流量源名称</th>
                   <th>URL</th>
                   <th>上线时间</th>
                   <th>激活状况</th>
@@ -20,12 +20,12 @@
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-<td><a href="javascript:void(0);" data-title="媒体更新：{{.site_name}}" data-href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}" id="editPopup">{{.site_name}}</a></td>
+<td><a href="javascript:void(0);" data-title="流量源更新：{{.site_name}}" data-href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}" id="editPopup">{{.site_name}}</a></td>
 <td>{{.site_url}}</td>
 <td>{{.created}}</td>
 <td>{{.active}}</td>
 <td><a class="btn btn-sm btn-info" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">所有广告位</a></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除此媒体{{.site_name}}吗？此操作不可更改。')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除此流量源{{.site_name}}吗？此操作不可更改。')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
 </tr>
 {{end}}{{end}}</tobdy>
 </table>

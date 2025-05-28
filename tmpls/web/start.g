@@ -9,7 +9,7 @@
   <meta name="description" content="Application of W8M Membership">
   <meta name="keyword" content="Application of W8M Membership">
 
-  <title>派兹注册</title>
+  <title>W8M 注册</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">

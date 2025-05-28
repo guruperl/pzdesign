@@ -5,7 +5,7 @@
 	<div class="col-md-6">
 		<div class="card mx-4">
 			<div class="card-body p-4">
-            	<h1>媒体商密码</h1>
+            	<h1>流量源公司密码</h1>
             	<p class="text-muted">请查看邮箱!</p>
 				如果你的注册邮箱正确的话，请查看邮箱里面的链接重新设置密码。
 			</div>

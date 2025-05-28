@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "advheader" .}}
 
-<h3>所有广告主</h3>
+<h3>所有商户</h3>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
     	<thead>

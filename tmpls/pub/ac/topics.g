@@ -5,7 +5,7 @@
 
           <div class="card">
             <div class="card-header">
-				<em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}媒体商户{{index .ARGS.p_company 0}}{{end}}</em> 的审核逻辑设置
+				<em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}流量源{{index .ARGS.p_company 0}}{{end}}</em> 的审核逻辑设置
             </div>
             <div class="card-body">
 <form name=f1 class="form" method=post action="ac">
@@ -19,8 +19,8 @@
 
 <div class=row>
 	<div class="col-12">
-<input type=radio name=access_order value="Black" {{if eq `Black` (index .ARGS.access_order 0)}}checked{{end}} />黑名单（不接受黑名单上广告商和活动，其余均接受）
-<input type=radio name=access_order value="White" {{if eq `White` (index .ARGS.access_order 0)}}checked{{end}} />白名单（只接受白名单上的广告商和活动）
+<input type=radio name=access_order value="Black" {{if eq `Black` (index .ARGS.access_order 0)}}checked{{end}} />黑名单（不接受黑名单上商家和活动，其余均接受）
+<input type=radio name=access_order value="White" {{if eq `White` (index .ARGS.access_order 0)}}checked{{end}} />白名单（只接受白名单上的商家和活动）
 {{if eq `31` (index .ARGS.entitytype_id 0)}}<input type=radio name=access_order value="Inherit" {{if eq `Inherit` (index .ARGS.access_order 0)}}checked{{end}} />默认{{end}}
 	</div>
 </div>
@@ -46,7 +46,7 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>广告商公司</th>
+                  <th>商家公司</th>
                   <th>公司网址URL</th>
                   <th>广告活动名称</th>
                   <th></th>
@@ -74,7 +74,7 @@
 <input type=hidden name=site_name value="{{index .ARGS.site_name 0}}" />
 <input type=hidden name=entitytype_id value="31" />{{else}}
 <input type=hidden name=entitytype_id value="3" />{{end}}
-直接添加审核名单：<input class="form-inline" type=radio name=othertype_id value="4" />广告商 <input type=radio name=othertype_id value="41" />广告活动
+直接添加审核名单：<input class="form-inline" type=radio name=othertype_id value="4" />商家 <input type=radio name=othertype_id value="41" />广告活动
 其代码: <input class="form-inline" type=text name=other_id size=12 />
 <button type=submit class="btn btn-sm btn-primary">添加</button>
 </form>

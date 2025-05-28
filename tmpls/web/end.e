@@ -1,6 +1,6 @@
 {{ define "footer" }}
       <footer class="app-footer">
-        <span><a href="http://pzcom.com">PZCom</a> © 2018 PaiZi Corporation.</span>
+        <span><a href="/">W8M</a> © Corporation.</span>
       </footer>
   </div>
 

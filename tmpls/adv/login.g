@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>广告主系统登录</title>
+    <title>商户系统登录</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">广告主登录入口</h3>
+                        <h3 class="panel-title">商户登录入口</h3>
                     </div>
                     <div class="panel-body">
     <form role="form" METHOD="POST" ACTION="/goto/adv/g/{{ .LoginName }}">

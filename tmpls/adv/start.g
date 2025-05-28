@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>派兹SSP广告主管理系统</title>
+    <title>W8M SSP商户管理系统</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6, button {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.html">派兹广告主管理系统</a>
+                <a class="navbar-brand" href="/index.html">W8M 商户管理系统</a>
             </div>
             <!-- /.navbar-header -->
 

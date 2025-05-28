@@ -9,8 +9,8 @@
 
   </div>
   <footer class="app-footer">
-    <span><a href="/goto/pub/e/pub?action=startnew">媒体商平台</a> © 2018 W8M.</span>
-    <span class="ml-auto">Powered by <a href="/">南京派兹科技有限公司</a></span>
+    <span><a href="/goto/pub/e/pub?action=startnew">流量源平台</a></span>
+    <span class="ml-auto">Powered by <a href="/">W8M 科技有限公司</a></span>
   </footer>
 
   <!-- Bootstrap and necessary plugins -->

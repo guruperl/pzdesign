@@ -10,7 +10,7 @@
   <meta name="keyword" content="EIC Membership Login">
   <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
 
-  <title>登入派兹ADX商户内网</title>
+  <title>登入W8M ADX商户内网</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">
@@ -60,7 +60,7 @@
             <div class="card-body text-center">
               <div>
                 <h2>注册</h2>
-                <p>让优质媒体获得高CPM，这是我们保证！平台自动为媒体的广告位抓取最高价位广告。媒体端可以通过对流量来源，知名度，内容频道等的改进，提高流量质量，而不断提升CPM。</p>
+                <p>让优质流量源获得高CPM，这是我们保证！平台自动为流量源的广告位抓取最高价位广告。流量源端可以通过对流量来源，知名度，内容频道等的改进，提高流量质量，而不断提升CPM。</p>
                 <a href="/goto/web/g/pub?action=startnew" class="btn btn-primary active mt-3">现在注册!</a>
               </div>
             </div>

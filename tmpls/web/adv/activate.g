@@ -5,9 +5,9 @@
 	<div class="col-md-6">
 		<div class="card mx-4">
 			<div class="card-body p-4">
-            	<h1>广告商注册</h1>
+            	<h1>商家注册</h1>
             	<p class="text-muted">完成!</p>
-派兹广告商注册完成，请<a href="/goto/adv/g/campaign?action=topics">由此登入</a>。
+W8M 商家注册完成，请<a href="/goto/adv/g/campaign?action=topics">由此登入</a>。
 			</div>
 		</div>
 	</div>

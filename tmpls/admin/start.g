@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/admin/favicon.ico">
 
-    <title>派兹SSP后台管理系统</title>
+    <title>W8M SSP后台管理系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6, button {
 
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">派兹系统管理员</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">W8M 系统管理员</a>
     <div class="navbar-brand">
 &nbsp; 欢迎 <em>{{index .ARGS.admin_login 0}}</em> ! 您的ID: <em>{{index .ARGS.admin_id 0}}</em> &nbsp;
 	</div>
@@ -55,7 +55,7 @@ h1, h2, h3, h4, h5, h6, button {
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
                   <span data-feather="package"></span>
-                  广告主 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
+                  商户 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">

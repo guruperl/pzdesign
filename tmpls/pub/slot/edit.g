@@ -98,7 +98,7 @@ MIME:</label>
     <div class="col-sm-5">
         <div class="card">
 			<div class="card-header">
-				本媒体质量
+				本流量源质量
 			</div>
             <div class="card-body">
 <div class="table-responsive">

@@ -6,7 +6,7 @@
 	<table class="table table-striped table-sm">
     	<thead>
         <tr>
-            <th>广告主</th>
+            <th>商户</th>
         	<th>数额</th>
         	<th>付款方式</th>
 			<th>状态</th>

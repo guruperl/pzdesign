@@ -9,7 +9,7 @@
 
   </div>
   <footer class="app-footer">
-    <span><a href="/goto/pub/e/pub?action=startnew">Publisher Membership</a> © 2018 W8M.</span>
+    <span><a href="/goto/pub/e/pub?action=startnew">Publisher Membership</a> ©  W8M.</span>
     <span class="ml-auto">Powered by <a href="/">W8M Corporation</a></span>
   </footer>
 

@@ -6,7 +6,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>版权所有 &copy; 南京派兹 2019</span>
+            <span>版权所有 &copy; W8M 2025</span>
           </div>
         </div>
       </footer>

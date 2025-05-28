@@ -4,7 +4,7 @@
 <th>名称</th>
 <th>价格</th>
 <th>状态</th>
-<th>媒体类</th>
+<th>流量源类</th>
 <th>开始/结束</th>
 </tr></thead>
 <tbody>{{with .Lists}}{{range .}}{{$mime := .qa_mime}}

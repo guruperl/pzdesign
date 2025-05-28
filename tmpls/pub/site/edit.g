@@ -8,7 +8,7 @@
 <input type=hidden name="site_id" value="{{$item.site_id}}" />
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">媒体名称：</label>
+	<label for="inputSiteName" class="col-sm-2 col-form-label text-right">流量源名称：</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=site_name value="{{$item.site_name}}" />
 	</div>

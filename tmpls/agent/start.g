@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6, button {
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
                   <span data-feather="package"></span>
-                  所有广告主 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
+                  所有商户 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">

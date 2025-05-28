@@ -7,7 +7,7 @@
     	<thead>
         <tr>
             <th>名称</th>
-            <th>媒体公司</th>
+            <th>流量源</th>
         	<th>URL</th>
 			<th>状态</th>
             <th>入网时间</th>

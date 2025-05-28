@@ -1,6 +1,6 @@
 {{ define "footer" }}
       <footer class="app-footer">
-        <span><a href="http://pzcom.com">派兹广告系统</a> © 2018 南京派兹科技有限公司</span>
+        <span><a href="/">W8M 广告系统</a> © 2025 W8M 科技有限公司</span>
       </footer>
   </div>
 

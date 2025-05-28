@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-<h3>媒体细节</h3>
+<h3>流量源细节</h3>
 <pre>{{$item := index .Lists 0}}{{range $k, $v := $item}}
 {{$k}}:{{$v}}{{end}}
 </pre>

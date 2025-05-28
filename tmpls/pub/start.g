@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="媒体广告系统- W8M">
-  <meta name="keyword" content="媒体广告系统">
-  <title>派兹媒体系统 - 为每个广告位谋求最大收益</title>
+  <meta name="description" content="流量源广告系统- W8M">
+  <meta name="keyword" content="流量源广告系统">
+  <title>W8M 流量源系统 - 为每个广告位谋求最大收益</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/flag-icon.min.css" rel="stylesheet">
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6, button {
     </button>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
       <li class="nav-item px-3">
-		派兹媒体商: <em>{{index .ARGS.p_email 0}}</em>
+		W8M 流量源公司: <em>{{index .ARGS.p_email 0}}</em>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -81,7 +81,7 @@ h1, h2, h3, h4, h5, h6, button {
           </li>
 
           <li class="nav-title">
-            媒体商
+            流量源公司
           </li>
           <li class="nav-item">
             <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> App和网站</a>

@@ -10,7 +10,7 @@
 
                         <section class="row">
                             <div class="col-12">
-                                <h3 class="mb-4">审核广告商和广告活动（即黑白名单）{{if .ARGS.site_id}} 网址: {{index .ARGS.site_name 0}}{{end}}</h3>
+                                <h3 class="mb-4">审核商家和广告活动（即黑白名单）{{if .ARGS.site_id}} 网址: {{index .ARGS.site_name 0}}{{end}}</h3>
                             </div>
                         </section>
 {{ end }}
