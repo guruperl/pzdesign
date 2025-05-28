@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico">
 
-    <title>W8M SSP后台登陆</title>
+    <title>W8M 后台登陆</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/dist/css/bootstrap.min.css" rel="stylesheet">

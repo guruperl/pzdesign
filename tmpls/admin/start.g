@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/admin/favicon.ico">
 
-    <title>W8M SSP后台管理系统</title>
+    <title>W8M 后台管理系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">

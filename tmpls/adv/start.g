@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>W8M SSP商户管理系统</title>
+    <title>W8M 商户管理系统</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
