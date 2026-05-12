@@ -105,6 +105,9 @@ h1, h2, h3, h4, h5, h6, button {
                         <li>
                             <a href="campaign?action=topics"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动</a>
 						</li>
+                        <li>
+                            <a href="bidder?action=topics"><i class="fa fa-exchange fa-fw"></i> 竞价端点</a>
+                        </li>
 {{ if and (or (or (or (or (or (or (eq .Other.Component `ac`)) (eq .Other.Component `campaign`)) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) .ARGS.campaign_md5}}
 						<li>
                             <ul class="nav nav-second-level nav-compact-sm">

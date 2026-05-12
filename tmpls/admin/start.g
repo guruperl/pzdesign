@@ -71,6 +71,12 @@ h1, h2, h3, h4, h5, h6, button {
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `bidder` }} active{{end}}" href="bidder?action=topics">
+                  <span data-feather="radio"></span>
+                  竞价端点 {{ if eq .Other.Component "bidder" }}<span class="sr-only">(current)</span>{{ end }}
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
                   <span data-feather="cast"></span>
                   ADX流量源 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
