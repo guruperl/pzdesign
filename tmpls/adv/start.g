@@ -106,6 +106,9 @@ h1, h2, h3, h4, h5, h6, button {
                         <li>
                             <a href="bidder?action=topics"><i class="fa fa-exchange fa-fw"></i> 竞价端点</a>
                         </li>
+                        <li>
+                            <a href="ledger?action=topicsMid24Hours"><i class="fa fa-line-chart fa-fw"></i> 竞价报告</a>
+                        </li>
 {{ if and (or (or (or (or (or (or (eq .Other.Component `ac`)) (eq .Other.Component `campaign`)) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) .ARGS.campaign_md5}}
 						<li>
                             <ul class="nav nav-second-level nav-compact-sm">
