@@ -1,9 +1,6 @@
 {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}
-{{$serverUrl := index .ARGS.serverUrl 0}}
-{{$serverScript := index .ARGS.serverScript 0}}
 {{ template "header" .}}
 {{ template "slotheader" .}}
-{{$site_str := index .ARGS.site_str 0}}
 
           <div class="card">
             <div class="card-header">
@@ -47,33 +44,11 @@
                 </button>
               </div>
               <div class="modal-body">
-                <pre><code>
-&lt;html&gt;
-&lt;head&gt;
-&lt;script src=&quot;{{$serverUrl}}/js/ads.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-...
-&lt;div id=&quot;pz-{{$item.code}}&quot;&gt;&lt;/div&gt;
-...
-&lt;/body&gt;
-&lt;script&gt;
-pzLoadAds({
-    platform: 'browser',
-    site: '{{$site_str}}',
-    adUnits: [{
-        code: 'pz-{{$item.code}}',
-        slot: '{{$item.slot_str}}',
-        mediaTypes: {
-{{$item.mediaTypes}}
-        }
-    }]
-})
-&lt;/script&gt;
-&lt;/html&gt;
-                </code></pre>
+                <textarea class="form-control" rows="24" id="browserCode{{$item.slot_id}}" readonly>{{$item.browser_code}}</textarea>
               </div>
               <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="pzCopyCode('browserCode{{$item.slot_id}}')">复制</button>
+                <button type="button" class="btn btn-success" onclick="pzDownloadCode('browserCode{{$item.slot_id}}', 'aofei-slot-{{$item.slot_id}}.html')">下载</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
               </div>
             </div>
@@ -93,35 +68,10 @@ pzLoadAds({
                 </button>
               </div>
               <div class="modal-body">
-POST下列JSON请求至{{$serverScript}}:
-                <pre><code>
-{
-    platform: ‘sdk’,
-    site: '{{$site_str}}', 
-    ua: 'ANY_UA_STRING',
-    ip: 'ANY_IP_STRING',
-    adUnits: [{
-        code: 'pz-{{$item.code}}',
-        slot: '{{$item.slot_str}}',
-        mediaTypes: {
-{{$item.mediaTypes}}
-        }
-    }]
-}
-                </code></pre>
-获取如下JSON:
-                <pre><code>
-[{
-        code: 'pz-{{$item.code}}',
-        slot: '{{$item.slot_str}}',
-        html: ‘DYNAMICAL_HTML’,
-        click: 'DYNAMICAL_CLICK_URL',
-        notification: ‘DYNAMICAL_NOTIFICATION_URL’
-}]
-                </code></pre>
-其中 code，slot 与送来的参数一样。html 表示在此显示广告的HTML代码，开发者需解析后获取广告素材。
+                <textarea class="form-control" rows="22" id="apiCode{{$item.slot_id}}" readonly>{{$item.api_code}}</textarea>
               </div>
               <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="pzCopyCode('apiCode{{$item.slot_id}}')">复制</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
               </div>
             </div>
@@ -167,9 +117,37 @@ POST下列JSON请求至{{$serverScript}}:
       });
     });
   });
+
+  function pzCopyCode(id) {
+    var field = document.getElementById(id);
+    if (!field) {
+      return;
+    }
+    field.focus();
+    field.select();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(field.value);
+      return;
+    }
+    document.execCommand('copy');
+  }
+
+  function pzDownloadCode(id, filename) {
+    var field = document.getElementById(id);
+    if (!field) {
+      return;
+    }
+    var blob = new Blob([field.value], {type: 'text/html;charset=utf-8'});
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  }
 </script>
 
 
 </body>
 </html>
-

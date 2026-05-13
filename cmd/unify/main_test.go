@@ -25,6 +25,7 @@ func TestServeMuxRegistersDSPRoutesBeforeCatchAll(t *testing.T) {
 		want   int
 	}{
 		{name: "ssp", method: http.MethodPost, path: "/pz", body: "{", want: http.StatusBadRequest},
+		{name: "ssp options", method: http.MethodOptions, path: "/pz", want: http.StatusNoContent},
 		{name: "bid", method: http.MethodPost, path: "/bid/pub.example", body: "{", want: http.StatusBadRequest},
 		{name: "debug vars", method: http.MethodGet, path: "/debug/vars", want: http.StatusOK},
 	}
@@ -35,6 +36,20 @@ func TestServeMuxRegistersDSPRoutesBeforeCatchAll(t *testing.T) {
 			mux.ServeHTTP(rr, req)
 			if rr.Code != tt.want {
 				t.Fatalf("status = %d, want %d: %s", rr.Code, tt.want, rr.Body.String())
+			}
+			if tt.path == "/pz" {
+				if got := rr.Header().Get("Access-Control-Allow-Origin"); got != "*" {
+					t.Fatalf("Access-Control-Allow-Origin = %q, want *", got)
+				}
+				if got := rr.Header().Get("Access-Control-Allow-Methods"); got != "POST, OPTIONS" {
+					t.Fatalf("Access-Control-Allow-Methods = %q, want POST, OPTIONS", got)
+				}
+				if got := rr.Header().Get("Access-Control-Allow-Headers"); got != "Content-Type" {
+					t.Fatalf("Access-Control-Allow-Headers = %q, want Content-Type", got)
+				}
+			}
+			if tt.path == "/bid/pub.example" && rr.Header().Get("Access-Control-Allow-Origin") != "" {
+				t.Fatalf("/bid received /pz CORS headers: %v", rr.Header())
 			}
 		})
 	}

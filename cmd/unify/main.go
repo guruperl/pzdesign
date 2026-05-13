@@ -95,7 +95,10 @@ func main() {
 func newServeMux(sc *dsp.Controller, geneletHandler http.Handler) *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("POST /bid/{domain}", sc.ServeBid)
-	mux.HandleFunc("POST /pz", sc.ServeSSP)
+	mux.HandleFunc("POST /pz", pzCORS(sc.ServeSSP))
+	mux.HandleFunc("OPTIONS /pz", pzCORS(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	}))
 	mux.HandleFunc("GET /win", sc.ServeWinLoss)
 	mux.HandleFunc("GET /loss", sc.ServeWinLoss)
 	mux.HandleFunc("GET /clk", sc.ServeWinLoss)
@@ -107,6 +110,15 @@ func newServeMux(sc *dsp.Controller, geneletHandler http.Handler) *http.ServeMux
 	mux.Handle("GET /debug/vars", expvar.Handler())
 	mux.Handle("/", geneletHandler)
 	return mux
+}
+
+func pzCORS(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		next(w, r)
+	}
 }
 
 func getGenelet(fn string, logger *zap.Logger) (*genelet.Controller, error) {

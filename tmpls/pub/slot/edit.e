@@ -28,7 +28,7 @@
         <input type=text class="form-control" name="w" value="{{$item.w}}" />
     </div>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="h" value="{{$item.w}}" />
+        <input type=text class="form-control" name="h" value="{{$item.h}}" />
     </div>
 </div>
 
@@ -100,4 +100,3 @@
 
 </body>
 </html>
-

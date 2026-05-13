@@ -1,8 +1,6 @@
 {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}
-{{$serverUrl := index .ARGS.serverUrl 0}}
 {{ template "header" .}}
 {{ template "slotheader" .}}
-{{$site_str := index .ARGS.site_str 0}}
 
           <div class="card">
             <div class="card-header">
@@ -18,7 +16,7 @@
                   <th>Platform</th>
                   <th>Active</th>
                   <th>Since</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-info" href="slot?action=startnew&{{$attach}}">Create New</a> </th>
+                  <th colspan=3 class="text-right"><a class="btn btn-info" href="slot?action=startnew&{{$attach}}">Create New</a> </th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }} {{$small := print "slot_id=" .slot_id "&slot_md5=" .slot_md5 "&slot_name=" (.slot_name | urlquery)}}
@@ -27,6 +25,7 @@
 <td>{{.active}}</td>
 <td>{{.created}}</td>
 <td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Code</button></td>
+<td><button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API</button></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">Del</a></td>
 {{end}}</tobdy>
 
@@ -44,33 +43,34 @@
                 </button>
               </div>
               <div class="modal-body">
-                <pre><code>
-&lt;html&gt;
-&lt;head&gt;
-&lt;script src=&quot;{{$serverUrl}}/js/ads.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-...
-&lt;div id=&quot;pz-{{$item.code}}&quot;&gt;&lt;/div&gt;
-...
-&lt;/body&gt;
-&lt;script&gt;
-pzLoadAds({
-	platform: 'browser',
-	site: '{{$site_str}}',
-	adUnits: [{
-		code: 'pz-{{$item.code}}',
-		slot: '{{$item.slot_str}}',
-		mediaTypes: {
-{{$item.mediaTypes}}
-		}
-	}]
-})
-&lt;/script&gt;
-&lt;/html&gt;
-				</code></pre>
+                <textarea class="form-control" rows="24" id="browserCode{{$item.slot_id}}" readonly>{{$item.browser_code}}</textarea>
               </div>
               <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="pzCopyCode('browserCode{{$item.slot_id}}')">Copy</button>
+                <button type="button" class="btn btn-success" onclick="pzDownloadCode('browserCode{{$item.slot_id}}', 'aofei-slot-{{$item.slot_id}}.html')">Download</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+<div class="modal fade" id="modalAPI{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modalAPI{{$item.slot_id}}Label" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">API Request</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <textarea class="form-control" rows="22" id="apiCode{{$item.slot_id}}" readonly>{{$item.api_code}}</textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="pzCopyCode('apiCode{{$item.slot_id}}')">Copy</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
@@ -86,6 +86,36 @@ pzLoadAds({
 
 {{ template "footer" }}
 
+<script>
+  function pzCopyCode(id) {
+    var field = document.getElementById(id);
+    if (!field) {
+      return;
+    }
+    field.focus();
+    field.select();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(field.value);
+      return;
+    }
+    document.execCommand('copy');
+  }
+
+  function pzDownloadCode(id, filename) {
+    var field = document.getElementById(id);
+    if (!field) {
+      return;
+    }
+    var blob = new Blob([field.value], {type: 'text/html;charset=utf-8'});
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+  }
+</script>
+
 </body>
 </html>
-

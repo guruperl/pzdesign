@@ -17,9 +17,10 @@
     </div>
     <label for="inputSizeID" class="col-sm-2 col-form-label text-right">尺寸:</label>
     <div class="col-sm-2">
-		不限
+        <input type=text class="form-control" name="w" value="64" />
 	</div>
     <div class="col-sm-2">
+        <input type=text class="form-control" name="h" value="64" />
 	</div>
 </div>
 

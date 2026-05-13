@@ -20,10 +20,10 @@
     </div>
     <label for="inputSizeID" class="col-sm-2 col-form-label text-right">Size:</label>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="w" placeholder="width" />
+        <input type=text class="form-control" name="w" value="64" placeholder="width" />
     </div>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="h" placeholder="height" />
+        <input type=text class="form-control" name="h" value="64" placeholder="height" />
     </div>
 </div>
 
@@ -97,4 +97,3 @@
 
 </body>
 </html>
-
