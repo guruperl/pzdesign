@@ -2,8 +2,7 @@
 {{ template "midrouteheader" .}}
 
 <div class="mb-3">
-  <a class="btn btn-primary" href="midroute?action=startnew">新建路由组</a>
-  <a class="btn btn-outline-secondary" href="midroute?action=health">健康检查</a>
+  <a class="btn btn-outline-secondary" href="midroute?action=topics">路由组</a>
 </div>
 
 {{ $cache := index .Other "midroute_cache_status" }}
@@ -29,12 +28,6 @@
         <th>数据库高水位</th>
         <td>{{$cache.db_route_high_water}}</td>
       </tr>
-      <tr>
-        <th>来源</th>
-        <td>{{$cache.cache_source}}</td>
-        <th>校验和</th>
-        <td>{{$cache.cache_checksum}}</td>
-      </tr>
       {{ if $cache.cache_error }}
       <tr>
         <th>错误</th>
@@ -50,35 +43,27 @@
   <table class="table table-striped table-sm">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>名称</th>
-        <th>触发</th>
-        <th>总超时</th>
-        <th>加价比例</th>
-        <th>最低加价</th>
-        <th>启用</th>
+        <th>严重性</th>
+        <th>问题</th>
+        <th>路由组</th>
         <th>竞价端点</th>
-        <th>目标</th>
-        <th></th>
+        <th>凭证引用</th>
+        <th>状态</th>
+        <th>详情</th>
       </tr>
     </thead>
     <tbody>{{ with .Lists }}{{ range . }}
       <tr>
-        <td>{{.group_id}}</td>
-        <td>{{.group_name}}</td>
-        <td>{{.trigger_mode}}</td>
-        <td>{{.total_timeout_ms}} ms</td>
-        <td>{{.margin_pct}}</td>
-        <td>{{.min_margin_cpm}}</td>
-        <td>{{.active}}</td>
-        <td><a href="midroute?action=bidders&group_id={{.group_id}}">{{.bidder_count}}</a></td>
-        <td><a href="midroute?action=targets&group_id={{.group_id}}">{{.target_count}}</a></td>
-        <td>
-          <a class="btn btn-sm btn-primary" href="midroute?action=edit&group_id={{.group_id}}">编辑</a>
-        </td>
+        <td>{{.severity}}</td>
+        <td>{{.issue_type}}</td>
+        <td>{{.group_id}} {{.group_name}}</td>
+        <td>{{.bidder_id}} {{.bidder_name}}</td>
+        <td>{{.credential_ref}}</td>
+        <td>{{.credential_status}} {{.bidder_active}}</td>
+        <td>{{.detail}}</td>
       </tr>
     {{end}}{{else}}
-      <tr><td colspan="10">暂无 Middleman 路由组。</td></tr>
+      <tr><td colspan="7">暂无 Middleman 路由健康问题。</td></tr>
     {{end}}</tbody>
   </table>
 </div>
