@@ -83,6 +83,12 @@ h1, h2, h3, h4, h5, h6, button {
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `midroute` }} active{{end}}" href="midroute?action=topics">
+                  <span data-feather="shuffle"></span>
+                  Middleman 路由 {{ if eq .Other.Component "midroute" }}<span class="sr-only">(current)</span>{{ end }}
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
                   <span data-feather="cast"></span>
                   ADX流量源 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}

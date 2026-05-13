@@ -80,9 +80,9 @@
 <td>{{.spend | printf "%.2f"}}</td>
 <td>{{.imps}}</td>
 <td>{{.clis}}</td>
-<td>{{.cpm | printf "%.2f"}}</td>
-<td>{{.cpc | printf "%.4f"}}</td>
-<td>{{.ctr}}</td>
+<td>{{with .cpm}}{{. | printf "%.2f"}}{{else}}0.00{{end}}</td>
+<td>{{with .cpc}}{{. | printf "%.4f"}}{{else}}0.0000{{end}}</td>
+<td>{{with .ctr}}{{.}}{{else}}0{{end}}</td>
 </tr>{{end}}{{end}}
 </tbody>
                                 </table>
@@ -112,9 +112,9 @@
 <td>{{.spend | printf "%.2f"}}</td>
 <td>{{.imps}}</td>
 <td>{{.clis}}</td>
-<td>{{.cpm | printf "%.2f"}}</td>
-<td>{{.cpc | printf "%.4f"}}</td>
-<td>{{.ctr}}</td>
+<td>{{with .cpm}}{{. | printf "%.2f"}}{{else}}0.00{{end}}</td>
+<td>{{with .cpc}}{{. | printf "%.4f"}}{{else}}0.0000{{end}}</td>
+<td>{{with .ctr}}{{.}}{{else}}0{{end}}</td>
 </tr>{{end}}{{end}}
 </tbody>
                                 </table>

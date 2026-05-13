@@ -28,7 +28,7 @@
 <td>{{.charge_spend | printf "%.2f"}}</td>
 <td>{{.pay_spend | printf "%.2f"}}</td>
 <td>{{.margin_spend | printf "%.2f"}}</td>
-<td>{{.margin_rate | printf "%.4f"}}</td>
+<td>{{with .margin_rate}}{{. | printf "%.4f"}}{{else}}0.0000{{end}}</td>
 <td>{{.forward_errors}}</td>
 </tr>{{end}}
 </tbody>
@@ -64,7 +64,7 @@
 <td>{{.charge_spend | printf "%.2f"}}</td>
 <td>{{.pay_spend | printf "%.2f"}}</td>
 <td>{{.margin_spend | printf "%.2f"}}</td>
-<td>{{.margin_rate | printf "%.4f"}}</td>
+<td>{{with .margin_rate}}{{. | printf "%.4f"}}{{else}}0.0000{{end}}</td>
 <td>{{.forward_errors}}</td>
 </tr>{{end}}{{end}}
 </tbody>
@@ -129,7 +129,7 @@
 <td>{{.charge_spend | printf "%.2f"}}</td>
 <td>{{.pay_spend | printf "%.2f"}}</td>
 <td>{{.margin_spend | printf "%.2f"}}</td>
-<td>{{.margin_rate | printf "%.4f"}}</td>
+<td>{{with .margin_rate}}{{. | printf "%.4f"}}{{else}}0.0000{{end}}</td>
 </tr>{{end}}{{end}}
 </tbody>
       </table>
