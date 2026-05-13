@@ -8,8 +8,6 @@
   <meta name="description" content="Membership Login">
   <meta name="author" content="Lukasz Holeczek">
   <meta name="keyword" content="Membership Login">
-  <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
-
   <title>Please login to W8M Publisher Area</title>
 
   <!-- Icons -->

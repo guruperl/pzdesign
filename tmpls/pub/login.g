@@ -8,8 +8,6 @@
   <meta name="description" content="EIC Membership Login">
   <meta name="author" content="Lukasz Holeczek">
   <meta name="keyword" content="EIC Membership Login">
-  <!-- <link rel="shortcut icon" href="assets/ico/favicon.png"> -->
-
   <title>登入W8M 流量源公司内网</title>
 
   <!-- Icons -->

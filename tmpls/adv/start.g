@@ -22,8 +22,6 @@
     <link href="/sb2/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <!-- link href="/sb2/vendor/morrisjs/morris.css" rel="stylesheet" -->
-
     <!-- Custom Fonts -->
     <link href="/sb2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 

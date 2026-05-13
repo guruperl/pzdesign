@@ -23,11 +23,6 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/sb2/vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Morris Charts JavaScript
-    <script src="/sb2/vendor/raphael/raphael.min.js"></script>
-    <script src="/sb2/vendor/morrisjs/morris.min.js"></script>
-    <script src="/sb2/data/morris-data.js"></script> -->
-
 <script>
 $(document).ready(function(){
     $("#ao_inherit").click(function(){

@@ -1,5 +1,6 @@
 {{ template "header" .}}
 {{ template "pubheader" .}}
+{{ $item := index .Lists 0}}
 
           <div class="card">
             <div class="card-header">

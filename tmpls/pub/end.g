@@ -26,14 +26,7 @@
 
   <script src="/1.0.8/js/app.js"></script>
 
-  <!-- Plugins and scripts required by this views -->
-  <!-- script src="/1.0.8/vendors/js/toastr.min.js"></script -->
-  <!-- script src="/1.0.8/vendors/js/gauge.min.js"></script -->
-  <!-- script src="/1.0.8/vendors/js/moment.min.js"></script -->
-  <!-- script src="/1.0.8/vendors/js/daterangepicker.min.js"></script -->
-
   <!-- Custom scripts required by this view -->
-  <!-- script src="/1.0.8/js/views/main.js"></script -->
   <script src="/js/counter.js"></script>
 
 {{end}}
