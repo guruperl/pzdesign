@@ -6,8 +6,8 @@ toolchain go1.23.5
 
 require (
 	github.com/delongw/go-int-cipher v0.0.0-20151122132803-cb275de15ba8
-	github.com/genelet/winter v0.0.0
 	github.com/go-sql-driver/mysql v1.8.1
+	github.com/guruperl/aofei v0.0.0
 	github.com/mediocregopher/radix/v4 v4.1.4
 	github.com/nats-io/nats.go v1.38.0
 	go.uber.org/zap v1.27.0
@@ -28,4 +28,4 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 )
 
-replace github.com/genelet/winter => ../aofei
+replace github.com/guruperl/aofei => ../aofei

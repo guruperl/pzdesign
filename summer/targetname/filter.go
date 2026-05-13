@@ -6,10 +6,10 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/genelet/winter/advice"
-	"github.com/genelet/winter/demo"
-	"github.com/genelet/winter/dh"
-	"github.com/genelet/winter/uploaded"
+	"github.com/guruperl/aofei/advice"
+	"github.com/guruperl/aofei/demo"
+	"github.com/guruperl/aofei/dh"
+	"github.com/guruperl/aofei/uploaded"
 	"github.com/guruperl/pzdesign/summer"
 )
 

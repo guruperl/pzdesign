@@ -1,7 +1,7 @@
 package summer
 
 import (
-	"github.com/genelet/winter/acl"
+	"github.com/guruperl/aofei/acl"
 )
 
 func Dictionary(word string) string {

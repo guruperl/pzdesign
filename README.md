@@ -57,7 +57,7 @@ Template:     /srv/aofei/Workspace/pzdesign/tmpls
 DocumentRoot: /srv/aofei/Workspace/pzdesign/www
 ```
 
-The module depends on Aofei domain packages through `github.com/genelet/winter`;
+The module depends on Aofei domain packages through `github.com/guruperl/aofei`;
 local development uses the `replace` in `go.mod` to resolve that dependency to
 `../aofei`.
 

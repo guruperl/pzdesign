@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/genelet/winter/dsp"
+	"github.com/guruperl/aofei/dsp"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer/registry"
