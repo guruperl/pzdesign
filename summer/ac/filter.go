@@ -3,6 +3,7 @@ package ac
 import (
 	"net/url"
 
+	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -40,9 +41,11 @@ func (self *Filter) Preset() error {
 	//action := self.Action
 
 	eid := ARGS.Get("entitytype_id")
-	ARGS.Set("table", summer.TABLES[eid][0])
-	ARGS.Set("idname", summer.TABLES[eid][1])
-	ARGS.Set("entity_id", ARGS.Get(ARGS.Get("idname")))
+	parts, ok := summer.TABLES[eid]
+	if !ok || len(parts) != 2 {
+		return genelet.Err(1092, "entitytype_id")
+	}
+	ARGS.Set("entity_id", ARGS.Get(parts[1]))
 
 	return nil
 }

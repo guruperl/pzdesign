@@ -22,10 +22,16 @@ func TestTmpl(t *testing.T) {
 		t.Errorf("%s error", err.Error())
 	}
 	matched, err := regexp.MatchString("Google authorization required", str)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !matched {
 		t.Errorf("%s wanted", str)
 	}
 	matched, err = regexp.MatchString("aaa.*bb.*email.*passwd", str)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !matched {
 		t.Errorf("%s wanted", str)
 	}

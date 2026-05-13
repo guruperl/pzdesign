@@ -1,8 +1,6 @@
 package pub
 
 import (
-	"crypto/sha1"
-	"encoding/hex"
 	"net/url"
 	"strconv"
 
@@ -33,9 +31,11 @@ func (self *Filter) Preset() error {
 			ARGS.Set("firstname", ARGS.Get("lastname"))
 		}
 		if ARGS.Get("passwd") == ARGS.Get("confirm") {
-			h := sha1.New()
-			h.Write([]byte(ARGS.Get("passwd") + ARGS.Get("email")))
-			ARGS.Set("passwd", hex.EncodeToString(h.Sum(nil)))
+			hash, err := genelet.HashPassword(ARGS.Get("passwd"))
+			if err != nil {
+				return err
+			}
+			ARGS.Set("passwd", hash)
 			ARGS.Del("confirm")
 		} else {
 			return genelet.Err(3102)

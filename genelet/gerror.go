@@ -17,7 +17,10 @@ func Err(code int, str ...string) Gerror {
 	return Gerror{code, ""}
 }
 
-func (self Gerror) Refresh() {
+func (self *Gerror) Refresh() {
+	if self == nil {
+		return
+	}
 	if self.Code < 1000 {
 		self.Errstr = http.StatusText(self.Code)
 	} else if self.Errstr == "" {

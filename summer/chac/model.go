@@ -4,12 +4,34 @@ package chac
 import (
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/guruperl/pzdesign/summer"
 )
 
 type Model struct {
 	summer.Model
+}
+
+func channelTarget(entitytypeID string) (string, string, error) {
+	parts, ok := summer.TABLES[entitytypeID]
+	if !ok || len(parts) != 2 {
+		return "", "", fmt.Errorf("unknown entitytype_id %q", entitytypeID)
+	}
+	return parts[0], parts[1], nil
+}
+
+func channelValues(args url.Values, field string) (string, []interface{}) {
+	values := make([]string, 0, len(args[field]))
+	sqlArgs := make([]interface{}, 0, len(args[field])*3)
+	for _, id := range args[field] {
+		if !summer.IsDigit(id) {
+			continue
+		}
+		values = append(values, "(?, ?, ?)")
+		sqlArgs = append(sqlArgs, args.Get("entitytype_id"), args.Get("entity_id"), id)
+	}
+	return strings.Join(values, ","), sqlArgs
 }
 
 func (self *Model) Topics(extra ...url.Values) error {
@@ -65,18 +87,11 @@ func (self *Model) InsertBelong(extra ...url.Values) error {
 		return nil
 	}
 
-	sql := `INSERT INTO ch_belong (entitytype_id, entity_id, channel_id) VALUES `
-	n := 0
-	for _, id := range ARGS["belong_ids"] {
-		if summer.IsDigit(id) {
-			n++
-			sql += "(" + ARGS.Get("entitytype_id") + "," + ARGS.Get("entity_id") + "," + id + "),"
-		}
-	}
-	if n == 0 {
+	values, args := channelValues(ARGS, "belong_ids")
+	if values == "" {
 		return nil
 	}
-	return self.DoSQL(sql[:len(sql)-1])
+	return self.DoSQL(`INSERT INTO ch_belong (entitytype_id, entity_id, channel_id) VALUES `+values, args...)
 }
 
 func (self *Model) InsertAc(extra ...url.Values) error {
@@ -85,18 +100,11 @@ func (self *Model) InsertAc(extra ...url.Values) error {
 		return nil
 	}
 
-	sql := `INSERT INTO ch_ac (entitytype_id, entity_id, channel_id) VALUES `
-	n := 0
-	for _, id := range ARGS["ac_ids"] {
-		if summer.IsDigit(id) {
-			n++
-			sql += "(" + ARGS.Get("entitytype_id") + "," + ARGS.Get("entity_id") + "," + id + "),"
-		}
-	}
-	if n == 0 {
+	values, args := channelValues(ARGS, "ac_ids")
+	if values == "" {
 		return nil
 	}
-	return self.DoSQL(sql[:len(sql)-1])
+	return self.DoSQL(`INSERT INTO ch_ac (entitytype_id, entity_id, channel_id) VALUES `+values, args...)
 }
 
 func (self *Model) Update(extra ...url.Values) error {
@@ -107,16 +115,19 @@ func (self *Model) Update(extra ...url.Values) error {
 	if (entitytypeID == "32" || entitytypeID == "42") && channelOrder == "" {
 		return fmt.Errorf("channel_order is empty")
 	}
+	table, idname, err := channelTarget(entitytypeID)
+	if err != nil {
+		return err
+	}
 
-	var err error
 	if err = self.DoSQL(`
 DELETE FROM ch_belong WHERE entitytype_id=? AND entity_id=?`, entitytypeID, entityID); err == nil {
 		if err = self.DoSQL(`
 DELETE FROM ch_ac WHERE entitytype_id=? AND entity_id=?`, entitytypeID, entityID); err == nil {
 			if entitytypeID == "32" || entitytypeID == "42" {
 				err = self.DoSQL(`
-UPDATE `+ARGS.Get("table")+`
-SET channel_order=? WHERE `+ARGS.Get("idname")+`=?`, channelOrder, entityID)
+UPDATE `+table+`
+SET channel_order=? WHERE `+idname+`=?`, channelOrder, entityID)
 			}
 			if err == nil {
 				if err = self.InsertAc(extra...); err == nil {

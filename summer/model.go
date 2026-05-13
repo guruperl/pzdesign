@@ -94,19 +94,38 @@ WHERE email=? AND active IN ("New", "Yes")`, self.ARGS.Get("email"))
 func (self *Model) Resetpass(extra ...url.Values) error {
 	id := self.CurrentKey
 	ARGS := self.ARGS
+	passwd, err := genelet.EnsurePasswordHash(ARGS.Get("passwd"))
+	if err != nil {
+		return err
+	}
 
 	return self.DoSQL(
 		`UPDATE `+self.CurrentTable+` SET passwd=?, active='Yes' WHERE `+id+`=?`,
-		ARGS.Get("passwd"), ARGS.Get(id))
+		passwd, ARGS.Get(id))
 }
 
 func (self *Model) Updatepass(extra ...url.Values) error {
 	id := self.CurrentKey
 	ARGS := self.ARGS
+	hash := make(map[string]interface{})
+	if err := self.GetSQL(hash, `SELECT passwd FROM `+self.CurrentTable+` WHERE `+id+`=?`, ARGS.Get(id)); err != nil {
+		return err
+	}
+	stored, ok := hash["passwd"]
+	if !ok || stored == nil {
+		return genelet.Err(1031)
+	}
+	if err := genelet.CheckPasswordHash(ARGS.Get("passwd_old"), genelet.Interface2String(stored)); err != nil {
+		return genelet.Err(1031)
+	}
+	passwd, err := genelet.EnsurePasswordHash(ARGS.Get("passwd"))
+	if err != nil {
+		return err
+	}
 	return self.DoSQL(
 		`UPDATE  `+self.CurrentTable+` SET passwd=?
-WHERE `+id+`=? AND passwd=SHA1(CONCAT(?, email))`,
-		ARGS.Get("passwd"), ARGS.Get(id), ARGS.Get("passwd_old"))
+WHERE `+id+`=?`,
+		passwd, ARGS.Get(id))
 }
 
 func (self *Model) CleanupLogin(extra ...url.Values) error {
@@ -134,8 +153,12 @@ func (self *Model) ChangePasswdAdmin(extra ...url.Values) error {
 	table := self.CurrentTable
 	id := self.CurrentKey
 	ARGS := self.ARGS
+	passwd, err := genelet.EnsurePasswordHash(ARGS.Get("passwd"))
+	if err != nil {
+		return err
+	}
 
 	return self.DoSQL(
-		`UPDATE `+table+` SET passwd=SHA1(?) WHERE `+id+`=?`,
-		ARGS.Get("passwd"), ARGS.Get(id))
+		`UPDATE `+table+` SET passwd=? WHERE `+id+`=?`,
+		passwd, ARGS.Get(id))
 }

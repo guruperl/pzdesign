@@ -1,10 +1,9 @@
 package agent
 
 import (
-	"crypto/sha1"
-	"encoding/hex"
 	"net/url"
 
+	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -25,9 +24,11 @@ func (self *Filter) Preset() error {
 	}
 
 	if who == "admin" && action == "insert" {
-		h := sha1.New()
-		h.Write([]byte(ARGS.Get("passwd") + ARGS.Get("login")))
-		ARGS.Set("passwd", hex.EncodeToString(h.Sum(nil)))
+		hash, err := genelet.HashPassword(ARGS.Get("passwd"))
+		if err != nil {
+			return err
+		}
+		ARGS.Set("passwd", hash)
 	}
 
 	return nil

@@ -58,6 +58,23 @@ func (self *Procedure) Run_sql(call_name string, in_vals []interface{}) error {
 func (self *Procedure) Authenticate(login, passwd string) error {
 	role := self.C.Roles[self.RoleValue]
 	issuer := role.Issuers[self.Provider]
+	if issuer.PasswordHash != "" {
+		if login == "" || passwd == "" {
+			return Err(1037)
+		}
+		if err := self.Run_sql(issuer.Sql, []interface{}{login}); err != nil {
+			return err
+		}
+		stored, ok := self.Out_hash[issuer.PasswordHash]
+		if !ok || stored == nil {
+			return Err(1031)
+		}
+		if err := CheckPasswordHash(passwd, Interface2String(stored)); err != nil {
+			return Err(1031)
+		}
+		delete(self.Out_hash, issuer.PasswordHash)
+		return nil
+	}
 	return self.Run_sql(issuer.Sql, []interface{}{login, passwd})
 }
 

@@ -10,8 +10,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/guruperl/aofei/dsp"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/guruperl/aofei/dsp"
 	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer/registry"
 	"go.uber.org/zap"
@@ -106,28 +106,17 @@ func getGenelet(fn string, logger *zap.Logger) (*genelet.Controller, error) {
 	if err != nil {
 		return nil, err
 	}
-	models, storage, filters := registry.Build()
-	for _, entry := range registry.Entries {
-		comp, err := genelet.LoadComponent(c.ProjectRoot + "/summer/" + entry.Name + "/component.json")
-		if err != nil {
-			return nil, err
-		}
-		if err := genelet.InvokeVoid(models[entry.Name], "Initialize", comp, logger); err != nil {
-			return nil, err
-		}
-		if err := genelet.InvokeVoid(storage[entry.Name], "Initialize", comp, logger); err != nil {
-			return nil, err
-		}
-		if err := genelet.InvokeVoid(filters[entry.Name], "Initialize", comp, logger); err != nil {
-			return nil, err
-		}
+	models, storage, filters, err := registry.BuildFactories(c.ProjectRoot, logger)
+	if err != nil {
+		return nil, err
 	}
 
 	return &genelet.Controller{
-		C:       c,
-		Models:  models,
-		Filters: filters,
-		Storage: storage,
-		Logger:  logger,
+		C:                c,
+		ModelFactories:   models,
+		FilterFactories:  filters,
+		StorageFactories: storage,
+		Storage:          map[string]interface{}{},
+		Logger:           logger,
 	}, nil
 }

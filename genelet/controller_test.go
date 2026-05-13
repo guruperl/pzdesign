@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"sync"
 	"testing"
 
 	"go.uber.org/zap"
@@ -92,6 +93,76 @@ func TestControllerCORS(t *testing.T) {
 			}
 		})
 	}
+}
+
+type factoryRaceModel struct {
+	args url.Values
+}
+
+func (m *factoryRaceModel) SetDefaults(args url.Values, lists *[]map[string]interface{}, other *map[string]interface{}, storage map[string]interface{}) {
+	m.args = args
+}
+
+func (m *factoryRaceModel) SetDB(any interface{}) {}
+
+func (m *factoryRaceModel) Topics(extra url.Values, nextextra url.Values) error {
+	m.args.Set("_seen", m.args.Get("req"))
+	return nil
+}
+
+type factoryRaceFilter struct {
+	Filter
+}
+
+func (f *factoryRaceFilter) GetAll() (map[string][]string, []string) {
+	return map[string][]string{"groups": []string{"admin"}}, nil
+}
+
+func (f *factoryRaceFilter) Before(model *factoryRaceModel, extra url.Values, nextextra url.Values) error {
+	return nil
+}
+
+func (f *factoryRaceFilter) After(model *factoryRaceModel) error {
+	return nil
+}
+
+func TestControllerFactoriesUseRequestLocalInstances(t *testing.T) {
+	controller := &Controller{
+		C: &Config{
+			ActionName:     "action",
+			DefaultActions: map[string]string{http.MethodGet: "topics"},
+			Script:         "/goto",
+			Blks:           map[string]map[string]string{},
+			Chartags:       map[string]Chartag{"json": {Case: 1, ContentType: "application/json"}},
+			Roles: map[string]Role{
+				"admin": {Is_admin: true, Id_name: "admin_id", Attributes: []string{"admin_id"}},
+			},
+		},
+		ModelFactories:  map[string]func() interface{}{"thing": func() interface{} { return &factoryRaceModel{} }},
+		FilterFactories: map[string]func() interface{}{"thing": func() interface{} { return &factoryRaceFilter{} }},
+		Storage:         map[string]interface{}{},
+		Logger:          zap.NewNop(),
+	}
+
+	var wg sync.WaitGroup
+	for i := 0; i < 32; i++ {
+		i := i
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			req := httptest.NewRequest(http.MethodGet, "/goto/admin/json/thing", nil)
+			req.Form = url.Values{"req": {string(rune('a' + i%26))}}
+			req.Header.Set("X-Forwarded-User", "1")
+			base := Base{C: controller.C, W: httptest.NewRecorder(), R: req, RoleValue: "admin", ChartagValue: "json"}
+			if err := controller.Handle("thing", base, http.MethodGet); err != nil {
+				t.Errorf("Handle returned error: %v", err)
+			}
+			if got := req.Form.Get("_seen"); got != req.Form.Get("req") {
+				t.Errorf("_seen = %q, want %q", got, req.Form.Get("req"))
+			}
+		}()
+	}
+	wg.Wait()
 }
 
 func TestStaticPathRejectionReturnsBeforeServeFile(t *testing.T) {

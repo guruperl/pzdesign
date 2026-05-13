@@ -38,17 +38,29 @@ func TestGate(t *testing.T) {
 	b := newBase(configure, "m", "json", w, req)
 	g := NewGate(*b)
 	err = g.HandleLogout()
+	if gerr, ok := err.(Gerror); !ok || gerr.Code != 200 {
+		t.Fatalf("HandleLogout = %#v, want 200 Gerror", err)
+	}
 
 	h := w.Header()["Set-Cookie"]
 	matched, err := regexp.MatchString("^mc=0; Path=/; Domain=genelet", h[0])
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !matched {
 		t.Errorf("%s wanted", h[0])
 	}
 	matched, err = regexp.MatchString("^mc_=0; Path=/; Domain=genelet", h[1])
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !matched {
 		t.Errorf("%s wanted", h[1])
 	}
 	matched, err = regexp.MatchString("^go_probe=0; Path=/; Domain=genelet", h[2])
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !matched {
 		t.Errorf("%s wanted", h[2])
 	}

@@ -11,6 +11,7 @@ require (
 	github.com/mediocregopher/radix/v4 v4.1.4
 	github.com/nats-io/nats.go v1.38.0
 	go.uber.org/zap v1.27.0
+	golang.org/x/crypto v0.31.0
 	golang.org/x/net v0.33.0
 )
 
@@ -24,7 +25,6 @@ require (
 	github.com/prebid/openrtb/v20 v20.3.0 // indirect
 	github.com/tilinna/clock v1.0.2 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 )
 

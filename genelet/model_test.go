@@ -45,6 +45,9 @@ func TestModelSimple(t *testing.T) {
 	args["x"] = []string{"a"}
 	args["y"] = []string{"b"}
 	ret = model.Insert()
+	if ret != nil {
+		t.Errorf("%s insert table testing failed", ret.Error())
+	}
 	if model.LastID != 1 {
 		t.Errorf("%d wanted", model.LastID)
 	}
@@ -52,6 +55,9 @@ func TestModelSimple(t *testing.T) {
 	hash.Set("x", "c")
 	hash.Set("y", "d")
 	ret = model.InsertHash(hash)
+	if ret != nil {
+		t.Errorf("%s insert hash table testing failed", ret.Error())
+	}
 	id := model.LastID
 	if id != 2 {
 		t.Errorf("%d wanted", id)
@@ -59,6 +65,9 @@ func TestModelSimple(t *testing.T) {
 
 	LISTS = LISTS[:0]
 	ret = model.Topics()
+	if ret != nil {
+		t.Errorf("%s topics table testing failed", ret.Error())
+	}
 	if len(LISTS) != 2 {
 		t.Errorf("%d 2 columns wanted", len(LISTS))
 	}

@@ -77,7 +77,10 @@ func TestDbiProcedure(t *testing.T) {
 	}
 	h := w.Header()
 	matched, err := regexp.MatchString("^mc=Ec9rwEEzh1\\/0UTuoE7dvi\\/ByyTC1F2qsXRbY4yYNbq3RoCpNDcLkiEYmJdaLrz8uBYUQZe\\/dglVvVtXQsRI\\/", h.Get("Set-Cookie"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !matched {
-		// t.Errorf("%s wanted", h.Get("Set-Cookie"))
+		t.Logf("legacy cookie prefix changed: %s", h.Get("Set-Cookie"))
 	}
 }

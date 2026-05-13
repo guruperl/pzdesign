@@ -236,7 +236,7 @@ func insertTestAdvertiser(t *testing.T, db *sql.DB) int64 {
 	_, err := db.Exec(`
 INSERT INTO adv
 	(adv_id, email, passwd, domain, address_id, active, access_order, created)
-VALUES (?, ?, SHA1('test'), ?, 1, 'Yes', 'Black', NOW())`,
+VALUES (?, ?, '$2a$10$kZ9O1lNlyvSsTxDyT2W5AOomuNHnM4Fj2EZbNe39QOpIzt8aaXmjm', ?, 1, 'Yes', 'Black', NOW())`,
 		advID, fmt.Sprintf("bidder-test-%d@example.test", advID), fmt.Sprintf("bidder-test-%d", advID))
 	if err != nil {
 		t.Fatal(err)

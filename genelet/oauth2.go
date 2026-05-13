@@ -1,9 +1,10 @@
 package genelet
 
 import (
+	"crypto/rand"
 	"database/sql"
+	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -78,14 +79,17 @@ func NewOauth2(base Base, db *sql.DB, uri string, provider string) *Oauth2 {
 
 func (self *Oauth2) Authenticate(login, password string) error {
 	defaults := self.DefaultPars
-	if _, ok := defaults["state"]; !ok {
-		defaults["state"] = fmt.Sprintf("%d", Unix_timestamp())
-	}
 	cbk := self.Callback_address()
 	if login == "" {
 		if password != "" {
 			return Err(400)
 		}
+		state, err := oauthState()
+		if err != nil {
+			return err
+		}
+		defaults["state"] = state
+		self.setStateCookie(state, 600)
 		dest := defaults["authorize_url"] + "?client_id=" + defaults["client_id"] + "&redirect_uri=" + url.QueryEscape(cbk)
 		for _, k := range []string{"scope", "display", "state", "response_type", "access_type", "approval_prompt"} {
 			if v, ok := defaults[k]; ok {
@@ -93,6 +97,9 @@ func (self *Oauth2) Authenticate(login, password string) error {
 			}
 		}
 		return Err(303, dest)
+	}
+	if err := self.verifyState(); err != nil {
+		return err
 	}
 
 	form := make(url.Values)
@@ -107,9 +114,9 @@ func (self *Oauth2) Authenticate(login, password string) error {
 	var res *http.Response
 	var err error
 	if _, ok := defaults["token_method_get"]; ok {
-		res, err = http.Get(defaults["access_token_url"] + "?" + form.Encode())
+		res, err = HTTPClient.Get(defaults["access_token_url"] + "?" + form.Encode())
 	} else {
-		res, err = http.PostForm(defaults["access_token_url"], form)
+		res, err = HTTPClient.PostForm(defaults["access_token_url"], form)
 	}
 	if err != nil {
 		return err
@@ -178,10 +185,50 @@ func (self *Oauth2) Authenticate(login, password string) error {
 	return self.Fill_provider(back)
 }
 
+func oauthState() (string, error) {
+	raw := make([]byte, 32)
+	if _, err := rand.Read(raw); err != nil {
+		return "", err
+	}
+	return base64.RawURLEncoding.EncodeToString(raw), nil
+}
+
+func (self *Oauth2) stateCookieName() string {
+	return "_goauth2_state_" + self.RoleValue + "_" + self.Provider
+}
+
+func (self *Oauth2) setStateCookie(value string, maxAge int) {
+	http.SetCookie(self.W, &http.Cookie{
+		Name:     self.stateCookieName(),
+		Value:    value,
+		Path:     self.C.Script + "/" + self.RoleValue + "/" + self.ChartagValue + "/" + self.Provider,
+		MaxAge:   maxAge,
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+		Secure:   self.R.TLS != nil,
+	})
+}
+
+func (self *Oauth2) verifyState() error {
+	got := self.R.Form.Get("state")
+	cookie, err := self.R.Cookie(self.stateCookieName())
+	self.setStateCookie("", -1)
+	if err != nil || got == "" || cookie.Value == "" || got != cookie.Value {
+		return Err(400, "invalid oauth2 state")
+	}
+	return nil
+}
+
 func (self *Oauth2) oauth2Request(method string, uri string, form url.Values, h map[string]string) ([]byte, error) {
+	if h == nil {
+		h = make(map[string]string)
+	}
 	if self.DefaultPars["grant_type"] == "authorization_code" {
 		h["Authorization"] = "Bearer " + self.AccessToken
 		return Do(method, uri, nil, h)
+	}
+	if form == nil {
+		form = make(url.Values)
 	}
 	form.Set("access_token", self.AccessToken)
 	return Do(method, uri, form, h)

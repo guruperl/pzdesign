@@ -266,14 +266,12 @@ func (self *Crud) UpdateHashNulls(fieldValues url.Values, keyname interface{}, i
 	if err := ValidateSQLIdentifier("table", self.CurrentTable); err != nil {
 		return err
 	}
-	fields := make([]string, 0)
 	field0 := make([]string, 0)
 	values := make([]interface{}, 0)
 	for k, v := range fieldValues {
 		if err := ValidateSQLIdentifier("field", k); err != nil {
 			return err
 		}
-		fields = append(fields, k)
 		field0 = append(field0, k+"=?")
 		values = append(values, v[0])
 	}

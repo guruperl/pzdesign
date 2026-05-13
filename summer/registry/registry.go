@@ -1,6 +1,7 @@
 package registry
 
 import (
+	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer/ac"
 	"github.com/guruperl/pzdesign/summer/address"
 	"github.com/guruperl/pzdesign/summer/adv"
@@ -26,6 +27,7 @@ import (
 	"github.com/guruperl/pzdesign/summer/targetname"
 	"github.com/guruperl/pzdesign/summer/wechat"
 	"github.com/guruperl/pzdesign/summer/weight"
+	"go.uber.org/zap"
 )
 
 type Entry struct {
@@ -73,4 +75,31 @@ func Build() (map[string]interface{}, map[string]interface{}, map[string]interfa
 		filters[entry.Name] = entry.NewFilter()
 	}
 	return models, storage, filters
+}
+
+func BuildFactories(projectRoot string, logger *zap.Logger) (map[string]func() interface{}, map[string]func() interface{}, map[string]func() interface{}, error) {
+	models := make(map[string]func() interface{}, len(Entries))
+	storage := make(map[string]func() interface{}, len(Entries))
+	filters := make(map[string]func() interface{}, len(Entries))
+	for _, entry := range Entries {
+		entry := entry
+		comp, err := genelet.LoadComponent(projectRoot + "/summer/" + entry.Name + "/component.json")
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		models[entry.Name] = initializedFactory(entry.NewModel, comp, logger)
+		storage[entry.Name] = initializedFactory(entry.NewStorage, comp, logger)
+		filters[entry.Name] = initializedFactory(entry.NewFilter, comp, logger)
+	}
+	return models, storage, filters, nil
+}
+
+func initializedFactory(newValue func() interface{}, comp *genelet.Component, logger *zap.Logger) func() interface{} {
+	return func() interface{} {
+		value := newValue()
+		if err := genelet.InvokeVoid(value, "Initialize", comp, logger); err != nil {
+			panic(err)
+		}
+		return value
+	}
 }

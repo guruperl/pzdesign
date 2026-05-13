@@ -22,12 +22,15 @@ import (
 const maxUploadBytes = 32 << 20
 
 type Controller struct {
-	C       *Config
-	DB      *sql.DB
-	Models  map[string]interface{}
-	Filters map[string]interface{}
-	Storage map[string]interface{}
-	Logger  *zap.Logger
+	C                *Config
+	DB               *sql.DB
+	Models           map[string]interface{}
+	Filters          map[string]interface{}
+	Storage          map[string]interface{}
+	ModelFactories   map[string]func() interface{}
+	FilterFactories  map[string]func() interface{}
+	StorageFactories map[string]func() interface{}
+	Logger           *zap.Logger
 }
 
 func (self *Controller) staticPage(w http.ResponseWriter, r *http.Request) {
@@ -419,14 +422,15 @@ func addJSON(c int8, msg string) string {
 
 func (self *Controller) Handle(obj string, base Base, method string) error {
 	glog := self.Logger.Sugar()
-	model, ok := self.Models[obj]
+	model, ok := self.newModel(obj)
 	if !ok {
 		return Err(404)
 	}
-	filter, ok := self.Filters[obj]
+	filter, ok := self.newFilter(obj)
 	if !ok {
 		return Err(404)
 	}
+	storage := self.newStorage()
 	who := base.RoleValue
 	tag := base.ChartagValue
 
@@ -439,7 +443,7 @@ func (self *Controller) Handle(obj string, base Base, method string) error {
 
 	lists := make([]map[string]interface{}, 0)
 	other := make(map[string]interface{})
-	if err := InvokeVoid(model, "SetDefaults", ARGS, &lists, &other, self.Storage); err != nil {
+	if err := InvokeVoid(model, "SetDefaults", ARGS, &lists, &other, storage); err != nil {
 		return err
 	}
 
@@ -565,10 +569,13 @@ func (self *Controller) Handle(obj string, base Base, method string) error {
 		return err
 	}
 
-	if !ok && !Grep(options, "no_method") {
-		x := strings.ToUpper(action[:1]) + action[1:]
+	if !Grep(options, "no_method") {
+		x, err := actionMethod(action)
+		if err != nil {
+			return err
+		}
 		glog.Infof("call model")
-		err := InvokeError(model, x, extra, nextextra)
+		err = InvokeError(model, x, extra, nextextra)
 		if err != nil {
 			return err
 		}
@@ -589,7 +596,7 @@ func (self *Controller) Handle(obj string, base Base, method string) error {
 	glog.Infof("call blocks")
 	err = c.Sendmail(lists, ARGS, other)
 	if err != nil {
-		return err.(error)
+		return err
 	}
 
 	tmpl := &Tmpl{ARGS: ARGS, Lists: lists, Other: other, Success: true}
@@ -634,6 +641,43 @@ func (self *Controller) Handle(obj string, base Base, method string) error {
 		}
 	}
 	return er
+}
+
+func (self *Controller) newModel(name string) (interface{}, bool) {
+	if self.ModelFactories != nil {
+		if factory, ok := self.ModelFactories[name]; ok {
+			return factory(), true
+		}
+	}
+	if self.Models == nil {
+		return nil, false
+	}
+	model, ok := self.Models[name]
+	return model, ok
+}
+
+func (self *Controller) newFilter(name string) (interface{}, bool) {
+	if self.FilterFactories != nil {
+		if factory, ok := self.FilterFactories[name]; ok {
+			return factory(), true
+		}
+	}
+	if self.Filters == nil {
+		return nil, false
+	}
+	filter, ok := self.Filters[name]
+	return filter, ok
+}
+
+func (self *Controller) newStorage() map[string]interface{} {
+	storage := make(map[string]interface{}, len(self.Storage)+len(self.StorageFactories))
+	for k, v := range self.Storage {
+		storage[k] = v
+	}
+	for k, factory := range self.StorageFactories {
+		storage[k] = factory()
+	}
+	return storage
 }
 
 func asGerror(err error) (Gerror, bool) {

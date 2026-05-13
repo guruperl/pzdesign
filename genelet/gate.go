@@ -140,7 +140,7 @@ func (self *Gate) SetAttributes(ref map[string]string) error {
 		return Err(1029)
 	}
 
-	ip, login, group, when, hash, err := self.getCookie()
+	ip, login, group, when, _, err := self.getCookie()
 	if err != nil {
 		return err
 	}
@@ -164,8 +164,8 @@ func (self *Gate) SetAttributes(ref map[string]string) error {
 	}
 
 	new_group := strings.Join(new_groups, "|")
-	hash = Digest(role.Secret, ip, login, new_group, when)
-	signed := EncodeScoder(strings.Join([]string{ip, login, new_group, when, hash}, "/"), role.Coding)
+	newHash := Digest(role.Secret, ip, login, new_group, when)
+	signed := EncodeScoder(strings.Join([]string{ip, login, new_group, when, newHash}, "/"), role.Coding)
 
 	self.SetCookie(role.Surface, signed, role.MaxAge)
 	self.SetCookieSession(role.Surface+"_", signed)

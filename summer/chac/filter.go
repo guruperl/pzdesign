@@ -3,6 +3,7 @@ package chac
 import (
 	"net/url"
 
+	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -36,11 +37,11 @@ func (self *Filter) Preset() error {
 	//who := self.RoleValue
 
 	entitytypeID := ARGS.Get("entitytype_id")
-	idname := summer.TABLES[entitytypeID][1]
-
-	ARGS.Set("table", summer.TABLES[entitytypeID][0])
-	ARGS.Set("idname", idname)
-	ARGS.Set("entity_id", ARGS.Get(idname))
+	parts, ok := summer.TABLES[entitytypeID]
+	if !ok || len(parts) != 2 {
+		return genelet.Err(1092, "entitytype_id")
+	}
+	ARGS.Set("entity_id", ARGS.Get(parts[1]))
 
 	return nil
 }

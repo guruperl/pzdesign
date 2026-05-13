@@ -35,6 +35,33 @@ type Model struct {
 	summer.Model
 }
 
+func uniqueDigits(values []string) []string {
+	found := make(map[string]bool)
+	out := make([]string, 0, len(values))
+	for _, id := range values {
+		if found[id] || !summer.IsDigit(id) {
+			continue
+		}
+		found[id] = true
+		out = append(out, id)
+	}
+	return out
+}
+
+func placeholders(n int) string {
+	if n <= 0 {
+		return ""
+	}
+	return strings.TrimRight(strings.Repeat("?,", n), ",")
+}
+
+func appendStrings(out []interface{}, values []string) []interface{} {
+	for _, value := range values {
+		out = append(out, value)
+	}
+	return out
+}
+
 func (self *Model) accessTarget() (string, string, error) {
 	parts, ok := summer.TABLES[self.ARGS.Get("entitytype_id")]
 	if !ok || len(parts) != 2 {
@@ -69,80 +96,41 @@ SELECT ac_id FROM ac WHERE entitytype_id=? AND entity_id=? AND othertype_id=? AN
 func (self *Model) Inserts(extra ...url.Values) error {
 	ARGS := self.ARGS
 
-	ads := make([]string, 0)
-	if ARGS.Get("adv_ids") != "" {
-		found := make(map[string]bool)
-		for _, id := range ARGS["adv_ids"] {
-			if found[id] {
-				continue
-			}
-			found[id] = true
-			if summer.IsDigit(id) {
-				ads = append(ads, id)
-			}
-		}
-	}
-	campaigns := make([]string, 0)
-	if ARGS.Get("campaign_ids") != "" {
-		found := make(map[string]bool)
-		for _, id := range ARGS["campaign_ids"] {
-			if found[id] {
-				continue
-			}
-			found[id] = true
-			if summer.IsDigit(id) {
-				ads = append(ads, id)
-			}
-		}
-	}
+	ads := uniqueDigits(ARGS["adv_ids"])
+	campaigns := uniqueDigits(ARGS["campaign_ids"])
 
 	ref := make(map[string]bool)
 	if len(ads) > 0 && len(campaigns) > 0 {
 		lists := make([]map[string]interface{}, 0)
+		args := make([]interface{}, 0, len(campaigns)+len(ads))
+		args = appendStrings(args, campaigns)
+		args = appendStrings(args, ads)
 		err := self.SelectSQL(&lists, `
 SELECT campaign_id
 FROM adv_campaign
-WHERE campaign_id IN (`+strings.Join(ads, ",")+`) AND adv_id IN (`+strings.Join(campaigns, ",")+`))`)
+WHERE campaign_id IN (`+placeholders(len(campaigns))+`) AND adv_id IN (`+placeholders(len(ads))+`)`, args...)
 		if err != nil {
 			return err
 		}
 		for _, item := range lists {
-			ref[item["campaign_id"].(string)] = true
+			ref[fmt.Sprintf("%v", item["campaign_id"])] = true
 		}
 	}
 
-	str := `INSERT INTO ac (entitytype_id, entity_id, othertype_id, other_id) VALUES`
-	n := 0
-	if ARGS.Get("adv_ids") != "" {
-		foundAdv := make(map[string]bool)
-		for _, advID := range ARGS["adv_ids"] {
-			if foundAdv[advID] {
-				continue
-			}
-			foundAdv[advID] = true
-			if summer.IsDigit(advID) {
-				n++
-				str += fmt.Sprintf(" (%s, %s, 4, %s),", ARGS.Get("entitytype_id"), ARGS.Get("entity_id"), advID)
-			}
-		}
+	values := make([]string, 0, len(ads)+len(campaigns))
+	args := make([]interface{}, 0, (len(ads)+len(campaigns))*4)
+	for _, advID := range ads {
+		values = append(values, "(?, ?, 4, ?)")
+		args = append(args, ARGS.Get("entitytype_id"), ARGS.Get("entity_id"), advID)
 	}
-	if ARGS.Get("campaign_ids") != "" {
-		foundCampaign := make(map[string]bool)
-		for _, campaignID := range ARGS["campaign_ids"] {
-			if foundCampaign[campaignID] {
-				continue
-			}
-			foundCampaign[campaignID] = true
-			if ref[campaignID] {
-				continue
-			}
-			if summer.IsDigit(campaignID) {
-				n++
-				str += fmt.Sprintf(" (%s, %s, 41, %s),", ARGS.Get("entitytype_id"), ARGS.Get("entity_id"), campaignID)
-			}
+	for _, campaignID := range campaigns {
+		if ref[campaignID] {
+			continue
 		}
+		values = append(values, "(?, ?, 41, ?)")
+		args = append(args, ARGS.Get("entitytype_id"), ARGS.Get("entity_id"), campaignID)
 	}
-	if n == 0 {
+	if len(values) == 0 {
 		return nil
 	}
 	err := self.DoSQL(`
@@ -150,7 +138,7 @@ DELETE FROM ac WHERE entitytype_id=? AND entity_id=?`, ARGS.Get("entitytype_id")
 	if err != nil {
 		return err
 	}
-	return self.DoSQL(str[:len(str)-1])
+	return self.DoSQL(`INSERT INTO ac (entitytype_id, entity_id, othertype_id, other_id) VALUES `+strings.Join(values, ","), args...)
 }
 
 func (self *Model) UpdateOrder(extra ...url.Values) error {

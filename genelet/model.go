@@ -512,7 +512,11 @@ func (self *Model) another_object(page map[string]interface{}, args url.Values, 
 	}
 
 	action := page["action"].(string)
-	return p, strings.Title(action), model + "_" + action, nil
+	method, err := actionMethod(action)
+	if err != nil {
+		return nil, "", "", err
+	}
+	return p, method, model + "_" + action, nil
 }
 
 func (self *Model) CallOnce(page map[string]interface{}, extra ...url.Values) error {
@@ -634,8 +638,7 @@ func (self *Model) CallNextpage(page map[string]interface{}, extra ...url.Values
 			continue
 		}
 		nextextra := make(url.Values)
-		x := strings.ToUpper(action[:1]) + action[1:]
-		if err := InvokeError(p, x, next_extra, nextextra); err != nil {
+		if err := InvokeError(p, action, next_extra, nextextra); err != nil {
 			return err
 		}
 
@@ -652,6 +655,17 @@ func (self *Model) CallNextpage(page map[string]interface{}, extra ...url.Values
 	}
 
 	return nil
+}
+
+func actionMethod(action string) (string, error) {
+	if action == "" {
+		return "", Err(1051, "empty action")
+	}
+	b := []byte(action)
+	if b[0] >= 'a' && b[0] <= 'z' {
+		b[0] -= 'a' - 'A'
+	}
+	return string(b), nil
 }
 
 func (self *Model) ProcessAfter(action string, extra ...url.Values) error {

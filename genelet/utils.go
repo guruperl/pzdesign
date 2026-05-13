@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"mime/multipart"
 	"net"
 	"net/http"
@@ -20,6 +19,8 @@ import (
 	"strings"
 	"time"
 )
+
+var HTTPClient = &http.Client{Timeout: 15 * time.Second}
 
 func Invoke0(any interface{}, name string, args ...interface{}) {
 	_, _ = TryInvoke(any, name, args...)
@@ -300,8 +301,7 @@ func Do(method string, url string, form url.Values, header map[string]string) ([
 		}
 	}
 
-	client := &http.Client{}
-	res, err := client.Do(req)
+	res, err := HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -310,15 +310,16 @@ func Do(method string, url string, form url.Values, header map[string]string) ([
 }
 
 func Get(url string, form url.Values) ([]byte, error) {
+	target := url
 	if form == nil {
-		res, err := http.Get(url)
+		res, err := HTTPClient.Get(target)
 		if err != nil {
 			return nil, err
 		}
 		return process_(res)
 	}
 
-	res, err := http.Get(url + "?" + form.Encode())
+	res, err := HTTPClient.Get(target + "?" + form.Encode())
 	if err != nil {
 		return nil, err
 	}
@@ -326,7 +327,7 @@ func Get(url string, form url.Values) ([]byte, error) {
 }
 
 func Post(url string, form url.Values) ([]byte, error) {
-	res, err := http.PostForm(url, form)
+	res, err := HTTPClient.PostForm(url, form)
 	if err != nil {
 		return nil, err
 	}
@@ -335,10 +336,10 @@ func Post(url string, form url.Values) ([]byte, error) {
 
 func PostFile(url string, fn string, header map[string]string) ([]byte, error) {
 	buf, err := os.Open(fn)
-	defer buf.Close()
 	if err != nil {
 		return nil, err
 	}
+	defer buf.Close()
 
 	req, err := http.NewRequest("POST", url, buf)
 	if err != nil {
@@ -351,8 +352,7 @@ func PostFile(url string, fn string, header map[string]string) ([]byte, error) {
 		}
 	}
 
-	client := &http.Client{}
-	res, err := client.Do(req)
+	res, err := HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func PostFile(url string, fn string, header map[string]string) ([]byte, error) {
 }
 
 func process_(res *http.Response) ([]byte, error) {
-	body, err := ioutil.ReadAll(res.Body)
+	body, err := io.ReadAll(res.Body)
 	res.Body.Close()
 	if err != nil {
 		return nil, err
@@ -469,8 +469,7 @@ func MultipartUpload(url string, form url.Values, header map[string]string, para
 		}
 	}
 
-	client := &http.Client{}
-	res, err := client.Do(req)
+	res, err := HTTPClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
