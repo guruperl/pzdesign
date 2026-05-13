@@ -72,18 +72,7 @@ func main() {
 		gc.C.ConnectArray = sc.C.ConnectArray
 	}
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("POST /bid/{domain}", sc.ServeBid)
-	mux.HandleFunc("GET /win", sc.ServeWinLoss)
-	mux.HandleFunc("GET /loss", sc.ServeWinLoss)
-	mux.HandleFunc("GET /clk", sc.ServeWinLoss)
-	mux.HandleFunc("GET /imp", sc.ServeWinLoss)
-	mux.HandleFunc("GET /mid/win", sc.ServeMiddlemanCallback)
-	mux.HandleFunc("GET /mid/loss", sc.ServeMiddlemanCallback)
-	mux.HandleFunc("GET /mid/bill", sc.ServeMiddlemanCallback)
-	mux.HandleFunc("GET /mid/click", sc.ServeMiddlemanCallback)
-	mux.Handle("GET /debug/vars", expvar.Handler())
-	mux.Handle("/", gc)
+	mux := newServeMux(sc, gc)
 
 	server := &http.Server{
 		Addr:           ":" + sc.C.ServerPort,
@@ -101,6 +90,23 @@ func main() {
 	} else if err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 	}
+}
+
+func newServeMux(sc *dsp.Controller, geneletHandler http.Handler) *http.ServeMux {
+	mux := http.NewServeMux()
+	mux.HandleFunc("POST /bid/{domain}", sc.ServeBid)
+	mux.HandleFunc("POST /pz", sc.ServeSSP)
+	mux.HandleFunc("GET /win", sc.ServeWinLoss)
+	mux.HandleFunc("GET /loss", sc.ServeWinLoss)
+	mux.HandleFunc("GET /clk", sc.ServeWinLoss)
+	mux.HandleFunc("GET /imp", sc.ServeWinLoss)
+	mux.HandleFunc("GET /mid/win", sc.ServeMiddlemanCallback)
+	mux.HandleFunc("GET /mid/loss", sc.ServeMiddlemanCallback)
+	mux.HandleFunc("GET /mid/bill", sc.ServeMiddlemanCallback)
+	mux.HandleFunc("GET /mid/click", sc.ServeMiddlemanCallback)
+	mux.Handle("GET /debug/vars", expvar.Handler())
+	mux.Handle("/", geneletHandler)
+	return mux
 }
 
 func getGenelet(fn string, logger *zap.Logger) (*genelet.Controller, error) {
