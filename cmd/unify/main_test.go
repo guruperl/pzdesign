@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -62,5 +63,30 @@ func TestServeMuxRegistersDSPRoutesBeforeCatchAll(t *testing.T) {
 	mux.ServeHTTP(rr, req)
 	if rr.Code != http.StatusNoContent || catchAllHits != 1 {
 		t.Fatalf("catch-all status/hits = %d/%d, want 204/1", rr.Code, catchAllHits)
+	}
+}
+
+func TestApplyLocalModeFlagDoesNotOverrideConfigWhenOmitted(t *testing.T) {
+	controller := &dsp.Controller{C: &dsp.Config{IsLocal: true}}
+
+	if err := applyLocalModeFlag(controller, false, false); err != nil {
+		t.Fatal(err)
+	}
+	if !controller.C.IsLocal {
+		t.Fatal("local flag omitted should preserve config local mode")
+	}
+}
+
+func TestApplyLocalModeFlagEnablesAndLoadsLocalStaticCache(t *testing.T) {
+	controller := &dsp.Controller{C: &dsp.Config{Spread: t.TempDir()}}
+
+	if err := applyLocalModeFlag(controller, true, true); err != nil {
+		t.Fatal(err)
+	}
+	if !controller.C.IsLocal {
+		t.Fatal("local flag should enable config local mode")
+	}
+	if reflect.ValueOf(controller).Elem().FieldByName("local").IsNil() {
+		t.Fatal("local flag should load the local static cache")
 	}
 }

@@ -126,6 +126,9 @@ func TestTopicsBuildsDirectSSPTagData(t *testing.T) {
 	if !strings.Contains(api, "POST https://aofei.example/pz") || !strings.Contains(api, `["<iframe ...></iframe>"]`) {
 		t.Fatalf("api code = %s", api)
 	}
+	if strings.Contains(api, `"ua"`) || strings.Contains(api, `"ip"`) {
+		t.Fatalf("api code should not include ignored body metadata fields: %s", api)
+	}
 }
 
 func contains(items []string, want string) bool {

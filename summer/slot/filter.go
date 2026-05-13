@@ -269,8 +269,6 @@ func apiSample(endpoint, siteStr string, item map[string]interface{}) string {
 {
 	"platform": "sdk",
 	"site": "%s",
-	"ua": "ANY_UA_STRING",
-	"ip": "ANY_IP_STRING",
 	"adUnits": [{
 		"code": "%s",
 		"slot": "%s",

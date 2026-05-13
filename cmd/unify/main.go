@@ -36,6 +36,7 @@ func init() {
 
 func main() {
 	flag.Parse()
+	localFlagSet := flagWasSet("local")
 	ctx := context.Background()
 	logger, err := zap.NewDevelopment()
 	if err != nil {
@@ -47,8 +48,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	sc.C.IsLocal = isLocal
 	sc.Logger = logger
+	if err := applyLocalModeFlag(sc, localFlagSet, isLocal); err != nil {
+		log.Fatal(err)
+	}
 	defer sc.Close()
 
 	gc, err := getGenelet(gConf, logger)
@@ -90,6 +93,30 @@ func main() {
 	} else if err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 	}
+}
+
+func flagWasSet(name string) bool {
+	found := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == name {
+			found = true
+		}
+	})
+	return found
+}
+
+func applyLocalModeFlag(sc *dsp.Controller, flagSet, enabled bool) error {
+	if sc == nil || sc.C == nil || !flagSet {
+		return nil
+	}
+	if sc.C.IsLocal == enabled {
+		return nil
+	}
+	sc.C.IsLocal = enabled
+	if enabled {
+		return sc.ReloadLocalStaticCache()
+	}
+	return nil
 }
 
 func newServeMux(sc *dsp.Controller, geneletHandler http.Handler) *http.ServeMux {

@@ -70,6 +70,10 @@ GOWORK=off SUMMER="$PWD/../aofei/etc/summer.local.json" \
   go run ./cmd/unify
 ```
 
+`cmd/unify` preserves the Aofei config `is_local` value unless `-local` is
+passed explicitly; `-local` also loads the local static snapshots before
+serving requests.
+
 For a local `systemctl --user` service, set `WorkingDirectory` to this checkout
 and pass the Aofei config paths explicitly. For example, the port-8200 local
 service uses:
