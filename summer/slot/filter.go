@@ -268,7 +268,18 @@ func apiSample(endpoint, siteStr string, item map[string]interface{}) string {
 
 {
 	"platform": "sdk",
+	"responseFormat": "json",
 	"site": "%s",
+	"app": {
+		"name": "Example App"
+	},
+	"device": {
+		"ifa": "00000000-0000-0000-0000-000000000000",
+		"ua": "ExampleSDK/1.0"
+	},
+	"user": {
+		"id": "example-user-id"
+	},
 	"adUnits": [{
 		"code": "%s",
 		"slot": "%s",
@@ -279,5 +290,19 @@ func apiSample(endpoint, siteStr string, item map[string]interface{}) string {
 }
 
 Response:
-["<iframe ...></iframe>"]`, endpoint, siteStr, code, slot, mimeFormat(item))
+[{
+	"filled": true,
+	"adm": "<iframe ...></iframe>",
+	"impressionUrl": "https://aofei.example/imp?...",
+	"clickUrl": "https://aofei.example/clk?...",
+	"price": 1.2,
+	"currency": "USD",
+	"adId": "10000",
+	"campaignId": "10",
+	"creativeId": "10000",
+	"width": 300,
+	"height": 250
+}]
+
+Set "responseFormat": "openrtb" for an OpenRTB BidResponse.`, endpoint, siteStr, code, slot, mimeFormat(item))
 }

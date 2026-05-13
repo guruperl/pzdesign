@@ -123,11 +123,23 @@ func TestTopicsBuildsDirectSSPTagData(t *testing.T) {
 		}
 	}
 	api := item["api_code"].(string)
-	if !strings.Contains(api, "POST https://aofei.example/pz") || !strings.Contains(api, `["<iframe ...></iframe>"]`) {
-		t.Fatalf("api code = %s", api)
+	for _, want := range []string{
+		"POST https://aofei.example/pz",
+		`"responseFormat": "json"`,
+		`"app": {`,
+		`"name": "Example App"`,
+		`"device": {`,
+		`"user": {`,
+		`"filled": true`,
+		`"impressionUrl": "https://aofei.example/imp?...`,
+		`Set "responseFormat": "openrtb"`,
+	} {
+		if !strings.Contains(api, want) {
+			t.Fatalf("api code missing %q:\n%s", want, api)
+		}
 	}
-	if strings.Contains(api, `"ua"`) || strings.Contains(api, `"ip"`) {
-		t.Fatalf("api code should not include ignored body metadata fields: %s", api)
+	if strings.Contains(api, `"ip"`) {
+		t.Fatalf("api code = %s", api)
 	}
 }
 
