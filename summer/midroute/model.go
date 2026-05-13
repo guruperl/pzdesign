@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/guruperl/aofei/match"
+	"github.com/guruperl/aofei/adminapi"
 	"github.com/guruperl/pzdesign/summer"
 	"github.com/mediocregopher/radix/v4"
 )
@@ -441,10 +441,10 @@ func (self *Model) loadRouteCacheStatus() error {
 		return nil
 	}
 	status := map[string]interface{}{
-		"cache_key":    match.HashNameMiddlemanRoutesV2,
+		"cache_key":    adminapi.HashNameMiddlemanRoutesV2,
 		"cache_status": "unknown",
 	}
-	currentHighWater, err := match.DBGetMiddlemanRouteHighWater(context.Background(), self.DB)
+	currentHighWater, err := adminapi.DBGetMiddlemanRouteHighWater(context.Background(), self.DB)
 	if err != nil {
 		return err
 	}
@@ -459,7 +459,7 @@ func (self *Model) loadRouteCacheStatus() error {
 		(*self.OTHER)["midroute_cache_status"] = status
 		return nil
 	}
-	cache, err := match.MiddlemanRouteCacheFromRedis(context.Background(), redis)
+	cache, err := adminapi.MiddlemanRouteCacheFromRedis(context.Background(), redis)
 	if err != nil {
 		status["cache_error"] = err.Error()
 		(*self.OTHER)["midroute_cache_status"] = status

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/guruperl/aofei/match"
+	"github.com/guruperl/aofei/adminapi"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -136,7 +136,7 @@ func (self *Filter) After(model *Model) error {
 			summer.SetWH(item)
 			item["slot_str"] = summer.PackTwo(slotID, sizeID)
 			var err error
-			item["code"], err = match.RPub{PubID: uint32(pubID), SiteID: uint32(siteID), SlotID: slotID, SizeID: sizeID}.PackString()
+			item["code"], err = adminapi.RPub{PubID: uint32(pubID), SiteID: uint32(siteID), SlotID: slotID, SizeID: sizeID}.PackString()
 			if err != nil {
 				return err
 			}

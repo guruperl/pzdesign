@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/guruperl/aofei/acl"
+	"github.com/guruperl/aofei/adminapi"
 	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
@@ -73,7 +73,7 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 	}
 
 	if who == "admin" && action == "insert" {
-		p, err := acl.AddPub(model.DB, ARGS.Get("domain"))
+		p, err := adminapi.AddPub(model.DB, ARGS.Get("domain"))
 		if err != nil {
 			return err
 		}

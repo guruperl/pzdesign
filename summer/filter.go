@@ -11,9 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/guruperl/aofei/acl"
-	"github.com/guruperl/aofei/match"
-	"github.com/guruperl/aofei/uploaded"
+	"github.com/guruperl/aofei/adminapi"
 	"github.com/guruperl/pzdesign/genelet"
 	"github.com/mediocregopher/radix/v4"
 	"github.com/nats-io/nats.go"
@@ -29,6 +27,21 @@ func CleanUploadName(file string) (string, error) {
 		return "", fmt.Errorf("invalid upload filename")
 	}
 	return name, nil
+}
+
+func SafeUploadPath(dir, name string) (string, error) {
+	root, err := filepath.Abs(dir)
+	if err != nil {
+		return "", err
+	}
+	target, err := filepath.Abs(filepath.Join(root, name))
+	if err != nil {
+		return "", err
+	}
+	if target != root && !strings.HasPrefix(target, root+string(filepath.Separator)) {
+		return "", fmt.Errorf("upload path escapes upload directory")
+	}
+	return target, nil
 }
 
 var TABLES = map[string][]string{
@@ -197,13 +210,13 @@ func SetSizeID(args url.Values) error {
 	if w > 65535 || h > 65535 {
 		return fmt.Errorf("w or h are over 65535")
 	}
-	args.Set("size_id", fmt.Sprintf("%d", match.SizeID2To1(uint16(w), uint16(h))))
+	args.Set("size_id", fmt.Sprintf("%d", adminapi.SizeID2To1(uint16(w), uint16(h))))
 	return nil
 }
 
 func SetWH(item map[string]interface{}) {
 	sizeid := item["size_id"].(int64)
-	item["w"], item["h"] = match.SizeID1To2(uint32(sizeid))
+	item["w"], item["h"] = adminapi.SizeID1To2(uint32(sizeid))
 }
 
 func (self *Filter) Preset() error {
@@ -340,14 +353,14 @@ func (self *Filter) After(model *Model) error {
 		if nc, ok, err := storageNATS(model.Storage); err != nil {
 			return err
 		} else if ok {
-			if err := match.DBGetCreativesToRedisSpread(ctx, nc, model.DB, par...); err != nil {
+			if err := adminapi.DBGetCreativesToRedisSpread(ctx, nc, model.DB, par...); err != nil {
 				return err
 			}
 		}
 		if redis, ok, err := storageRedis(model.Storage); err != nil {
 			return err
 		} else if ok {
-			if err := match.DBGetCreativesToRedisSpread(ctx, redis, model.DB, par...); err != nil {
+			if err := adminapi.DBGetCreativesToRedisSpread(ctx, redis, model.DB, par...); err != nil {
 				return err
 			}
 		}
@@ -369,7 +382,7 @@ func (self *Filter) After(model *Model) error {
 	}
 
 	if obj == "targetname" && action == "insert" {
-		aud, err := match.DBGetAudience(model.DB, itemID)
+		aud, err := adminapi.DBGetAudience(model.DB, itemID)
 		if err == nil && aud != nil {
 			if nc, ok, storageErr := storageNATS(model.Storage); storageErr != nil {
 				return storageErr
@@ -398,9 +411,9 @@ func (self *Filter) After(model *Model) error {
 			}
 			switch ARGS.Get("how") {
 			case "Get":
-				err = match.DBGetRAdvsToRedisSpreadByItemID(ctx, nc, model.DB, itemID, top)
+				err = adminapi.DBGetRAdvsToRedisSpreadByItemID(ctx, nc, model.DB, itemID, top)
 			case "Delete":
-				err = match.DBDeleteRAdvsToRedisSpreadByItemID(ctx, nc, model.DB, itemID, top)
+				err = adminapi.DBDeleteRAdvsToRedisSpreadByItemID(ctx, nc, model.DB, itemID, top)
 			}
 		}
 		if redis, ok, storageErr := storageRedis(model.Storage); storageErr != nil {
@@ -408,9 +421,9 @@ func (self *Filter) After(model *Model) error {
 		} else if ok {
 			switch ARGS.Get("how") {
 			case "Get":
-				err = match.DBGetRAdvsToRedisSpreadByItemID(ctx, redis, model.DB, itemID)
+				err = adminapi.DBGetRAdvsToRedisSpreadByItemID(ctx, redis, model.DB, itemID)
 			case "Delete":
-				err = match.DBDeleteRAdvsToRedisSpreadByItemID(ctx, redis, model.DB, itemID)
+				err = adminapi.DBDeleteRAdvsToRedisSpreadByItemID(ctx, redis, model.DB, itemID)
 			}
 		}
 		if err != nil {
@@ -419,7 +432,7 @@ func (self *Filter) After(model *Model) error {
 	}
 
 	if who == "admin" && obj == "pub" && action == "takedown" {
-		pub, domain, err := acl.DBGetPubByID(model.DB, ARGS.Get("pub_id"))
+		pub, domain, err := adminapi.DBGetPubByID(model.DB, ARGS.Get("pub_id"))
 		if err != nil {
 			return fmt.Errorf("failed to get pub: %s", err.Error())
 		}
@@ -455,14 +468,24 @@ func (self *Filter) After(model *Model) error {
 		if err != nil {
 			return fmt.Errorf("adv_id should be a number")
 		}
-		dest := filepath.Join(self.C.UploadDir, ARGS.Get("adv_id"))
+		dest, err := SafeUploadPath(self.C.UploadDir, ARGS.Get("adv_id"))
+		if err != nil {
+			return err
+		}
 		err = os.MkdirAll(dest, 0755)
 		if err != nil {
 			return err
 		}
-		dest = filepath.Join(dest, file)
+		dest, err = SafeUploadPath(dest, file)
+		if err != nil {
+			return err
+		}
 
-		err = os.Rename(filepath.Join(self.C.UploadDir, file), dest)
+		src, err := SafeUploadPath(self.C.UploadDir, file)
+		if err != nil {
+			return err
+		}
+		err = os.Rename(src, dest)
 		if err != nil {
 			return err
 		}
@@ -485,7 +508,7 @@ func (self *Filter) After(model *Model) error {
 				if line == "" {
 					continue
 				}
-				err = uploaded.UploadSingle(ctx, redis, id, marker, line)
+				err = adminapi.UploadSingle(ctx, redis, id, marker, line)
 				if err != nil {
 					return err
 				}

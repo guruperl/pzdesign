@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"expvar"
 	"flag"
 	"fmt"
 	"log"
@@ -81,6 +82,7 @@ func main() {
 	mux.HandleFunc("GET /mid/loss", sc.ServeMiddlemanCallback)
 	mux.HandleFunc("GET /mid/bill", sc.ServeMiddlemanCallback)
 	mux.HandleFunc("GET /mid/click", sc.ServeMiddlemanCallback)
+	mux.Handle("GET /debug/vars", expvar.Handler())
 	mux.Handle("/", gc)
 
 	server := &http.Server{

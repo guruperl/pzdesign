@@ -62,33 +62,36 @@ type Role struct {
 }
 
 type Config struct {
-	UploadDir      string
-	Template       string
-	Pubrole        string
-	Secret         string
-	ServerURL      string
-	CORSOrigins    []string
-	UploadURL      string
-	ServerPort     string
-	DocumentRoot   string
-	ProjectRoot    string
-	Script         string
-	ComponentName  string
-	ActionName     string
-	DefaultActions map[string]string
-	RoleName       string
-	Oauth2s        []string
-	Oauth1s        []string
-	LoginName      string
-	LogoutName     string
-	TagName        string
-	ProviderName   string
-	CallbackName   string
-	GoStampName    string
-	GoMD5Name      string
-	GoURIName      string
-	GoProbeName    string
-	GoErrName      string
+	UploadDir             string
+	Template              string
+	Pubrole               string
+	Secret                string
+	ServerURL             string
+	CORSOrigins           []string
+	UploadURL             string
+	ServerPort            string
+	DocumentRoot          string
+	ProjectRoot           string
+	Script                string
+	ComponentName         string
+	ActionName            string
+	DefaultActions        map[string]string
+	RoleName              string
+	Oauth2s               []string
+	Oauth1s               []string
+	LoginName             string
+	LogoutName            string
+	TagName               string
+	ProviderName          string
+	CallbackName          string
+	GoStampName           string
+	GoMD5Name             string
+	GoURIName             string
+	GoProbeName           string
+	GoErrName             string
+	UploadMaxBytes        int64
+	CSRFName              string
+	RequestTimeoutSeconds int
 
 	ConnectArray []string
 	Blks         map[string]map[string]string

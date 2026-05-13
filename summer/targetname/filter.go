@@ -2,14 +2,13 @@
 package targetname
 
 import (
+	"context"
 	"database/sql"
 	"net/url"
 	"strconv"
 
-	"github.com/guruperl/aofei/advice"
-	"github.com/guruperl/aofei/demo"
-	"github.com/guruperl/aofei/dh"
-	"github.com/guruperl/aofei/uploaded"
+	"github.com/guruperl/aofei/adminapi"
+	"github.com/guruperl/pzdesign/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -33,10 +32,10 @@ func (self *Filter) Preset() error {
 	}
 
 	if action == "insert" || action == "update" {
-		advice.UAResetArgs(ARGS)
-		demo.DemoResetArgs(ARGS)
-		dh.DHResetArgs(ARGS)
-		uploaded.UploadedResetArgs(ARGS)
+		adminapi.UAResetArgs(ARGS)
+		adminapi.DemoResetArgs(ARGS)
+		adminapi.DHResetArgs(ARGS)
+		adminapi.UploadedResetArgs(ARGS)
 	}
 
 	return nil
@@ -49,6 +48,11 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 
 	ARGS := self.R.Form
 	action := self.Action
+	if self.RoleValue == "adv" && ARGS.Get("item_id") != "" {
+		if err := ensureAdvertiserOwnsItem(model, ARGS.Get("adv_id"), ARGS.Get("item_id")); err != nil {
+			return err
+		}
+	}
 
 	if action == "topics" {
 		extra.Set("tn.item_id", ARGS.Get("item_id"))
@@ -56,6 +60,29 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 		extra.Set("item_id", ARGS.Get("item_id"))
 	}
 
+	return nil
+}
+
+func ensureAdvertiserOwnsItem(model *Model, advID, itemID string) error {
+	var owner int64
+	ctx := model.Context
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	err := model.DB.QueryRowContext(ctx, `
+SELECT c.adv_id
+FROM adv_item i
+INNER JOIN adv_campaign c USING (campaign_id)
+WHERE i.item_id=?`, itemID).Scan(&owner)
+	if err == sql.ErrNoRows {
+		return genelet.Err(401, "item not found")
+	}
+	if err != nil {
+		return err
+	}
+	if strconv.FormatInt(owner, 10) != advID {
+		return genelet.Err(401, "item belongs to another advertiser")
+	}
 	return nil
 }
 
@@ -190,10 +217,10 @@ WHERE item_id = ?`, ARGS.Get("item_id")).Scan(&channelOrder)
 				|             2 |              2 |     3263 |        1103 | state    |         NULL |
 				+---------------+----------------+----------+-------------+----------+--------------+
 		*/
-		dhAud := new(dh.DHAudience)
-		demAud := new(demo.DemoAudience)
-		uaAud := new(advice.UaAudience)
-		uploadAud := new(uploaded.UploadAudience)
+		dhAud := adminapi.NewDHAudience()
+		demAud := adminapi.NewDemoAudience()
+		uaAud := adminapi.NewUaAudience()
+		uploadAud := adminapi.NewUploadAudience()
 		for _, item := range lists {
 			attrname := item["attrname"].(string)
 			valueID := uint32(int(item["value_id"].(int64)))

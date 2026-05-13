@@ -1,13 +1,13 @@
 package summer
 
 import (
-	"github.com/guruperl/aofei/acl"
+	"github.com/guruperl/aofei/adminapi"
 )
 
 func Dictionary(word string) string {
 	hash := make(map[string]string)
-	for k, v := range acl.String2CAT {
-		hash[k] = acl.CAT2String[v]
+	for k, v := range adminapi.String2CAT {
+		hash[k] = adminapi.CAT2String[v]
 	}
 
 	var ref = map[string]string{

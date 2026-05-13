@@ -1,6 +1,7 @@
 package genelet
 
 import (
+	"context"
 	"database/sql"
 	"math"
 	"math/rand"
@@ -13,6 +14,7 @@ import (
 
 type Model struct {
 	Crud
+	Context context.Context
 
 	ARGS  url.Values
 	LISTS *[]map[string]interface{}

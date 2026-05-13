@@ -10,7 +10,7 @@ Its source lives in this module under `genelet/`.
 
 Genelet reads the `SUMMER` config through `genelet.NewConfig`. The sibling
 Aofei local helper generates `../aofei/etc/summer.local.json`; checked-in
-examples live in `../aofei/etc/summer.json`. The config uses upper-case keys
+examples live in `../aofei/etc/summer.example.json`. The config uses upper-case keys
 such as `ConnectArray`, `Template`, `UploadDir`, `ProjectRoot`, `Script`,
 `Roles`, and `Chartags`. The local Summer `ProjectRoot` points at this checkout,
 the template path points at `tmpls/`, and static UI assets are served from

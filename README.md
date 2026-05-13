@@ -57,9 +57,10 @@ Template:     /srv/aofei/Workspace/pzdesign/tmpls
 DocumentRoot: /srv/aofei/Workspace/pzdesign/www
 ```
 
-The module depends on Aofei domain packages through `github.com/guruperl/aofei`;
-local development uses the `replace` in `go.mod` to resolve that dependency to
-`../aofei`.
+The module depends on Aofei through the stable `github.com/guruperl/aofei/adminapi`
+facade for Summer UI helpers, while `cmd/unify` imports `dsp` as the HTTP service
+integration point. Local development uses the `replace` in `go.mod` to resolve
+that dependency to `../aofei`.
 
 Run the combined service from this checkout with Aofei's generated configs:
 
