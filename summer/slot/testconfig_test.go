@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func testSummerConfig(t *testing.T) *genelet.Config {

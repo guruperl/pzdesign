@@ -1,8 +1,9 @@
 # pzdesign
 
 `pzdesign` is the Go module `github.com/guruperl/pzdesign`. It owns the
-Genelet framework package, Summer admin packages, UI templates, and static
-assets used by the sibling Aofei/Winter DSP checkout.
+Summer admin packages, UI templates, and static assets used by the sibling
+Aofei/Winter DSP checkout. It depends on the external Genelet framework module
+`github.com/guruperl/genelet`.
 
 ## Layout
 
@@ -11,8 +12,6 @@ assets used by the sibling Aofei/Winter DSP checkout.
   `tmpls/<role>/<object>/<action>.g`.
 - `cmd/unify/` contains the combined Summer/Genelet admin and Aofei DSP HTTP
   service command.
-- `genelet/` contains the local web/admin framework used by Summer and
-  `cmd/unify`.
 - `summer/` contains admin UI models, filters, component JSON, registry code,
   and module tests.
 - `tmpls/<role>/*.g` contains shared role-level layout fragments such as

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/guruperl/aofei/acl"
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func TestFilter(t *testing.T) {

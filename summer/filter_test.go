@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func TestFilter(t *testing.T) {

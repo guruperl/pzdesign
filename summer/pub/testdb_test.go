@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func testSummerConfig(t *testing.T) *genelet.Config {

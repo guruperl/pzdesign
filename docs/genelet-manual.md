@@ -1,10 +1,10 @@
 # Genelet Manual
 
-Genelet is the local web/admin framework used by Summer and `cmd/unify`. It
+Genelet is the web/admin framework used by Summer and `cmd/unify`. It
 owns route parsing, role/cookie auth, component-driven CRUD setup, templates,
 uploads, CORS, and framework error rendering. It does not own DSP bidding,
 schema migrations, Redis payload contracts, or production secrets.
-Its source lives in this module under `genelet/`.
+Its source lives in the external module `github.com/guruperl/genelet`.
 
 ## Configuration
 
@@ -21,7 +21,7 @@ the DSP controller, then fills missing Genelet server fields from the DSP
 config. Admin tests that need a database should use:
 
 ```bash
-GOWORK=off SUMMER="$PWD/../aofei/etc/summer.local.json" go test ./genelet
+GOWORK=off SUMMER="$PWD/../aofei/etc/summer.local.json" go test ./summer/...
 ```
 
 ## Routes
@@ -93,17 +93,18 @@ separators and comments are rejected.
 
 Controller handling follows this order:
 
-1. Set model defaults with request args, output lists, `other`, and storage.
-2. Set filter base/action/component state.
-3. Read the action rule and foreign-key rule from `Filter.GetAll`.
-4. Copy role/auth metadata into request args.
-5. Enforce action group access and foreign-key signatures.
-6. Run `Filter.Preset`.
-7. Set the model DB unless action options include `no_db`.
-8. Run `Filter.Before`.
-9. Run the model action unless action options suppress the model method.
-10. Assign foreign-key signatures for returned lists.
-11. Run `Filter.After`, send optional mail blocks, then render JSON/template.
+1. Resolve the action and reject invalid CSRF tokens for mutating methods.
+2. Set model defaults with request args, output lists, `other`, and storage.
+3. Set filter base/action/component state.
+4. Read the action rule and foreign-key rule from `Filter.GetAll`.
+5. Copy role/auth metadata into request args.
+6. Enforce action group access and foreign-key signatures.
+7. Run `Filter.Preset`.
+8. Set the model DB unless action options include `no_db`.
+9. Run `Filter.Before`.
+10. Run the model action unless action options suppress the model method.
+11. Assign foreign-key signatures for returned lists.
+12. Run `Filter.After`, send optional mail blocks, then render JSON/template.
 
 Reflection dispatch is guarded by `TryInvoke`, `InvokeVoid`, and
 `InvokeError`. Missing methods, wrong arity, wrong argument types, and panics
@@ -145,12 +146,12 @@ Rejected origins receive HTTP 403 before action handling.
 Fast framework and admin package checks:
 
 ```bash
-GOWORK=off go test ./genelet ./summer/... ./cmd/unify
+GOWORK=off go test ./summer/... ./cmd/unify
 ```
 
 DB-backed admin compatibility, after local Docker config exists:
 
 ```bash
 GOWORK=off SUMMER="$PWD/../aofei/etc/summer.local.json" \
-  go test ./genelet ./summer ./summer/pub ./summer/slot ./summer/weight
+  go test ./summer ./summer/pub ./summer/slot ./summer/weight
 ```

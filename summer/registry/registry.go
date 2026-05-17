@@ -1,7 +1,7 @@
 package registry
 
 import (
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer/ac"
 	"github.com/guruperl/pzdesign/summer/address"
 	"github.com/guruperl/pzdesign/summer/adv"

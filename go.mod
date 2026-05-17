@@ -5,19 +5,25 @@ go 1.22
 toolchain go1.23.5
 
 require (
-	github.com/delongw/go-int-cipher v0.0.0-20151122132803-cb275de15ba8
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/guruperl/aofei v0.0.0
 	github.com/mediocregopher/radix/v4 v4.1.4
 	github.com/nats-io/nats.go v1.38.0
 	go.uber.org/zap v1.27.0
-	golang.org/x/crypto v0.31.0
 	golang.org/x/net v0.33.0
+)
+
+require (
+	github.com/delongw/go-int-cipher v0.0.0-20151122132803-cb275de15ba8 // indirect
+	github.com/lib/pq v1.12.3 // indirect
+	github.com/mattn/go-sqlite3 v1.14.44 // indirect
+	golang.org/x/crypto v0.31.0 // indirect
 )
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/IncSW/geoip2 v0.1.3 // indirect
+	github.com/guruperl/genelet v0.1.1
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/mileusna/useragent v1.3.5 // indirect
 	github.com/nats-io/nkeys v0.4.9 // indirect

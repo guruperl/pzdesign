@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func TestRegistryCoversComponentModules(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func TestModel(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 	"strconv"
 
 	"github.com/guruperl/aofei/adminapi"
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 

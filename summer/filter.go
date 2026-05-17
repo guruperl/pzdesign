@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/guruperl/aofei/adminapi"
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 	"github.com/mediocregopher/radix/v4"
 	"github.com/nats-io/nats.go"
 )

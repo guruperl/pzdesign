@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func TestMiddlemanLedgerTemplatesRender(t *testing.T) {

@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 )
 
 func TestPresetRejectsUnknownEntityType(t *testing.T) {

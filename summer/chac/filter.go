@@ -3,7 +3,7 @@ package chac
 import (
 	"net/url"
 
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 

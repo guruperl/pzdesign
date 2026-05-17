@@ -13,7 +13,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/guruperl/aofei/dsp"
-	"github.com/guruperl/pzdesign/genelet"
+	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer/registry"
 	"go.uber.org/zap"
 )
