@@ -10,7 +10,11 @@ import (
 
 func TestModel(t *testing.T) {
 	db := openSummerTestDB(t)
-	defer db.Close()
+	defer func() {
+		_, _ = db.Exec(`DROP TABLE IF EXISTS testing`)
+		_, _ = db.Exec(`DELETE FROM add_address WHERE company='b_company' OR contact IN ('b_contact', 'c_contact')`)
+		_ = db.Close()
+	}()
 
 	comp := genelet.NewComponent("component.json")
 	addressComp := genelet.NewComponent("../address/component.json")
