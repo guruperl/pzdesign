@@ -1,0 +1,70 @@
+name: Verify
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pzdesign
+    steps:
+      - name: Check out pzdesign
+        uses: actions/checkout@v4
+        with:
+          path: pzdesign
+          fetch-depth: 0
+      - name: Check out Aofei dependency
+        uses: actions/checkout@v4
+        with:
+          repository: guruperl/aofei
+          ref: 3348166a5405ac11417cc69c7cf453d7fa9fba13
+          path: aofei
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 1.23.5
+          cache: true
+          cache-dependency-path: |
+            pzdesign/go.sum
+            aofei/go.sum
+      - name: Test
+        run: GOWORK=off go test ./...
+      - name: Race tests
+        run: GOWORK=off go test -race ./cmd/unify
+      - name: Vet
+        run: GOWORK=off go vet ./...
+      - name: Staticcheck
+        run: |
+          GOWORK=off go install honnef.co/go/tools/cmd/staticcheck@v0.5.1
+          GOWORK=off "$(go env GOPATH)/bin/staticcheck" -checks=all,-ST1000,-ST1003,-ST1006 ./...
+      - name: Parse active templates
+        run: GOWORK=off go run ./tools/check-templates.go -ext=.g
+      - name: Parse English templates
+        run: GOWORK=off go run ./tools/check-templates.go -ext=.e
+      - name: Committed diff hygiene
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          PUSH_AFTER_SHA: ${{ github.event.after }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            base=$(git merge-base "$PR_BASE_SHA" "$PR_HEAD_SHA")
+            git diff --check "$base" "$PR_HEAD_SHA"
+          elif [ "$PUSH_BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            empty_tree=$(git hash-object -t tree /dev/null)
+            git diff --check "$empty_tree" "$PUSH_AFTER_SHA"
+          else
+            git diff --check "$PUSH_BEFORE_SHA" "$PUSH_AFTER_SHA"
+          fi

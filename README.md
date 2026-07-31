@@ -61,6 +61,14 @@ facade for Summer UI helpers, while `cmd/unify` imports `dsp` as the HTTP servic
 integration point. Local development uses the `replace` in `go.mod` to resolve
 that dependency to `../aofei`.
 
+The CI workflow pins its sibling Aofei checkout to a reviewed commit so a
+moving Aofei branch cannot change pzdesign verification unexpectedly. Update
+that `ref` in `.github/workflows/verify.yml` when intentionally adopting a new
+Aofei revision, and verify both repositories in the same change. CI fetches the
+primary repository history and checks committed whitespace over the pull-request
+merge-base-to-head or push before-to-after range. Keep `git diff --check` as the
+local closeout check for uncommitted changes.
+
 Run the combined service from this checkout with Aofei's generated configs:
 
 ```bash
@@ -72,6 +80,11 @@ GOWORK=off SUMMER="$PWD/../aofei/etc/summer.local.json" \
 `cmd/unify` preserves the Aofei config `is_local` value unless `-local` is
 passed explicitly; `-local` also loads the local static snapshots before
 serving requests.
+
+`SIGINT` and `SIGTERM` stop new HTTP work, allow up to 15 seconds for in-flight
+handlers, and then close the Aofei controller so queued audits and owned
+service connections drain in order. A shutdown timeout force-closes remaining
+connections and exits with an error.
 
 For a local `systemctl --user` service, set `WorkingDirectory` to this checkout
 and pass the Aofei config paths explicitly. For example, the port-8200 local
@@ -113,3 +126,9 @@ go run ./tools/check-templates.go -ext=.e
 The `.e` check is intentionally best-effort cleanup coverage. If an English
 variant has no runtime owner, prefer making it parse-clean without changing the
 active `.g` behavior.
+
+`.github/workflows/verify.yml` runs tests, vet, both template parsers, and
+staticcheck on pushes and pull requests. It checks out public Aofei beside this
+repository so the local `go.mod` replace directive resolves on a clean runner;
+staticcheck keeps the established `ST1000`, `ST1003`, and `ST1006` legacy style
+exclusions.
