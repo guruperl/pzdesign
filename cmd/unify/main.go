@@ -3,12 +3,16 @@ package main
 
 import (
 	"context"
+	"errors"
 	"expvar"
 	"flag"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -27,6 +31,8 @@ func usage() {
 var gConf, sConf string
 var isLocal bool
 
+const shutdownTimeout = 15 * time.Second
+
 func init() {
 	flag.Usage = usage
 	flag.StringVar(&gConf, "g", os.Getenv("SUMMER"), "Genelet Config")
@@ -36,27 +42,33 @@ func init() {
 
 func main() {
 	flag.Parse()
-	localFlagSet := flagWasSet("local")
-	ctx := context.Background()
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+	if err := run(ctx, flagWasSet("local")); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run(ctx context.Context, localFlagSet bool) error {
 	logger, err := zap.NewDevelopment()
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer logger.Sync()
 
 	sc, err := dsp.NewController(ctx, sConf)
 	if err != nil {
-		log.Fatal(err)
-	}
-	sc.Logger = logger
-	if err := applyLocalModeFlag(sc, localFlagSet, isLocal); err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer sc.Close()
+	sc.Logger = logger
+	if err := applyLocalModeFlag(sc, localFlagSet, isLocal); err != nil {
+		return err
+	}
 
 	gc, err := getGenelet(gConf, logger)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	gc.DB = sc.DB
 	gc.Storage["Redis"] = sc.Redis
@@ -84,15 +96,56 @@ func main() {
 		WriteTimeout:   15 * time.Second, // 15 seconds
 		MaxHeaderBytes: 1 << 20,          // 1 MB
 	}
-
-	// This is a blocking call, so it will not return until the server is stopped
-	// or an error occurs.
-	err = server.ListenAndServe()
-	if err != nil && err == http.ErrServerClosed {
-		log.Println("Server closed gracefully")
-	} else if err != nil {
-		log.Fatalf("Failed to run server: %v", err)
+	listener, err := net.Listen("tcp", server.Addr)
+	if err != nil {
+		return err
 	}
+	return runHTTPServer(ctx, server, listener, shutdownTimeout)
+}
+
+type gracefulHTTPServer interface {
+	Serve(net.Listener) error
+	Shutdown(context.Context) error
+	Close() error
+}
+
+func runHTTPServer(ctx context.Context, server gracefulHTTPServer, listener net.Listener, timeout time.Duration) error {
+	if server == nil || listener == nil {
+		return fmt.Errorf("HTTP server and listener are required")
+	}
+	if timeout <= 0 {
+		return fmt.Errorf("shutdown timeout must be positive")
+	}
+	serveErr := make(chan error, 1)
+	go func() {
+		serveErr <- server.Serve(listener)
+	}()
+
+	select {
+	case err := <-serveErr:
+		if errors.Is(err, http.ErrServerClosed) {
+			return nil
+		}
+		return err
+	case <-ctx.Done():
+	}
+
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+	shutdownErr := server.Shutdown(shutdownCtx)
+	if shutdownErr != nil {
+		closeErr := server.Close()
+		err := <-serveErr
+		if errors.Is(err, http.ErrServerClosed) {
+			err = nil
+		}
+		return errors.Join(shutdownErr, closeErr, err)
+	}
+	err := <-serveErr
+	if errors.Is(err, http.ErrServerClosed) {
+		return nil
+	}
+	return err
 }
 
 func flagWasSet(name string) bool {
