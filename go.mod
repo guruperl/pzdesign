@@ -35,3 +35,5 @@ require (
 )
 
 replace github.com/guruperl/aofei => ../aofei
+
+replace github.com/guruperl/genelet => ../genelet
