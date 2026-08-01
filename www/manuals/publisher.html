@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="W8M 媒体主中文使用手册">
+    <meta name="description" content="W8M 流量方（发布商）中文接入手册">
     <link rel="shortcut icon" href="../logo.png">
-    <title>媒体主使用手册｜W8M</title>
+    <title>流量方（发布商）接入手册｜W8M</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/w8m-manual.css?v=20260801-2" rel="stylesheet">
@@ -23,9 +23,9 @@
 
     <header class="manual-hero">
       <div class="container">
-        <p class="eyebrow">媒体接入</p>
-        <h1>媒体主使用手册</h1>
-        <p>面向通过 W8M 管理网站、App 和广告位，并使用网页广告码或 <code>POST /pz</code> 接口接入广告服务的媒体主。</p>
+        <p class="eyebrow">流量接入</p>
+        <h1>流量方（发布商）接入手册</h1>
+        <p>面向通过 W8M 管理网站、App 和广告位，并使用网页广告码或 <code>POST /pz</code> 接口接入广告服务的流量方（发布商）。</p>
       </div>
     </header>
 
@@ -35,7 +35,7 @@
           <aside class="col-lg-3">
             <nav class="toc" aria-label="手册目录">
               <strong>本页目录</strong>
-              <a href="#account">1. 账户与库存</a>
+              <a href="#account">1. 账户与流量资源</a>
               <a href="#site">2. 创建流量源</a>
               <a href="#slot">3. 创建广告位</a>
               <a href="#browser">4. 网页广告码</a>
@@ -44,16 +44,16 @@
               <a href="#measurement">7. 填充与报表</a>
               <a href="#errors">8. 错误排查</a>
               <a href="#checklist">9. 上线验收</a>
-              <a class="toc-action" href="/goto/web/g/pub?action=startnew">注册媒体主 →</a>
+              <a class="toc-action" href="/goto/web/g/pub?action=startnew">注册流量方 →</a>
             </nav>
           </aside>
 
           <article class="col-lg-9">
             <div class="manual-content">
               <section class="manual-section" id="account">
-                <h2>1. 账户与库存层级</h2>
-                <p>媒体主账户用于管理网站、App 和广告位。登录页面位于 <code>/goto/pub/g/...</code>。</p>
-                <div class="hierarchy">媒体主账户<br>└── 流量源 <span>（网站或 App）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── 广告位</div>
+                <h2>1. 账户与流量资源层级</h2>
+                <p>流量方账户用于管理网站、App 和广告位。登录页面位于 <code>/goto/pub/g/...</code>。</p>
+                <div class="hierarchy">流量方账户 <span>（发布商）</span><br>└── 流量源 <span>（网站或 App）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── 广告位</div>
                 <p>仪表盘可查看主要广告位、主要广告活动和近 24 小时数据。报表由后台日志和账务任务定时汇总，不是请求级实时数据。</p>
               </section>
 
@@ -63,7 +63,7 @@
                 <ul>
                   <li>流量源名称与类型：<code>Web</code> 或 <code>App</code>。</li>
                   <li>Bundle/Domain：网站填写域名，Android App 填包名，iOS App 填商店数字 ID。</li>
-                  <li>介绍网址、访问控制和启用状态。</li>
+                  <li>介绍网址、流量范围（白名单/黑名单）和启用状态。</li>
                 </ul>
                 <div class="notice"><strong>Web 来源校验：</strong>生产页面发送的 <code>Origin</code> 或 <code>Referer</code> 主机名必须与平台缓存中的站点主机名完全一致。不同子域名不会自动视为同一站点。</div>
                 <p>修改流量源后，如果生成的接入代码仍被拒绝或继续使用旧数据，请联系运营方刷新静态缓存；广告请求链路不会直接查询数据库。</p>
@@ -100,8 +100,8 @@ pzLoadAds({
                 <pre><code>pzLoadAds(payload, { endpoint: "https://w8m.com/pz" });</code></pre>
                 <h3>部署注意事项</h3>
                 <ul>
-                  <li><code>adUnits[].code</code> 是页面 DOM 元素 ID 和响应顺序标识，不是库存身份；同一请求内非空值必须唯一。</li>
-                  <li><code>site</code> 标识媒体主和流量源，<code>slot</code> 标识广告位与尺寸。</li>
+                  <li><code>adUnits[].code</code> 是页面 DOM 元素 ID 和响应顺序标识，不是流量资源身份；同一请求内非空值必须唯一。</li>
+                  <li><code>site</code> 标识流量方账户和流量源，<code>slot</code> 标识广告位与尺寸。</li>
                   <li>支持 <code>banner</code>、<code>video</code> 和 <code>native</code> 媒体类型。</li>
                   <li>浏览器请求必须携带有效来源，所有出现的来源主机都必须与缓存站点完全一致。</li>
                   <li><code>/pz</code> 跨域访问不携带凭据，不能依赖跨站 Cookie 一定可用。</li>
@@ -161,13 +161,13 @@ Content-Type: application/json</code></pre>
                   <li>SDK 请求完全不读取、设置或传递该 Cookie，应提供合规的设备或用户标识。</li>
                   <li>只有 CDN 或反向代理出口已由运营方加入受信列表时，服务才会采用 <code>X-Forwarded-For</code> 或 <code>X-Real-IP</code>。</li>
                 </ul>
-                <div class="notice">媒体主不应伪造代理请求头。如流量经过 CDN 或反向代理，请与运营方共同验证代理链路和真实客户端地址。</div>
+                <div class="notice">流量方不应伪造代理请求头。如流量经过 CDN 或反向代理，请与运营方共同验证代理链路和真实客户端地址。</div>
               </section>
 
               <section class="manual-section" id="measurement">
                 <h2>7. 填充、测量与报表</h2>
                 <p>通过 <code>/pz</code> 投放的本地素材复用平台的签名展示和点击测量。账务中的展示与花费以有效展示跟踪到达为基础，点击以有效点击跟踪到达为基础。</p>
-                <p>当平台启用外部竞价功能时，本地无填充可使用 Fallback 路由；只有独立 Always 开关同时启用时，外部竞价才可与本地广告竞争。这些选择对媒体主接入协议透明，无需修改 <code>ads.js</code> 或请求结构。</p>
+                <p>当平台启用外部 DSP / ADX 需求方竞价时，本地无填充可使用 Fallback 路由；只有独立 Always 开关同时启用时，外部竞价才可与本地广告竞争。这些选择对流量方接入协议透明，无需修改 <code>ads.js</code> 或请求结构。</p>
                 <p>报表由日志聚合与账务任务定时生成。持续缺失时，请向运营方提供时间范围、流量源、广告位和请求结果。</p>
               </section>
 
@@ -202,8 +202,8 @@ Content-Type: application/json</code></pre>
                   <li>与运营方确认缓存刷新、报表延迟和故障联系渠道。</li>
                 </ul>
                 <div class="manual-actions">
-                  <a class="btn btn-publisher" href="/goto/pub/g/site?action=topics">登录媒体主工作台</a>
-                  <a class="btn btn-soft" href="/goto/web/g/pub?action=startnew">注册媒体主</a>
+                  <a class="btn btn-publisher" href="/goto/pub/g/site?action=topics">登录流量方工作台</a>
+                  <a class="btn btn-soft" href="/goto/web/g/pub?action=startnew">注册流量方</a>
                   <a class="btn btn-soft" href="advertiser.html">查看广告主手册</a>
                 </div>
               </section>

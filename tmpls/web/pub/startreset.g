@@ -5,11 +5,11 @@
   <aside class="account-context">
     <div class="account-context-copy">
       <span class="account-role-mark"><i class="fa fa-lock" aria-hidden="true"></i></span>
-      <p class="account-eyebrow">媒体主账户</p>
+      <p class="account-eyebrow">流量方（发布商）账户</p>
       <h2>设置新密码</h2>
-      <p>请为媒体主账户设置新密码，并确保两次输入一致。</p>
+      <p>请为流量方账户设置新密码，并确保两次输入一致。</p>
     </div>
-    <div class="account-context-footer"><a href="/goto/pub/g/site?action=topics">返回媒体主登录</a></div>
+    <div class="account-context-footer"><a href="/goto/pub/g/site?action=topics">返回流量方登录</a></div>
   </aside>
   <section class="account-form-panel">
     <div class="account-form-heading">

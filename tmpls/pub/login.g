@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="W8M 媒体主工作台登录">
+  <meta name="description" content="W8M 流量方（发布商）工作台登录">
   <meta name="theme-color" content="#0b1f33">
-  <title>媒体主登录｜W8M</title>
+  <title>流量方登录｜W8M</title>
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href="/css/w8m-account.css?v=20260801-2" rel="stylesheet">
@@ -17,7 +17,7 @@
     <div class="container">
       <a class="account-brand" href="/">W8M <small>广告平台</small></a>
       <nav class="account-topnav" aria-label="账户页导航">
-        <a href="/manuals/publisher.html">媒体主手册</a>
+        <a href="/manuals/publisher.html">流量方接入手册</a>
         <a href="/goto/web/g/pub?action=startnew">注册账户</a>
         <a href="/">返回首页</a>
       </nav>
@@ -30,23 +30,23 @@
         <aside class="account-context">
           <div class="account-context-copy">
             <span class="account-role-mark"><i class="fa fa-globe" aria-hidden="true"></i></span>
-            <p class="account-eyebrow">媒体主后台</p>
-            <h2>广告库存管理</h2>
-            <p>进入工作台，管理网站、App、广告位、接入代码和媒体报表。</p>
+            <p class="account-eyebrow">流量方（发布商）后台</p>
+            <h2>流量接入管理</h2>
+            <p>进入工作台，管理网站、App、广告位、接入代码和流量报表。</p>
             <ul class="account-benefits">
               <li>维护网站、App 和来源主机</li>
               <li>生成网页广告码与 API 样例</li>
               <li>查看填充、展示、点击和收益</li>
             </ul>
           </div>
-          <div class="account-context-footer"><a href="/manuals/publisher.html">查看媒体主使用手册</a></div>
+          <div class="account-context-footer"><a href="/manuals/publisher.html">查看流量方接入手册</a></div>
         </aside>
 
         <section class="account-form-panel">
           <div class="account-form-heading">
             <span class="account-kicker">账户登录</span>
-            <h1>媒体主账户登录</h1>
-            <p>使用注册邮箱和密码进入媒体主工作台。</p>
+            <h1>流量方账户登录</h1>
+            <p>使用注册邮箱和密码进入流量方工作台。</p>
           </div>
 
           {{if .Errorstr}}<div class="account-alert"><i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -69,10 +69,10 @@
               <label for="pub-login-password">密码</label>
               <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input id="pub-login-password" class="form-control" name="{{ .Password }}" type="password" placeholder="输入密码" autocomplete="current-password" required></div>
             </div>
-            <button type="submit" class="account-submit">登录媒体主工作台</button>
+            <button type="submit" class="account-submit">登录流量方工作台</button>
             <div class="account-form-links">
               <a href="/goto/web/g/pub?action=startretrieve">忘记密码？</a>
-              <a href="/goto/web/g/pub?action=startnew">创建媒体主账户</a>
+              <a href="/goto/web/g/pub?action=startnew">创建流量方账户</a>
             </div>
           </form>
         </section>

@@ -5,8 +5,8 @@
   <aside class="account-context">
     <div class="account-context-copy">
       <span class="account-role-mark"><i class="fa fa-globe" aria-hidden="true"></i></span>
-      <p class="account-eyebrow">媒体主账户</p>
-      <h2>媒体主账户与接入流程</h2>
+      <p class="account-eyebrow">流量方（发布商）账户</p>
+      <h2>流量方账户与接入流程</h2>
       <p>创建账户后，登记流量源和广告位，再使用平台生成的网页代码或 API 请求接入。</p>
       <ul class="account-benefits">
         <li>网站 / App → 流量源 → 广告位</li>
@@ -15,14 +15,14 @@
       </ul>
     </div>
     <div class="account-context-footer">
-      <a href="/manuals/publisher.html">注册前阅读媒体主手册</a>
+      <a href="/manuals/publisher.html">注册前阅读流量方接入手册</a>
     </div>
   </aside>
 
   <section class="account-form-panel">
     <div class="account-form-heading">
       <span class="account-kicker">账户注册</span>
-      <h1>注册媒体主账户</h1>
+      <h1>注册流量方账户</h1>
       <p>提交后请根据邮件完成验证。账户启用和商务结算规则由平台运营方确认。</p>
     </div>
 
@@ -35,7 +35,7 @@
         </div>
         <div class="account-field">
           <label for="company">公司名称</label>
-          <div class="account-control"><i class="fa fa-building-o" aria-hidden="true"></i><input type="text" name="company" id="company" class="form-control" placeholder="公司或媒体名称" autocomplete="organization"></div>
+          <div class="account-control"><i class="fa fa-building-o" aria-hidden="true"></i><input type="text" name="company" id="company" class="form-control" placeholder="公司或发布商名称" autocomplete="organization"></div>
         </div>
         <div class="account-field account-field-wide">
           <label for="lastname">联系人姓名 <span>*</span></label>
@@ -59,8 +59,8 @@
       </div>
       <button type="submit" class="account-submit">提交注册申请</button>
       <div class="account-form-links">
-        <span>已有媒体主账户？</span>
-        <a href="/goto/pub/g/site?action=topics">登录媒体主工作台</a>
+        <span>已有流量方账户？</span>
+        <a href="/goto/pub/g/site?action=topics">登录流量方工作台</a>
       </div>
     </form>
   </section>

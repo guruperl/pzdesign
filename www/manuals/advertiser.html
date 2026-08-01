@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="W8M 广告主与 DSP 代理中文使用手册">
+    <meta name="description" content="W8M 广告主与代理商中文使用手册">
     <link rel="shortcut icon" href="../logo.png">
-    <title>广告主与 DSP 代理使用手册｜W8M</title>
+    <title>广告主与代理商使用手册｜W8M</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/w8m-manual.css?v=20260801-2" rel="stylesheet">
@@ -15,7 +15,7 @@
       <div class="container">
         <a class="navbar-brand" href="../">W8M <small>用户中心</small></a>
         <div class="navbar-nav flex-row ml-auto">
-          <a class="nav-link mr-3" href="publisher.html">媒体主手册</a>
+          <a class="nav-link mr-3" href="publisher.html">流量方接入手册</a>
           <a class="nav-link" href="/goto/adv/g/campaign?action=topics">登录</a>
         </div>
       </div>
@@ -24,8 +24,8 @@
     <header class="manual-hero">
       <div class="container">
         <p class="eyebrow">广告投放</p>
-        <h1>广告主与 DSP 代理使用手册</h1>
-        <p>面向通过 W8M 投放广告的广告主，以及受托查看或审核广告主、广告活动和投放项目的 DSP 代理。</p>
+        <h1>广告主与代理商使用手册</h1>
+        <p>面向通过 W8M 投放广告的广告主，以及受托查看或审核广告主、广告活动和广告组的代理商。</p>
       </div>
     </header>
 
@@ -39,7 +39,7 @@
               <a href="#structure">2. 投放对象层级</a>
               <a href="#workflow">3. 推荐投放流程</a>
               <a href="#measurement">4. 报表与计量</a>
-              <a href="#middleman">5. 外部 DSP / AdX 中间商竞价</a>
+              <a href="#middleman">5. 外部 DSP / ADX 需求方接入与竞价</a>
               <a href="#faq">6. 常见问题</a>
               <a href="#checklist">7. 上线检查</a>
               <a class="toc-action" href="/goto/web/g/adv?action=startnew">注册广告主 →</a>
@@ -50,40 +50,40 @@
             <div class="manual-content">
               <section class="manual-section" id="account">
                 <h2>1. 账户与职责</h2>
-                <p>平台地址、账户开通、商务规则和生产凭据由运营方另行提供。广告主页面位于 <code>/goto/adv/g/...</code>，DSP 代理页面位于 <code>/goto/agent/g/...</code>。</p>
+                <p>平台地址、账户开通、商务规则和生产凭据由运营方另行提供。广告主页面位于 <code>/goto/adv/g/...</code>，代理商页面位于 <code>/goto/agent/g/...</code>。</p>
                 <div class="table-scroll">
                   <table class="role-table">
                     <thead><tr><th>角色</th><th>主要职责</th></tr></thead>
                     <tbody>
-                      <tr><td>广告主（<code>adv</code>）</td><td>维护自己的账户、广告活动、投放项目、素材、定向、预算、付款记录和竞价端点。</td></tr>
-                      <tr><td>DSP 代理（<code>agent</code>）</td><td>受托查看广告主、广告活动和投放项目，并执行被授权的审核流程。</td></tr>
-                      <tr><td>管理员（<code>admin</code>）</td><td>管理账户状态、竞价端点凭据与启用、中间商路由、流量分配和结算视图。</td></tr>
+                      <tr><td>广告主（<code>adv</code>）</td><td>维护自己的账户、广告活动、广告组、广告素材、定向、预算、付款记录和竞价端点。</td></tr>
+                      <tr><td>代理商（<code>agent</code>）</td><td>受托查看广告主、广告活动和广告组，并执行被授权的审核流程。</td></tr>
+                      <tr><td>平台运营人员（<code>admin</code>）</td><td>管理账户状态、竞价端点凭据与启用、外部需求方路由、流量分配和结算视图。</td></tr>
                     </tbody>
                   </table>
                 </div>
-                <div class="notice"><strong>注意：</strong>代理角色不是另一个广告主账户，也不会自动获得广告主的全部编辑权限。审批、凭据、路由或生产启用需要管理员处理。</div>
+                <div class="notice"><strong>注意：</strong>代理商账户不是另一个广告主账户，也不会自动获得广告主的全部编辑权限。审批、凭据、路由或生产启用需要平台运营人员处理。</div>
                 <p>如果现有密码无法登录，请使用登录页的“忘记密码”功能，或联系平台运营方确认账户状态。</p>
               </section>
 
               <section class="manual-section" id="structure">
                 <h2>2. 投放对象层级</h2>
-                <div class="hierarchy">广告主账户<br>└── 广告活动 <span>（Campaign）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── 投放项目 <span>（Item）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 素材 <span>（Creative）</span></div>
+                <div class="hierarchy">广告主账户<br>└── 广告活动 <span>（Campaign）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── 广告组 <span>（Ad Group，系统内部对象名为 Item）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── 广告素材 <span>（Creative）</span></div>
                 <ul>
-                  <li><strong>广告活动</strong>定义名称、投放时间、访问控制、活动级预算和启用状态。</li>
-                  <li><strong>投放项目</strong>定义价格、计费方式、落地页、频次控制、项目级预算和定向条件。</li>
-                  <li><strong>素材</strong>定义尺寸、媒体类型、内容、权重和启用状态。</li>
+                  <li><strong>广告活动</strong>定义名称、投放时间、流量范围、活动级预算和启用状态。</li>
+                  <li><strong>广告组</strong>定义价格、计费方式、落地页、频次控制、广告组预算和定向条件。</li>
+                  <li><strong>广告素材</strong>定义尺寸、媒体类型、内容、权重和启用状态。</li>
                 </ul>
-                <p>一次请求只有在账户、活动、项目、素材、时间、预算、尺寸、定向和供应侧规则都允许时，才可能参与竞价。只启用最下层素材，不能绕过上层状态或规则。</p>
+                <p>一次请求只有在账户、广告活动、广告组、广告素材、时间、预算、尺寸、定向和供应侧规则都允许时，才可能参与竞价。只启用最下层广告素材，不能绕过上层状态或规则。</p>
               </section>
 
               <section class="manual-section" id="workflow">
                 <h2>3. 推荐投放流程</h2>
                 <div class="steps">
                   <div class="step"><span class="step-number">1</span><div><h3>检查账户资料</h3><p>核对账户名称、联系人、地址和密码。余额、付款及账户启用状态以平台运营规则为准；页面显示“已保存”不代表已经具备生产投放资格。</p></div></div>
-                  <div class="step"><span class="step-number">2</span><div><h3>创建广告活动</h3><p>填写活动名称、起止时间、访问控制、总预算、每日预算和状态。建议先保存为未启用，完成项目、素材与定向检查后再启用。</p></div></div>
-                  <div class="step"><span class="step-number">3</span><div><h3>创建投放项目</h3><p>设置计费方式、价格、落地页、起止时间、预算、展示/点击频次，以及语言、设备、地域、媒体、行业和其他定向规则。</p></div></div>
-                  <div class="step"><span class="step-number">4</span><div><h3>添加并测试素材</h3><p>填写素材名称、尺寸、媒体类型、内容、权重和状态。素材尺寸必须与目标广告位一致，并在测试环境检查展示和最终点击跳转。</p></div></div>
-                  <div class="step"><span class="step-number">5</span><div><h3>逐步配置定向</h3><p>建议先用较宽规则完成小流量验证，再逐项收紧。无投放时按“状态与时间 → 预算 → 尺寸 → 供应访问控制 → 人群定向”排查。</p></div></div>
+                  <div class="step"><span class="step-number">2</span><div><h3>创建广告活动</h3><p>填写活动名称、起止时间、流量范围、总预算、每日预算和状态。建议先保存为未启用，完成广告组、广告素材与定向检查后再启用。</p></div></div>
+                  <div class="step"><span class="step-number">3</span><div><h3>创建广告组</h3><p>设置计费方式、价格、落地页、起止时间、预算、展示/点击频次，以及语言、设备、地域、流量方、行业和其他定向规则。</p></div></div>
+                  <div class="step"><span class="step-number">4</span><div><h3>添加并测试广告素材</h3><p>填写素材名称、尺寸、媒体类型、内容、权重和状态。素材尺寸必须与目标广告位一致，并在测试环境检查展示和最终点击跳转。</p></div></div>
+                  <div class="step"><span class="step-number">5</span><div><h3>逐步配置定向</h3><p>建议先用较宽规则完成小流量验证，再逐项收紧。无投放时按“状态与时间 → 预算 → 尺寸 → 供应侧流量范围 → 人群定向”排查。</p></div></div>
                 </div>
 
                 <h3>价格、币种与频次</h3>
@@ -93,7 +93,7 @@
                   <li>缺少稳定身份时，跨请求频控效果会受到限制。</li>
                 </ul>
 
-                <h3>素材跟踪规则</h3>
+                <h3>广告素材跟踪规则</h3>
                 <ul>
                   <li>原生和原生视频素材带 DSP 展示跟踪，并以 DSP 点击跳转地址作为主链接。</li>
                   <li>Banner iframe 带展示像素；需要 DSP 点击测量时，内容 URL 或模板必须显式使用 <code>{CLICK_URL}</code>。</li>
@@ -107,7 +107,7 @@
                   <li>人群：性别、年龄/出生年份区间和语言。</li>
                   <li>设备：操作系统、版本、浏览器/平台和设备类型。</li>
                   <li>时间：日期、小时、星期和时区。</li>
-                  <li>供应与内容：媒体、站点/App、广告位、行业及访问控制。</li>
+                  <li>供应与内容：流量方、网站/App、广告位、行业及流量范围。</li>
                   <li>上传人群：广告主上传的用户或设备标识集合。</li>
                 </ul>
                 <div class="notice"><strong>上传人群：</strong>配置多个上传标识类型时，请求必须同时包含并命中每个已配置类型。上传人群命中具有优先层级，配置时应避免意外排除其他候选。</div>
@@ -115,7 +115,7 @@
 
               <section class="manual-section" id="measurement">
                 <h2>4. 报表与计量口径</h2>
-                <p>广告主仪表盘和报表可查看近 24 小时数据、主要投放项目和主要广告位。数据由日志聚合与账务定时任务生成，并非请求级实时数据。</p>
+                <p>广告主仪表盘和报表可查看近 24 小时数据、主要广告组和主要广告位。数据由日志聚合与账务定时任务生成，并非请求级实时数据。</p>
                 <div class="table-scroll">
                   <table class="manual-table">
                     <thead><tr><th>指标</th><th>当前口径</th></tr></thead>
@@ -131,7 +131,7 @@
               </section>
 
               <section class="manual-section" id="middleman">
-                <h2>5. 外部 DSP / AdX 中间商竞价</h2>
+                <h2>5. 外部 DSP / ADX 需求方接入与竞价</h2>
                 <p>经营外部 DSP 的广告主可在“竞价端点”维护端点名称、HTTP/HTTPS URL、OpenRTB 版本、Seat 和超时时间：</p>
                 <pre><code>/goto/adv/g/bidder?action=topics</code></pre>
                 <p>端点身份凭据、审批与启用、流量范围、路由、加价和报表归属由平台运营方管理。请通过约定的安全渠道提供密钥，不要将密钥写入端点名称、URL 或其他普通表单字段。</p>
@@ -145,15 +145,15 @@
                   <li>迟到、非法、低于底价或非 USD 的响应会被丢弃。</li>
                   <li>平台保留下游广告代码，但用平台签名的 <code>/mid/*</code> 地址代理 win、loss 和 bill 回调。</li>
                   <li><code>burl</code> 优先作为可计费事件；没有 <code>burl</code> 时，win 才是回退。</li>
-                  <li>端点接入不代表无条件获得全部流量，仍需满足运营方配置的媒体、流量源和广告位范围。</li>
+                  <li>端点接入不代表无条件获得全部流量，仍需满足运营方配置的流量方、流量源和广告位范围。</li>
                 </ul>
                 <div class="notice">新增或修改端点后，请等待运营方完成审批、身份凭据和流量路由配置，再进行流量测试。</div>
               </section>
 
               <section class="manual-section" id="faq">
                 <h2>6. 常见问题</h2>
-                <h3>有素材但没有竞价</h3>
-                <p>检查上层对象是否启用、时间和预算是否有效、尺寸是否匹配、底价币种是否为 USD，以及定向、行业和媒体访问控制是否过窄。</p>
+                <h3>有广告素材但没有竞价</h3>
+                <p>检查上层对象是否启用、时间和预算是否有效、尺寸是否匹配、竞价底价币种是否为 USD，以及定向、行业和供应侧流量范围是否过窄。</p>
                 <h3>有 win 但报表没有展示或花费</h3>
                 <p>当前账务以展示跟踪为准。检查素材中的展示像素是否被客户端加载，并确认报表处理时间已覆盖对应测试时段。</p>
                 <h3>Banner 有展示但没有点击</h3>
@@ -165,19 +165,19 @@
               <section class="manual-section" id="checklist">
                 <h2>7. 上线检查清单</h2>
                 <ul class="checklist">
-                  <li>广告主、活动、项目和至少一个素材均处于可投放状态。</li>
-                  <li>当前时间位于活动和项目的投放区间。</li>
+                  <li>广告主、广告活动、广告组和至少一个广告素材均处于可投放状态。</li>
+                  <li>当前时间位于广告活动和广告组的投放区间。</li>
                   <li>总预算和每日预算未耗尽。</li>
                   <li>素材尺寸与目标广告位一致。</li>
                   <li>落地页与第三方监测地址可从公网访问。</li>
                   <li>Banner 需要点击测量时已使用 <code>{CLICK_URL}</code>。</li>
-                  <li>价格与底价使用兼容币种，定向和访问控制没有互相排斥。</li>
+                  <li>价格与竞价底价使用兼容币种，定向和流量范围没有互相排斥。</li>
                   <li>运营方已确认修改进入运行缓存。</li>
                 </ul>
                 <div class="manual-actions">
                   <a class="btn btn-advertiser" href="/goto/adv/g/campaign?action=topics">登录广告主工作台</a>
                   <a class="btn btn-soft" href="/goto/web/g/adv?action=startnew">注册广告主</a>
-                  <a class="btn btn-soft" href="publisher.html">查看媒体主手册</a>
+                  <a class="btn btn-soft" href="publisher.html">查看流量方接入手册</a>
                 </div>
               </section>
             </div>

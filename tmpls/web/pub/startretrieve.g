@@ -5,17 +5,17 @@
   <aside class="account-context">
     <div class="account-context-copy">
       <span class="account-role-mark"><i class="fa fa-key" aria-hidden="true"></i></span>
-      <p class="account-eyebrow">媒体主账户</p>
+      <p class="account-eyebrow">流量方（发布商）账户</p>
       <h2>密码重置</h2>
       <p>输入注册邮箱后，我们会向已注册账户发送密码重置链接。</p>
     </div>
-    <div class="account-context-footer"><a href="/goto/pub/g/site?action=topics">返回媒体主登录</a></div>
+    <div class="account-context-footer"><a href="/goto/pub/g/site?action=topics">返回流量方登录</a></div>
   </aside>
   <section class="account-form-panel">
     <div class="account-form-heading">
       <span class="account-kicker">账户帮助</span>
-      <h1>媒体主账户密码重置</h1>
-      <p>请输入注册媒体主账户时使用的邮箱。</p>
+      <h1>流量方账户密码重置</h1>
+      <p>请输入注册流量方账户时使用的邮箱。</p>
     </div>
     <form id="pubRetrieve" action="pub" method="post">
       <input type="hidden" name="action" value="retrieve">

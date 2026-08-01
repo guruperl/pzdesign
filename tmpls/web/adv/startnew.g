@@ -7,9 +7,9 @@
       <span class="account-role-mark"><i class="fa fa-bullseye" aria-hidden="true"></i></span>
       <p class="account-eyebrow">广告主账户</p>
       <h2>广告主账户与投放流程</h2>
-      <p>创建账户后，按活动、投放项目和素材的层级组织预算、定向与创意。</p>
+      <p>创建账户后，按广告活动、广告组和广告素材的层级组织预算、定向与创意。</p>
       <ul class="account-benefits">
-        <li>广告活动 → 投放项目 → 素材</li>
+        <li>广告活动 → 广告组 → 广告素材</li>
         <li>预算、频次与多维定向管理</li>
         <li>签名展示、点击与花费报表</li>
       </ul>

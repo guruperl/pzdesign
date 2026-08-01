@@ -32,7 +32,7 @@
             <span class="account-role-mark"><i class="fa fa-bullseye" aria-hidden="true"></i></span>
             <p class="account-eyebrow">广告主后台</p>
             <h2>广告投放管理</h2>
-            <p>进入工作台，管理广告活动、投放项目、素材、定向和效果报表。</p>
+            <p>进入工作台，管理广告活动、广告组、广告素材、定向和效果报表。</p>
             <ul class="account-benefits">
               <li>检查预算、状态和投放周期</li>
               <li>配置素材、频次和多维定向</li>

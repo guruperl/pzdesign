@@ -30,7 +30,7 @@
             <span class="account-role-mark"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
             <p class="account-eyebrow">授权账户</p>
             <h2>代理审核与查看</h2>
-            <p>此入口用于受托查看广告主、广告活动和投放项目，并完成被授权的审核工作。</p>
+            <p>此入口用于受托查看广告主、广告活动和广告组，并完成被授权的审核工作。</p>
           </div>
         </aside>
 

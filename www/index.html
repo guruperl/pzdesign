@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="W8M 为广告主提供广告投放与效果管理，为媒体主提供网站、App 和广告位接入服务。">
+    <meta name="description" content="W8M 为广告主提供广告投放与效果管理，为流量方（发布商）提供网站、App 和广告位接入服务。">
     <meta name="author" content="W8M">
     <meta name="theme-color" content="#102a43">
     <link rel="shortcut icon" href="logo.png">
 
-    <title>W8M 广告投放与媒体接入平台</title>
+    <title>W8M 广告投放与流量接入平台</title>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -42,8 +42,8 @@
         <div class="row align-items-center">
           <div class="col-lg-8">
             <p class="eyebrow">平台服务</p>
-            <h1>W8M 广告投放与媒体接入平台</h1>
-            <p class="hero-lead">W8M 为广告主提供从活动、素材、定向到报表的完整投放流程，也为媒体主提供网站、App、网页广告码与 API 接入能力。</p>
+            <h1>W8M 广告投放与流量接入平台</h1>
+            <p class="hero-lead">W8M 为广告主提供从广告活动、广告组、广告素材、定向到报表的完整投放流程，也为流量方（发布商）提供网站、App、网页广告码与 API 接入能力。</p>
             <div class="hero-actions">
               <a class="btn btn-primary btn-lg" href="#advertiser-guide" data-role-tab="advertiser">我要投放广告</a>
               <a class="btn btn-light btn-lg" href="#publisher-guide" data-role-tab="publisher">我要接入流量</a>
@@ -54,11 +54,11 @@
               <span class="hero-panel-label">账户类型</span>
               <div class="hero-panel-row">
                 <i class="fa fa-bullseye" aria-hidden="true"></i>
-                <div><strong>广告主</strong><small>创建活动、配置定向、管理素材</small></div>
+                <div><strong>广告主</strong><small>创建广告活动和广告组、配置定向、管理素材</small></div>
               </div>
               <div class="hero-panel-row">
                 <i class="fa fa-code" aria-hidden="true"></i>
-                <div><strong>媒体主</strong><small>管理库存、部署广告码、查看收益</small></div>
+                <div><strong>流量方</strong><small>管理流量源和广告位、部署广告码、查看报表</small></div>
               </div>
             </div>
           </div>
@@ -69,7 +69,7 @@
     <section class="signal-strip" aria-label="平台特性">
       <div class="container">
         <div class="row text-center">
-          <div class="col-md-4 signal-item"><i class="fa fa-crosshairs" aria-hidden="true"></i><span>多维定向与访问控制</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-crosshairs" aria-hidden="true"></i><span>多维定向与流量范围控制</span></div>
           <div class="col-md-4 signal-item"><i class="fa fa-shield" aria-hidden="true"></i><span>签名展示与点击测量</span></div>
           <div class="col-md-4 signal-item"><i class="fa fa-exchange" aria-hidden="true"></i><span>网页、SDK 与 OpenRTB 接入</span></div>
         </div>
@@ -81,19 +81,19 @@
         <div class="container">
           <div class="section-intro text-center">
             <p class="eyebrow eyebrow-dark">账户类型</p>
-            <h2>选择适合你的账户类型</h2>
-            <p>广告主用于管理广告投放，媒体主用于管理网站、App 和广告位接入。</p>
+            <h2>选择账户类型</h2>
+            <p>广告主用于管理广告投放，流量方（发布商）用于管理网站、App 和广告位接入。</p>
           </div>
 
           <ul class="nav nav-pills role-tabs justify-content-center" id="roleTabs" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="advertiser-tab" data-toggle="pill" href="#advertiser-guide" role="tab" aria-controls="advertiser-guide" aria-selected="true">
-                <i class="fa fa-bullseye" aria-hidden="true"></i> 广告主 / DSP 代理
+                <i class="fa fa-bullseye" aria-hidden="true"></i> 广告主 / 代理商
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="publisher-tab" data-toggle="pill" href="#publisher-guide" role="tab" aria-controls="publisher-guide" aria-selected="false">
-                <i class="fa fa-globe" aria-hidden="true"></i> 媒体主
+                <i class="fa fa-globe" aria-hidden="true"></i> 流量方（发布商）
               </a>
             </li>
           </ul>
@@ -104,15 +104,15 @@
                 <div>
                   <span class="role-kicker">广告主</span>
                   <h3>广告主使用流程</h3>
-                  <p>先完善活动结构，再逐步收紧预算、定向与供应规则。保存不等于已经上线，启用前请完成全链路检查。</p>
+                  <p>先完善广告活动和广告组，再逐步收紧预算、定向与供应侧规则。保存不等于已经上线，启用前请完成全链路检查。</p>
                 </div>
                 <span class="role-badge">ADV</span>
               </div>
 
               <div class="journey-grid">
-                <article class="journey-step"><span>01</span><i class="fa fa-folder-open-o" aria-hidden="true"></i><h4>创建广告活动</h4><p>设置投放周期、总预算、每日预算和访问控制。</p></article>
-                <article class="journey-step"><span>02</span><i class="fa fa-sliders" aria-hidden="true"></i><h4>配置投放项目</h4><p>确定价格、落地页、频次、设备、地域和人群定向。</p></article>
-                <article class="journey-step"><span>03</span><i class="fa fa-picture-o" aria-hidden="true"></i><h4>添加并测试素材</h4><p>核对尺寸、媒体类型、展示像素与点击跳转。</p></article>
+                <article class="journey-step"><span>01</span><i class="fa fa-folder-open-o" aria-hidden="true"></i><h4>创建广告活动</h4><p>设置投放周期、总预算、每日预算和流量范围。</p></article>
+                <article class="journey-step"><span>02</span><i class="fa fa-sliders" aria-hidden="true"></i><h4>配置广告组</h4><p>确定价格、落地页、频次、设备、地域和人群定向。</p></article>
+                <article class="journey-step"><span>03</span><i class="fa fa-picture-o" aria-hidden="true"></i><h4>添加并测试广告素材</h4><p>核对尺寸、媒体类型、展示像素与点击跳转。</p></article>
                 <article class="journey-step"><span>04</span><i class="fa fa-line-chart" aria-hidden="true"></i><h4>上线并查看报表</h4><p>确认状态与缓存生效，再观察展示、点击和花费。</p></article>
               </div>
 
@@ -120,7 +120,7 @@
                 <div class="col-lg-7">
                   <h4>上线前重点检查</h4>
                   <ul class="check-list">
-                    <li>账户、活动、项目和至少一个素材均可投放</li>
+                    <li>账户、广告活动、广告组和至少一个广告素材均可投放</li>
                     <li>预算、时间、素材尺寸与目标广告位一致</li>
                     <li>Banner 需要点击测量时正确使用 <code>{CLICK_URL}</code></li>
                   </ul>
@@ -136,9 +136,9 @@
             <div class="tab-pane fade" id="publisher-guide" role="tabpanel" aria-labelledby="publisher-tab">
               <div class="role-heading publisher-heading">
                 <div>
-                  <span class="role-kicker">媒体主</span>
-                  <h3>媒体主接入流程</h3>
-                  <p>库存属于媒体主账户。使用系统生成的站点与广告位令牌接入，不要自行修改令牌或用请求宽高覆盖平台配置。</p>
+                  <span class="role-kicker">流量方（发布商）</span>
+                  <h3>流量方接入流程</h3>
+                  <p>网站、App 和广告位属于流量方账户。请使用系统生成的流量源与广告位令牌接入，不要自行修改令牌或用请求宽高覆盖平台配置。</p>
                 </div>
                 <span class="role-badge publisher-badge">PUB</span>
               </div>
@@ -160,8 +160,8 @@
                   </ul>
                 </div>
                 <div class="col-lg-5 role-actions">
-                  <a class="btn btn-publisher" href="/goto/web/g/pub?action=startnew">注册媒体主</a>
-                  <a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">媒体主登录</a>
+                  <a class="btn btn-publisher" href="/goto/web/g/pub?action=startnew">注册流量方</a>
+                  <a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">流量方登录</a>
                   <a class="manual-link publisher-link" href="manuals/publisher.html">阅读完整中文手册 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </div>
               </div>
@@ -181,7 +181,7 @@
             <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-crosshairs" aria-hidden="true"></i><h3>多维定向</h3><p>按地域、人群、设备、时间、媒体、行业和上传人群组织投放条件。</p></article></div>
             <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-cubes" aria-hidden="true"></i><h3>多形态素材</h3><p>支持 Banner、视频与原生广告，并按广告位尺寸和媒体要求完成匹配。</p></article></div>
             <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-check-circle-o" aria-hidden="true"></i><h3>签名测量</h3><p>展示和点击地址使用签名验证，并提供尽力而为的重复事件抑制。</p></article></div>
-            <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-random" aria-hidden="true"></i><h3>灵活接入</h3><p>媒体可使用网页广告码或 SDK/API；外部 DSP 可通过审核后的 OpenRTB 端点参与。</p></article></div>
+            <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-random" aria-hidden="true"></i><h3>灵活接入</h3><p>流量方可使用网页广告码或 SDK/API；外部 DSP/ADX 需求方可通过审核后的 OpenRTB 端点参与竞价。</p></article></div>
           </div>
         </div>
       </section>
@@ -197,17 +197,17 @@
             <div class="col-lg-5 mb-4">
               <article class="entry-card advertiser-entry">
                 <i class="fa fa-bullseye" aria-hidden="true"></i>
-                <h3>广告主 / DSP 代理</h3>
-                <p>管理活动、项目、素材、定向、竞价端点与投放报表。</p>
-                <div class="entry-links"><a href="/goto/adv/g/campaign?action=topics">登录广告主工作台</a><a href="manuals/advertiser.html">查看使用手册</a></div>
+                <h3>广告主 / 代理商</h3>
+                <p>管理广告活动、广告组、广告素材、定向、竞价端点与投放报表。</p>
+                <div class="entry-links"><a href="/goto/adv/g/campaign?action=topics">登录广告主工作台</a><a href="/goto/agent/g/adv?action=topics">登录代理商后台</a><a href="manuals/advertiser.html">查看使用手册</a></div>
               </article>
             </div>
             <div class="col-lg-5 mb-4">
               <article class="entry-card publisher-entry">
                 <i class="fa fa-globe" aria-hidden="true"></i>
-                <h3>媒体主</h3>
+                <h3>流量方（发布商）</h3>
                 <p>管理网站、App、广告位、接入代码与近 24 小时报表。</p>
-                <div class="entry-links"><a href="/goto/pub/g/site?action=topics">登录媒体主工作台</a><a href="manuals/publisher.html">查看使用手册</a></div>
+                <div class="entry-links"><a href="/goto/pub/g/site?action=topics">登录流量方工作台</a><a href="manuals/publisher.html">查看使用手册</a></div>
               </article>
             </div>
           </div>
@@ -222,8 +222,8 @@
           </div>
           <div class="faq-list">
             <details><summary>页面显示“已保存”，为什么投放或广告位行为还没有变化？</summary><p>运行请求读取缓存而不是直接查询数据库。请先确认对象状态正确，再联系运营方检查缓存是否已经刷新到运行节点。</p></details>
-            <details><summary>广告主已经有素材，为什么仍然没有竞价？</summary><p>依次检查账户与上层对象状态、投放时间、预算、素材尺寸、USD 底价、供应访问控制和人群定向。只启用素材不足以绕过上层规则。</p></details>
-            <details><summary>媒体请求返回 200，但广告内容为空，是否表示故障？</summary><p>不一定。合法请求在没有合适广告时也会返回 200，空字符串或未填充对象属于正常 no-fill，客户端应隐藏或回收对应容器。</p></details>
+            <details><summary>广告主已经有广告素材，为什么仍然没有竞价？</summary><p>依次检查账户与上层对象状态、投放时间、预算、素材尺寸、USD 竞价底价、供应侧流量范围和人群定向。只启用广告素材不足以绕过上层规则。</p></details>
+            <details><summary>流量方请求返回 200，但广告内容为空，是否表示故障？</summary><p>不一定。合法请求在没有合适广告时也会返回 200，空字符串或未填充对象属于正常 no-fill，客户端应隐藏或回收对应容器。</p></details>
             <details><summary>报表为什么不是即时更新？</summary><p>展示、点击和账务数据由日志聚合与定时任务生成，因此会有处理延迟。上线验收时请同时记录测试时间、账户、活动或广告位信息。</p></details>
           </div>
         </div>
@@ -242,7 +242,7 @@
     <footer class="site-footer">
       <div class="container d-md-flex justify-content-between align-items-center">
         <p>&copy; 2026 W8M 网络有限公司</p>
-        <nav aria-label="页脚导航"><a href="manuals/advertiser.html">广告主手册</a><a href="manuals/publisher.html">媒体主手册</a><a href="#page-top">返回顶部</a></nav>
+        <nav aria-label="页脚导航"><a href="manuals/advertiser.html">广告主与代理商手册</a><a href="manuals/publisher.html">流量方接入手册</a><a href="#page-top">返回顶部</a></nav>
       </div>
     </footer>
 

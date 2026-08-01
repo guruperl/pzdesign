@@ -123,7 +123,7 @@ func (self *Filter) After(model *Model) error {
 		ARGS.Set("serverUrl", self.C.ServerURL)
 		other["_gmail"] = map[string]interface{}{
 			"To":      email,
-			"Subject": "W8M 媒体主账户邮箱验证",
+			"Subject": "W8M 流量方账户邮箱验证",
 			"file":    self.C.Template + "/" + who + "/pub/insert.mail." + self.ChartagValue}
 	} else if who == "web" && action == "retrieve" && len(lists) > 0 {
 		item := lists[0]
@@ -134,7 +134,7 @@ func (self *Filter) After(model *Model) error {
 		ARGS.Set("serverUrl", self.C.ServerURL)
 		other["_gmail"] = map[string]interface{}{
 			"To":      email,
-			"Subject": "W8M 媒体主账户密码重置",
+			"Subject": "W8M 流量方账户密码重置",
 			"file":    self.C.Template + "/" + who + "/pub/retrieve.mail." + self.ChartagValue}
 	}
 
