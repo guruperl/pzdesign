@@ -34,7 +34,7 @@
 <td>Street, City, State:</td>
 <td><input type=text name=street value="{{if $item.street}}{{$item.street}}{{end}}" size=10 />
 <input type=text name=city value="{{if $item.city}}{{$item.city}}{{end}}" size=10 />
-<input type=text name=state_id "{{if $item.state_id}}{{$item.state_id}}{{end}}" size=10 /></td>
+<input type=text name=state_id value="{{if $item.state_id}}{{$item.state_id}}{{end}}" size=10 /></td>
 </tr>
 <tr>
 <td colspan=2><input  class="btn btn-primary" type=submit value="Update" /></td>

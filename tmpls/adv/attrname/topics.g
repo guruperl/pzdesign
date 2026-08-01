@@ -18,7 +18,7 @@
 <div class="form-group row">
     <label for="inputContent" class="col-sm-1 col-form-label">文件类别</label>  
     <div class="col-sm-2">
-        <select class=form-control" size=1 name=marker>
+        <select class="form-control" size=1 name=marker>
             <option value="buyerid">Buyer ID</option>
             <option value="userid">User ID</option>
             <option value="ip">IP</option>
