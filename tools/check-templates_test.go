@@ -105,7 +105,43 @@ func TestAdvertiserWorkspaceShell(t *testing.T) {
 	}
 }
 
+func TestPublisherWorkspaceShell(t *testing.T) {
+	args := url.Values{}
+	args.Set("p_email", "publisher@example.test")
+	rendered := renderRoleTemplate(
+		t,
+		filepath.Join("..", "tmpls", "pub", "site", "topics.g"),
+		"site",
+		nil,
+		args,
+	)
+	for _, want := range []string{
+		`href="/css/w8m-workspace.css?v=20260801-3"`,
+		`w8m-workspace theme-publisher`,
+		`<span class="navbar-brand">W8M <small>流量方工作台</small></span>`,
+		`class="nav-link workspace-account-menu"`,
+		`<span>账户</span>`,
+	} {
+		if !strings.Contains(rendered, want) {
+			t.Errorf("rendered publisher workspace does not contain %q", want)
+		}
+	}
+	for _, unwanted := range []string{`/img/O.png`, `img-avatar`} {
+		if strings.Contains(rendered, unwanted) {
+			t.Errorf("rendered publisher workspace still contains %q", unwanted)
+		}
+	}
+}
+
 func renderAdvertiserTemplate(t *testing.T, action, component string, lists []map[string]interface{}) string {
+	t.Helper()
+	args := url.Values{}
+	args.Set("a_company", "测试广告主")
+	args.Set("a_email", "adv@example.test")
+	return renderRoleTemplate(t, action, component, lists, args)
+}
+
+func renderRoleTemplate(t *testing.T, action, component string, lists []map[string]interface{}, args url.Values) string {
 	t.Helper()
 	ext := filepath.Ext(action)
 	files, err := roleFiles(filepath.Join("..", "tmpls"), action, ext)
@@ -117,9 +153,6 @@ func renderAdvertiserTemplate(t *testing.T, action, component string, lists []ma
 		t.Fatal(err)
 	}
 
-	args := url.Values{}
-	args.Set("a_company", "测试广告主")
-	args.Set("a_email", "adv@example.test")
 	page := &genelet.Tmpl{
 		Lists: lists,
 		ARGS:  args,

@@ -23,15 +23,16 @@
   <link href="/1.0.8/vendors/css/daterangepicker.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/gauge.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/toastr.min.css" rel="stylesheet">
+  <link href="/css/w8m-workspace.css?v=20260801-3" rel="stylesheet">
 
 </head>
 
-<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden w8m-workspace theme-publisher">
   <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#"></a>
+    <span class="navbar-brand">W8M <small>Publisher Workspace</small></span>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -45,8 +46,8 @@
         <i class="icon-bell"></i>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <img src="/img/O.png" class="img-avatar" alt="avatar">
+        <a class="nav-link workspace-account-menu" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <span>Account</span><i class="fa fa-angle-down" aria-hidden="true"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-header text-center">
