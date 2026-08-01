@@ -23,7 +23,7 @@
   <link href="/1.0.8/vendors/css/daterangepicker.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/gauge.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/toastr.min.css" rel="stylesheet">
-  <link href="/css/w8m-workspace.css?v=20260801-3" rel="stylesheet">
+  <link href="/css/w8m-workspace.css?v=20260801-4" rel="stylesheet">
 
 </head>
 

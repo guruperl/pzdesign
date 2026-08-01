@@ -92,7 +92,7 @@ func TestAdvertiserWorkspaceShell(t *testing.T) {
 		nil,
 	)
 	for _, want := range []string{
-		`href="/css/w8m-workspace.css?v=20260801-2"`,
+		`href="/css/w8m-workspace.css?v=20260801-4"`,
 		`<body class="w8m-workspace theme-advertiser">`,
 		`<span class="navbar-brand">W8M 广告主工作台</span>`,
 	} {
@@ -116,7 +116,7 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 		args,
 	)
 	for _, want := range []string{
-		`href="/css/w8m-workspace.css?v=20260801-3"`,
+		`href="/css/w8m-workspace.css?v=20260801-4"`,
 		`w8m-workspace theme-publisher`,
 		`<span class="navbar-brand">W8M <small>流量方工作台</small></span>`,
 		`class="navbar-toggler mobile-sidebar-toggler d-lg-none"`,
@@ -136,6 +136,75 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 		if strings.Contains(rendered, unwanted) {
 			t.Errorf("rendered publisher workspace still contains %q", unwanted)
 		}
+	}
+}
+
+func TestRegistrationRoleThemes(t *testing.T) {
+	tests := []struct {
+		role  string
+		theme string
+	}{
+		{role: "adv", theme: "theme-advertiser"},
+		{role: "pub", theme: "theme-publisher"},
+	}
+	for _, test := range tests {
+		t.Run(test.role, func(t *testing.T) {
+			rendered := renderRoleTemplate(
+				t,
+				filepath.Join("..", "tmpls", "web", test.role, "startnew.g"),
+				test.role,
+				nil,
+				url.Values{},
+			)
+			for _, want := range []string{
+				`href="/css/w8m-account.css?v=20260801-3"`,
+				`<body class="w8m-public-account ` + test.theme + `">`,
+				`<div class="account-card ` + test.theme + `">`,
+			} {
+				if !strings.Contains(rendered, want) {
+					t.Errorf("rendered %s registration does not contain %q", test.role, want)
+				}
+			}
+		})
+	}
+}
+
+func TestLoginRoleThemes(t *testing.T) {
+	tests := []struct {
+		role  string
+		theme string
+	}{
+		{role: "adv", theme: "theme-advertiser"},
+		{role: "pub", theme: "theme-publisher"},
+	}
+	for _, test := range tests {
+		t.Run(test.role, func(t *testing.T) {
+			path := filepath.Join("..", "tmpls", test.role, "login.g")
+			parsed, err := template.ParseFiles(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var output strings.Builder
+			if err := parsed.Execute(&output, map[string]interface{}{
+				"LoginName": "login",
+				"GoURIName": "go_uri",
+				"GoURI":     "/",
+				"Login":     "email",
+				"Password":  "passwd",
+				"Errorstr":  "",
+			}); err != nil {
+				t.Fatal(err)
+			}
+			rendered := output.String()
+			for _, want := range []string{
+				`href="/css/w8m-account.css?v=20260801-3"`,
+				`<body class="w8m-public-account ` + test.theme + `">`,
+			} {
+				if !strings.Contains(rendered, want) {
+					t.Errorf("rendered %s login does not contain %q", test.role, want)
+				}
+			}
+		})
 	}
 }
 

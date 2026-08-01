@@ -19,15 +19,33 @@ body {
 }
 
 body.w8m-public-account {
+  --role: var(--account-advertiser);
+  --role-dark: var(--account-advertiser-dark);
+  --role-rgb: 240, 95, 64;
+  --role-page: #fff8f5;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
   flex-direction: column;
   margin: 0;
   color: var(--account-ink);
-  background: var(--account-bg);
+  background: var(--role-page);
   font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
   line-height: 1.65;
+}
+
+.w8m-public-account.theme-publisher {
+  --role: var(--account-publisher);
+  --role-dark: var(--account-publisher-dark);
+  --role-rgb: 15, 157, 138;
+  --role-page: #f2fbf9;
+}
+
+.w8m-public-account.theme-internal {
+  --role: var(--account-internal);
+  --role-dark: var(--account-internal-dark);
+  --role-rgb: 82, 113, 143;
+  --role-page: #f3f6fa;
 }
 
 .account-topbar {
@@ -96,9 +114,9 @@ body.w8m-public-account {
   padding: 4rem 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 8% 12%, rgba(240, 95, 64, .08), transparent 28%),
-    radial-gradient(circle at 92% 88%, rgba(15, 157, 138, .08), transparent 28%),
-    var(--account-bg);
+    radial-gradient(circle at 8% 12%, rgba(var(--role-rgb), .13), transparent 30%),
+    radial-gradient(circle at 92% 88%, rgba(var(--role-rgb), .07), transparent 30%),
+    var(--role-page);
 }
 
 .account-stage::before,
@@ -106,7 +124,7 @@ body.w8m-public-account {
   position: absolute;
   width: 360px;
   height: 360px;
-  border: 1px solid rgba(16, 42, 67, .055);
+  border: 1px solid rgba(var(--role-rgb), .09);
   border-radius: 50%;
   content: "";
   pointer-events: none;
@@ -132,13 +150,14 @@ body.w8m-public-account {
 .account-card {
   --role: var(--account-advertiser);
   --role-dark: var(--account-advertiser-dark);
+  --role-rgb: 240, 95, 64;
   display: grid;
   max-width: 1020px;
   min-height: 560px;
   grid-template-columns: minmax(300px, 42%) minmax(0, 58%);
   margin: 0 auto;
   overflow: hidden;
-  border: 1px solid rgba(16, 42, 67, .08);
+  border: 1px solid rgba(var(--role-rgb), .14);
   border-radius: 1.35rem;
   background: var(--account-paper);
   box-shadow: 0 28px 70px rgba(25, 55, 82, .14);
@@ -148,12 +167,14 @@ body.w8m-public-account {
 .w8m-public-account.theme-publisher {
   --role: var(--account-publisher);
   --role-dark: var(--account-publisher-dark);
+  --role-rgb: 15, 157, 138;
 }
 
 .account-card.theme-internal,
 .w8m-public-account.theme-internal {
   --role: var(--account-internal);
   --role-dark: var(--account-internal-dark);
+  --role-rgb: 82, 113, 143;
 }
 
 .account-card-compact {

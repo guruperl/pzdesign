@@ -13,10 +13,10 @@
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/simple-line-icons.min.css" rel="stylesheet">
   <link href="/1.0.8/css/style.css" rel="stylesheet">
-  <link href="/css/w8m-account.css?v=20260801-2" rel="stylesheet">
+  <link href="/css/w8m-account.css?v=20260801-3" rel="stylesheet">
 </head>
 
-<body class="w8m-public-account">
+<body class="w8m-public-account {{if eq .Other.Component `pub`}}theme-publisher{{else}}theme-advertiser{{end}}">
   <header class="account-topbar">
     <div class="container">
       <a class="account-brand" href="/">W8M <small>广告平台</small></a>

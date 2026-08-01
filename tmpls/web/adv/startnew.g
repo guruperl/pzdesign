@@ -1,4 +1,4 @@
-{{ template "header" }}
+{{ template "header" .}}
 {{ template "advheader" }}
 
 <div class="account-card theme-advertiser">

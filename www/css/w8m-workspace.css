@@ -3,7 +3,7 @@
   --workspace-ink-soft: #486581;
   --workspace-line: #d9e2ec;
   --workspace-paper: #ffffff;
-  --workspace-bg: #f3f6fa;
+  --workspace-bg: #fff8f5;
   --workspace-night: #0b1f33;
   --workspace-night-soft: #173d5b;
   --workspace-role: #f05f40;
@@ -11,6 +11,7 @@
   --workspace-role-hover: #aa351d;
   --workspace-role-rgb: 240, 95, 64;
   --workspace-role-surface: #fff5f1;
+  --workspace-role-line: #f4d2c9;
 }
 
 html,
@@ -33,6 +34,8 @@ body.w8m-workspace.theme-publisher {
   --workspace-role-hover: #05675c;
   --workspace-role-rgb: 15, 157, 138;
   --workspace-role-surface: #effbf8;
+  --workspace-role-line: #bfe4de;
+  --workspace-bg: #f2fbf9;
 }
 
 .w8m-workspace h1,
@@ -201,14 +204,14 @@ body.w8m-workspace.theme-publisher {
 .w8m-workspace .panel {
   margin-bottom: 24px;
   overflow: hidden;
-  border: 1px solid rgba(16, 42, 67, .07);
+  border: 1px solid var(--workspace-role-line);
   border-radius: 14px;
   background: var(--workspace-paper);
   box-shadow: 0 13px 34px rgba(25, 55, 82, .09);
 }
 
 .w8m-workspace .panel-primary {
-  border-color: rgba(16, 42, 67, .07);
+  border-color: var(--workspace-role-line);
 }
 
 .w8m-workspace .panel-primary > .panel-heading {
@@ -560,7 +563,7 @@ body.w8m-workspace.theme-publisher {
 .w8m-workspace.theme-publisher .card {
   margin-bottom: 24px;
   overflow: hidden;
-  border: 1px solid rgba(16, 42, 67, .07);
+  border: 1px solid var(--workspace-role-line);
   border-radius: 14px;
   background: var(--workspace-paper);
   box-shadow: 0 13px 34px rgba(25, 55, 82, .09);

@@ -1,4 +1,4 @@
-{{ template "header" }}
+{{ template "header" .}}
 {{ template "pubheader" }}
 
 <div class="account-card account-card-compact theme-publisher">

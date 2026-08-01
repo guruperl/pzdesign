@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>系统管理提示｜W8M</title>
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/w8m-account.css?v=20260801-2" rel="stylesheet">
+  <link href="/css/w8m-account.css?v=20260801-3" rel="stylesheet">
 </head>
 <body class="w8m-public-account theme-internal">
   <main class="account-stage"><div class="container"><div class="account-card account-card-compact theme-internal">
