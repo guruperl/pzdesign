@@ -75,11 +75,12 @@ facade for Summer UI helpers, while `cmd/unify` imports `dsp` as the HTTP servic
 integration point. Local development uses the `replace` in `go.mod` to resolve
 that dependency to `../aofei`.
 
-The CI workflow pins its sibling Aofei checkout to a reviewed commit so a
-moving Aofei branch cannot change pzdesign verification unexpectedly. Update
-that `ref` in `.github/workflows/verify.yml` when intentionally adopting a new
-Aofei revision, and verify both repositories in the same change. CI fetches the
-primary repository history and checks committed whitespace over the pull-request
+The CI workflow pins its sibling Aofei and Genelet checkouts to reviewed
+commits so moving dependency branches cannot change pzdesign verification
+unexpectedly. Update those `ref` values in `.github/workflows/verify.yml` when
+intentionally adopting a new dependency revision, and verify the repositories
+in the same change. CI fetches the primary repository history and checks
+committed whitespace over the pull-request
 merge-base-to-head or push before-to-after range. Keep `git diff --check` as the
 local closeout check for uncommitted changes.
 

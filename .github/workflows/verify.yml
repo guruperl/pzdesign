@@ -28,8 +28,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: guruperl/aofei
-          ref: 73cb69dc5e86537c2c531b5d1573c6a4c0a610d4
+          ref: 64027107a5cb12c399b197da5fd574c9e44b5e72
           path: aofei
+      - name: Check out Genelet dependency
+        uses: actions/checkout@v4
+        with:
+          repository: guruperl/genelet
+          ref: 64cd9fdc7f7e938a5684511b2599aa64d75441b1
+          path: genelet
       - uses: actions/setup-go@v5
         with:
           go-version: 1.23.5
@@ -37,6 +43,7 @@ jobs:
           cache-dependency-path: |
             pzdesign/go.sum
             aofei/go.sum
+            genelet/go.sum
       - name: Test
         run: GOWORK=off go test ./...
       - name: Race tests
