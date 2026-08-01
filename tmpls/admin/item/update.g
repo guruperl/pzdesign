@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "itemheader" .}}
 
-更新成功
+广告组已更新。
 
 {{ template "footer" .}}

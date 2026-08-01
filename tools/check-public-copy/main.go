@@ -198,12 +198,8 @@ func publicFiles(root string) ([]string, error) {
 		filepath.Join(root, "www", "manuals", "advertiser.html"),
 		filepath.Join(root, "www", "manuals", "publisher.html"),
 	}
-	for _, role := range []string{"admin", "adv", "agent", "pub"} {
-		files = append(files, filepath.Join(root, "tmpls", role, "login.g"))
-	}
-
-	webRoot := filepath.Join(root, "tmpls", "web")
-	if err := filepath.WalkDir(webRoot, func(path string, entry os.DirEntry, err error) error {
+	templateRoot := filepath.Join(root, "tmpls")
+	if err := filepath.WalkDir(templateRoot, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}

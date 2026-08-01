@@ -8,7 +8,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                          活动： {{index .ARGS.campaign_name 0}}  &nbsp; / &nbsp; Ad Group：{{index .ARGS.item_name 0}}  
+                          广告活动：{{index .ARGS.campaign_name 0}} &nbsp; / &nbsp; 广告组：{{index .ARGS.item_name 0}}
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -42,7 +42,7 @@
 	</div>
 	<!-- /.modal -->
 </td>
-<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" onClick="return (confirm('确认要删除此素材吗？此操作不可更改。')) ? true : false;" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
+<td>{{if eq $active "Prepare"}}<a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除此广告素材吗？此操作不可撤销。')) ? true : false;" href="creative?action=delete&creative_id={{.creative_id}}&{{$attach}}&{{$second}}">删除</a>{{end}}</td>
 </tr>{{end}}{{end}}
 </table>
                             </div>
@@ -88,22 +88,22 @@
     <div class="col-sm-2">
         <input id="inputW" type=text class="form-control" name="w" placeholder="" />
     </div>
-    <label for="inputCreativeName" class="col-sm-1 col-form-label">x</label>
+    <label for="inputCreativeName" class="col-sm-1 col-form-label">×</label>
     <div class="col-sm-2">
         <input id="inputW" type=text class="form-control" name="h" placeholder="" /> 
     </div>
-	<label for="inputWeight" class="col-sm-1 col-form-label">比重:</label>
+	<label for="inputWeight" class="col-sm-1 col-form-label">权重：</label>
     <div class="col-sm-2">
         <input id="inputWeight" type=text class="form-control" name="weight" placeholder="0.5" />
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputRandomChoices" class="col-sm-2 col-form-label">选择物料:</label>
+    <label for="inputRandomChoices" class="col-sm-2 col-form-label">广告素材类型:</label>
     <div class="col-sm-1">
         <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=1 />
     </div>
-    <label for="inputRandom1" class="col-sm-2 col-form-label">素材表达</label>
+    <label for="inputRandom1" class="col-sm-2 col-form-label">素材内容</label>
     <div class="col-sm-1">
         <input id="inputRandom1" type=radio class="form-control" name="randomChoice" value=2 />
     </div>
@@ -119,7 +119,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputContent" class="col-sm-2 col-form-label">素材表达:</label>
+    <label for="inputContent" class="col-sm-2 col-form-label">素材内容:</label>
     <div class="col-sm-8">
 		<textarea id="inputContent" name=content class="form-control" rows="2">
 http://www.creative.site/sample.png

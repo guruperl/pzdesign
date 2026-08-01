@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-body">
-                            添加成功
+                            流量范围条目已添加。
                         </div>
                     </div>
                 </div>

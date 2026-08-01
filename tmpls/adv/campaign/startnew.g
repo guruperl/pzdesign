@@ -22,27 +22,26 @@
 </div>
 
 <div class="form-group row">
-<p>(预览链接: 应用市场链接或者落地页 For mobile apps in Google Play Store, these should be bundle or package names e.g. com.foo.mygame. For apps in Apple App Store, these should be a numeric ID. For web, this should be site's domain name.)</p>
-<p>(质监图片: URL without cache-busting to an image that is representative
-of the content of the campaign for ad quality/safety checking)</p>
+<p>预览链接：网页广告填写落地页域名；Android App 填写包名（例如 <code>com.foo.mygame</code>）；iOS App 填写 App Store 数字 ID。</p>
+<p>质量审核图片：填写能代表广告活动内容的图片 URL，不要添加随机防缓存参数。该图片用于广告质量与安全审核。</p>
 </div>
 <div class="form-group row">
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">预览链接:</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">预览链接：</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=foreign_id placeholder="编号必填" />
 	</div>
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">质监图片：</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">质量审核图片：</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=iurl placeholder="IURL" />
 	</div>
 </div>
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-2 col-form-label">起始时间:</label>
+    <label for="inputCampaigName" class="col-sm-2 col-form-label">开始时间：</label>
     <div class="col-sm-4">
         <input type=text class="form-control" name="startx" value="">
     </div>
-    <label for="inputCampaigName" class="col-sm-2 col-form-label">截止时间:</label>
+    <label for="inputCampaigName" class="col-sm-2 col-form-label">结束时间：</label>
     <div class="col-sm-4">
         <input type=text class="form-control" name="endx" value="">
     </div>
@@ -57,10 +56,10 @@ of the content of the campaign for ad quality/safety checking)</p>
 		<div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
 <tr><th> </th><th>花费金额</th><th>曝光次数</th><th>点击次数</th></tr>
-<tr><td>全部: </td><td><input type=text name=limit_spend size=8 /></td>
+<tr><td>总限额：</td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
 <td><input type=text name=limit_cli size=8 /></td></tr>
-<tr><td>每天: </td><td><input type=text name=daily_spend size=8 /></td>
+<tr><td>每日限额：</td><td><input type=text name=daily_spend size=8 /></td>
 <td><input type=text name=daily_imp size=8 /></td>
 <td><input type=text name=daily_cli size=8 /></td></tr>
 </table>

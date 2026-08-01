@@ -78,7 +78,7 @@
         </td>
       </tr>
     {{end}}{{else}}
-      <tr><td colspan="10">暂无 Middleman 路由组。</td></tr>
+      <tr><td colspan="10">暂无外部需求方路由组。</td></tr>
     {{end}}</tbody>
   </table>
 </div>

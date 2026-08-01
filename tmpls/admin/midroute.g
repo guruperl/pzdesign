@@ -1,6 +1,6 @@
 {{ define "midrouteheader" }}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-  <h1 class="h2">Middleman 路由</h1>
+  <h1 class="h2">外部 DSP / ADX 需求方路由</h1>
 </div>
 {{ end }}
 
@@ -35,8 +35,8 @@
 <div class="form-group">
   <label>启用</label>
   <select class="form-control" name="active">
-    <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>Yes</option>
-    <option value="No"{{if eq $item.active "No"}} selected{{end}}>No</option>
+    <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>启用</option>
+    <option value="No"{{if eq $item.active "No"}} selected{{end}}>停用</option>
   </select>
 </div>
 {{ end }}
@@ -47,10 +47,10 @@
   <div class="form-group col-md-4">
     <label>范围</label>
     <select class="form-control" name="entitytype_id">
-      <option value=""{{if $item.entitytype_global}} selected{{end}}>Global</option>
-      <option value="3"{{if $item.entitytype_pub}} selected{{end}}>Publisher</option>
-      <option value="31"{{if $item.entitytype_site}} selected{{end}}>Site</option>
-      <option value="32"{{if $item.entitytype_slot}} selected{{end}}>Slot</option>
+      <option value=""{{if $item.entitytype_global}} selected{{end}}>全部流量</option>
+      <option value="3"{{if $item.entitytype_pub}} selected{{end}}>流量方</option>
+      <option value="31"{{if $item.entitytype_site}} selected{{end}}>流量源（网站/App）</option>
+      <option value="32"{{if $item.entitytype_slot}} selected{{end}}>广告位</option>
     </select>
   </div>
   <div class="form-group col-md-4">
@@ -60,7 +60,7 @@
   <div class="form-group col-md-4">
     <label>尺寸</label>
     <select class="form-control" name="size_id">
-      <option value="">Any</option>
+      <option value="">任意尺寸</option>
       {{ range $size := index .Other "midroute_sizes" }}
         <option value="{{$size.size_id}}"{{if eq $size.size_id $item.size_id}} selected{{end}}>{{$size.size_id}} {{$size.size_name}} {{$size.width}}x{{$size.height}}</option>
       {{ end }}
@@ -75,8 +75,8 @@
   <div class="form-group col-md-6">
     <label>启用</label>
     <select class="form-control" name="active">
-      <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>Yes</option>
-      <option value="No"{{if eq $item.active "No"}} selected{{end}}>No</option>
+      <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>启用</option>
+      <option value="No"{{if eq $item.active "No"}} selected{{end}}>停用</option>
     </select>
   </div>
 </div>

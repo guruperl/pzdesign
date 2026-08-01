@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "agentheader" .}}
 
-<h3>所有审查单位名单</h3>
+<h3>全部代理商账户</h3>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
     	<thead>
@@ -20,7 +20,7 @@
 			<td>{{.level}}</td>
 			<td>{{.notes}}</td>
 			<td>{{.active}}</td>
-			<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=agent&login={{.login | urlquery}}" target="_blank">As</a></td>
+			<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=agent&login={{.login | urlquery}}" target="_blank">进入账户</a></td>
 			<td><a href="agent?action=delete&agent_id={{.agent_id}}">删除</a></td>
 			</tr>{{end}}{{end}}
 		</tbody>
@@ -28,7 +28,7 @@
 </div>
 
 <form class="form" action=agent method=post><input type=hidden name=action value="insert">
-<h3>添加审核单位</h3>
+<h3>添加代理商账户</h3>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
     	<thead>
@@ -36,17 +36,17 @@
         	<th>用户名</th>
         	<th>密码</th>
         	<th>等级</th>
-			<th>附录</th>
+			<th>备注</th>
             <th>状态</th>
             <th></th>
 		<tr>
         </thead>
 		<tbody>
 			<td><input class="form-input" type=text name=login></td>
-			<td><input class="form-input" type=text name=passwd></td>
+			<td><input class="form-input" type=password name=passwd autocomplete="new-password"></td>
 			<td><input class="form-input" type=radio name=level value=1>初审权 <input class="form-input" type=radio name=level value=2>终审权 <input class="form-input" type=radio name=level value=3>初审和终审权</td>
 			<td><input class="form-input" type=text name=notes></td>
-			<td><input class="form-input" type=radio name=active value=Yes checked>Yes <input class="form-input" type=radio name=active value=Pause>Pause</td>
+			<td><input class="form-input" type=radio name=active value=Yes checked>启用 <input class="form-input" type=radio name=active value=Pause>暂停</td>
 			<td><button type="submit" class="btn btn-sm btn-primary">添加</button></td>
 			</tr>
 		</tbody>

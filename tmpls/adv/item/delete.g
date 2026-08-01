@@ -6,11 +6,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                           	成功。
+                            广告组已删除
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            {{index .ARGS.item_name 0}} 已被删除。
+                            广告组“{{index .ARGS.item_name 0}}”已删除。
                         </div>
                         <!-- /.panel-body -->
                     </div>

@@ -5,7 +5,7 @@
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        添加Ad Group
+                        添加广告组
                     </div>
                     <div class="panel-body">
 
@@ -18,9 +18,9 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-1 col-form-label text-right">名称</label>
+    <label for="inputCampaigName" class="col-sm-1 col-form-label text-right">广告组名称</label>
     <div class="col-sm-3">
-        <input type=text class="form-control" name="item_name" placeholder="名" />
+        <input type=text class="form-control" name="item_name" placeholder="输入广告组名称" />
     </div>
     <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
     <div class="col-sm-3">
@@ -43,16 +43,16 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">显示监控:</label>
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">展示监测地址:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="imp_url">显示监控 URL，可使用宏。多选时用英文逗号分开</textarea>
+        <textarea class="form-control" rows=2 name="imp_url">展示监测 URL，可使用宏；多个地址请用英文逗号分隔</textarea>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监控:</label>
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监测地址:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="click_url">点击监控 URL，可使用宏。多选时用英文逗号分开</textarea>
+        <textarea class="form-control" rows=2 name="click_url">点击监测 URL，可使用宏；多个地址请用英文逗号分隔</textarea>
     </div>
 </div>
 
@@ -69,7 +69,7 @@
 
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">如何显示:</label>
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">素材展示方式:</label>
     <div class="col-sm-10">手机可选XHTML Banner，其它选Iframe</div>
 </div>
 <div class="form-group row">
@@ -83,7 +83,7 @@
 	<label for="tableFrequencyCap" class="col-sm-2 col-form-label">参数设置：</label>
 	<div class="col-sm-5">
         <div class="panel panel-primary">
-            <div class="panel-heading">个人频次控制</div>
+            <div class="panel-heading">用户频次控制</div>
             <div class="panel-body">
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
@@ -103,7 +103,7 @@
     </div>
 	<div class="col-sm-5">
         <div class="panel panel-primary">
-            <div class="panel-heading">活动总预算</div>
+            <div class="panel-heading">广告组预算</div>
             <div class="panel-body">
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">
@@ -126,7 +126,7 @@
     <div class="col-sm-1">
 	</div>
     <div class="col-sm-11">
-<button type="submit" class="btn btn-primary">新建完成</button>
+<button type="submit" class="btn btn-primary">创建广告组</button>
     </div>
 </div>
 

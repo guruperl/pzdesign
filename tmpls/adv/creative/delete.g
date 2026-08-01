@@ -4,6 +4,6 @@
 {{ template "header" .}}
 {{ template "creativeheader" .}}
 
-删除成功.
+广告素材已删除。
 
 {{template "footer"}}

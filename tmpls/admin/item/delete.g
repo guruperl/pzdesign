@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "itemheader" .}}
 
-删除成功
+广告组已删除。
 
 {{ template "footer" .}}

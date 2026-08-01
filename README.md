@@ -37,14 +37,16 @@ Runtime asset groups under `www/`:
   advertiser entry pages use the landing page's coral role color and publisher
   entry pages use its teal role color. Keep authenticated dashboard styling
   separate from this public account surface.
-- `manuals/` contains the public Chinese advertiser and publisher web manuals.
+- `manuals/` contains the public Chinese advertiser/agency and
+  publisher/supply-side web manuals.
   Their operational content follows the sibling Aofei references
   `docs/advertiser-dsp-agent-manual.zh-CN.md` and
   `docs/publisher-manual.zh-CN.md`; keep both editions aligned when user-facing
   behavior changes.
 - [docs/public-chinese-content-guide.md](docs/public-chinese-content-guide.md)
   defines the terminology, descriptive-heading style, account/error wording,
-  and typography rules for every unauthenticated W8M page and account email.
+  and typography rules for public pages, account emails, and authenticated
+  Chinese templates.
 - `uploads/` is ignored and should stay empty in the public repository; runtime
   uploads belong in the application upload directory.
 
@@ -142,7 +144,8 @@ active `.g` behavior.
 
 The public-copy check requires the complete Chinese advertiser/publisher
 account-action template matrix, preserves reset-form field contracts, and
-rejects retired account terms, slogan headings, raw framework errors, and
+rejects retired account terms across public and authenticated Chinese
+templates. It also rejects slogan headings, raw framework errors, and
 Chinese-page links into the secondary `.e` surface.
 
 `.github/workflows/verify.yml` runs tests, vet, both template parsers, and

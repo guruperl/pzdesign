@@ -12,7 +12,7 @@
 </form>
 
 <hr>
-<form method="post" action="midroute?action=deleteTarget" onsubmit="return confirm('Delete this route target?');">
+<form method="post" action="midroute?action=deleteTarget" onsubmit="return confirm('确认删除此流量目标吗？');">
   <input type="hidden" name="target_id" value="{{$item.target_id}}">
   <button type="submit" class="btn btn-outline-danger">删除流量目标</button>
 </form>

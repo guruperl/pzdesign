@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-删除成功
+流量源已删除。
 
 {{ template "footer" .}}

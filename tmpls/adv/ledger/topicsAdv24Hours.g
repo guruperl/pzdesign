@@ -23,7 +23,7 @@
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            最火Ad Group
+                            广告组排行
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -62,7 +62,7 @@
 				<div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            最火广告位
+                            广告位排行
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

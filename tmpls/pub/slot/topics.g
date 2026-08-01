@@ -4,7 +4,7 @@
 
           <div class="card">
             <div class="card-header">
-              <em>{{index .ARGS.site_name 0}}</em>下所有广告位
+              流量源“<em>{{index .ARGS.site_name 0}}</em>”下的广告位
             </div>
             <div class="card-body">
 
@@ -12,11 +12,11 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>广告位名</th>
+                  <th>广告位名称</th>
                   <th>设备平台</th>
-                  <th>激活</th>
+                  <th>启用状态</th>
                   <th>上线时间</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="新添加广告位" data-href="slot?action=startnew&{{$attach}}" id="startnewPopup">添加广告位</a></th>
+                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告位" data-href="slot?action=startnew&{{$attach}}" id="startnewPopup">添加广告位</a></th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
@@ -26,8 +26,8 @@
 <td>{{if eq "Yes" .active}}&check; {{else if eq "No" .active}}&#10007;{{else}}&check;{{end}}</td>
 <td>{{.created}}</td>
 <td><button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">广告码</button></td>
-<td><button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API码</button></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确信删除此广告位{{.slot_name}}吗？此操作不可更改。')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">删除</a></td>
+<td><button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API 接入代码</button></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告位“{{.slot_name}}”吗？此操作不可撤销。')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">删除</a></td>
 {{end}}</tobdy>
 
 </table>
@@ -38,7 +38,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">应用网页广告码放置</h4>
+                <h4 class="modal-title">网页广告码</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
                   <span aria-hidden="true">×</span>
                 </button>
@@ -62,8 +62,8 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">API广告码</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h4 class="modal-title">SDK / API 接入代码</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>

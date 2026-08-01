@@ -1,10 +1,9 @@
 {{ template "header" .}}
 {{ template "acheader" .}}
 
-<h3>添加完成。</h3>
+<h3>流量范围条目已添加。</h3>
 
 {{template "footer"}}
 
 </body>
 </html>
-

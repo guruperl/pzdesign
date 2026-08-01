@@ -1,4 +1,4 @@
 {{ template "header" .}}
 {{ template "attrnameheader" .}}
-添加成功
+自定义标签已添加。
 {{template "footer"}}

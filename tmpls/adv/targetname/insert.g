@@ -7,7 +7,7 @@
                     <div class="panel panel-primary">
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            保存成功
+                            定向设置已保存。
                         </div>
                     </div>
                 </div>

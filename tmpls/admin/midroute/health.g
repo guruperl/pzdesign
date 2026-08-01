@@ -63,7 +63,7 @@
         <td>{{.detail}}</td>
       </tr>
     {{end}}{{else}}
-      <tr><td colspan="7">暂无 Middleman 路由健康问题。</td></tr>
+      <tr><td colspan="7">未发现外部需求方路由健康问题。</td></tr>
     {{end}}</tbody>
   </table>
 </div>

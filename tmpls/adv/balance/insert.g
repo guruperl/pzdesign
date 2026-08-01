@@ -8,7 +8,7 @@
                         {{index .ARGS.which 0}}
                     </div>
                     <div class="panel-body">
-                        提交成功
+                        预算设置已提交。
                     </div>
                 </div>
             </div>

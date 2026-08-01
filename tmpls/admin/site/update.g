@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "siteheader" .}}
 
-更新成功
+流量源已更新。
 
 {{ template "footer" .}}

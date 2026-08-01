@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "advheader" .}}
 
-拿下
+广告主账户已停用。
 
 {{ template "footer" .}}

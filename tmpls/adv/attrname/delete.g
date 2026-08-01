@@ -1,4 +1,4 @@
 {{ template "header" .}}
 {{ template "attrnameheader" .}}
-删除成功
+自定义标签已删除。
 {{template "footer"}}

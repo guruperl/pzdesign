@@ -14,7 +14,7 @@
         <th>ID</th>
         <th>优先级</th>
         <th>竞价端点</th>
-        <th>商户</th>
+        <th>广告主</th>
         <th>超时</th>
         <th>加价比例</th>
         <th>最低加价</th>

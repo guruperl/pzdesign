@@ -6,14 +6,14 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>商户</th>
+        <th>广告主</th>
         <th>名称</th>
         <th>端点</th>
         <th>凭证</th>
         <th>启用</th>
         <th>活动</th>
         <th>广告组</th>
-        <th>创意</th>
+        <th>广告素材</th>
         <th></th>
       </tr>
     </thead>

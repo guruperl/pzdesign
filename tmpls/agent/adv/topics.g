@@ -1,7 +1,7 @@
 {{ template "header" .}}
 {{ template "advheader" .}}
 
-<h3>所有商户</h3>
+<h3>全部广告主账户</h3>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
     	<thead>
@@ -11,7 +11,7 @@
         	<th>公司</th>
 			<th>状态</th>
             <th>余款</th>
-            <th>入网时间</th>
+            <th>创建时间</th>
             <th></th>
             <th></th>
         </tr>
@@ -26,10 +26,10 @@
 				<td>{{.created}}</td>
 				<td>
 {{if eq .active "New"}}<a class="btn btn-sm btn-primary" href="adv?action=update&active=Yes&adv_id={{.adv_id}}">激活</a>{{end}}
-{{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="adv?action=takedown&active=No&adv_id={{.adv_id}}">拿下</a>{{end}}
+{{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="adv?action=takedown&active=No&adv_id={{.adv_id}}">停用</a>{{end}}
 {{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="adv?action=takedown&active=Yes&adv_id={{.adv_id}}">重新激活</a>{{end}}
 </td>
-				<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=adv&email={{.email | urlquery}}" target="_blank">As</a></td>
+				<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=adv&email={{.email | urlquery}}" target="_blank">进入账户</a></td>
 			</tr>{{end}}{{end}}
 		</tbody>
 	</table>

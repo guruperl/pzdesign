@@ -3,11 +3,10 @@
 
           <div class="card">
             <div class="card-body">
-<h4>提交完成。</h4>
+<h4>流量源已添加。</h4>
         </div>
         </div>
 
 {{ template "footer" .}}
 </body>
 </html>
-

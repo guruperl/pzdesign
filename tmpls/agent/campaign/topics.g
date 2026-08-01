@@ -11,7 +11,7 @@
         <tr>
         	<th>活动名称</th>
 			<th>状态</th>
-            <th>入网时间</th>
+            <th>创建时间</th>
             <th></th>
         </tr>
         </thead>

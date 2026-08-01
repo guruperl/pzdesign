@@ -1,7 +1,7 @@
 {{ define "slotheader" }}
       <!-- Breadcrumb -->
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">公司</li>
+        <li class="breadcrumb-item">流量方账户</li>
         <li class="breadcrumb-item"><a href="site?action=topics">流量源</a></li>
         <li class="breadcrumb-item active">广告位</li>
       </ol>

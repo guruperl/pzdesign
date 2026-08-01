@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "paymentheader" .}}
 
-删除成功
+付款记录已删除。
 
 {{ template "footer" .}}

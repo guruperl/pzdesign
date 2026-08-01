@@ -9,7 +9,7 @@
 
   </div>
   <footer class="app-footer">
-    <span><a href="/goto/pub/e/pub?action=startnew">流量源平台</a></span>
+    <span><a href="/goto/pub/g/site?action=topics">流量方工作台</a></span>
     <span class="ml-auto">Powered by <a href="/">W8M 科技有限公司</a></span>
   </footer>
 

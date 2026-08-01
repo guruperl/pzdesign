@@ -5,7 +5,7 @@
 <form method="post" action="bidder?action=update">
   <input type="hidden" name="bidder_id" value="{{$item.bidder_id}}">
   <div class="form-group">
-    <label>商户</label>
+    <label>广告主</label>
     <p class="form-control-static">{{$item.adv_id}} {{$item.adv_email}}</p>
   </div>
   <div class="form-group">
@@ -35,17 +35,17 @@
   <div class="form-group">
     <label>凭证状态</label>
     <select class="form-control" name="credential_status">
-      <option value="Missing"{{if eq $item.credential_status "Missing"}} selected{{end}}>Missing</option>
-      <option value="Pending"{{if eq $item.credential_status "Pending"}} selected{{end}}>Pending</option>
-      <option value="Active"{{if eq $item.credential_status "Active"}} selected{{end}}>Active</option>
-      <option value="Disabled"{{if eq $item.credential_status "Disabled"}} selected{{end}}>Disabled</option>
+      <option value="Missing"{{if eq $item.credential_status "Missing"}} selected{{end}}>未配置</option>
+      <option value="Pending"{{if eq $item.credential_status "Pending"}} selected{{end}}>待审批</option>
+      <option value="Active"{{if eq $item.credential_status "Active"}} selected{{end}}>已启用</option>
+      <option value="Disabled"{{if eq $item.credential_status "Disabled"}} selected{{end}}>已停用</option>
     </select>
   </div>
   <div class="form-group">
     <label>启用</label>
     <select class="form-control" name="active">
-      <option value="No"{{if eq $item.active "No"}} selected{{end}}>No</option>
-      <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>Yes</option>
+      <option value="No"{{if eq $item.active "No"}} selected{{end}}>停用</option>
+      <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>启用</option>
     </select>
   </div>
   <div class="form-row">
@@ -58,7 +58,7 @@
       <p class="form-control-static">{{$item.synthetic_item_id}}</p>
     </div>
     <div class="form-group col-md-4">
-      <label>合成创意</label>
+      <label>合成广告素材</label>
       <p class="form-control-static">{{$item.synthetic_creative_id}}</p>
     </div>
   </div>

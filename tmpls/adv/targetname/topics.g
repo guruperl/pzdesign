@@ -40,7 +40,7 @@
 				<div class="col-sm-12">
                     <div class="form-check form-check-inline">
 						<input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App,Web"}}checked{{end }} value="App,Web" />
-						<label class="form-check-label">All</label>
+						<label class="form-check-label">全部</label>
 						<input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App"}}checked{{end }} value="App" />
 						<label class="form-check-label">App</label>
 						<input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "Web"}}checked{{end }} value="Web" />
@@ -179,7 +179,7 @@
 
 <p> &nbsp </p>
             <h3>自定义标签定向</h3>
-            <h4>（从左边栏目里的“标签管理/自定义标签列表”，设置标签名和可选值）</h4>
+            <h4>（请先在左侧“标签管理 / 自定义标签列表”中设置标签名和可选值。）</h4>
 			{{range $key, $val := .Other.custom}}<h4>{{$key}}</h4>
             <div class="form-group row">
                 <div class="col-sm-12">

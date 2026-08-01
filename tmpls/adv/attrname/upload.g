@@ -7,7 +7,7 @@
                     <div class="panel panel-primary">
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            上传成功
+                            人群标识文件已上传。
                         </div>
                     </div>
                 </div>

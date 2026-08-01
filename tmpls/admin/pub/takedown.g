@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "pubheader" .}}
 
-拿下成功
+流量方账户已停用。
 
 {{ template "footer" .}}

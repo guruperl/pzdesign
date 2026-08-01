@@ -12,7 +12,7 @@
 </form>
 
 <hr>
-<form method="post" action="midroute?action=deleteBidder" onsubmit="return confirm('Delete this bidder route?');">
+<form method="post" action="midroute?action=deleteBidder" onsubmit="return confirm('确认从路由组中删除此竞价端点吗？');">
   <input type="hidden" name="route_bidder_id" value="{{$item.route_bidder_id}}">
   <button type="submit" class="btn btn-outline-danger">删除竞价端点路由</button>
 </form>

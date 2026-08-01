@@ -46,14 +46,14 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">显示监控:</label>
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">展示监测地址:</label>
     <div class="col-sm-10">
         <textarea class="form-control" rows=2 name="imp_url">{{$item.imp_url}}</textarea>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监控:</label>
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监测地址:</label>
     <div class="col-sm-10">
         <textarea class="form-control" rows=2 name="click_url">{{$item.click_url}}</textarea>
     </div>
@@ -72,7 +72,7 @@
 
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">如何显示:</label>
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">素材展示方式:</label>
     <div class="col-sm-10">手机可选XHTML Banner，其它选Iframe</div>
 </div>
 <div class="form-group row">
@@ -106,7 +106,7 @@
 	</div>
 	<div class="col-sm-5">
         <div class="panel panel-primary">
-            <div class="panel-heading">活动总预算</div>
+            <div class="panel-heading">广告组预算</div>
             <div class="panel-body">
 <div class="table-responsive">
 <table class="table-sm table-bordered table-condensed">

@@ -5,7 +5,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-body">
-                        保存成功
+                        预算设置已保存。
                     </div>
                 </div>
             </div>

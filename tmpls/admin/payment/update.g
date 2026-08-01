@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "paymentheader" .}}
 
-更新成功
+付款记录已更新。
 
 {{ template "footer" .}}

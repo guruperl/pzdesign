@@ -1,53 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Application Error Page">
-  <meta name="keyword" content="Application Error Page">
-  <title>流量源出错</title>
-
-  <!-- Icons -->
-  <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">
-  <link href="/1.0.8/vendors/css/simple-line-icons.min.css" rel="stylesheet">
-
-  <!-- Main styles for this application -->
-  <link href="/1.0.8/css/style.css" rel="stylesheet">
-
-  <!-- Styles required by this views -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>流量方工作台提示｜W8M</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/w8m-account.css?v=20260801-2" rel="stylesheet">
 </head>
-
-<body class="app flex-row align-items-center">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="clearfix">
-          <h1 class="float-left display-3 mr-4">{{ .Code }}</h1>
-          <h4 class="pt-3">{{if or (or (or (eq .Code 400) (eq .Code 401)) (eq .Code 404)) (eq .Code 403)}}Oops! You're lost.{{else}}Application error.{{end}}</h4>
-          <p class="text-muted">{{ .Errstr }}</p>
-        </div>
-{{if or (or (or (eq .Code 400) (eq .Code 401)) (eq .Code 404)) (eq .Code 403)}}<form>
-        <div class="input-prepend input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><i class="fa fa-search"></i></span>
-          </div>
-          <input id="prependedInput" class="form-control" size="16" type="text" placeholder="What are you looking for?">
-          <span class="input-group-append">
-            <button class="btn btn-info" type="button">Search</button>
-          </span>
-        </div>
-</form>{{end}}
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap and necessary plugins -->
-  <script src="/1.0.8/vendors/js/jquery.min.js"></script>
-  <script src="/1.0.8/vendors/js/popper.min.js"></script>
-  <script src="/1.0.8/vendors/js/bootstrap.min.js"></script>
-
+<body class="w8m-public-account theme-publisher">
+  <main class="account-stage"><div class="container"><div class="account-card account-card-compact theme-publisher">
+    <aside class="account-context"><div class="account-context-copy"><p class="account-eyebrow">流量方工作台</p><h2>无法完成当前操作</h2><p>请检查提交内容或重新登录后再试。</p></div></aside>
+    <section class="account-form-panel"><div class="account-form-heading"><span class="account-kicker">处理结果</span><h1>当前请求未能完成</h1><p>如果问题持续，请联系技术支持并提供下方错误编号。</p></div><div class="account-actions"><a class="account-action" href="/goto/pub/g/site?action=topics">返回流量方工作台</a><a class="account-action-secondary" href="mailto:support@w8m.com">联系技术支持</a></div><p class="account-support-reference">错误编号：{{.Code}}</p></section>
+  </div></div></main>
 </body>
 </html>

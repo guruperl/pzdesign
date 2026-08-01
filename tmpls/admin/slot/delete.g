@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
-删除成功
+广告位已删除。
 
 {{ template "footer" .}}

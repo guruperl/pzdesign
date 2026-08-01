@@ -3,10 +3,10 @@
 
           <div class="card">
             <div class="card-header">
-              基本个人信息
+              账户安全
             </div>
             <div class="card-body">
-<h4>密码更新成功</h4>
+<h4>密码已更新。</h4>
             </div>
           </div>
 

@@ -5,10 +5,10 @@
 
           <div class="card">
             <div class="card-header">
-              基本个人信息
+              账户资料
             </div>
             <div class="card-body">
-<h4>更新成功</h4>
+<h4>账户资料已更新。</h4>
             </div>
           </div>
 

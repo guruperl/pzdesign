@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
-<h3>广告条授权成功</h3>
+<h3>广告组审核状态已更新</h3>
 
 {{ template "footer" .}}

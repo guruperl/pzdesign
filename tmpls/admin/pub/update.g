@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "pubheader" .}}
 
-更新成功
+流量方账户已更新。
 
 {{ template "footer" .}}

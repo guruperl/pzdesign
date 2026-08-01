@@ -3,7 +3,7 @@
 
           <div class="card">
             <div class="card-body">
-广告位添加成功。
+广告位已添加。
     </div>
 </div>
 
@@ -11,4 +11,3 @@
 
 </body>
 </html>
-

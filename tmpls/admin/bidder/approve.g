@@ -7,10 +7,10 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>商户</th>
+        <th>广告主</th>
         <th>合成活动</th>
         <th>合成广告组</th>
-        <th>合成创意</th>
+        <th>合成广告素材</th>
         <th>凭证</th>
         <th>启用</th>
       </tr>

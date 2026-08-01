@@ -1,6 +1,6 @@
 {{ define "header" }}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
 
@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>W8M 商户管理系统</title>
+    <title>W8M 广告主工作台</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -64,14 +64,14 @@ h1, h2, h3, h4, h5, h6, button {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.html">W8M 商户管理系统</a>
+                <a class="navbar-brand" href="/index.html">W8M 广告主工作台</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
 				<li class="text-info">
-					{{index .ARGS.a_email 0}} of {{index .ARGS.a_company 0}}
+					{{index .ARGS.a_company 0}}（{{index .ARGS.a_email 0}}）
 				</li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -116,7 +116,7 @@ h1, h2, h3, h4, h5, h6, button {
                                  	<a href="javascript:void(0);">{{index .ARGS.campaign_name 0}}</a>
                                 </li>
                                 <li>
-                                 	<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Ad Groups</a>
+                                    <a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">广告组</a>
                                 </li>
                                 <!-- li>
                                    	<a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">人群定向</a>

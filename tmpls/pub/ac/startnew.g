@@ -5,7 +5,7 @@
 
           <div class="card">
             <div class="card-header">
-              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}流量源{{index .ARGS.p_company 0}}{{end}}</em>的Ad Group审核
+              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}流量源“{{index .ARGS.site_name 0}}”{{else}}流量方账户“{{index .ARGS.p_company 0}}”{{end}}</em>的广告组审核
             </div>
             <div class="card-body">
 
@@ -18,10 +18,10 @@
 <input type=hidden name=entitytype_id value="31" />{{else}}
 <input type=hidden name=entitytype_id value="3" />{{end}}
 
-黑白逻辑: <input type=radio name=access_order value="Black" {{if eq `Black` (index .ARGS.access_order 0)}}checked{{end}} />黑名单
+流量范围规则：<input type=radio name=access_order value="Black" {{if eq `Black` (index .ARGS.access_order 0)}}checked{{end}} />黑名单
 <input type=radio name=access_order value="White" {{if eq `White` (index .ARGS.access_order 0)}}checked{{end}} />白名单
 {{if eq `31` (index .ARGS.entitytype_id 0)}}<input type=radio name=access_order value="Inherit" {{if eq `Inherit` (index .ARGS.access_order 0)}}checked{{end}} />默认{{end}}
-<button class="btn btn-sm btn-primary" type=submit onClick="return (confirm('确信更改审核逻辑吗？本操作将删除所有已有逻辑。')) ? true : false;">更新逻辑次序</button>
+<button class="btn btn-sm btn-primary" type=submit onClick="return (confirm('确认更改流量范围规则吗？此操作将清除现有规则。')) ? true : false;">更新流量范围规则</button>
 </form>
             </div>
           </div>
@@ -31,7 +31,7 @@
 
           <div class="card">
             <div class="card-header">
-              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}广告位组{{index .ARGS.site_name 0}}{{else}}商户{{index .ARGS.p_company 0}}{{end}}</em>目前的黑白名单
+              <em>{{if eq "31" (index .ARGS.entitytype_id 0)}}流量源“{{index .ARGS.site_name 0}}”{{else}}流量方账户“{{index .ARGS.p_company 0}}”{{end}}</em>当前的白名单/黑名单
             </div>
             <div class="card-body">
 
@@ -42,8 +42,8 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>公司名</th>
-                  <th>公司审核</th>
+                  <th>广告主</th>
+                  <th>广告主审核</th>
                   <th>广告活动</th>
                   <th>活动审核</th>
                 </tr>
@@ -68,7 +68,7 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">素材</h4>
+        <h4 class="modal-title">广告素材</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body"></div>
@@ -96,4 +96,3 @@
 </script>
 </body>
 </html>
-

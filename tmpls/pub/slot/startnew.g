@@ -11,11 +11,11 @@
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
 
 <div class="form-group row">
-    <label for="inputSlotName" class="col-sm-3 col-form-label text-right">广告位名称:</label>
+    <label for="inputSlotName" class="col-sm-3 col-form-label text-right">广告位名称：</label>
     <div class="col-sm-3">
         <input type=text class="form-control" name="slot_name" placeholder="名称" />
     </div>
-    <label for="inputSizeID" class="col-sm-2 col-form-label text-right">尺寸:</label>
+    <label for="inputSizeID" class="col-sm-2 col-form-label text-right">尺寸：</label>
     <div class="col-sm-2">
         <input type=text class="form-control" name="w" value="64" />
 	</div>
@@ -25,8 +25,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-3 col-form-label text-right">所用语言:</label>
-    <div class="col-sm-9 col-form-label">本广告位所用语言</div>
+    <label for="inputPlatform" class="col-sm-3 col-form-label text-right">广告语言：</label>
+    <div class="col-sm-9 col-form-label">选择该广告位可接受的广告语言。</div>
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_language }}
       <div class="form-check form-check-inline mr-1">
@@ -37,8 +37,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPlatform" class="col-sm-3 col-form-label text-right">设备平台:</label>
-    <div class="col-sm-9 col-form-label">本广告位所处的硬件设备</div>
+    <label for="inputPlatform" class="col-sm-3 col-form-label text-right">设备平台：</label>
+    <div class="col-sm-9 col-form-label">选择该广告位所在的设备类型。</div>
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_device }}
       <div class="form-check form-check-inline mr-1">
@@ -49,8 +49,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-3 col-form-label text-right">广告位位置:</label>
-    <div class="col-sm-9 col-form-label">本广告位在屏幕上的位置</div>
+    <label for="inputPageLevel" class="col-sm-3 col-form-label text-right">广告位位置：</label>
+    <div class="col-sm-9 col-form-label">选择该广告位在页面或屏幕中的位置。</div>
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_position }}
 		<div class="form-check form-check-inline mr-1">
@@ -61,8 +61,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputType" class="col-sm-3 col-form-label text-right">可接受广告MIME:</label>
-    <div class="col-sm-9 col-form-label">所能接受的广告MIME类。多选</div>
+    <label for="inputType" class="col-sm-3 col-form-label text-right">可接受的广告 MIME 类型：</label>
+    <div class="col-sm-9 col-form-label">可多选。</div>
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.fl_mime }}
         <div class="form-check form-check-inline mr-1">
@@ -73,8 +73,8 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputYaxis" class="col-sm-3 col-form-label text-right">可接受广告特点:</label>
-    <div class="col-sm-9">所能接受的广告特点，多选。</div>
+    <label for="inputYaxis" class="col-sm-3 col-form-label text-right">可接受的广告特征：</label>
+    <div class="col-sm-9">可多选。</div>
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9">{{ range $item := .Other.fl_creative }}
         <div class="form-check form-check-inline mr-1">
@@ -86,8 +86,8 @@
 
 
 <div class="form-group row">
-    <label for="inputClock" class="col-sm-3 col-form-label text-right">展开:</label>
-    <div class="col-sm-9 col-form-label">能接受的广告展开？多选。</div>
+    <label for="inputClock" class="col-sm-3 col-form-label text-right">可接受的广告展开方式：</label>
+    <div class="col-sm-9 col-form-label">可多选。</div>
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.fl_expnd }}
 		<div class="form-check form-check-inline mr-1">
@@ -166,7 +166,7 @@
     <div class="col-sm-3">
 	</div>
     <div class="col-sm-9">
-<button type="submit" class="btn btn-primary">添加广告位!</button>
+<button type="submit" class="btn btn-primary">添加广告位</button>
     </div>
 </div>
 

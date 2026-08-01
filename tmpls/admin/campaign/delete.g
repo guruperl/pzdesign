@@ -1,6 +1,6 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
-删除成功
+广告活动已删除。
 
 {{ template "footer" .}}

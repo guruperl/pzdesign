@@ -5,7 +5,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            推广活动
+                            广告活动
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -19,7 +19,7 @@
                   <th>预算</th>
                   <th>曝光</th>
                   <th>点击</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告活动" data-href="campaign?action=startnew" id="startnewPopup">创建活动</a></th>
+                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告活动" data-href="campaign?action=startnew" id="startnewPopup">创建广告活动</a></th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
@@ -31,9 +31,9 @@
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
-<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">Ad Groups</a></td>
+<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">广告组</a></td>
 <td><a class="btn btn-sm btn-info" href="javascript:void(0);" data-title="活动预算：{{.campaign_name}}" data-href="balance?action=topics&{{$small}}&entitytype_id=41" id="balancePopup">活动预算</a></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('您确定要删除活动（{{.campaign_name}}）吗？此操作不可更改。')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告活动“{{.campaign_name}}”吗？此操作不可撤销。')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
 </tr>
 {{end}}{{end}}</tobdy>
                                 </table>

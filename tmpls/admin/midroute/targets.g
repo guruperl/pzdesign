@@ -24,7 +24,7 @@
       <tr>
         <td>{{.target_id}}</td>
         <td>{{.priority}}</td>
-        <td>{{if .entitytype_pub}}Publisher{{else if .entitytype_site}}Site{{else if .entitytype_slot}}Slot{{else}}Global{{end}}</td>
+        <td>{{if .entitytype_pub}}流量方{{else if .entitytype_site}}流量源{{else if .entitytype_slot}}广告位{{else}}全部流量{{end}}</td>
         <td>{{.entity_id}} {{.entity_name}}</td>
         <td>{{.size_id}} {{.size_name}}</td>
         <td>{{.active}}</td>

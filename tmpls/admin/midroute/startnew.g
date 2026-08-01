@@ -11,8 +11,8 @@
     <div class="form-group col-md-4">
       <label>触发模式</label>
       <select class="form-control" name="trigger_mode">
-        <option value="Fallback"{{if eq $item.trigger_mode "Fallback"}} selected{{end}}>Fallback</option>
-        <option value="Always"{{if eq $item.trigger_mode "Always"}} selected{{end}}>Always</option>
+        <option value="Fallback"{{if eq $item.trigger_mode "Fallback"}} selected{{end}}>Fallback（本地无填充时）</option>
+        <option value="Always"{{if eq $item.trigger_mode "Always"}} selected{{end}}>Always（始终参与竞价）</option>
       </select>
     </div>
     <div class="form-group col-md-4">
@@ -22,8 +22,8 @@
     <div class="form-group col-md-4">
       <label>启用</label>
       <select class="form-control" name="active">
-        <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>Yes</option>
-        <option value="No"{{if eq $item.active "No"}} selected{{end}}>No</option>
+        <option value="Yes"{{if eq $item.active "Yes"}} selected{{end}}>启用</option>
+        <option value="No"{{if eq $item.active "No"}} selected{{end}}>停用</option>
       </select>
     </div>
   </div>

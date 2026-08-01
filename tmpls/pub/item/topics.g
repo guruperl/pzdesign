@@ -1,10 +1,10 @@
 <div class="table-responsive">
 <table class="table table-striped table-nordered table-hover">
 <thead><tr>
-<th>名称</th>
+<th>广告组名称</th>
 <th>价格</th>
 <th>状态</th>
-<th>流量源类</th>
+<th>素材类型</th>
 <th>开始/结束</th>
 </tr></thead>
 <tbody>{{with .Lists}}{{range .}}{{$mime := .qa_mime}}

@@ -2,20 +2,20 @@
 {{ template "ledgerheader" .}}
 
 <div class="card">
-  <div class="card-header">最近24小时 Middleman 结算</div>
+  <div class="card-header">最近 24 小时外部需求方结算</div>
   <div class="card-body">
     <div class="table-responsive">
       <table class="table table-sm table-hover">
 <thead><tr>
 <th>小时</th>
-<th>Win</th>
-<th>Loss</th>
-<th>曝光</th>
+<th>竞价胜出</th>
+<th>竞价未胜出</th>
+<th>展示</th>
 <th>点击</th>
-<th>Charge</th>
-<th>Pay</th>
-<th>Margin</th>
-<th>Margin Rate</th>
+<th>应收</th>
+<th>应付</th>
+<th>毛利</th>
+<th>毛利率</th>
 <th>回调错误</th>
 </tr></thead>
 <tbody>{{range .Lists}}
@@ -44,14 +44,14 @@
       <table class="table table-sm table-hover">
 <thead><tr>
 <th>端点</th>
-<th>Win</th>
-<th>Loss</th>
-<th>曝光</th>
+<th>竞价胜出</th>
+<th>竞价未胜出</th>
+<th>展示</th>
 <th>点击</th>
-<th>Charge</th>
-<th>Pay</th>
-<th>Margin</th>
-<th>Margin Rate</th>
+<th>应收</th>
+<th>应付</th>
+<th>毛利</th>
+<th>毛利率</th>
 <th>回调错误</th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsMidTopBidders}}{{range .}}
@@ -79,14 +79,14 @@
     <div class="table-responsive">
       <table class="table table-sm table-hover">
 <thead><tr>
-<th>Group</th>
-<th>Route Bidder</th>
-<th>Target</th>
-<th>曝光</th>
+<th>路由组</th>
+<th>路由竞价端点</th>
+<th>流量目标</th>
+<th>展示</th>
 <th>点击</th>
-<th>Charge</th>
-<th>Pay</th>
-<th>Margin</th>
+<th>应收</th>
+<th>应付</th>
+<th>毛利</th>
 <th>回调错误</th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsMidTopRoutes}}{{range .}}
@@ -113,13 +113,13 @@
     <div class="table-responsive">
       <table class="table table-sm table-hover">
 <thead><tr>
-<th>Publisher</th>
-<th>曝光</th>
+<th>流量方</th>
+<th>展示</th>
 <th>点击</th>
-<th>Charge</th>
-<th>Pay</th>
-<th>Margin</th>
-<th>Margin Rate</th>
+<th>应收</th>
+<th>应付</th>
+<th>毛利</th>
+<th>毛利率</th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsMidTopPublishers}}{{range .}}
 <tr>

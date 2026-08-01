@@ -1,13 +1,13 @@
 {{define "header"}}
 <!DOCTYPE html> {{$c := .Other.Component}} {{$a := .Other.Action}}
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="流量源广告系统- W8M">
-  <meta name="keyword" content="流量源广告系统">
-  <title>W8M 流量源系统 - 为每个广告位谋求最大收益</title>
+  <meta name="description" content="W8M 流量方（发布商）工作台">
+  <meta name="keyword" content="流量接入,流量方,发布商,广告位">
+  <title>W8M 流量方工作台</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/flag-icon.min.css" rel="stylesheet">
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6, button {
     </button>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
       <li class="nav-item px-3">
-		W8M 流量源公司: <em>{{index .ARGS.p_email 0}}</em>
+		W8M 流量方账户：<em>{{index .ARGS.p_email 0}}</em>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -59,11 +59,11 @@ h1, h2, h3, h4, h5, h6, button {
         </a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-header text-center">
-            <strong>账号</strong>
+            <strong>账户</strong>
           </div>
           <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> 基本设置</a>
           <a class="dropdown-item" href="pub?action=editpass"><i class="fa fa-wrench"></i> 重置密码</a>
-          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> 登出</a>
+          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> 退出登录</a>
         </div>
       </li>
       <button class="navbar-toggler aside-menu-toggler" type="button">
@@ -77,14 +77,14 @@ h1, h2, h3, h4, h5, h6, button {
       <nav class="sidebar-nav">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `pub`) (eq $a `dashboard`) }}active{{end}}" href="pub?action=dashboard"><i class="icon-speedometer"></i> 会员汇总</a>
+            <a class="nav-link {{if and (eq $c `pub`) (eq $a `dashboard`) }}active{{end}}" href="pub?action=dashboard"><i class="icon-speedometer"></i> 账户概况</a>
           </li>
 
           <li class="nav-title">
-            流量源公司
+            流量接入
           </li>
           <li class="nav-item">
-            <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> App和网站</a>
+            <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> 网站与 App</a>
           </li>
           <li class="nav-item">
             <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> 广告审核</a>
@@ -111,7 +111,7 @@ h1, h2, h3, h4, h5, h6, button {
             报表
           </li>
           <li class="nav-item">
-             <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> 收入</a>
+             <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> 收入报表</a>
           </li>
         </ul>
       </nav>

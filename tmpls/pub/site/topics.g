@@ -15,7 +15,7 @@
                   <th>URL</th>
                   <th>上线时间</th>
                   <th>激活状况</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加新站" data-href="site?action=startnew" id="startnewPopup">添加新App或网站</a> </th>
+<th colspan=2 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加流量源" data-href="site?action=startnew" id="startnewPopup">添加网站或 App</a> </th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
@@ -25,7 +25,7 @@
 <td>{{.created}}</td>
 <td>{{.active}}</td>
 <td><a class="btn btn-sm btn-info" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">所有广告位</a></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除此流量源{{.site_name}}吗？此操作不可更改。')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除流量源“{{.site_name}}”吗？此操作不可撤销。')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
 </tr>
 {{end}}{{end}}</tobdy>
 </table>
@@ -73,4 +73,3 @@
 
 </body>
 </html>
-

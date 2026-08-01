@@ -1,6 +1,6 @@
 {{ define "header" }}
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,7 +32,7 @@ h1, h2, h3, h4, h5, h6, button {
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">W8M 系统管理员</a>
     <div class="navbar-brand">
-&nbsp; 欢迎 <em>{{index .ARGS.admin_login 0}}</em> ! 您的ID: <em>{{index .ARGS.admin_id 0}}</em> &nbsp;
+&nbsp; 欢迎 <em>{{index .ARGS.admin_login 0}}</em>，管理员 ID：<em>{{index .ARGS.admin_id 0}}</em> &nbsp;
 	</div>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -49,19 +49,19 @@ h1, h2, h3, h4, h5, h6, button {
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `agent` }} active{{end}}" href="agent?action=topics">
                   <span data-feather="users"></span>
-                  审核单位 {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
+                  代理商 {{ if eq .Other.Component "agent" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
                   <span data-feather="package"></span>
-                  商户 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
+                  广告主 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `payment` }} active{{end}}" href="payment?action=topics">
                   <span data-feather="shopping-cart"></span>
-                  付费记录 {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
+                  付款记录 {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
@@ -79,25 +79,25 @@ h1, h2, h3, h4, h5, h6, button {
               <li class="nav-item">
                 <a class="nav-link{{ if and (eq .Other.Component `ledger`) (eq .Other.Action `topicsMid24Hours`) }} active{{end}}" href="ledger?action=topicsMid24Hours">
                   <span data-feather="bar-chart-2"></span>
-                  Middleman 报表 {{ if and (eq .Other.Component "ledger") (eq .Other.Action "topicsMid24Hours") }}<span class="sr-only">(current)</span>{{ end }}
+                  外部 DSP / ADX 需求方报表 {{ if and (eq .Other.Component "ledger") (eq .Other.Action "topicsMid24Hours") }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `midroute` }} active{{end}}" href="midroute?action=topics">
                   <span data-feather="shuffle"></span>
-                  Middleman 路由 {{ if eq .Other.Component "midroute" }}<span class="sr-only">(current)</span>{{ end }}
+                  外部 DSP / ADX 需求方路由 {{ if eq .Other.Component "midroute" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
                   <span data-feather="cast"></span>
-                  ADX流量源 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
+                  流量方账户 {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `site` }} active{{end}}" href="site?action=topics">
                   <span data-feather="grid"></span>
-                  App站 {{ if eq .Other.Component "site" }}<span class="sr-only">(current)</span>{{ end }}
+                  网站 / App 流量源 {{ if eq .Other.Component "site" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
             </ul>
