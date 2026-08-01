@@ -7,6 +7,63 @@ import (
 	"github.com/guruperl/genelet"
 )
 
+func TestResetpassRequiresMatchingEmail(t *testing.T) {
+	db := openSummerTestDB(t)
+	defer db.Close()
+
+	const table = "testing_resetpass"
+	if _, err := db.Exec(`DROP TABLE IF EXISTS ` + table); err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _, _ = db.Exec(`DROP TABLE IF EXISTS ` + table) }()
+	if _, err := db.Exec(`CREATE TABLE ` + table + ` (
+		id int(10) unsigned NOT NULL,
+		email varchar(255) NOT NULL,
+		passwd varchar(255) NOT NULL,
+		active enum('Yes','No','New') default 'New',
+		PRIMARY KEY (id)
+	)`); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := db.Exec(`INSERT INTO ` + table + ` (id, email, passwd) VALUES (1, 'owner@example.test', 'original')`); err != nil {
+		t.Fatal(err)
+	}
+
+	model := new(Model)
+	model.DB = db
+	model.CurrentTable = table
+	model.CurrentKey = "id"
+	args := make(url.Values)
+	lists := make([]map[string]interface{}, 0)
+	other := make(map[string]interface{})
+	model.SetDefaults(args, &lists, &other, nil)
+	args.Set("id", "1")
+	args.Set("passwd", "replacement")
+	args.Set("email", "different@example.test")
+
+	if err := model.Resetpass(); err != nil {
+		t.Fatal(err)
+	}
+	var stored string
+	if err := db.QueryRow(`SELECT passwd FROM ` + table + ` WHERE id=1`).Scan(&stored); err != nil {
+		t.Fatal(err)
+	}
+	if stored != "original" {
+		t.Fatal("password changed for a non-matching email")
+	}
+
+	args.Set("email", "owner@example.test")
+	if err := model.Resetpass(); err != nil {
+		t.Fatal(err)
+	}
+	if err := db.QueryRow(`SELECT passwd FROM ` + table + ` WHERE id=1`).Scan(&stored); err != nil {
+		t.Fatal(err)
+	}
+	if err := genelet.CheckPasswordHash("replacement", stored); err != nil {
+		t.Fatal("password was not changed for the matching email")
+	}
+}
+
 func TestModelExternal(t *testing.T) {
 	db := openSummerTestDB(t)
 	defer db.Close()

@@ -100,8 +100,8 @@ func (self *Model) Resetpass(extra ...url.Values) error {
 	}
 
 	return self.DoSQL(
-		`UPDATE `+self.CurrentTable+` SET passwd=?, active='Yes' WHERE `+id+`=?`,
-		passwd, ARGS.Get(id))
+		`UPDATE `+self.CurrentTable+` SET passwd=?, active='Yes' WHERE `+id+`=? AND email=?`,
+		passwd, ARGS.Get(id), ARGS.Get("email"))
 }
 
 func (self *Model) Updatepass(extra ...url.Values) error {
