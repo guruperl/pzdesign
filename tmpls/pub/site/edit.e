@@ -5,7 +5,6 @@
 {{$sAttrs := .Other.siteAttrs}}
 
 {{$item := index .Lists 0}}
-{{$first := print "site_id=" $item.site_id "&site_md5=" $item.site_md5 "&site_name=" ($item.site_name | urlquery)}}
 
           <div class="card">
             <div class="card-header">
@@ -100,4 +99,3 @@
 
 </body>
 </html>
-

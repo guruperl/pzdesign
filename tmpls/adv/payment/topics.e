@@ -25,8 +25,7 @@
 <td>{{.entity_id}}</td>
 <td>{{.amount}}</td>
 <td>{{.created}}</td>
-{{$second := print "payment_id=" .payment_id "&payment_md5=" .payment_md5}}
-<td><a href="payment?action=edit&{{$second}}">View</a></td>
+<td><a href="payment?action=edit&payment_id={{.payment_id}}&payment_md5={{.payment_md5}}">View</a></td>
 </tr>{{end}}{{end}}
 </tbody>
 </table>

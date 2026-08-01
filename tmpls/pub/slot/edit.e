@@ -1,9 +1,7 @@
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
-{{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}
 {{$item := index .Lists 0}}
-{{$first := print "slot_id=" $item.slot_id "&slot_md5=" $item.slot_md5 "&slot_name=" ($item.slot_name | urlquery)}}
 
           <div class="card">
             <div class="card-header">

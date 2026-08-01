@@ -91,18 +91,18 @@ h1, h2, h3, h4, h5, h6, button {
           </li>
 
 
-          {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_md5 }} {{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}<li class="nav-title">
+          {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_md5 }}<li class="nav-title">
             {{index .ARGS.site_name 0}} <i class="icon-arrow-down mt-4"></i>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&{{$attach}}"><i class="icon-grid"></i> 所有广告位</a>
+            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-grid"></i> 所有广告位</a>
           </li>
 
-          {{ if and .ARGS.slot_name .ARGS.slot_md5 }} {{$small := print "slot_id=" (index .ARGS.slot_id 0) "&slot_md5=" (index .ARGS.slot_md5 0) "&slot_name=" (index .ARGS.slot_name 0 | urlquery)}}<li class="nav-title">
+          {{ if and .ARGS.slot_name .ARGS.slot_md5 }}<li class="nav-title">
             {{index .ARGS.slot_name 0}}
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `edit`) }}active{{end}}" href="slot?action=edit&{{$small}}&{{$attach}}"> <i class="icon-arrow-right"></i> 编辑</a>
+            <a class="nav-link {{if and (eq $c `slot`) (eq $a `edit`) }}active{{end}}" href="slot?action=edit&slot_id={{index .ARGS.slot_id 0}}&slot_md5={{index .ARGS.slot_md5 0}}&slot_name={{index .ARGS.slot_name 0 | urlquery}}&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"> <i class="icon-arrow-right"></i> 编辑</a>
           </li>{{end}} 
           {{end}}
 

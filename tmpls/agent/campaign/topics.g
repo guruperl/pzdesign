@@ -1,7 +1,6 @@
 {{ template "header" .}}
 {{ template "campaignheader" .}}
 
-{{$attach := print "adv_id=" (index .ARGS.adv_id 0) "&adv_md5=" (index .ARGS.adv_md5 0)}}
 {{$next := (index .ARGS.agent_level 0)}}
 
 <h3>广告活动</h3>
@@ -21,8 +20,8 @@
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>
-{{if ne .active "Yes"}}<a class="btn btn-sm btn-primary" href="campaign?action=authen&campaign_id={{.campaign_id}}&active={{if eq $next `1`}}Pass2{{else}}Yes{{end}}&{{$attach}}">激活</a>
-<a class="btn btn-sm btn-warning" href="campaign?action=authen&campaign_id={{.campaign_id}}&active=No&{{$attach}}">终止</a>{{end}}
+{{if ne .active "Yes"}}<a class="btn btn-sm btn-primary" href="campaign?action=authen&campaign_id={{.campaign_id}}&active={{if eq $next `1`}}Pass2{{else}}Yes{{end}}&adv_id={{index $.ARGS.adv_id 0}}&adv_md5={{index $.ARGS.adv_md5 0}}">激活</a>
+<a class="btn btn-sm btn-warning" href="campaign?action=authen&campaign_id={{.campaign_id}}&active=No&adv_id={{index $.ARGS.adv_id 0}}&adv_md5={{index $.ARGS.adv_md5 0}}">终止</a>{{end}}
 </td>
 			</tr>{{end}}{{end}}
 		</tbody>

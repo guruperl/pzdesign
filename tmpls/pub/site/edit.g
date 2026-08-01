@@ -1,7 +1,6 @@
 
 
 {{$item := index .Lists 0}}
-{{$first := print "site_id=" $item.site_id "&site_md5=" $item.site_md5 "&site_name=" ($item.site_name | urlquery)}}
 
 <form method=post action=site>
 <input type=hidden name="action" value="update" />

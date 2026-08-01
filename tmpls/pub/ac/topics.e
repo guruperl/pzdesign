@@ -50,7 +50,7 @@ Access logic: <input type=radio name=access_order value="Black" {{if eq `Black` 
               <tbody>{{ with .Lists }}{{ range . }}
 <tr><td>{{.company}}</td>
 <td>{{.url}}</td>
-<td><a href="ac?action=delete&ac_id={{.ac_id}}&{{if eq (index $args.entitytype_id 0) "3"}}entitytype_id=3{{else}}{{ print `entytitype_id=31&site_id=` (index $args.site_id 0) `&site_md5=` (index $args.site_md5 0) `&site_name=` (index $args.site_name 0 | urlquery) }}{{end}}">Del</a></td>
+<td><a href="ac?action=delete&ac_id={{.ac_id}}&{{if eq (index $args.entitytype_id 0) "3"}}entitytype_id=3{{else}}entitytype_id=31&site_id={{index $args.site_id 0}}&site_md5={{index $args.site_md5 0}}&site_name={{index $args.site_name 0 | urlquery}}{{end}}">Del</a></td>
 </tr>{{end}}{{end}}
 </tobdy>
 </table>
@@ -88,4 +88,3 @@ Its ID: <input type=text name=other_id size=12 />
 {{ template "footer" }}
 </body>
 </html>
-

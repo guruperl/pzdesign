@@ -24,15 +24,14 @@
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr {{if eq .active "New"}}class="warning"{{else if eq .active "Pause"}}class="danger"{{else}}{{end}}>
-{{$small := print "campaign_id=" .campaign_id "&campaign_md5=" .campaign_md5 "&campaign_name=" (.campaign_name | urlquery)}}
-<td><a href="campaign?action=edit&{{$small}}">{{.campaign_name}}</a></td>
+<td><a href="campaign?action=edit&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}">{{.campaign_name}}</a></td>
 <td>{{.created}}</td>
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
-<td><a class="btn btn-sm btn-primary" href="item?action=topics&{{$small}}">Items</a></td>
-<td><a class="btn btn-sm btn-info" href="item?action=startnew&{{$small}}">Add Item</a></td>
-<td><a class="btn btn-sm btn-success" href="targetname?action=topics&{{$small}}">Audience</a></td>
+<td><a class="btn btn-sm btn-primary" href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}">Items</a></td>
+<td><a class="btn btn-sm btn-info" href="item?action=startnew&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}">Add Item</a></td>
+<td><a class="btn btn-sm btn-success" href="targetname?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}">Audience</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.campaign_name}}?')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">Del</a></td>
 </tr>
 {{end}}{{end}}</tobdy>

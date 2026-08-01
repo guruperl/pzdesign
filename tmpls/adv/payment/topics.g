@@ -51,8 +51,8 @@
 <th>创建时间</th>
 <th>充值状态</th>
 </tr></thead>
-<tbody>{{with .Lists}}{{range .}}{{$second := print "payment_id=" .payment_id "&payment_md5=" .payment_md5}}
-<td><a href="payment?action=edit&{{$second}}">{{.payment_id}}</a></td>
+<tbody>{{with .Lists}}{{range .}}
+<td><a href="payment?action=edit&payment_id={{.payment_id}}&payment_md5={{.payment_md5}}">{{.payment_id}}</a></td>
 <td>{{.paytype_value}}</td>
 <td>{{.amount}}</td>
 <td>{{.created}}</td>

@@ -1,7 +1,6 @@
 {{ template "header" .}}
 {{ template "itemheader" .}}
 
-{{$attach := print "campaign_id=" (index .ARGS.campaign_id 0) "&campaign_md5=" (index .ARGS.campaign_md5 0)}}
 {{$next := (index .ARGS.agent_level 0)}}
 
 <h3>广告组列表</h3>
@@ -23,8 +22,8 @@
 				<td>{{.active}}</td>
 				<td>{{.startx}}</td>
 				<td>
-{{if ne .active "Yes"}}<a class="btn btn-sm btn-primary" href="item?action=authen&item_id={{.item_id}}&active={{if eq $next `1`}}Pass2{{else}}Yes{{end}}&{{$attach}}">通过</a>
-<a class="btn btn-sm btn-warning" href="item?action=authen&item_id={{.item_id}}&active=No&{{$attach}}">不通过</a>{{end}}
+{{if ne .active "Yes"}}<a class="btn btn-sm btn-primary" href="item?action=authen&item_id={{.item_id}}&active={{if eq $next `1`}}Pass2{{else}}Yes{{end}}&campaign_id={{index $.ARGS.campaign_id 0}}&campaign_md5={{index $.ARGS.campaign_md5 0}}">通过</a>
+<a class="btn btn-sm btn-warning" href="item?action=authen&item_id={{.item_id}}&active=No&campaign_id={{index $.ARGS.campaign_id 0}}&campaign_md5={{index $.ARGS.campaign_md5 0}}">不通过</a>{{end}}
 </td>
 			</tr>{{end}}{{end}}
 		</tbody>

@@ -1,4 +1,3 @@
-{{$attach := print "site_id=" (index .ARGS.site_id 0) "&site_md5=" (index .ARGS.site_md5 0) "&site_name=" (index .ARGS.site_name 0 | urlquery)}}
 {{ template "header" .}}
 {{ template "slotheader" .}}
 
@@ -16,18 +15,17 @@
                   <th>设备平台</th>
                   <th>启用状态</th>
                   <th>上线时间</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告位" data-href="slot?action=startnew&{{$attach}}" id="startnewPopup">添加广告位</a></th>
+                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告位" data-href="slot?action=startnew&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}" id="startnewPopup">添加广告位</a></th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
-{{$small := print "slot_id=" .slot_id "&slot_md5=" .slot_md5 "&slot_name=" (.slot_name | urlquery)}}
-<tr><td><a href="javascript:void(0);" data-title="广告位更新：{{.slot_name}}" data-href="slot?action=edit&{{$attach}}&{{$small}}" id="editPopup">{{.slot_name}}</a></td>
+<tr><td><a href="javascript:void(0);" data-title="广告位更新：{{.slot_name}}" data-href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}" id="editPopup">{{.slot_name}}</a></td>
 <td>{{.qa_device_g}}</td>
 <td>{{if eq "Yes" .active}}&check; {{else if eq "No" .active}}&#10007;{{else}}&check;{{end}}</td>
 <td>{{.created}}</td>
 <td><button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">广告码</button></td>
 <td><button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API 接入代码</button></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告位“{{.slot_name}}”吗？此操作不可撤销。')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&{{$attach}}">删除</a></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告位“{{.slot_name}}”吗？此操作不可撤销。')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}">删除</a></td>
 {{end}}</tobdy>
 
 </table>
