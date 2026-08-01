@@ -20,6 +20,9 @@ func (self *Filter) Preset() error {
 	ARGS := self.R.Form
 	action := self.Action
 	who := self.RoleValue
+	if err := summer.RequireAccountEmail(self.C, who, action); err != nil {
+		return err
+	}
 
 	if (who == "pub" && action == "updatepass") || (who == "web" && (action == "insert" || action == "resetpass")) {
 		if ARGS.Get("firstname") == "" {

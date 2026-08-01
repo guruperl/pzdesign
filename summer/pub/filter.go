@@ -24,6 +24,9 @@ func (self *Filter) Preset() error {
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"
 	}
+	if err := summer.RequireAccountEmail(self.C, who, action); err != nil {
+		return err
+	}
 
 	if (who == "pub" && action == "updatepass") ||
 		(who == "web" && (action == "insert" || action == "resetpass")) {

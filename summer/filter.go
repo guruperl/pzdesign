@@ -29,6 +29,46 @@ func CleanUploadName(file string) (string, error) {
 	return name, nil
 }
 
+// AccountEmailAvailable reports whether the public account workflows have a
+// complete SMTP configuration. Registration and password retrieval must check
+// this before they mutate account state or claim that a message was sent.
+func AccountEmailAvailable(config *genelet.Config) bool {
+	if config == nil {
+		return false
+	}
+	mail, ok := config.Blks["_gmail"]
+	if !ok {
+		return false
+	}
+	username := strings.TrimSpace(mail["Username"])
+	if username == "" {
+		username = strings.TrimSpace(os.Getenv("SMTPUSER"))
+	}
+	password := mail["Password"]
+	if password == "" {
+		password = os.Getenv("SMTPPASS")
+	}
+	address := strings.TrimSpace(mail["Address"])
+	if address == "" {
+		address = strings.TrimSpace(os.Getenv("SMTPHOST"))
+	}
+	return address != "" && username != "" && password != "" && strings.TrimSpace(mail["From"]) != ""
+}
+
+func AccountEmailUnavailableError() error {
+	return genelet.Err(1063, "邮件服务暂时停用，请稍后再试或联系技术支持。")
+}
+
+// RequireAccountEmail rejects only the public actions that need to send an
+// account message. Start pages, activation links, and authenticated actions do
+// not depend on SMTP availability.
+func RequireAccountEmail(config *genelet.Config, role, action string) error {
+	if role == "web" && (action == "insert" || action == "retrieve") && !AccountEmailAvailable(config) {
+		return AccountEmailUnavailableError()
+	}
+	return nil
+}
+
 func SafeUploadPath(dir, name string) (string, error) {
 	root, err := filepath.Abs(dir)
 	if err != nil {
