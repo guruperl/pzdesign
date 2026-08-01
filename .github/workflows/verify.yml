@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: guruperl/aofei
-          ref: 880a3c6eb4dddd717f3c19f4809e27b0ec30bd5c
+          ref: 73cb69dc5e86537c2c531b5d1573c6a4c0a610d4
           path: aofei
       - uses: actions/setup-go@v5
         with:
@@ -56,9 +56,10 @@ jobs:
       - name: Public data
         run: ./tools/check-public-data.sh
       - name: Install Gitleaks
-        run: GOWORK=off go install github.com/zricethezav/gitleaks/v8@v8.30.1
+        run: "GOWORK=off go install github.com/zricethezav/gitleaks/v8@v8.30.1"
       - name: Secret history
-        run: "$(go env GOPATH)/bin/gitleaks" git --redact --no-banner .
+        run: |
+          "$(go env GOPATH)/bin/gitleaks" git --redact --no-banner .
       - name: Committed diff hygiene
         env:
           EVENT_NAME: ${{ github.event_name }}
