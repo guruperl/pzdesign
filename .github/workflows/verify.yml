@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: guruperl/aofei
-          ref: 8014203297c1d920001ced642e666e31e9d4543e
+          ref: 880a3c6eb4dddd717f3c19f4809e27b0ec30bd5c
           path: aofei
       - uses: actions/setup-go@v5
         with:
