@@ -1,0 +1,11 @@
+title = "Pzdesign secret scanning"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Ignored logs and uploaded media are not repository inputs"
+paths = [
+  '''^logs/''',
+  '''^www/uploads/''',
+]
