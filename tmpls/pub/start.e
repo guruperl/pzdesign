@@ -33,9 +33,6 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <span class="navbar-brand">W8M <small>Publisher Workspace</small></span>
-    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
       <li class="nav-item px-3">
 		W8M Publisher: <em>{{index .ARGS.p_email 0}}</em>
@@ -58,10 +55,6 @@
           <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> Logout</a>
         </div>
       </li>
-      <button class="navbar-toggler aside-menu-toggler" type="button">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
     </ul>
   </header>
   <div class="app-body">

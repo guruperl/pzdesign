@@ -119,6 +119,7 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 		`href="/css/w8m-workspace.css?v=20260801-3"`,
 		`w8m-workspace theme-publisher`,
 		`<span class="navbar-brand">W8M <small>流量方工作台</small></span>`,
+		`class="navbar-toggler mobile-sidebar-toggler d-lg-none"`,
 		`class="nav-link workspace-account-menu"`,
 		`<span>账户</span>`,
 	} {
@@ -126,7 +127,12 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 			t.Errorf("rendered publisher workspace does not contain %q", want)
 		}
 	}
-	for _, unwanted := range []string{`/img/O.png`, `img-avatar`} {
+	for _, unwanted := range []string{
+		`/img/O.png`,
+		`img-avatar`,
+		`class="navbar-toggler sidebar-toggler d-md-down-none"`,
+		`aside-menu-toggler`,
+	} {
 		if strings.Contains(rendered, unwanted) {
 			t.Errorf("rendered publisher workspace still contains %q", unwanted)
 		}
