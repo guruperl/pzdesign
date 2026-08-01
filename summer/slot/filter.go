@@ -149,8 +149,7 @@ func (self *Filter) After(model *Model) error {
 			item["browser_code"] = browserSample(serverURL, siteStr, item)
 			item["api_code"] = apiSample(serverURL+"/pz", siteStr, item)
 			if created := item["created"]; created != nil {
-				c := created.(string)
-				item["created"] = c[:len(c)-9]
+				item["created"] = summer.DateDisplay(created)
 			}
 		}
 	} else if action == "insert" {

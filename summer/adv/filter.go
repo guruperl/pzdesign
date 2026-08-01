@@ -85,8 +85,7 @@ func (self *Filter) After(model *Model) error {
 
 	if action == "topics" {
 		for _, item := range lists {
-			created := item["created"].(string)
-			item["created"] = created[:len(created)-9]
+			item["created"] = summer.DateDisplay(item["created"])
 		}
 	} else if who == "web" && action == "insert" {
 		email := ARGS.Get("email")

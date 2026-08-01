@@ -7,6 +7,7 @@ import (
 	"encoding/gob"
 	"os"
 	"reflect"
+	"time"
 )
 
 func PackTwo(x, y uint32) string {
@@ -129,4 +130,36 @@ func GrepGeneral(items interface{}, v interface{}) bool {
 		}
 	}
 	return false
+}
+
+func DateDisplay(value interface{}) string {
+	text := sqlTimeString(value)
+	if len(text) >= len("2006-01-02") {
+		return text[:len("2006-01-02")]
+	}
+	return text
+}
+
+func MonthDayDisplay(value interface{}) string {
+	date := DateDisplay(value)
+	if len(date) == len("2006-01-02") {
+		return date[len("2006-"):]
+	}
+	return date
+}
+
+func sqlTimeString(value interface{}) string {
+	switch observed := value.(type) {
+	case time.Time:
+		if observed.IsZero() {
+			return ""
+		}
+		return observed.Format("2006-01-02 15:04:05")
+	case string:
+		return observed
+	case []byte:
+		return string(observed)
+	default:
+		return ""
+	}
 }

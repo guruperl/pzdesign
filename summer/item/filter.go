@@ -150,12 +150,10 @@ func (self *Filter) After(model *Model) error {
 	} else if action == "topics" {
 		for _, item := range lists {
 			if item["startx"] != nil {
-				startx := item["startx"].(string)
-				item["startx"] = startx[5 : len(startx)-9]
+				item["startx"] = summer.MonthDayDisplay(item["startx"])
 			}
 			if item["endx"] != nil {
-				endx := item["endx"].(string)
-				item["endx"] = endx[5 : len(endx)-9]
+				item["endx"] = summer.MonthDayDisplay(item["endx"])
 			}
 		}
 		summer.TranslateOne(lists, "qa_mime", "qa_chinese")
