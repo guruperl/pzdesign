@@ -1,132 +1,99 @@
 {{ template "header" }}
 {{ template "advheader" }}
 
-<form class="form" id="advForm" action=adv method=post>
-<input type=hidden name=action value="insert" />
+<div class="account-card theme-advertiser">
+  <aside class="account-context">
+    <div class="account-context-copy">
+      <span class="account-role-mark"><i class="fa fa-bullseye" aria-hidden="true"></i></span>
+      <p class="account-eyebrow">广告主账户</p>
+      <h2>广告主账户与投放流程</h2>
+      <p>创建账户后，按活动、投放项目和素材的层级组织预算、定向与创意。</p>
+      <ul class="account-benefits">
+        <li>广告活动 → 投放项目 → 素材</li>
+        <li>预算、频次与多维定向管理</li>
+        <li>签名展示、点击与花费报表</li>
+      </ul>
+    </div>
+    <div class="account-context-footer">
+      <a href="/manuals/advertiser.html">注册前阅读广告主手册</a>
+    </div>
+  </aside>
 
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card mx-4">
-          <div class="card-body p-4">
-            <h1>商家注册</h1>
-            <p class="text-muted">开始注册</p>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-star"></i></span>
-              </div>
-              <input type="text" name=company id="domain" class="form-control" placeholder="advertiser.kom">
-            </div>
+  <section class="account-form-panel">
+    <div class="account-form-heading">
+      <span class="account-kicker">账户注册</span>
+      <h1>注册广告主账户</h1>
+      <p>提交后请根据邮件完成验证。账户启用、余额和商务规则由平台运营方确认。</p>
+    </div>
 
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-home"></i></span>
-              </div>
-              <input type="text" name=company id="company" class="form-control" placeholder="公司名">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-user"></i></span>
-              </div>
-              <input type="text" name=lastname id="lastname" class="form-control" placeholder="姓名">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-envelope"></i></span>
-              </div>
-              <input type="text" name=email id="email" class="form-control" placeholder="电子邮箱">
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-              <input type="password" name=passwd id="passwd" class="form-control" placeholder="密码">
-            </div>
-
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-              <input type="password" name=confirm id="confirm" class="form-control" placeholder="再输入密码">
-            </div>
-
-            <div class="input-group mb-4">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="agree" name="agree" value="agree"> 请接受我们的用户协议
-                </label>
-              </div>
-            </div>
-
-            <div class="input-group mb-4">
-            <button type="submit" class="btn btn-block btn-primary">提交注册申请</button>
-            </div>
-
-          </div>
+    <form id="advForm" action="adv" method="post">
+      <input type="hidden" name="action" value="insert">
+      <div class="account-form-grid">
+        <div class="account-field">
+          <label for="domain">企业域名</label>
+          <div class="account-control"><i class="fa fa-globe" aria-hidden="true"></i><input type="text" name="domain" id="domain" class="form-control" placeholder="advertiser.example.com" autocomplete="url"></div>
+        </div>
+        <div class="account-field">
+          <label for="company">公司名称</label>
+          <div class="account-control"><i class="fa fa-building-o" aria-hidden="true"></i><input type="text" name="company" id="company" class="form-control" placeholder="公司或品牌名称" autocomplete="organization"></div>
+        </div>
+        <div class="account-field account-field-wide">
+          <label for="lastname">联系人姓名 <span>*</span></label>
+          <div class="account-control"><i class="fa fa-user-o" aria-hidden="true"></i><input type="text" name="lastname" id="lastname" class="form-control" placeholder="负责人或联系人姓名" autocomplete="name" required></div>
+        </div>
+        <div class="account-field account-field-wide">
+          <label for="email">电子邮箱 <span>*</span></label>
+          <div class="account-control"><i class="fa fa-envelope-o" aria-hidden="true"></i><input type="email" name="email" id="email" class="form-control" placeholder="name@example.com" autocomplete="email" required></div>
+        </div>
+        <div class="account-field">
+          <label for="passwd">密码 <span>*</span></label>
+          <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="输入密码" autocomplete="new-password" required></div>
+        </div>
+        <div class="account-field">
+          <label for="confirm">确认密码 <span>*</span></label>
+          <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="再次输入密码" autocomplete="new-password" required></div>
+        </div>
+        <div class="account-field account-field-wide">
+          <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>我已阅读并接受平台用户协议及账户使用规则。</span></label>
         </div>
       </div>
-    </div>
-</form>
+      <button type="submit" class="account-submit">提交注册申请</button>
+      <div class="account-form-links">
+        <span>已有广告主账户？</span>
+        <a href="/goto/adv/g/campaign?action=topics">登录广告主工作台</a>
+      </div>
+    </form>
+  </section>
+</div>
 
 {{ template "footer" }}
 
-  <!-- Custom scripts required by form validation-->
-  <script>
-$(function (){
+<script>
+$(function () {
   $('#advForm').validate({
     rules: {
-      firstname: 'required',
       lastname: 'required',
-      passwd: {
-        required: true,
-        minlength: 5
-      },
-      confirm: {
-        required: true,
-        minlength: 5,
-        equalTo: '#passwd'
-      },
-      email: {
-        required: true,
-        email: true
-      },
+      passwd: { required: true, minlength: 5 },
+      confirm: { required: true, minlength: 5, equalTo: '#passwd' },
+      email: { required: true, email: true },
       agree: 'required'
     },
     messages: {
-      firstname: 'Please enter your firstname',
-      lastname: 'Please enter your lastname',
-      passwd: {
-        required: 'Please provide a password',
-        minlength: 'Your password must be at least 5 characters long'
-      },
-      confirm: {
-        required: 'Please provide a password',
-        minlength: 'Your password must be at least 5 characters long',
-        equalTo: 'Please enter the same password as above'
-      },
-      email: 'Please enter a valid email address',
-      agree: 'Please accept our policy'
+      lastname: '请输入联系人姓名',
+      passwd: { required: '请输入密码', minlength: '密码至少需要 5 个字符' },
+      confirm: { required: '请再次输入密码', minlength: '密码至少需要 5 个字符', equalTo: '两次输入的密码不一致' },
+      email: '请输入有效的电子邮箱',
+      agree: '请先接受平台用户协议及账户使用规则'
     },
     errorElement: 'em',
-    errorPlacement: function ( error, element ) {
-      error.addClass( 'invalid-feedback' );
-      if ( element.prop( 'type' ) === 'checkbox' ) {
-        error.insertAfter( element.parent( 'label' ) );
-      } else {
-        error.insertAfter( element );
-      }
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      error.appendTo(element.closest('.account-field'));
     },
-    highlight: function ( element, errorClass, validClass ) {
-      $( element ).addClass( 'is-invalid' ).removeClass( 'is-valid' );
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $( element ).addClass( 'is-valid' ).removeClass( 'is-invalid' );
-    }
+    highlight: function (element) { $(element).addClass('is-invalid').removeClass('is-valid'); },
+    unhighlight: function (element) { $(element).addClass('is-valid').removeClass('is-invalid'); }
   });
 });
-  </script>
-
-  </body>
+</script>
+</body>
 </html>

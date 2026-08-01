@@ -51,6 +51,8 @@ jobs:
         run: GOWORK=off go run ./tools/check-templates.go -ext=.g
       - name: Parse English templates
         run: GOWORK=off go run ./tools/check-templates.go -ext=.e
+      - name: Check public Chinese copy
+        run: GOWORK=off go run ./tools/check-public-copy
       - name: Committed diff hygiene
         env:
           EVENT_NAME: ${{ github.event_name }}

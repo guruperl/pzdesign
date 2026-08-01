@@ -33,6 +33,18 @@ Runtime asset groups under `www/`:
 - `1.0.8/` contains publisher and web console assets.
 - `css/`, `js/`, `img/`, and `vendor/` support the public landing page and
   legacy creative/demo pages.
+- `www/css/w8m-account.css` is the shared public registration/login theme:
+  advertiser entry pages use the landing page's coral role color and publisher
+  entry pages use its teal role color. Keep authenticated dashboard styling
+  separate from this public account surface.
+- `manuals/` contains the public Chinese advertiser and publisher web manuals.
+  Their operational content follows the sibling Aofei references
+  `docs/advertiser-dsp-agent-manual.zh-CN.md` and
+  `docs/publisher-manual.zh-CN.md`; keep both editions aligned when user-facing
+  behavior changes.
+- [docs/public-chinese-content-guide.md](docs/public-chinese-content-guide.md)
+  defines the terminology, descriptive-heading style, account/error wording,
+  and typography rules for every unauthenticated W8M page and account email.
 - `uploads/` is ignored and should stay empty in the public repository; runtime
   uploads belong in the application upload directory.
 
@@ -121,14 +133,20 @@ GOWORK=off go test ./...
 GOWORK=off go test ./cmd/unify
 go run ./tools/check-templates.go -ext=.g
 go run ./tools/check-templates.go -ext=.e
+GOWORK=off go run ./tools/check-public-copy
 ```
 
 The `.e` check is intentionally best-effort cleanup coverage. If an English
 variant has no runtime owner, prefer making it parse-clean without changing the
 active `.g` behavior.
 
+The public-copy check requires the complete Chinese advertiser/publisher
+account-action template matrix, preserves reset-form field contracts, and
+rejects retired account terms, slogan headings, raw framework errors, and
+Chinese-page links into the secondary `.e` surface.
+
 `.github/workflows/verify.yml` runs tests, vet, both template parsers, and
-staticcheck on pushes and pull requests. It checks out public Aofei beside this
+staticcheck and the public-copy guard on pushes and pull requests. It checks out public Aofei beside this
 repository so the local `go.mod` replace directive resolves on a clean runner;
 staticcheck keeps the established `ST1000`, `ST1003`, and `ST1006` legacy style
 exclusions.

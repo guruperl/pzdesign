@@ -1,26 +1,17 @@
 {{ define "footer" }}
-      <footer class="app-footer">
-        <span><a href="/">W8M 广告系统</a> © 2025 W8M 科技有限公司</span>
-      </footer>
-  </div>
+    </div>
+  </main>
 
+  <footer class="account-footer">
+    <div class="container">
+      <p>&copy; 2026 W8M 网络有限公司</p>
+      <a href="mailto:support@w8m.com">support@w8m.com</a>
+    </div>
+  </footer>
 
-  <!-- Bootstrap and necessary plugins -->
   <script src="/1.0.8/vendors/js/jquery.min.js"></script>
   <script src="/1.0.8/vendors/js/popper.min.js"></script>
   <script src="/1.0.8/vendors/js/bootstrap.min.js"></script>
-
-  <!-- CoreUI Pro main scripts -->
-
   <script src="/1.0.8/js/app.js"></script>
-
-  <!-- Plugins and scripts required by this views -->
-  <script src="/1.0.8/vendors/js/jquery.maskedinput.min.js"></script>
-  <script src="/1.0.8/vendors/js/moment.min.js"></script>
-  <script src="/1.0.8/vendors/js/select2.min.js"></script>
-  <script src="/1.0.8/vendors/js/daterangepicker.min.js"></script>
-  <!-- Plugins and scripts required by form validation-->
   <script src="/1.0.8/vendors/js/jquery.validate.min.js"></script>
-
 {{ end }}
-

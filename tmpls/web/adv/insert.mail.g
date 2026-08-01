@@ -1,8 +1,8 @@
-商家 {{index .ARGS.firstname 0}}：
+您好，{{index .ARGS.lastname 0}}{{index .ARGS.firstname 0}}：
 
-你好！
-
-请访问如下地址确认邮箱正确，并完成W8M 商家注册：
+你正在注册 W8M 广告主账户。请使用以下链接验证注册邮箱并完成账户注册：
 {{index .ARGS.serverUrl 0}}/goto/web/g/adv?action=activate&adv_id={{index .ARGS.adv_id 0}}&email={{index .ARGS.email 0|urlquery}}&stamp={{index .ARGS.stamp 0}}&md5={{index .ARGS.md5 0}}&firstname={{index .ARGS.firstname 0|urlquery}}&lastname={{index .ARGS.lastname 0|urlquery}}
 
-W8M 网络
+如果这不是你的操作，可以忽略这封邮件。
+
+W8M 广告平台

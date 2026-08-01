@@ -1,38 +1,37 @@
 {{ template "header" }}
 {{ template "pubheader" }}
 
-<form class="form" id="pubRetrieve" action=pub method=post>
-<input type=hidden name=action value="retrieve">
-
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card mx-4">
-          <div class="card-body p-4">
-            <h1>找回密码</h1>
-            <p class="text-muted">流量源由此开始</p>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-envelope"></i></span>
-              </div>
-              <input type="text" name=email id="email" class="form-control" placeholder="注册用电子邮箱">
-            </div>
-
-            <div class="input-group mb-4">
-            <button type="submit" class="btn btn-block btn-primary">提交并继续</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
+<div class="account-card account-card-compact theme-publisher">
+  <aside class="account-context">
+    <div class="account-context-copy">
+      <span class="account-role-mark"><i class="fa fa-key" aria-hidden="true"></i></span>
+      <p class="account-eyebrow">媒体主账户</p>
+      <h2>密码重置</h2>
+      <p>输入注册邮箱后，我们会向已注册账户发送密码重置链接。</p>
     </div>
-</form>
+    <div class="account-context-footer"><a href="/goto/pub/g/site?action=topics">返回媒体主登录</a></div>
+  </aside>
+  <section class="account-form-panel">
+    <div class="account-form-heading">
+      <span class="account-kicker">账户帮助</span>
+      <h1>媒体主账户密码重置</h1>
+      <p>请输入注册媒体主账户时使用的邮箱。</p>
+    </div>
+    <form id="pubRetrieve" action="pub" method="post">
+      <input type="hidden" name="action" value="retrieve">
+      <div class="account-field">
+        <label for="email">注册邮箱</label>
+        <div class="account-control"><i class="fa fa-envelope-o" aria-hidden="true"></i><input type="email" name="email" id="email" class="form-control" placeholder="name@example.com" autocomplete="email" required></div>
+      </div>
+      <button type="submit" class="account-submit">发送密码重置邮件</button>
+    </form>
+  </section>
+</div>
 
 {{ template "footer" }}
 
-  <!-- Custom scripts required by form validation-->
-  <script>
-$(function (){
+<script>
+$(function () {
   $('#pubRetrieve').validate({
     rules: {
       email: {
@@ -40,17 +39,11 @@ $(function (){
         email: true
       }
     },
-    messages: {
-      email: 'Please enter a valid email address'
-    },
+    messages: { email: '请输入有效的注册邮箱' },
     errorElement: 'em',
     errorPlacement: function ( error, element ) {
       error.addClass( 'invalid-feedback' );
-      if ( element.prop( 'type' ) === 'checkbox' ) {
-        error.insertAfter( element.parent( 'label' ) );
-      } else {
-        error.insertAfter( element );
-      }
+      error.appendTo(element.closest('.account-field'));
     },
     highlight: function ( element, errorClass, validClass ) {
       $( element ).addClass( 'is-invalid' ).removeClass( 'is-valid' );
@@ -60,7 +53,6 @@ $(function (){
     }
   });
 });
-  </script>
-
-  </body>
+</script>
+</body>
 </html>

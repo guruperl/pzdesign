@@ -1,65 +1,71 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/admin/favicon.ico">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="W8M 系统管理登录">
+  <meta name="theme-color" content="#0b1f33">
+  <title>系统管理登录｜W8M</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/w8m-account.css?v=20260801-2" rel="stylesheet">
+</head>
 
-    <title>W8M 后台登陆</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/admin/dashboard.css" rel="stylesheet">
-
-  </head>
-
-  <body>
-
-  <form role="form" METHOD="POST" ACTION="/goto/admin/g/{{ .LoginName }}">
-  <INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
-<div class="container-fluid">
-	<h2>后台管理员登陆</h2>
-	<div class="row">
-		<div class="col alert alert-success">
-			{{ .Errorstr }}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-2 form-group">
-			<label>用户名:</lable>
-		</div>
-		<div class="col-10 form-group">
-			<input class="form-control" placeholder="用户名" name="{{.Login}}" autofocus>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-2 form-group">
-			<label>密码:</lable>
-		</div>
-		<div class="col-10 form-group">
-			<input class="form-control" placeholder="密码" name="{{ .Password }}" type="password" value="">
-		</div>
-
-	</div>
-	<div class="row">
-		<div class="col alert alert-success">
-			<button type="submit" class="btn btn-lg btn-success btn-block">登入！</button>
-		</div>
+<body class="w8m-public-account theme-internal">
+  <header class="account-topbar">
+    <div class="container">
+      <a class="account-brand" href="/">W8M <small>系统管理</small></a>
+      <nav class="account-topnav" aria-label="管理登录页导航">
+        <a href="mailto:support@w8m.com">技术支持</a>
+        <a href="/">返回首页</a>
+      </nav>
     </div>
-</div>
-                        </form>
+  </header>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/admin/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="/admin/assets/js/vendor/popper.min.js"></script>
-    <script src="/admin/dist/js/bootstrap.min.js"></script>
+  <main class="account-stage">
+    <div class="container">
+      <div class="account-card account-card-compact theme-internal">
+        <aside class="account-context">
+          <div class="account-context-copy">
+            <span class="account-role-mark"><i class="fa fa-cog" aria-hidden="true"></i></span>
+            <p class="account-eyebrow">内部账户</p>
+            <h2>系统管理</h2>
+            <p>此入口仅供获授权的系统运营和维护人员使用。</p>
+          </div>
+        </aside>
 
-  </body>
+        <section class="account-form-panel">
+          <div class="account-form-heading">
+            <span class="account-kicker">账户登录</span>
+            <h1>系统管理登录</h1>
+            <p>请输入管理员用户名和密码。</p>
+          </div>
+          {{if .Errorstr}}<div class="account-alert"><i class="fa fa-info-circle" aria-hidden="true"></i>
+            {{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}请输入用户名和密码。
+            {{else if eq .Errorstr "Login is expired."}}登录状态已失效，请重新登录。
+            {{else if eq .Errorstr "Too many failed logins."}}登录尝试次数过多，请稍后再试。
+            {{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}用户名或密码不正确，请重新输入。
+            {{else if eq .Errorstr "Please make sure your browser supports cookie."}}登录需要启用 Cookie，请检查浏览器设置。
+            {{else}}暂时无法登录，请检查登录信息后重试。
+            {{end}}
+          </div>{{end}}
+          <form method="post" action="/goto/admin/g/{{ .LoginName }}">
+            <input type="hidden" name="{{ .GoURIName }}" value="{{ .GoURI }}">
+            <div class="account-field">
+              <label for="admin-login-name">管理员用户名</label>
+              <div class="account-control"><i class="fa fa-user-o" aria-hidden="true"></i><input id="admin-login-name" class="form-control" name="{{.Login}}" type="text" placeholder="输入管理员用户名" autocomplete="username" autofocus required></div>
+            </div>
+            <div class="account-field">
+              <label for="admin-login-password">密码</label>
+              <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input id="admin-login-password" class="form-control" name="{{.Password}}" type="password" placeholder="输入密码" autocomplete="current-password" required></div>
+            </div>
+            <button type="submit" class="account-submit">登录系统管理后台</button>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="account-footer"><div class="container"><p>&copy; 2026 W8M 网络有限公司</p><a href="mailto:support@w8m.com">support@w8m.com</a></div></footer>
+</body>
 </html>
