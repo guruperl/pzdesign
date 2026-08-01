@@ -20,7 +20,7 @@ check_pattern "private key material" 'BEGIN (RSA |EC |DSA |OPENSSH )?PRIVATE KEY
 check_pattern "a private home path" '/home/'peter
 check_pattern "personal CSS identifiers" 'peter-'"small(er)?"
 check_pattern "customer email domains" 'kinet'"\\.com"
-check_pattern "retired customer exchange domains" 'leadsadx'"-trade\\.com|example-dsp|example-ad"
+check_pattern "retired customer exchange domains" 'leadsadx'"-trade\\.com|leads"'dsp|pine'"mobi"
 
 if git ls-files 'logs/*' 'www/uploads/*' '*.docx' | grep -q .; then
 	echo "public-data-check: runtime logs, uploads, or DOCX sources are tracked" >&2
