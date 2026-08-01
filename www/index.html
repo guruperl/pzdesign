@@ -1,322 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
   <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="W8M 在线广告一站式服务系统">
+    <meta name="description" content="W8M 为广告主提供广告投放与效果管理，为媒体主提供网站、App 和广告位接入服务。">
     <meta name="author" content="W8M">
-	<link rel="shortcut icon" href="logo.png" />
+    <meta name="theme-color" content="#102a43">
+    <link rel="shortcut icon" href="logo.png">
 
-    <title>W8M 商家流量源公司一站式服务系统</title>
+    <title>W8M 广告投放与媒体接入平台</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom fonts for this template -->
-	<link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Plugin CSS -->
-    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/creative.css" rel="stylesheet">
-
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/w8m-home.css?v=20260801-2" rel="stylesheet">
   </head>
 
   <body id="page-top">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" aria-label="主导航">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">W8M 广告系统</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#page-top" aria-label="W8M 首页">
+          <span class="brand-mark">W8M</span>
+          <span class="brand-copy">广告平台</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="展开导航">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">一站式服务</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">产品特色</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">核心优势</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">定制服务</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">注册</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#login">登入</a>
-            </li>
+          <ul class="navbar-nav ml-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#role-guide">使用指南</a></li>
+            <li class="nav-item"><a class="nav-link" href="#capabilities">平台能力</a></li>
+            <li class="nav-item"><a class="nav-link" href="#help">常见问题</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">联系我们</a></li>
+            <li class="nav-item ml-lg-2"><a class="btn btn-sm btn-outline-light nav-login" href="#entry">登录平台</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <header class="masthead text-center text-white d-flex">
-      <div class="container my-auto">
-        <div class="row">
-          <div class="col-lg-10 mx-auto">
-            <h1 class="text-uppercase">
-              <strong>在线广告一站式服务系统</strong>
-            </h1>
-            <hr>
+    <header class="hero">
+      <div class="container hero-content">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <p class="eyebrow">平台服务</p>
+            <h1>W8M 广告投放与媒体接入平台</h1>
+            <p class="hero-lead">W8M 为广告主提供从活动、素材、定向到报表的完整投放流程，也为媒体主提供网站、App、网页广告码与 API 接入能力。</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="#advertiser-guide" data-role-tab="advertiser">我要投放广告</a>
+              <a class="btn btn-light btn-lg" href="#publisher-guide" data-role-tab="publisher">我要接入流量</a>
+            </div>
           </div>
-          <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-5">精准定位的广告投放,
-拥有优质的流量源资源!</p>
-            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">更多介绍</a>
+          <div class="col-lg-4 d-none d-lg-block">
+            <div class="hero-panel">
+              <span class="hero-panel-label">账户类型</span>
+              <div class="hero-panel-row">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <div><strong>广告主</strong><small>创建活动、配置定向、管理素材</small></div>
+              </div>
+              <div class="hero-panel-row">
+                <i class="fa fa-code" aria-hidden="true"></i>
+                <div><strong>媒体主</strong><small>管理库存、部署广告码、查看收益</small></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </header>
 
-    <section class="bg-primary" id="about">
+    <section class="signal-strip" aria-label="平台特性">
       <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading text-white">一次性全面解决方案!</h2>
-            <hr class="light my-4">
-            <p class="text-faded mb-4">商家登入，即可在各大流量源，流行APP以及广告交易中心AdX上精准投放广告。
-流量源登入，获取私有化采买广告，使用人工智能技术优化广告位收益。
-欢迎广告代理公司，APP开发商和优质流量源的合作!</p>
-
-
-<!--
-<ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active btn btn-light btn-xl" id="publisher-tab" data-toggle="tab" href="#publisher" role="tab" aria-controls="publisher" aria-selected="true">流量源公司注册!</a>
-  </li>
-<li class="nav-item"> </li>
-  <li class="nav-item">
-    <a class="nav-link btn btn-light btn-xl" id="advertiser-tab" data-toggle="tab" href="#advertiser" role="tab" aria-controls="advertiser" aria-selected="false">商家或代理商注册!</a>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="publisher" role="tabpanel" aria-labelledby="publisher-tab">...</div>
-  <div class="tab-pane fade" id="advertiser" role="tabpanel" aria-labelledby="advertiser-tab">aaa.</div>
-</div>
--->
-
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="/goto/web/g/pub?action=startnew">流量源公司注册!</a>
-            <a class="btn btn-light btn-xl js-scroll-trigger" href="/goto/web/g/adv?action=startnew">商家或代理商注册!</a>
-          </div>
+        <div class="row text-center">
+          <div class="col-md-4 signal-item"><i class="fa fa-crosshairs" aria-hidden="true"></i><span>多维定向与访问控制</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-shield" aria-hidden="true"></i><span>签名展示与点击测量</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-exchange" aria-hidden="true"></i><span>网页、SDK 与 OpenRTB 接入</span></div>
         </div>
       </div>
     </section>
 
-    <section id="services">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <h2 class="section-heading">产品特色</h2>
-            <hr class="my-4">
+    <main>
+      <section id="role-guide" class="section role-guide">
+        <div class="container">
+          <div class="section-intro text-center">
+            <p class="eyebrow eyebrow-dark">账户类型</p>
+            <h2>选择适合你的账户类型</h2>
+            <p>广告主用于管理广告投放，媒体主用于管理网站、App 和广告位接入。</p>
           </div>
-        </div>
-      </div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-diamond text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">人口属性</h3>
-              <p class="text-muted mb-0">性别、年龄、星座、生肖、出生地等定向投放。</p>
+
+          <ul class="nav nav-pills role-tabs justify-content-center" id="roleTabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="advertiser-tab" data-toggle="pill" href="#advertiser-guide" role="tab" aria-controls="advertiser-guide" aria-selected="true">
+                <i class="fa fa-bullseye" aria-hidden="true"></i> 广告主 / DSP 代理
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="publisher-tab" data-toggle="pill" href="#publisher-guide" role="tab" aria-controls="publisher-guide" aria-selected="false">
+                <i class="fa fa-globe" aria-hidden="true"></i> 媒体主
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content role-content" id="roleTabContent">
+            <div class="tab-pane fade show active" id="advertiser-guide" role="tabpanel" aria-labelledby="advertiser-tab">
+              <div class="role-heading">
+                <div>
+                  <span class="role-kicker">广告主</span>
+                  <h3>广告主使用流程</h3>
+                  <p>先完善活动结构，再逐步收紧预算、定向与供应规则。保存不等于已经上线，启用前请完成全链路检查。</p>
+                </div>
+                <span class="role-badge">ADV</span>
+              </div>
+
+              <div class="journey-grid">
+                <article class="journey-step"><span>01</span><i class="fa fa-folder-open-o" aria-hidden="true"></i><h4>创建广告活动</h4><p>设置投放周期、总预算、每日预算和访问控制。</p></article>
+                <article class="journey-step"><span>02</span><i class="fa fa-sliders" aria-hidden="true"></i><h4>配置投放项目</h4><p>确定价格、落地页、频次、设备、地域和人群定向。</p></article>
+                <article class="journey-step"><span>03</span><i class="fa fa-picture-o" aria-hidden="true"></i><h4>添加并测试素材</h4><p>核对尺寸、媒体类型、展示像素与点击跳转。</p></article>
+                <article class="journey-step"><span>04</span><i class="fa fa-line-chart" aria-hidden="true"></i><h4>上线并查看报表</h4><p>确认状态与缓存生效，再观察展示、点击和花费。</p></article>
+              </div>
+
+              <div class="role-footer row align-items-center">
+                <div class="col-lg-7">
+                  <h4>上线前重点检查</h4>
+                  <ul class="check-list">
+                    <li>账户、活动、项目和至少一个素材均可投放</li>
+                    <li>预算、时间、素材尺寸与目标广告位一致</li>
+                    <li>Banner 需要点击测量时正确使用 <code>{CLICK_URL}</code></li>
+                  </ul>
+                </div>
+                <div class="col-lg-5 role-actions">
+                  <a class="btn btn-primary" href="/goto/web/g/adv?action=startnew">注册广告主</a>
+                  <a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">广告主登录</a>
+                  <a class="manual-link" href="manuals/advertiser.html">阅读完整中文手册 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="publisher-guide" role="tabpanel" aria-labelledby="publisher-tab">
+              <div class="role-heading publisher-heading">
+                <div>
+                  <span class="role-kicker">媒体主</span>
+                  <h3>媒体主接入流程</h3>
+                  <p>库存属于媒体主账户。使用系统生成的站点与广告位令牌接入，不要自行修改令牌或用请求宽高覆盖平台配置。</p>
+                </div>
+                <span class="role-badge publisher-badge">PUB</span>
+              </div>
+
+              <div class="journey-grid">
+                <article class="journey-step publisher-step"><span>01</span><i class="fa fa-sitemap" aria-hidden="true"></i><h4>创建流量源</h4><p>登记网站域名或 App Bundle，并确认来源主机。</p></article>
+                <article class="journey-step publisher-step"><span>02</span><i class="fa fa-object-group" aria-hidden="true"></i><h4>配置广告位</h4><p>设置尺寸、媒体类型、设备与内容质量规则。</p></article>
+                <article class="journey-step publisher-step"><span>03</span><i class="fa fa-code" aria-hidden="true"></i><h4>部署接入代码</h4><p>复制网页广告码，或使用 SDK/API 样例接入 <code>/pz</code>。</p></article>
+                <article class="journey-step publisher-step"><span>04</span><i class="fa fa-bar-chart" aria-hidden="true"></i><h4>验证接入与查看报表</h4><p>测试填充和无填充，并按报表查看广告位表现。</p></article>
+              </div>
+
+              <div class="role-footer row align-items-center">
+                <div class="col-lg-7">
+                  <h4>接入前重点检查</h4>
+                  <ul class="check-list publisher-checks">
+                    <li>实际页面主机与平台登记的站点主机完全一致</li>
+                    <li>使用广告位页面最新生成的 <code>site</code> 与 <code>slot</code> 令牌</li>
+                    <li><code>200</code> 空结果表示正常无填充，不应快速重复请求</li>
+                  </ul>
+                </div>
+                <div class="col-lg-5 role-actions">
+                  <a class="btn btn-publisher" href="/goto/web/g/pub?action=startnew">注册媒体主</a>
+                  <a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">媒体主登录</a>
+                  <a class="manual-link publisher-link" href="manuals/publisher.html">阅读完整中文手册 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-paper-plane text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">地理位置</h3>
-              <p class="text-muted mb-0">省市区和各种时间维度。</p>
+        </div>
+      </section>
+
+      <section id="capabilities" class="section capabilities">
+        <div class="container">
+          <div class="section-intro text-center">
+            <p class="eyebrow eyebrow-dark">功能说明</p>
+            <h2>平台功能</h2>
+            <p>平台提供广告匹配、定向、素材管理、测量、报表和外部竞价接入功能。</p>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-crosshairs" aria-hidden="true"></i><h3>多维定向</h3><p>按地域、人群、设备、时间、媒体、行业和上传人群组织投放条件。</p></article></div>
+            <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-cubes" aria-hidden="true"></i><h3>多形态素材</h3><p>支持 Banner、视频与原生广告，并按广告位尺寸和媒体要求完成匹配。</p></article></div>
+            <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-check-circle-o" aria-hidden="true"></i><h3>签名测量</h3><p>展示和点击地址使用签名验证，并提供尽力而为的重复事件抑制。</p></article></div>
+            <div class="col-md-6 col-xl-3 mb-4"><article class="capability-card"><i class="fa fa-random" aria-hidden="true"></i><h3>灵活接入</h3><p>媒体可使用网页广告码或 SDK/API；外部 DSP 可通过审核后的 OpenRTB 端点参与。</p></article></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="entry" class="section entry-section">
+        <div class="container">
+          <div class="section-intro text-center text-white">
+            <p class="eyebrow">登录与注册</p>
+            <h2>账户入口</h2>
+            <p>请选择正确的账户入口。注册后的账户状态、余额与生产启用由平台运营规则决定。</p>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-5 mb-4">
+              <article class="entry-card advertiser-entry">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <h3>广告主 / DSP 代理</h3>
+                <p>管理活动、项目、素材、定向、竞价端点与投放报表。</p>
+                <div class="entry-links"><a href="/goto/adv/g/campaign?action=topics">登录广告主工作台</a><a href="manuals/advertiser.html">查看使用手册</a></div>
+              </article>
+            </div>
+            <div class="col-lg-5 mb-4">
+              <article class="entry-card publisher-entry">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+                <h3>媒体主</h3>
+                <p>管理网站、App、广告位、接入代码与近 24 小时报表。</p>
+                <div class="entry-links"><a href="/goto/pub/g/site?action=topics">登录媒体主工作台</a><a href="manuals/publisher.html">查看使用手册</a></div>
+              </article>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">社会属性</h3>
-              <p class="text-muted mb-0">收入、消费能力、高消费特殊人群等!</p>
-            </div>
+        </div>
+      </section>
+
+      <section id="help" class="section help-section">
+        <div class="container">
+          <div class="section-intro text-center">
+            <p class="eyebrow eyebrow-dark">帮助</p>
+            <h2>使用说明与常见问题</h2>
           </div>
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="service-box mt-5 mx-auto">
-              <i class="fa fa-4x fa-heart text-primary mb-3 sr-icons"></i>
-              <h3 class="mb-3">个人偏好</h3>
-              <p class="text-muted mb-0">消费习惯，个人爱好，上网和购物习性以及场景营销!</p>
-            </div>
+          <div class="faq-list">
+            <details><summary>页面显示“已保存”，为什么投放或广告位行为还没有变化？</summary><p>运行请求读取缓存而不是直接查询数据库。请先确认对象状态正确，再联系运营方检查缓存是否已经刷新到运行节点。</p></details>
+            <details><summary>广告主已经有素材，为什么仍然没有竞价？</summary><p>依次检查账户与上层对象状态、投放时间、预算、素材尺寸、USD 底价、供应访问控制和人群定向。只启用素材不足以绕过上层规则。</p></details>
+            <details><summary>媒体请求返回 200，但广告内容为空，是否表示故障？</summary><p>不一定。合法请求在没有合适广告时也会返回 200，空字符串或未填充对象属于正常 no-fill，客户端应隐藏或回收对应容器。</p></details>
+            <details><summary>报表为什么不是即时更新？</summary><p>展示、点击和账务数据由日志聚合与定时任务生成，因此会有处理延迟。上线验收时请同时记录测试时间、账户、活动或广告位信息。</p></details>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="bg-dark text-white" id="portfolio">
-      <div class="container text-center">
-        <h2 class="mb-4">核心优势!</h2>
-		<hr class="my-4">
-        <a class="btn btn-light btn-xl sr-button" href="#">高速</a>
-        <a class="btn btn-light btn-xl sr-button" href="#">精准</a>
-        <a class="btn btn-light btn-xl sr-button" href="#">透明</a>
-        <a class="btn btn-light btn-xl sr-button" href="#">优化</a>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">定制服务!</h2>
-            <hr class="my-4">
-            <p class="mb-5">
-通过智能算法，为商户设定最有效的投放方案。
-平台基于流量源综合分析、用户行为分析，配置投放方案、实现目标人群匹配和精准投放。
-商户可以随时监控投放效果并不断调整投放策略，实现与用户的无缝对接。
-<br> <br>
-让优质流量源获得高CPM，这是我们保证！平台自动为流量源的广告位抓取最高价位广告。流量源端可以通过对流量来源，知名度，内容频道等的改进，提高流量质量，而不断提升CPM。
-            </p>
+      <section id="contact" class="contact-section">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-8"><p class="eyebrow eyebrow-dark">技术支持</p><h2>联系技术支持</h2><p>联系时请提供发生时间、账户类型、广告活动或广告位、请求结果，以及最近修改过的配置。</p></div>
+            <div class="col-lg-4 text-lg-right"><a class="btn btn-primary btn-lg" href="mailto:support@w8m.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> support@w8m.com</a></div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-4 ml-auto text-center">
-            <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
-            <p>123-456-6789</p>
-          </div>
-          <div class="col-lg-4 mr-auto text-center">
-            <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
-            <p>
-              <a href="mailto:support@w8m.com">support@w8m.com</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <section class="p-0" id="login">
-      <div class="container-fluid p-0">
-        <div class="row no-gutters">
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="/goto/pub/g/ledger?action=topicsPub24Hours">
-              <img class="img-fluid" src="img/portfolio/thumbnails/1.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    流量源
-                  </div>
-                  <div class="project-name">
-                    盈利报告
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="/goto/pub/g/site?action=topics">
-              <img class="img-fluid" src="img/portfolio/thumbnails/2.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    流量源
-                  </div>
-                  <div class="project-name">
-                    APP和网站管理
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="/goto/pub/g/ac?action=topics&entitytype_id=3">
-              <img class="img-fluid" src="img/portfolio/thumbnails/3.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    流量源
-                  </div>
-                  <div class="project-name">
-                    黑白名单
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="/goto/adv/g/ledger?action=topicsAdv24Hours">
-              <img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    商家
-                  </div>
-                  <div class="project-name">
-                    投放费用和效果报表
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="/goto/adv/g/campaign?action=topics">
-              <img class="img-fluid" src="img/portfolio/thumbnails/5.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    商家
-                  </div>
-                  <div class="project-name">
-                    广告活动管理
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-lg-4 col-sm-6">
-            <a class="portfolio-box" href="/goto/adv/g/attrname?action=topics">
-              <img class="img-fluid" src="img/portfolio/thumbnails/6.jpg" alt="">
-              <div class="portfolio-box-caption">
-                <div class="portfolio-box-caption-content">
-                  <div class="project-category text-faded">
-                    商家
-                  </div>
-                  <div class="project-name">
-                    自定义投放标签
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
+    <footer class="site-footer">
+      <div class="container d-md-flex justify-content-between align-items-center">
+        <p>&copy; 2026 W8M 网络有限公司</p>
+        <nav aria-label="页脚导航"><a href="manuals/advertiser.html">广告主手册</a><a href="manuals/publisher.html">媒体主手册</a><a href="#page-top">返回顶部</a></nav>
       </div>
-    </section>
-    <section class="bg-dark text-white">
-      <div class="container text-center">
-        <h2 class="mb-4">登录</h2>
-		<hr class="my-4">
-        <a class="btn btn-light btn-xl sr-button" href="/goto/pub/g/site?action=topics">流量源公司由此登入</a>
-        <a class="btn btn-light btn-xl sr-button" href="/goto/adv/g/campaign?action=topics">商家由此登入</a>
-      </div>
-    </section>
+    </footer>
 
-<footer>
-<div class="container my-auto">
-	&copy; 2025 W8M 网络有限公司
-</div>
-</footer>
-    <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      (function () {
+        var nav = document.getElementById('mainNav');
+        function updateNav() {
+          nav.classList.toggle('navbar-scrolled', window.scrollY > 24);
+        }
+        updateNav();
+        window.addEventListener('scroll', updateNav, { passive: true });
 
-    <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+        document.querySelectorAll('[data-role-tab]').forEach(function (link) {
+          link.addEventListener('click', function (event) {
+            event.preventDefault();
+            var tab = link.getAttribute('data-role-tab') === 'publisher' ? '#publisher-tab' : '#advertiser-tab';
+            $(tab).tab('show');
+            document.getElementById('role-guide').scrollIntoView({ behavior: 'smooth' });
+          });
+        });
 
-    <!-- Custom scripts for this template -->
-    <script src="js/creative.min.js"></script>
-
+        document.querySelectorAll('#navbarResponsive a[href^="#"]').forEach(function (link) {
+          link.addEventListener('click', function () { $('#navbarResponsive').collapse('hide'); });
+        });
+      }());
+    </script>
   </body>
-
 </html>

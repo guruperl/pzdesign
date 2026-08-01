@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="W8M 媒体主中文使用手册">
+    <link rel="shortcut icon" href="../logo.png">
+    <title>媒体主使用手册｜W8M</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/w8m-manual.css?v=20260801-2" rel="stylesheet">
+  </head>
+  <body class="publisher-manual">
+    <nav class="navbar navbar-expand manual-nav">
+      <div class="container">
+        <a class="navbar-brand" href="../">W8M <small>用户中心</small></a>
+        <div class="navbar-nav flex-row ml-auto">
+          <a class="nav-link mr-3" href="advertiser.html">广告主手册</a>
+          <a class="nav-link" href="/goto/pub/g/site?action=topics">登录</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="manual-hero">
+      <div class="container">
+        <p class="eyebrow">媒体接入</p>
+        <h1>媒体主使用手册</h1>
+        <p>面向通过 W8M 管理网站、App 和广告位，并使用网页广告码或 <code>POST /pz</code> 接口接入广告服务的媒体主。</p>
+      </div>
+    </header>
+
+    <main class="manual-layout">
+      <div class="container">
+        <div class="row">
+          <aside class="col-lg-3">
+            <nav class="toc" aria-label="手册目录">
+              <strong>本页目录</strong>
+              <a href="#account">1. 账户与库存</a>
+              <a href="#site">2. 创建流量源</a>
+              <a href="#slot">3. 创建广告位</a>
+              <a href="#browser">4. 网页广告码</a>
+              <a href="#sdk">5. SDK 与 API</a>
+              <a href="#identity">6. 身份与代理</a>
+              <a href="#measurement">7. 填充与报表</a>
+              <a href="#errors">8. 错误排查</a>
+              <a href="#checklist">9. 上线验收</a>
+              <a class="toc-action" href="/goto/web/g/pub?action=startnew">注册媒体主 →</a>
+            </nav>
+          </aside>
+
+          <article class="col-lg-9">
+            <div class="manual-content">
+              <section class="manual-section" id="account">
+                <h2>1. 账户与库存层级</h2>
+                <p>媒体主账户用于管理网站、App 和广告位。登录页面位于 <code>/goto/pub/g/...</code>。</p>
+                <div class="hierarchy">媒体主账户<br>└── 流量源 <span>（网站或 App）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── 广告位</div>
+                <p>仪表盘可查看主要广告位、主要广告活动和近 24 小时数据。报表由后台日志和账务任务定时汇总，不是请求级实时数据。</p>
+              </section>
+
+              <section class="manual-section" id="site">
+                <h2>2. 创建流量源</h2>
+                <p>进入“流量源/站点”后选择新增，并检查：</p>
+                <ul>
+                  <li>流量源名称与类型：<code>Web</code> 或 <code>App</code>。</li>
+                  <li>Bundle/Domain：网站填写域名，Android App 填包名，iOS App 填商店数字 ID。</li>
+                  <li>介绍网址、访问控制和启用状态。</li>
+                </ul>
+                <div class="notice"><strong>Web 来源校验：</strong>生产页面发送的 <code>Origin</code> 或 <code>Referer</code> 主机名必须与平台缓存中的站点主机名完全一致。不同子域名不会自动视为同一站点。</div>
+                <p>修改流量源后，如果生成的接入代码仍被拒绝或继续使用旧数据，请联系运营方刷新静态缓存；广告请求链路不会直接查询数据库。</p>
+              </section>
+
+              <section class="manual-section" id="slot">
+                <h2>3. 创建广告位</h2>
+                <p>在流量源下选择“添加广告位”，配置广告位名称、宽高、语言、设备平台、页面位置、可接受媒体类型、素材特点、质量条件、行业规则和状态。</p>
+                <ul>
+                  <li>广告位保存的尺寸是运行时可信尺寸。</li>
+                  <li>浏览器或 SDK 请求中自报的宽高不能覆盖平台配置。</li>
+                  <li>请求令牌携带的尺寸与缓存配置不一致时，服务会返回 <code>400</code>。</li>
+                  <li>修改尺寸后，应重新取得接入代码，不要继续使用旧 <code>slot</code> 令牌。</li>
+                </ul>
+              </section>
+
+              <section class="manual-section" id="browser">
+                <h2>4. 获取并部署网页广告码</h2>
+                <p>广告位列表提供“广告码”“复制”“下载”和“API码”。推荐直接使用页面生成的样例，其中的 <code>site</code> 和 <code>slot</code> 是平台生成的打包标识，不要猜测、截断、交换或手工改写。</p>
+                <pre><code>&lt;script src="https://w8m.com/js/ads.js"&gt;&lt;/script&gt;
+&lt;div id="pz-slot-13" style="width:300px;height:250px"&gt;&lt;/div&gt;
+&lt;script&gt;
+pzLoadAds({
+  "platform": "browser",
+  "site": "&lt;页面生成的 site 令牌&gt;",
+  "adUnits": [{
+    "code": "pz-slot-13",
+    "slot": "&lt;页面生成的 slot 令牌&gt;",
+    "mediaTypes": {"banner": {"size": [300, 250]}}
+  }]
+});
+&lt;/script&gt;</code></pre>
+                <p><code>ads.js</code> 默认根据自身脚本地址推导 <code>/pz</code> 服务地址。若静态文件和广告服务不在同一地址，可显式指定：</p>
+                <pre><code>pzLoadAds(payload, { endpoint: "https://w8m.com/pz" });</code></pre>
+                <h3>部署注意事项</h3>
+                <ul>
+                  <li><code>adUnits[].code</code> 是页面 DOM 元素 ID 和响应顺序标识，不是库存身份；同一请求内非空值必须唯一。</li>
+                  <li><code>site</code> 标识媒体主和流量源，<code>slot</code> 标识广告位与尺寸。</li>
+                  <li>支持 <code>banner</code>、<code>video</code> 和 <code>native</code> 媒体类型。</li>
+                  <li>浏览器请求必须携带有效来源，所有出现的来源主机都必须与缓存站点完全一致。</li>
+                  <li><code>/pz</code> 跨域访问不携带凭据，不能依赖跨站 Cookie 一定可用。</li>
+                </ul>
+                <h3>HTML 响应</h3>
+                <p>省略 <code>responseFormat</code> 或使用 <code>html</code> 时，成功响应是按广告位输入顺序排列的 HTML 字符串数组。未填充位置用空字符串表示：</p>
+                <pre><code>["&lt;iframe ...&gt;&lt;/iframe&gt;&lt;img ...&gt;", ""]</code></pre>
+                <div class="notice">合法请求即使全部无填充也返回 <code>200</code>。前端应隐藏或回收空结果的容器，不要将 no-fill 当成网络错误快速重试。</div>
+              </section>
+
+              <section class="manual-section" id="sdk">
+                <h2>5. SDK 与服务端 API 接入</h2>
+                <p>SDK 请求发送至：</p>
+                <pre><code>POST https://w8m.com/pz
+Content-Type: application/json</code></pre>
+                <p>建议使用广告位页面“API码”中的实际令牌：</p>
+                <pre><code>{
+  "platform": "sdk",
+  "responseFormat": "json",
+  "site": "&lt;页面生成的 site 令牌&gt;",
+  "app": {"bundle": "example.com"},
+  "device": {
+    "ifa": "00000000-0000-0000-0000-000000000000",
+    "ua": "ExampleSDK/1.0"
+  },
+  "user": {"id": "example-user-id"},
+  "adUnits": [{
+    "code": "pz-slot-13",
+    "slot": "&lt;页面生成的 slot 令牌&gt;",
+    "mediaTypes": {"banner": {"size": [300, 250]}}
+  }]
+}</code></pre>
+                <ul>
+                  <li>SDK 可提供 OpenRTB 风格的 <code>app</code>、<code>device</code> 和 <code>user</code> 对象。</li>
+                  <li><code>device.ifa</code> 等设备 ID 进入正常身份和频控流程；HTTP 头可作为 IP、User-Agent 和语言的后备。</li>
+                  <li><code>app.id</code>、<code>app.bundle</code> 或 <code>app.domain</code> 如提供，必须与平台验证出的流量源身份一致。</li>
+                  <li>SDK 可省略 <code>Origin</code> 和 <code>Referer</code>，但只要提供就必须通过主机校验。</li>
+                </ul>
+                <div class="table-scroll">
+                  <table class="manual-table">
+                    <thead><tr><th><code>responseFormat</code></th><th>响应</th></tr></thead>
+                    <tbody>
+                      <tr><td>省略或 <code>html</code></td><td>每个广告位对应一个 HTML 字符串。</td></tr>
+                      <tr><td><code>json</code></td><td>每个广告位对应一个结构化的填充/未填充对象。</td></tr>
+                      <tr><td><code>openrtb</code></td><td>一个 OpenRTB <code>BidResponse</code>；全部无填充时 <code>seatbid</code> 为空。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>客户端负责按广告类型安全展示 <code>adm</code>，并在使用结构化响应时按协议触发展示或点击测量。不要修改平台生成的签名参数。</p>
+              </section>
+
+              <section class="manual-section" id="identity">
+                <h2>6. 浏览器身份、隐私与代理</h2>
+                <ul>
+                  <li>浏览器接入可将 <code>aofei_pz_uid</code> 用作尽力而为的匿名身份。</li>
+                  <li>Cookie 因跨域策略缺失时不阻止投放，系统仍可能使用 IP 与 User-Agent 作为后备。</li>
+                  <li>SDK 请求完全不读取、设置或传递该 Cookie，应提供合规的设备或用户标识。</li>
+                  <li>只有 CDN 或反向代理出口已由运营方加入受信列表时，服务才会采用 <code>X-Forwarded-For</code> 或 <code>X-Real-IP</code>。</li>
+                </ul>
+                <div class="notice">媒体主不应伪造代理请求头。如流量经过 CDN 或反向代理，请与运营方共同验证代理链路和真实客户端地址。</div>
+              </section>
+
+              <section class="manual-section" id="measurement">
+                <h2>7. 填充、测量与报表</h2>
+                <p>通过 <code>/pz</code> 投放的本地素材复用平台的签名展示和点击测量。账务中的展示与花费以有效展示跟踪到达为基础，点击以有效点击跟踪到达为基础。</p>
+                <p>当平台启用外部竞价功能时，本地无填充可使用 Fallback 路由；只有独立 Always 开关同时启用时，外部竞价才可与本地广告竞争。这些选择对媒体主接入协议透明，无需修改 <code>ads.js</code> 或请求结构。</p>
+                <p>报表由日志聚合与账务任务定时生成。持续缺失时，请向运营方提供时间范围、流量源、广告位和请求结果。</p>
+              </section>
+
+              <section class="manual-section" id="errors">
+                <h2>8. 错误与排查</h2>
+                <div class="table-scroll">
+                  <table class="manual-table">
+                    <thead><tr><th>现象</th><th>常见原因</th><th>处理</th></tr></thead>
+                    <tbody>
+                      <tr><td><code>400</code></td><td>JSON 或令牌错误、广告位不存在、尺寸不符、媒体类型不支持、<code>code</code> 重复</td><td>使用广告位页面最新样例，逐项核对请求字段。</td></tr>
+                      <tr><td><code>403</code></td><td>浏览器来源缺失或主机不完全匹配</td><td>核对生产页面主机、<code>Origin</code>、<code>Referer</code> 和缓存站点。</td></tr>
+                      <tr><td><code>413</code></td><td>请求体超过限制</td><td>减少单次请求广告位数量或无关字段。</td></tr>
+                      <tr><td><code>200</code> 且为空</td><td>请求合法，但没有匹配广告</td><td>当作正常 no-fill；排查时提供时间和广告位。</td></tr>
+                      <tr><td>页面没有渲染</td><td>DOM ID 不一致、脚本失败、CSP/网络拦截或未处理空响应</td><td>检查浏览器控制台、网络请求和容器 ID。</td></tr>
+                      <tr><td>修改后仍是旧行为</td><td>运行缓存尚未发布</td><td>联系运营方刷新缓存并确认生成时间。</td></tr>
+                      <tr><td>报表延迟</td><td>日志轮转或账务时间片尚未完成</td><td>等待计划任务；持续缺失时提供时间范围。</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <section class="manual-section" id="checklist">
+                <h2>9. 上线验收清单</h2>
+                <ul class="checklist">
+                  <li>流量源类型、Bundle/Domain、站点主机和状态正确。</li>
+                  <li>广告位尺寸、设备、媒体类型和质量规则正确。</li>
+                  <li>使用广告位页面最新生成的 <code>site</code> 与 <code>slot</code> 令牌。</li>
+                  <li>浏览器实际 <code>Origin</code>/<code>Referer</code> 与缓存站点完全一致。</li>
+                  <li>每个非空 <code>code</code> 在请求内唯一，并有对应 DOM 容器。</li>
+                  <li>测试至少一次有填充和一次无填充响应。</li>
+                  <li>SDK 不依赖 Cookie，并提供合规的设备或用户标识。</li>
+                  <li>与运营方确认缓存刷新、报表延迟和故障联系渠道。</li>
+                </ul>
+                <div class="manual-actions">
+                  <a class="btn btn-publisher" href="/goto/pub/g/site?action=topics">登录媒体主工作台</a>
+                  <a class="btn btn-soft" href="/goto/web/g/pub?action=startnew">注册媒体主</a>
+                  <a class="btn btn-soft" href="advertiser.html">查看广告主手册</a>
+                </div>
+              </section>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <footer class="manual-footer"><div class="container d-flex justify-content-between"><p>&copy; 2026 W8M 网络有限公司</p><a href="../">返回首页</a></div></footer>
+  </body>
+</html>
