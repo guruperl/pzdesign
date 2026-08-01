@@ -223,7 +223,7 @@ func TestModelSummer(t *testing.T) {
 	model.CurrentKey = "slot_id"
 	model.EditPars = []string{"slot_id", "site_id", "slot_name", "qa_device", "qa_position", "fl_expnd", "channel_order", "created", "active"}
 
-	args["slot_id"] = []string{"25"}
+	args["slot_id"] = []string{"1"}
 	err := model.Edit(extra...)
 
 	if err != nil {
@@ -233,8 +233,8 @@ func TestModelSummer(t *testing.T) {
 	one := lists[0]
 	if one["active"].(string) != "Yes" ||
 		one["slot_name"].(string) != "defaultSlot" ||
-		one["slot_id"].(int64) != 25 ||
-		one["site_id"].(int64) != 25 ||
+		one["slot_id"].(int64) != 1 ||
+		one["site_id"].(int64) != 1 ||
 		one["qa_device"].(string) != "0" ||
 		one["qa_position"].(string) != "0" ||
 		one["fl_expnd"].(string) != "0,1,2,3,4,5" ||

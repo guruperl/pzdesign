@@ -59,15 +59,15 @@ From the sibling `aofei` checkout, local Summer config generation can point to
 this repository:
 
 ```bash
-AOFEI_PZDESIGN_ROOT=/srv/aofei/Workspace/pzdesign ./scripts/aofei-local.sh up
+AOFEI_PZDESIGN_ROOT=/srv/aofei/pzdesign ./scripts/aofei-local.sh up
 ```
 
 The generated Summer config should use:
 
 ```text
-ProjectRoot:   /srv/aofei/Workspace/pzdesign
-Template:     /srv/aofei/Workspace/pzdesign/tmpls
-DocumentRoot: /srv/aofei/Workspace/pzdesign/www
+ProjectRoot:   /srv/aofei/pzdesign
+Template:     /srv/aofei/pzdesign/tmpls
+DocumentRoot: /srv/aofei/pzdesign/www
 ```
 
 The module depends on Aofei through the stable `github.com/guruperl/aofei/adminapi`
@@ -105,13 +105,20 @@ and pass the Aofei config paths explicitly. For example, the port-8200 local
 service uses:
 
 ```ini
-WorkingDirectory=/srv/aofei/Workspace/pzdesign
+WorkingDirectory=/srv/aofei/pzdesign
 Environment=GOWORK=off
-ExecStart=/usr/local/go/bin/go run ./cmd/unify -s /srv/aofei/Workspace/aofei/.local/aofei.8200.json -g /srv/aofei/Workspace/aofei/.local/summer.8200.json
+ExecStart=/usr/local/go/bin/go run ./cmd/unify -s /srv/aofei/aofei/.local/aofei.8200.json -g /srv/aofei/aofei/.local/summer.8200.json
 ```
 
 The matching Summer config must set `ProjectRoot` to the pzdesign checkout so
 component loading resolves `summer/*/component.json`.
+
+Public advertiser/publisher registration and password retrieval require a
+complete `Blks._gmail` SMTP block. If it is absent or incomplete, those actions
+return a Chinese maintenance error before database mutation. Login, activation
+links already issued, and authenticated workspaces remain available. Removing
+the block is the supported emergency email-disable control after credential
+exposure.
 
 Bidder portal pages live under:
 
@@ -136,6 +143,8 @@ GOWORK=off go test ./cmd/unify
 go run ./tools/check-templates.go -ext=.g
 go run ./tools/check-templates.go -ext=.e
 GOWORK=off go run ./tools/check-public-copy
+./tools/check-public-data.sh
+gitleaks git --redact .
 ```
 
 The `.e` check is intentionally best-effort cleanup coverage. If an English
@@ -153,3 +162,6 @@ staticcheck and the public-copy guard on pushes and pull requests. It checks out
 repository so the local `go.mod` replace directive resolves on a clean runner;
 staticcheck keeps the established `ST1000`, `ST1003`, and `ST1006` legacy style
 exclusions.
+
+See [SECURITY.md](SECURITY.md) for private vulnerability reporting and the
+repository data boundary.
