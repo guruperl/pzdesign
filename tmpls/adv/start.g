@@ -20,6 +20,7 @@
 
     <!-- Custom CSS -->
     <link href="/sb2/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/css/w8m-workspace.css?v=20260801-2" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <!-- Custom Fonts -->
@@ -31,27 +32,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<style>
-html, body {
-  font-family: "SimSun","宋体";
-}
-h1, h2, h3, h4, h5, h6, button {
-  font-family: "Microsoft YaHei","微软雅黑","SimHei","黑体";
-}
-.nav {
-  font-family: "Microsoft YaHei","微软雅黑","SimHei","黑体";
-}
-.nav-compact {
-	font-size: small
-}
-.nav-compact-sm {
-	font-size: smaller
-}
-</style>
-
 </head>
-
-<body>
+<body class="w8m-workspace theme-advertiser">
 
     <div id="wrapper">
 
@@ -64,7 +46,7 @@ h1, h2, h3, h4, h5, h6, button {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.html">W8M 广告主工作台</a>
+                <span class="navbar-brand">W8M 广告主工作台</span>
             </div>
             <!-- /.navbar-header -->
 

@@ -76,37 +76,64 @@ func TestAdvertiserTemplatesRender(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			ext := filepath.Ext(test.action)
-			files, err := roleFiles(filepath.Join("..", "tmpls"), test.action, ext)
-			if err != nil {
-				t.Fatal(err)
-			}
-			parsed, err := template.New(filepath.Base(test.action)).Option("missingkey=zero").ParseFiles(files...)
-			if err != nil {
-				t.Fatal(err)
-			}
-
-			args := url.Values{}
-			args.Set("a_company", "测试广告主")
-			args.Set("a_email", "adv@example.test")
-			page := &genelet.Tmpl{
-				Lists: test.lists,
-				ARGS:  args,
-				Other: map[string]interface{}{
-					"Action":    strings.TrimSuffix(filepath.Base(test.action), ext),
-					"Component": test.component,
-				},
-				Success: true,
-			}
-			rendered, err := page.Get_page(parsed)
-			if err != nil {
-				t.Fatal(err)
-			}
+			rendered := renderAdvertiserTemplate(t, test.action, test.component, test.lists)
 			if !strings.Contains(rendered, test.contains) {
 				t.Fatalf("rendered template does not contain %q", test.contains)
 			}
 		})
 	}
+}
+
+func TestAdvertiserWorkspaceShell(t *testing.T) {
+	rendered := renderAdvertiserTemplate(
+		t,
+		filepath.Join("..", "tmpls", "adv", "attrname", "topics.g"),
+		"attrname",
+		nil,
+	)
+	for _, want := range []string{
+		`href="/css/w8m-workspace.css?v=20260801-2"`,
+		`<body class="w8m-workspace theme-advertiser">`,
+		`<span class="navbar-brand">W8M 广告主工作台</span>`,
+	} {
+		if !strings.Contains(rendered, want) {
+			t.Errorf("rendered workspace does not contain %q", want)
+		}
+	}
+	if strings.Contains(rendered, `<a class="navbar-brand"`) {
+		t.Error("workspace name must not link away from the advertiser portal")
+	}
+}
+
+func renderAdvertiserTemplate(t *testing.T, action, component string, lists []map[string]interface{}) string {
+	t.Helper()
+	ext := filepath.Ext(action)
+	files, err := roleFiles(filepath.Join("..", "tmpls"), action, ext)
+	if err != nil {
+		t.Fatal(err)
+	}
+	parsed, err := template.New(filepath.Base(action)).Option("missingkey=zero").ParseFiles(files...)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	args := url.Values{}
+	args.Set("a_company", "测试广告主")
+	args.Set("a_email", "adv@example.test")
+	page := &genelet.Tmpl{
+		Lists: lists,
+		ARGS:  args,
+		Other: map[string]interface{}{
+			"Action":    strings.TrimSuffix(filepath.Base(action), ext),
+			"Component": component,
+		},
+		Success: true,
+	}
+	rendered, err := page.Get_page(parsed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return rendered
 }
 
 func advertiserProfileFixture() map[string]interface{} {

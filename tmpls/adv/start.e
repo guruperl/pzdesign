@@ -20,6 +20,7 @@
 
     <!-- Custom CSS -->
     <link href="/sb2/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/css/w8m-workspace.css?v=20260801-2" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <!-- Custom Fonts -->
@@ -33,7 +34,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body class="w8m-workspace theme-advertiser">
 
     <div id="wrapper">
 
@@ -46,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.html">Advertiser at W8M</a>
+                <span class="navbar-brand">Advertiser at W8M</span>
             </div>
             <!-- /.navbar-header -->
 
