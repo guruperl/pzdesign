@@ -24,7 +24,7 @@
 	<canvas class="my-4" id="advChart" width="900" height="380"></canvas>
 
     <!-- Graphs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="/1.0.8/vendors/js/Chart.min.js"></script>
     <script>
       var ctx = document.getElementById("advChart");
       var advChart = new Chart(ctx, {

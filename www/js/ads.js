@@ -41,6 +41,7 @@ function pzLoadAds(data, options) {
 		if (ok) {
 			try {
 				resps = JSON.parse(this.responseText);
+				ok = Array.isArray(resps);
 			} catch (err) {
 				ok = false;
 			}
@@ -51,11 +52,41 @@ function pzLoadAds(data, options) {
 			if (!target) {
 				continue;
 			}
-			target.innerHTML = ok ? (resps[i] || "") : "Ad Request Failed";
+			pzRenderAd(target, ok ? resps[i] : "", adunit, ok ? "no-fill" : "error");
 		}
 	};
 	var url = pzAdEndpoint(options);
 	xhttp.open("POST", url, true);
+	xhttp.timeout = options && options.timeout ? options.timeout : 3000;
 	xhttp.setRequestHeader("Content-Type", "application/json");
-	xhttp.send(JSON.stringify(data)); 
+	xhttp.send(JSON.stringify(data));
+}
+
+function pzRenderAd(target, markup, adunit, emptyState) {
+	while (target.firstChild) {
+		target.removeChild(target.firstChild);
+	}
+	if (typeof markup !== "string" || markup.length === 0) {
+		target.setAttribute("data-pz-state", emptyState || "no-fill");
+		return;
+	}
+	var frame = document.createElement("iframe");
+	frame.setAttribute("title", "Advertisement");
+	frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox");
+	frame.setAttribute("referrerpolicy", "no-referrer");
+	frame.setAttribute("scrolling", "no");
+	frame.setAttribute("frameborder", "0");
+	frame.style.border = "0";
+	frame.style.display = "block";
+	var banner = adunit && adunit.mediaTypes && adunit.mediaTypes.banner;
+	if (banner && banner.size && banner.size.length === 2) {
+		frame.width = String(banner.size[0]);
+		frame.height = String(banner.size[1]);
+	} else {
+		frame.style.width = "100%";
+		frame.style.height = "100%";
+	}
+	frame.srcdoc = markup;
+	target.appendChild(frame);
+	target.setAttribute("data-pz-state", "filled");
 }

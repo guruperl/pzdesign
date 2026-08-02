@@ -2,10 +2,13 @@ package item
 
 import (
 	"fmt"
+	"math"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/guruperl/aofei/match"
+	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -27,6 +30,33 @@ func (self *Filter) Preset() error {
 	}
 
 	if who == "adv" && (action == "insert" || action == "update") {
+		if ARGS.Get("cost_type") != "CPM" {
+			return fmt.Errorf("W8M v1 only supports reviewed USD CPM pricing; legacy ROI, CPC, and CPA records must be migrated explicitly")
+		}
+		cost, err := strconv.ParseFloat(strings.TrimSpace(ARGS.Get("cost")), 64)
+		if err != nil || cost <= 0 || math.IsNaN(cost) || math.IsInf(cost, 0) {
+			return fmt.Errorf("cost must be a finite positive USD CPM value")
+		}
+		ARGS.Set("cost", strconv.FormatFloat(cost, 'f', 6, 64))
+		if err := validateCommercialURL("landing", ARGS.Get("item_click")); err != nil {
+			return err
+		}
+		for _, field := range []string{"imp_url", "click_url"} {
+			for _, raw := range strings.Split(ARGS.Get(field), ",") {
+				if strings.TrimSpace(raw) == "" {
+					continue
+				}
+				if err := validateCommercialURL(field, raw); err != nil {
+					return err
+				}
+			}
+		}
+		if err := summer.ApplyDeliveryForm(ARGS, false); err != nil {
+			return err
+		}
+		if err := summer.ValidateBalanceLimits(ARGS); err != nil {
+			return err
+		}
 		slot := summer.GetSlotScoreArgs(ARGS)
 		ARGS.Set("fl_slot", strconv.FormatUint(uint64(slot), 10))
 		item := summer.GetItemScoreArgs(ARGS)
@@ -72,6 +102,22 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"
 	}
+	activating := ARGS.Get("active") == "Yes" || ARGS.Get("active") == "Pass2"
+	if activating && ((who == "admin" && action == "update") || (who == "agent" && action == "authen")) {
+		commercial := make(map[string]interface{})
+		if err := model.GetSQL(commercial,
+			"SELECT cost_type, cost FROM adv_item WHERE item_id=?", ARGS.Get("item_id")); err != nil {
+			return fmt.Errorf("load item pricing before activation: %w", err)
+		}
+		costType := strings.TrimSpace(genelet.Interface2String(commercial["cost_type"]))
+		cost, err := strconv.ParseFloat(strings.TrimSpace(genelet.Interface2String(commercial["cost"])), 64)
+		if costType != "CPM" || err != nil || cost <= 0 || math.IsNaN(cost) || math.IsInf(cost, 0) {
+			return fmt.Errorf("item cannot be activated until its legacy or invalid price is reviewed and saved as a finite positive USD CPM value")
+		}
+		if err := match.DBValidateItemCreativesForActivation(self.R.Context(), model.DB, ARGS.Get("item_id")); err != nil {
+			return fmt.Errorf("item cannot be activated until its active creatives pass validation: %w", err)
+		}
+	}
 
 	if who == "admin" && action == "topics" {
 		if ARGS.Get("campaign_id") != "" {
@@ -113,6 +159,12 @@ func (self *Filter) After(model *Model) error {
 	other := *model.OTHER
 
 	if action == "startnew" {
+		other["commercial_cost_type"] = "CPM"
+		other["delivery_schedule_rows"] = summer.DeliveryScheduleRows(nil, true)
+		other["delivery_schedule_rows_en"] = summer.DeliveryScheduleRows(nil, false)
+		other["delivery_schedule_enabled"] = false
+		other["delivery_has_timezone"] = false
+		other["delivery_pacing"] = "Fast"
 		for _, name := range []string{"language", "device", "position"} {
 			other["fl_"+name] = summer.LargeOptions(name)
 			summer.TranslateOne(other["fl_"+name], "label", "label_chinese")
@@ -123,6 +175,14 @@ func (self *Filter) After(model *Model) error {
 		}
 	} else if action == "edit" {
 		item := lists[0]
+		item["legacy_cost_type"] = item["cost_type"] != "CPM"
+		other["commercial_cost_type"] = "CPM"
+		other["delivery_schedule_rows"] = summer.DeliveryScheduleRows(item["weekly_schedule"], true)
+		other["delivery_schedule_rows_en"] = summer.DeliveryScheduleRows(item["weekly_schedule"], false)
+		item["delivery_schedule_enabled"] = summer.DeliveryScheduleEnabled(item["weekly_schedule"])
+		other["delivery_schedule_enabled"] = item["delivery_schedule_enabled"]
+		other["delivery_has_timezone"] = false
+		other["delivery_pacing"] = item["pacing_mode"]
 		campItem := summer.UnpackItem((uint32(item["qa_item"].(int64))))
 		for k, v := range campItem.InHash() {
 			item[k] = v
@@ -173,5 +233,17 @@ SET r.weight= r.weight/t.weight`, ARGS.Get("item_id"), ARGS.Get("item_id"))
 		}
 	}
 
+	return nil
+}
+
+func validateCommercialURL(name, raw string) error {
+	u, err := url.Parse(strings.TrimSpace(raw))
+	if err != nil {
+		return fmt.Errorf("%s URL: %w", name, err)
+	}
+	scheme := strings.ToLower(u.Scheme)
+	if (scheme != "http" && scheme != "https") || u.Hostname() == "" || u.User != nil {
+		return fmt.Errorf("%s URL must be an absolute HTTP(S) URL without credentials", name)
+	}
 	return nil
 }

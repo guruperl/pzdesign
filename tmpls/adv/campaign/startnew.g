@@ -22,17 +22,17 @@
 </div>
 
 <div class="form-group row">
-<p>预览链接：网页广告填写落地页域名；Android App 填写包名（例如 <code>com.foo.mygame</code>）；iOS App 填写 App Store 数字 ID。</p>
+<p>外部业务编号：可填写广告主自己的订单或活动编号，仅用于识别，不作为网址使用。</p>
 <p>质量审核图片：填写能代表广告活动内容的图片 URL，不要添加随机防缓存参数。该图片用于广告质量与安全审核。</p>
 </div>
 <div class="form-group row">
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">预览链接：</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">外部业务编号：</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=foreign_id placeholder="编号必填" />
+		<input type=text class="form-control" name=foreign_id placeholder="可选，例如 ORD-2026-001" />
 	</div>
 	<label for="inputCampaigName" class="col-sm-2 col-form-label">质量审核图片：</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=iurl placeholder="IURL" />
+		<input type=url class="form-control" name=iurl placeholder="https://cdn.example/quality.png" />
 	</div>
 </div>
 
@@ -46,6 +46,8 @@
         <input type=text class="form-control" name="endx" value="">
     </div>
 </div>
+
+{{template "deliveryschedule" .}}
 
 <div class="form-group row">
 	<label for="inputCampaigName" class="col-sm-2 col-form-label">活动描述：</label>

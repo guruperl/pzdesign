@@ -1,12 +1,12 @@
 {
   "actions" : {
-    "startnew" : {"groups":["adv"], "options":["no_db","no_method"]},
-    "insert" : {"groups":["admin","adv"], "validate":["adv_id","bidder_name","endpoint_url"]},
-    "topics" : {"groups":["admin","adv"]},
-    "edit" :   {"groups":["admin","adv"], "validate":["bidder_id"]},
-    "update" : {"groups":["admin","adv"], "validate":["bidder_id"]},
-    "approve" : {"groups":["admin"], "validate":["bidder_id","credential_ref"]},
-    "delete" : {"groups":["admin"], "validate":["bidder_id"]}
+    "startnew" : {"groups":["adv"], "permission":["bidder.propose"], "options":["no_db","no_method"]},
+    "insert" : {"groups":["admin","adv"], "permission_adv":["bidder.propose"], "permission_admin":["bidder.profile.create"], "validate":["adv_id","bidder_name","endpoint_url"]},
+    "topics" : {"groups":["admin","adv"], "permission_adv":["bidder.read"], "permission_admin":["bidder.review.read"]},
+    "edit" :   {"groups":["admin","adv"], "permission_adv":["bidder.propose"], "permission_admin":["bidder.review.read"], "validate":["bidder_id"]},
+    "update" : {"groups":["admin","adv"], "permission_adv":["bidder.propose"], "permission_admin":["bidder.profile.edit"], "reauth_admin":["mfa"], "validate":["bidder_id"]},
+    "approve" : {"groups":["admin"], "permission":["bidder.profile.approve"], "resource":["bidder","$f:bidder_id"], "reauth":["mfa"], "validate":["bidder_id","credential_ref"]},
+    "delete" : {"groups":["admin"], "permission":["bidder.profile.delete"], "resource":["bidder","$f:bidder_id"], "reauth":["mfa"], "validate":["bidder_id"]}
   },
 
   "fks" : {

@@ -49,7 +49,8 @@
           </div>
           <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> 基本设置</a>
           <a class="dropdown-item" href="pub?action=editpass"><i class="fa fa-wrench"></i> 重置密码</a>
-          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> 退出登录</a>
+          <a class="dropdown-item" href="security?action=dashboard"><i class="fa fa-shield"></i> 账户安全</a>
+          <form method="post" action="logout"><button class="dropdown-item" type="submit"><i class="fa fa-lock"></i> 退出登录</button></form>
         </div>
       </li>
     </ul>
@@ -94,6 +95,12 @@
           </li>
           <li class="nav-item">
              <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> 收入报表</a>
+          </li>
+          <li class="nav-item">
+             <a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> 流量收益分析</a>
+          </li>
+          <li class="nav-item">
+             {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics" class="nav-link {{if eq $c `hostedpayment`}}active{{end}}"><i class="icon-wallet"></i> 收益结算账户</a>{{end}}
           </li>
         </ul>
       </nav>

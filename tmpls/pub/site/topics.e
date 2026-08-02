@@ -24,7 +24,7 @@
 <td>{{.site_url}}</td>
 <td>{{.created}}</td>
 <td>{{.active}}</td>
-<td><a class="btn btn-sm btn-primary" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">Slots</a></td>
+<td><a class="btn btn-sm btn-primary" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&site_type={{.site_type | urlquery}}">Slots</a></td>
 <!--
 td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">Channels</a></td>
 -->
@@ -44,4 +44,3 @@ td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_
 
 </body>
 </html>
-

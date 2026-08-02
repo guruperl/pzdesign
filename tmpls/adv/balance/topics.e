@@ -8,6 +8,7 @@
 						Total Budget
                     </div>
                     <div class="panel-body">
+						<p class="text-muted">Spend, impression, and click limits are hard delivery limits. Zero or blank means unlimited. Lowering a limit to the consumed value stops later auctions within the documented cache propagation window.</p>
 
 <form name=total class="form" method=post action="balance">
 {{if .ARGS.total_balance_id}}<input type=hidden name=action value="update" />
@@ -26,13 +27,13 @@
 <table class="table table-striped table-condensed">
 <thead> <tr> <th> </th> <th>Budget</th> <th>Impressions</th> <th>Clicks</th> <th> </th> </tr> </thead>
 <tbody> <tr>
-<td>Expected: </td>
+<td>Limit: </td>
 <td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}" /></td>
 <td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}" /></td>
 <td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}" /></td>
 <td><input type=hidden name=balance_id value={{.balance_id}} /><input class="btn btn-sm" type=submit value="Update" /></td>
 </tr> <tr>
-<td>Current: </td>
+<td>Consumed: </td>
 <td>{{ .current_spend}}</td>
 <td>{{ .current_imp}}</td>
 <td>{{ .current_cli}}</td>
@@ -88,13 +89,13 @@
 <table class="table table-striped table-sm">
 <thead> <tr><th> </th> <th>Budget</th> <th>Impressions</th> <th>Clicks</th><th> </th> </tr> </thead>
 <tbody> <tr>
-<td>Expected</td>
+<td>Daily limit</td>
 <td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}"></td>
 <td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}"></td>
 <td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}"></td>
 <td><input type=hidden name=balance_id value={{.balance_id}}><input class="btn btn-sm" type=submit value="Update"></td>
 </tr> <tr>
-<td>Current:</td>
+<td>Daily consumed{{if .current_day}} (UTC {{.current_day}}){{end}}:</td>
 <td>{{ .current_spend}}</td>
 <td>{{ .current_imp}}</td>
 <td>{{ .current_cli}}</td>

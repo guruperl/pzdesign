@@ -44,6 +44,7 @@
 		</div>
 
 	</div>
+	<div class="row"><div class="col-2 form-group"><label for="admin-totp">Authenticator:</label></div><div class="col-10 form-group"><input id="admin-totp" class="form-control" name="{{.TOTP}}" placeholder="Code or recovery code (if enabled)" autocomplete="one-time-code"></div></div>
 	<div class="row">
 		<div class="col alert alert-success">
 			<button type="submit" class="btn btn-lg btn-success btn-block">Login In</button>
@@ -55,8 +56,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/admin/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="/admin/assets/js/vendor/jquery-slim.min.js"></script>
     <script src="/admin/assets/js/vendor/popper.min.js"></script>
     <script src="/admin/dist/js/bootstrap.min.js"></script>
 

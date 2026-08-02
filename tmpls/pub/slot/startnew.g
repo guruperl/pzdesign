@@ -9,6 +9,7 @@
 <input type=hidden name="site_id"   value="{{index .ARGS.site_id 0}}" />
 <input type=hidden name="site_md5"  value="{{index .ARGS.site_md5 0}}" />
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
+<input type=hidden name="site_type" value="{{index .ARGS.site_type 0}}" />
 
 <div class="form-group row">
     <label for="inputSlotName" class="col-sm-3 col-form-label text-right">广告位名称：</label>
@@ -22,6 +23,31 @@
     <div class="col-sm-2">
         <input type=text class="form-control" name="h" value="64" />
 	</div>
+</div>
+
+<div class="card mb-3"><div class="card-header">广告位分类与质量</div><div class="card-body">
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label text-right">媒体形式：</label><div class="col-sm-4"><select class="form-control" name="media_intent"><option value="Unknown">待确认</option><option value="Banner">展示广告</option><option value="Video">视频</option><option value="Native">原生</option><option value="Audio">音频</option><option value="Multi">多格式</option></select></div>
+  <label class="col-sm-2 col-form-label text-right">展示位置：</label><div class="col-sm-4"><select class="form-control" name="placement"><option value="Unknown">待确认</option><option value="AboveFold">首屏</option><option value="InFeed">信息流</option><option value="Interstitial">插屏</option><option value="Rewarded">激励式</option><option value="Sticky">悬停</option><option value="Popup">弹窗</option><option value="Other">其他</option></select></div>
+</div>
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label text-right">呈现场景：</label><div class="col-sm-4"><select class="form-control" name="render_context"><option value="Unknown">待确认</option><option value="WebPage">网页</option><option value="InApp">App 内</option><option value="Player">播放器</option><option value="Fullscreen">全屏</option><option value="Other">其他</option></select></div>
+  <label class="col-sm-2 col-form-label text-right">刷新：</label><div class="col-sm-2"><select class="form-control" name="refresh_mode"><option value="Unknown">待确认</option><option value="None">不刷新</option><option value="Timed">定时</option><option value="Event">事件触发</option></select></div><div class="col-sm-2"><input class="form-control" type="number" name="refresh_seconds" value="0" min="0" max="3600" aria-label="刷新秒数" /></div>
+</div>
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label text-right">广告密度：</label><div class="col-sm-2"><select class="form-control" name="ad_density"><option value="Unknown">待确认</option><option value="Low">低</option><option value="Standard">标准</option><option value="High">高</option></select></div>
+  <label class="col-sm-2 col-form-label text-right">流量质量：</label><div class="col-sm-2"><select class="form-control" name="traffic_quality"><option value="Unknown">待确认</option><option value="Reviewed">人工审核</option><option value="Sampled">抽样审核</option><option value="Suspicious">可疑</option><option value="Blocked">停用</option></select></div>
+  <label class="col-sm-2 col-form-label text-right">流量来源：</label><div class="col-sm-2"><select class="form-control" name="source_quality"><option value="Unknown">待确认</option><option value="OwnedOperated">自有自营</option><option value="Partner">合作方</option><option value="Network">媒体网络</option><option value="Resale">转售</option></select></div>
+</div>
+<div class="form-group row mb-0"><label class="col-sm-2 col-form-label text-right">管理责任：</label><div class="col-sm-4"><select class="form-control" name="management_control"><option value="Unknown">待确认</option><option value="Publisher">流量方管理</option><option value="Operator">平台管理</option><option value="Partner">合作方管理</option></select></div><div class="col-sm-6 text-muted">定时刷新需填写 15–3600 秒；这些字段用于透明度和报表，不改变结算归属。</div></div>
+</div></div>
+
+<div class="form-group row">
+    <label for="inputBidFloor" class="col-sm-3 col-form-label text-right">最低竞价（USD CPM）：</label>
+    <div class="col-sm-3">
+        <input id="inputBidFloor" type=number class="form-control" name="bidfloor" value="0.000000" min="0" step="0.000001" />
+    </div>
+    <div class="col-sm-6 col-form-label">系统始终采用配置底价与请求底价中的较高值；客户端不能降低此底价。</div>
 </div>
 
 <div class="form-group row">

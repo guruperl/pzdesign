@@ -22,7 +22,7 @@
 <tbody>{{with .Lists}}{{range .}}
 <tr {{if eq .active "New"}}class="warning"{{else if eq .active "Pause"}}class="danger"{{else}}{{end}}>
 <td><a href="item?action=edit&campaign_id={{index $.ARGS.campaign_id 0}}&campaign_md5={{index $.ARGS.campaign_md5 0}}&campaign_name={{index $.ARGS.campaign_name 0 | urlquery}}&item_id={{.item_id}}&item_md5={{.item_md5}}&item_name={{.item_name | urlquery}}">{{.item_name}}</a></td>
-<td>{{.cost}} {{.cost_type}}</td>
+	<td>{{if eq .cost_type "CPM"}}{{.cost}} USD CPM{{else}}Disabled legacy {{.cost_type}} record{{end}}</td>
 <td>{{.active}}{{if eq .active "Prepare"}} <a class="btn btn-sm btn-primary" href="item?action=review&item_id={{.item_id}}&active=New&campaign_id={{index $.ARGS.campaign_id 0}}&campaign_md5={{index $.ARGS.campaign_md5 0}}&campaign_name={{index $.ARGS.campaign_name 0 | urlquery}}">Review</a>{{end}}</td>
 <td>{{.qa_mime}}</td>
 <td>{{.startx}}/{{.endx}}</td>

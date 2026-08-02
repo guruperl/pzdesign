@@ -15,6 +15,7 @@
 <input type=hidden name="site_id"   value="{{index .ARGS.site_id 0}}" />
 <input type=hidden name="site_md5"  value="{{index .ARGS.site_md5 0}}" />
 <input type=hidden name="site_name" value="{{index .ARGS.site_name 0}}" />
+<input type=hidden name="site_type" value="{{index .ARGS.site_type 0}}" />
 
 <div class="form-group row">
     <label for="inputSlotName" class="col-sm-2 col-form-label text-right">Slot Name:</label>
@@ -28,6 +29,14 @@
     <div class="col-sm-2">
         <input type=text class="form-control" name="h" value="{{$item.h}}" />
     </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputBidFloor" class="col-sm-2 col-form-label text-right">Minimum bid (USD CPM):</label>
+    <div class="col-sm-4">
+        <input id="inputBidFloor" type=number class="form-control" name="bidfloor" value="{{$item.bidfloor}}" min="0" step="0.000001" />
+    </div>
+    <div class="col-sm-6 col-form-label">The server uses the greater of this configured floor and any request floor.</div>
 </div>
 
 <div class="form-group row">

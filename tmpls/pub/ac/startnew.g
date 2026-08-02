@@ -51,7 +51,7 @@
               <tbody>{{ with .Lists }}{{ range . }}
 <tr><td>{{.adv_name}}</td>
 <td><input class="form-inline" type=checkbox name=adv_ids {{if .othertype_id}}{{if eq 4 .othertype_id}}checked{{end}}{{end}} value="{{.adv_id}}"></td>
-<td><a href="javascript:void(0);" data-title="{{.campaign_name}}" data-href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}" class="openPopup">{{.campaign_name}}</a></td>
+<td><a href="#" data-title="{{.campaign_name}}" data-href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}" class="openPopup">{{.campaign_name}}</a></td>
 <td><input class="form-inline" type=checkbox name=campaign_ids {{if .othertype_id}}{{if eq 41 .othertype_id}}checked{{end}}{{end}} value="{{.campaign_id}}"></td>
 </tr>{{end}}{{end}}
 </tobdy>
@@ -87,7 +87,7 @@
     $('.openPopup').on('click',function(){
       var dataTITLE = $(this).attr('data-title');
       var dataURL = $(this).attr('data-href');
-      $('.modal-title').html(dataTITLE);
+      $('.modal-title').text(dataTITLE);
       $('.modal-body').load(dataURL,function(){
         $('#myModal').modal({show:true});
       });

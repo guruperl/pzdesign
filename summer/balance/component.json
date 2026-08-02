@@ -10,8 +10,8 @@
 
   "insert_pars"    : ["limit_spend","limit_imp","limit_cli","created"],
   "update_pars"    : ["limit_spend","limit_imp","limit_cli","balance_id"],
-    "edit_pars"    : ["limit_spend","limit_imp","limit_cli","current_spend","current_imp","current_cli","created","balance_id"],
-  "topics_pars"    : ["limit_spend","limit_imp","limit_cli","current_spend","current_imp","current_cli","created","balance_id"],
+    "edit_pars"    : ["limit_spend","limit_imp","limit_cli","current_spend","current_imp","current_cli","current_day","created","balance_id"],
+  "topics_pars"    : ["limit_spend","limit_imp","limit_cli","current_spend","current_imp","current_cli","current_day","created","balance_id"],
 
   "current_table"  : "adv_balance",
   "current_key"    : "balance_id",

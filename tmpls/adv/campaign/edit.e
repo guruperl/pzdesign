@@ -27,6 +27,15 @@
 </div>
 
 <div class="form-group row">
+	<label class="col-sm-2 col-form-label">Start (UTC):</label>
+	<div class="col-sm-4"><input type="text" class="form-control" name="startx" value="{{$item.startx}}" placeholder="YYYY-MM-DD HH:MM:SS"></div>
+	<label class="col-sm-2 col-form-label">End (UTC):</label>
+	<div class="col-sm-4"><input type="text" class="form-control" name="endx" value="{{$item.endx}}" placeholder="YYYY-MM-DD HH:MM:SS"></div>
+</div>
+
+{{template "deliveryschedule" .}}
+
+<div class="form-group row">
 	<label for="tableFrequencyCap" class="col-sm-3 col-form-label">Frequency Cap:</label>
 	<div class="col-sm-9">
 <table class="table table-sm table-bordered table-condensed">

@@ -24,8 +24,9 @@
 Welcome&nbsp; <em>{{index .ARGS.agent_login 0}}</em> ! Your Level&nbsp; <em>{{index .ARGS.agent_level 0}}</em>.
 	</div>
       <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap"><a class="nav-link" href="security?action=dashboard">Account security</a></li>
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="logout">Sign out</a>
+          <form method="post" action="logout"><button class="btn btn-link nav-link" type="submit">Sign out</button></form>
         </li>
       </ul>
     </nav>
@@ -37,13 +38,11 @@ Welcome&nbsp; <em>{{index .ARGS.agent_login 0}}</em> ! Your Level&nbsp; <em>{{in
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
-                  <span data-feather="package"></span>
                   Advertisers {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `campaign` }} active{{end}}" href="campaign?action=topics">
-                  <span data-feather="flag"></span>
                   Campaigns {{ if eq .Other.Component "campaign" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>

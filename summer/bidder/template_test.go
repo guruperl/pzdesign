@@ -87,7 +87,7 @@ func templateBidderRow() map[string]interface{} {
 		"endpoint_url":          "https://bidder.example/openrtb",
 		"openrtb_version":       "2.5",
 		"seat":                  "seat-1",
-		"credential_ref":        "secret/ref",
+		"credential_ref":        "BIDDER_HEADERS",
 		"credential_status":     "Active",
 		"timeout_ms":            "100",
 		"active":                "Yes",

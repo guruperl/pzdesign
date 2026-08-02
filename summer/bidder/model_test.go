@@ -18,7 +18,7 @@ func TestApproveCreatesSyntheticChain(t *testing.T) {
 	defer cleanupBidderChain(t, db, bidderID, 0, 0, 0)
 
 	lists := make([]map[string]interface{}, 0)
-	model := approvalModel(db, bidderID, "secret/ref/create", &lists)
+	model := approvalModel(db, bidderID, "BIDDER_HEADERS_CREATE", &lists)
 	if err := model.Approve(); err != nil {
 		t.Fatal(err)
 	}
@@ -26,7 +26,7 @@ func TestApproveCreatesSyntheticChain(t *testing.T) {
 	campaignID, itemID, creativeID := approvedSyntheticIDs(t, db, bidderID)
 	defer cleanupBidderChain(t, db, bidderID, campaignID, itemID, creativeID)
 	assertSyntheticChain(t, db, 1, campaignID, itemID, creativeID)
-	assertBidderApproved(t, db, bidderID, "secret/ref/create")
+	assertBidderApproved(t, db, bidderID, "BIDDER_HEADERS_CREATE")
 	if len(lists) != 1 || lists[0]["active"] != "Yes" {
 		t.Fatalf("approval lists = %#v", lists)
 	}
@@ -42,7 +42,7 @@ func TestApproveReusesExistingSyntheticChain(t *testing.T) {
 	defer cleanupBidderChain(t, db, bidderID, campaignID, itemID, creativeID)
 
 	lists := make([]map[string]interface{}, 0)
-	model := approvalModel(db, bidderID, "secret/ref/reuse", &lists)
+	model := approvalModel(db, bidderID, "BIDDER_HEADERS_REUSE", &lists)
 	if err := model.Approve(); err != nil {
 		t.Fatal(err)
 	}
@@ -52,7 +52,7 @@ func TestApproveReusesExistingSyntheticChain(t *testing.T) {
 		t.Fatalf("synthetic IDs = %d/%d/%d, want %d/%d/%d",
 			gotCampaignID, gotItemID, gotCreativeID, campaignID, itemID, creativeID)
 	}
-	assertBidderApproved(t, db, bidderID, "secret/ref/reuse")
+	assertBidderApproved(t, db, bidderID, "BIDDER_HEADERS_REUSE")
 }
 
 func TestApproveRejectsPartialSyntheticChain(t *testing.T) {
@@ -65,7 +65,7 @@ func TestApproveRejectsPartialSyntheticChain(t *testing.T) {
 	defer cleanupBidderChain(t, db, bidderID, campaignID, itemID, creativeID)
 
 	lists := make([]map[string]interface{}, 0)
-	model := approvalModel(db, bidderID, "secret/ref/partial", &lists)
+	model := approvalModel(db, bidderID, "BIDDER_HEADERS_PARTIAL", &lists)
 	if err := model.Approve(); err == nil || !strings.Contains(err.Error(), "partial synthetic") {
 		t.Fatalf("Approve error = %v, want partial synthetic error", err)
 	}
@@ -84,7 +84,7 @@ func TestApproveRejectsWrongAdvertiserChain(t *testing.T) {
 	defer cleanupBidderChain(t, db, bidderID, campaignID, itemID, creativeID)
 
 	lists := make([]map[string]interface{}, 0)
-	model := approvalModel(db, bidderID, "secret/ref/wrong", &lists)
+	model := approvalModel(db, bidderID, "BIDDER_HEADERS_WRONG", &lists)
 	if err := model.Approve(); err == nil || !strings.Contains(err.Error(), "does not belong") {
 		t.Fatalf("Approve error = %v, want advertiser-chain error", err)
 	}

@@ -35,8 +35,9 @@ h1, h2, h3, h4, h5, h6, button {
 &nbsp; 欢迎，<em>{{index .ARGS.agent_login 0}}</em>；权限级别：<em>{{index .ARGS.agent_level 0}}</em> &nbsp;
 	</div>
       <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap"><a class="nav-link" href="security?action=dashboard">账户安全</a></li>
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="logout">退出</a>
+          <form method="post" action="logout"><button class="btn btn-link nav-link" type="submit">退出</button></form>
         </li>
       </ul>
     </nav>
@@ -48,13 +49,11 @@ h1, h2, h3, h4, h5, h6, button {
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
-                  <span data-feather="package"></span>
                   广告主账户 {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `campaign` }} active{{end}}" href="campaign?action=topics">
-                  <span data-feather="flag"></span>
                   广告活动 {{ if eq .Other.Component "campaign" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>

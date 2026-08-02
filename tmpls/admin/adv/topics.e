@@ -10,7 +10,6 @@
         	<th>Name</th>
         	<th>company</th>
 			<th>Active</th>
-            <th>Balance</th>
             <th>Created</th>
             <th></th>
             <th></th>
@@ -22,7 +21,6 @@
 				<td>{{.firstname}}</td>
 				<td>{{.company}}</td>
 				<td>{{.active}}</td>
-				<td>{{.balance}}</td>
 				 <td>{{.created}}</td>
 				<td>
 {{if eq .active "New"}}<a class="btn btn-sm btn-primary" href="adv?action=update&active=Yes&adv_id={{.adv_id}}">Activate</a>{{end}}

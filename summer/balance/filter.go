@@ -33,6 +33,11 @@ func (self *Filter) Preset() error {
 	}
 
 	ARGS := self.R.Form
+	if self.Action == "insert" || self.Action == "update" {
+		if err := summer.ValidateBalanceLimits(ARGS); err != nil {
+			return err
+		}
+	}
 	//action := self.Action
 	//who := self.RoleValue
 

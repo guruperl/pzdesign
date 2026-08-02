@@ -1,0 +1,8 @@
+{{ template "header" .}}
+{{ template "ledgerheader" .}}
+<h2>流量收益分析</h2>
+<p>数据按 UTC 汇总，金额为 USD。报表只读，不会更改流量源、广告位或结算信息。</p>
+<form method="get" action="ledger"><input type="hidden" name="action" value="topicsMarketplace"><label>截止日期 <input type="date" name="day" value="{{index .ARGS.day 0}}"></label><label>回溯天数 <input type="number" min="0" max="90" name="idays" value="{{index .ARGS.idays 0}}"></label><label>最多行数 <input type="number" min="1" max="200" name="top" value="{{index .ARGS.top 0}}"></label><button type="submit">查看</button><a href="../json/ledger?action=topicsMarketplace&amp;day={{index .ARGS.day 0}}&amp;idays={{index .ARGS.idays 0}}&amp;top={{index .ARGS.top 0}}">导出 JSON</a></form>
+<h3>数据新鲜度</h3>{{with .Other.ledger_topicsMarketplaceFreshness}}{{range .}}<p>投放事实：{{.report_state}}，更新至 {{.report_through}}；日报：{{.daily_state}}，更新至 {{.daily_through}}。转化数据不适用于流量方报表。</p>{{end}}{{end}}<p>“unavailable / partial” 表示数据源不可确认或尚未完整，不能按真实的零收入解释。</p>
+<h3>流量维度明细</h3><table><thead><tr><th>需求来源</th><th>流量源</th><th>广告位</th><th>国家 / 地区</th><th>设备</th><th>曝光</th><th>点击</th><th>CTR</th><th>收入（USD）</th><th>有效 CPM</th></tr></thead><tbody>{{range .Lists}}<tr><td>{{.demand_source}}</td><td>{{.site_name}}</td><td>{{.slot_name}}</td><td>{{with .country_name}}{{.}}{{else}}未知{{end}}{{with .state_name}} / {{.}}{{end}}</td><td>{{.device_os_name}} / {{.device_type_name}}</td><td>{{.imps}}</td><td>{{.clis}}</td><td>{{.ctr | printf "%.4f"}}</td><td>{{.revenue_usd}}</td><td>{{.effective_cpm | printf "%.6f"}}</td></tr>{{end}}</tbody></table>
+{{ template "footer" }}

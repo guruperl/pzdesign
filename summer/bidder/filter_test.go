@@ -13,7 +13,7 @@ func TestAdvPresetCannotSetOperatorFields(t *testing.T) {
 		"synthetic_campaign_id": {"7"},
 		"synthetic_item_id":     {"8"},
 		"synthetic_creative_id": {"9"},
-		"credential_ref":        {"secret/ref"},
+		"credential_ref":        {"BIDDER_HEADERS"},
 		"credential_status":     {"Active"},
 		"active":                {"Yes"},
 	}
@@ -72,7 +72,7 @@ func TestAdvAfterHidesOperatorFields(t *testing.T) {
 			"synthetic_campaign_id": "7",
 			"synthetic_item_id":     "8",
 			"synthetic_creative_id": "9",
-			"credential_ref":        "secret/ref",
+			"credential_ref":        "BIDDER_HEADERS",
 			"credential_status":     "Active",
 			"active":                "Yes",
 		},
@@ -128,6 +128,17 @@ func TestValidateEndpointURL(t *testing.T) {
 	}
 }
 
+func TestValidateEndpointFieldsRejectsNonPortableCredentialReference(t *testing.T) {
+	form := url.Values{"credential_ref": {"secret/ref"}}
+	if err := validateEndpointFields(form, "update"); err == nil {
+		t.Fatal("nonportable credential reference was accepted")
+	}
+	form.Set("credential_ref", "BIDDER_HEADERS_01")
+	if err := validateEndpointFields(form, "update"); err != nil {
+		t.Fatalf("portable credential reference: %v", err)
+	}
+}
+
 func TestNormalizeTimeout(t *testing.T) {
 	form := url.Values{"endpoint_url": {"https://bidder.example/openrtb"}}
 	if err := validateEndpointFields(form, "insert"); err != nil {
@@ -156,5 +167,43 @@ func TestNormalizeTimeout(t *testing.T) {
 	form.Set("timeout_ms", "5001")
 	if err := validateEndpointFields(form, "update"); err == nil {
 		t.Fatal("timeout_ms=5001 accepted, want validation failure")
+	}
+}
+
+func TestPartnerProfileNormalizesExactOpenRTB25AndSeat(t *testing.T) {
+	form := url.Values{
+		"endpoint_url": {"https://bidder.example/openrtb"},
+		"seat":         {"  buyer-seat  "},
+	}
+	if err := validateEndpointFields(form, "insert"); err != nil {
+		t.Fatal(err)
+	}
+	if got := form.Get("openrtb_version"); got != "2.5" {
+		t.Fatalf("openrtb_version = %q, want 2.5", got)
+	}
+	if got := form.Get("seat"); got != "buyer-seat" {
+		t.Fatalf("seat = %q, want normalized seat", got)
+	}
+
+	for name, values := range map[string]url.Values{
+		"version": {
+			"endpoint_url":    {"https://bidder.example/openrtb"},
+			"openrtb_version": {"2.6"},
+		},
+		"fragment": {
+			"endpoint_url":    {"https://bidder.example/openrtb#secret"},
+			"openrtb_version": {"2.5"},
+		},
+		"seat control": {
+			"endpoint_url":    {"https://bidder.example/openrtb"},
+			"openrtb_version": {"2.5"},
+			"seat":            {"one\ntwo"},
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if err := validateEndpointFields(values, "insert"); err == nil {
+				t.Fatal("invalid partner profile was accepted")
+			}
+		})
 	}
 }

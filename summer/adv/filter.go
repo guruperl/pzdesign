@@ -24,16 +24,21 @@ func (self *Filter) Preset() error {
 		return err
 	}
 
-	if (who == "pub" && action == "updatepass") || (who == "web" && (action == "insert" || action == "resetpass")) {
+	if (who == "adv" && action == "updatepass") || (who == "web" && (action == "insert" || action == "resetpass")) {
 		if ARGS.Get("firstname") == "" {
 			ARGS.Set("firstname", ARGS.Get("lastname"))
 		}
 		if ARGS.Get("passwd") == ARGS.Get("confirm") {
-			hash, err := genelet.HashPassword(ARGS.Get("passwd"))
-			if err != nil {
+			if err := genelet.ValidatePassword(ARGS.Get("passwd")); err != nil {
 				return err
 			}
-			ARGS.Set("passwd", hash)
+			if !(who == "adv" && action == "updatepass" && self.Identity != nil) {
+				hash, err := genelet.HashPassword(ARGS.Get("passwd"))
+				if err != nil {
+					return err
+				}
+				ARGS.Set("passwd", hash)
+			}
 			ARGS.Del("confirm")
 		} else {
 			return genelet.Err(3102)
@@ -43,6 +48,11 @@ func (self *Filter) Preset() error {
 	if who == "web" && (action == "activate" || action == "startreset" || action == "resetpass") {
 		if ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("adv_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
 			return genelet.Err(3102)
+		}
+		if self.Identity != nil && (action == "startreset" || action == "resetpass") {
+			if err := self.Identity.ValidateRecoveryTimestamp(ARGS.Get("stamp")); err != nil {
+				return genelet.Err(3102)
+			}
 		}
 	} else if ARGS.Get("_gadmin") != "1" && action == "update" {
 		if ARGS.Get("active") != "" {

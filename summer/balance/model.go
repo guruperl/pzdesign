@@ -27,12 +27,12 @@ func (self *Model) Topics(extra ...url.Values) error {
 	}
 
 	return self.SelectSQL(self.LISTS,
-		`SELECT "total_balance_id" AS which, b.balance_id, limit_spend, limit_imp, limit_cli, current_spend, current_imp, current_cli
+		`SELECT "total_balance_id" AS which, b.balance_id, limit_spend, limit_imp, limit_cli, current_spend, current_imp, current_cli, current_day
 FROM adv_balance b
 INNER JOIN `+table+` c ON (b.balance_id=c.total_balance_id)
 WHERE c.`+idname+`=?
 UNION
-SELECT "daily_balance_id" AS which, b.balance_id, limit_spend, limit_imp, limit_cli, current_spend, current_imp, current_cli
+SELECT "daily_balance_id" AS which, b.balance_id, limit_spend, limit_imp, limit_cli, current_spend, current_imp, current_cli, current_day
 FROM adv_balance b
 INNER JOIN `+table+` c ON (b.balance_id=c.daily_balance_id)
 WHERE c.`+idname+`=?`, entityID, entityID)

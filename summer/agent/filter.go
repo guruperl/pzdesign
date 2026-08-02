@@ -24,6 +24,9 @@ func (self *Filter) Preset() error {
 	}
 
 	if who == "admin" && action == "insert" {
+		if err := genelet.ValidatePassword(ARGS.Get("passwd")); err != nil {
+			return err
+		}
 		hash, err := genelet.HashPassword(ARGS.Get("passwd"))
 		if err != nil {
 			return err

@@ -19,14 +19,15 @@
           </div>
           <div class="form-group">
             <label>OpenRTB 版本</label>
-            <input class="form-control" name="openrtb_version" value="{{$item.openrtb_version}}">
+            <input class="form-control" name="openrtb_version" value="{{$item.openrtb_version}}" readonly>
+            <p class="help-block">当前合作方协议固定使用 OpenRTB 2.5。</p>
           </div>
           <div class="form-group">
-            <label>Seat</label>
+            <label>买方席位（Seat，可选）</label>
             <input class="form-control" name="seat" value="{{$item.seat}}">
           </div>
           <div class="form-group">
-            <label>超时毫秒</label>
+            <label>请求超时（毫秒）</label>
             <input class="form-control" type="number" min="1" max="5000" name="timeout_ms" value="{{$item.timeout_ms}}">
           </div>
           <div class="form-group">

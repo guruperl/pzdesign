@@ -18,19 +18,21 @@
   </div>
   <div class="form-group">
     <label>OpenRTB 版本</label>
-    <input class="form-control" name="openrtb_version" value="{{$item.openrtb_version}}">
+    <input class="form-control" name="openrtb_version" value="{{$item.openrtb_version}}" readonly>
+    <p class="help-block">当前合作方协议固定使用 OpenRTB 2.5。</p>
   </div>
   <div class="form-group">
-    <label>Seat</label>
+    <label>买方席位（Seat，可选）</label>
     <input class="form-control" name="seat" value="{{$item.seat}}">
   </div>
   <div class="form-group">
-    <label>超时毫秒</label>
+    <label>请求超时（毫秒）</label>
     <input class="form-control" type="number" min="1" max="5000" name="timeout_ms" value="{{$item.timeout_ms}}">
   </div>
   <div class="form-group">
-    <label>凭证引用</label>
+    <label>凭证环境变量名</label>
     <input class="form-control" name="credential_ref" value="{{$item.credential_ref}}">
+    <p class="help-block">仅填写变量名，例如 BIDDER_HEADERS；凭证值不得写入数据库。</p>
   </div>
   <div class="form-group">
     <label>凭证状态</label>
@@ -70,8 +72,9 @@
 <form method="post" action="bidder?action=approve">
   <input type="hidden" name="bidder_id" value="{{$item.bidder_id}}">
   <div class="form-group">
-    <label>审批凭证引用</label>
+    <label>审批凭证环境变量名</label>
     <input class="form-control" name="credential_ref" value="{{$item.credential_ref}}" required>
+    <p class="help-block">审批只保存变量名；先在灰度服务环境安全注入对应 JSON 请求头。</p>
   </div>
   <button type="submit" class="btn btn-success">审批启用</button>
 </form>

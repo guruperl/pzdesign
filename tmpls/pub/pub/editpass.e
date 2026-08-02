@@ -13,21 +13,21 @@
 <div class="form-group row">
     <label for="inputCurrentPass" class="col-sm-3 col-form-label">Current Password:</label>
     <div class="col-sm-8">
-        <input type=password class="form-control" name=passwd_old placeholder="Old password" />
+        <input type=password class="form-control" name=passwd_old placeholder="Current password" autocomplete="current-password" required />
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputNewPass" class="col-sm-3 col-form-label">New Password:</label>
+    <label for="inputNewPass" class="col-sm-3 col-form-label">New Password (at least 12 characters):</label>
     <div class="col-sm-8">
-        <input type=password class="form-control" name=passwd placeholder="New password" />
+        <input type=password class="form-control" name=passwd placeholder="New password" autocomplete="new-password" minlength=12 required />
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputConfirm" class="col-sm-3 col-form-label">Confirm Password:</label>
     <div class="col-sm-8">
-        <input type=password class="form-control" name=confirm placeholder="New password Again" />
+        <input type=password class="form-control" name=confirm placeholder="Repeat new password" autocomplete="new-password" minlength=12 required />
     </div>
 </div>
 
@@ -46,4 +46,3 @@
 
 </body>
 </html>
-

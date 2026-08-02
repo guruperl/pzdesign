@@ -17,14 +17,14 @@
 	<tbody>
 <tr>
 <td>请输入当前密码:</td>
-<td><input type=password name=passwd_old size=10 /></td>
+<td><input type=password name=passwd_old size=24 autocomplete="current-password" required /></td>
 </tr>
-<tr><td>请输入新密码:</td>
-<td><input type=password name=passwd size=10 /></td>
+<tr><td>请输入新密码（至少 12 个字符）:</td>
+<td><input type=password name=passwd size=24 autocomplete="new-password" minlength=12 required /></td>
 </tr>
 <tr>
 <td>确认新密码:</td>
-<td><input type=password name=confirm size=10 /></td>
+<td><input type=password name=confirm size=24 autocomplete="new-password" minlength=12 required /></td>
 </tr>
 <tr>
 <td colspan=2><input  class="btn btn-primary" type=submit value="保存" /></td>

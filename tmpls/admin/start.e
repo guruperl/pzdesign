@@ -24,9 +24,8 @@
 Welcome&nbsp; <em>{{index .ARGS.admin_login 0}}</em> ! Your ID&nbsp; <em>{{index .ARGS.admin_id 0}}</em>.
 	</div>
       <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="logout">Sign out</a>
-        </li>
+        <li class="nav-item text-nowrap"><a class="nav-link" href="security?action=dashboard">Account security</a></li>
+        <li class="nav-item text-nowrap"><form method="post" action="logout"><button class="btn btn-link nav-link" type="submit">Sign out</button></form></li>
       </ul>
     </nav>
 
@@ -37,37 +36,36 @@ Welcome&nbsp; <em>{{index .ARGS.admin_login 0}}</em> ! Your ID&nbsp; <em>{{index
             <ul class="nav flex-column">
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `agent` }} active{{end}}" href="agent?action=topics">
-                  <span data-feather="users"></span>
-                  Agents {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link{{ if eq .Other.Component `payment` }} active{{end}}" href="payment?action=topics">
-                  <span data-feather="shopping-cart"></span>
-                  Payments {{ if eq .Other.Component "payment" }}<span class="sr-only">(current)</span>{{ end }}
+                  Agents {{ if eq .Other.Component "agent" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `adv` }} active{{end}}" href="adv?action=topics">
-                  <span data-feather="package"></span>
                   Advertisers {{ if eq .Other.Component "adv" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `pub` }} active{{end}}" href="pub?action=topics">
-                  <span data-feather="cast"></span>
                   Publishers {{ if eq .Other.Component "pub" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `campaign` }} active{{end}}" href="campaign?action=topics">
-                  <span data-feather="flag"></span>
                   Campaigns {{ if eq .Other.Component "campaign" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `apicredential` }} active{{end}}" href="apicredential?action=topics">
+                  Management API credentials
+                </a>
+              </li>
+              {{if .Other.HostedPaymentEnabled}}<li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `hostedpayment` }} active{{end}}" href="hostedpayment?action=topics">
+                  Hosted funding and payouts
+                </a>
+              </li>{{end}}
+              <li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `site` }} active{{end}}" href="site?action=topics">
-                  <span data-feather="grid"></span>
                   Sites {{ if eq .Other.Component "site" }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>

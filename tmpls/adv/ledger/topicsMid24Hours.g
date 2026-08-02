@@ -7,7 +7,7 @@
                         <div class="panel-heading">竞价端点最近24小时报告</div>
                         <div class="panel-body">
                             <canvas class="my-4" id="midChart"></canvas>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+                            <script src="/1.0.8/vendors/js/Chart.min.js"></script>
                             <script>
                               var ctx = document.getElementById("midChart");
                               var midChart = new Chart(ctx, {

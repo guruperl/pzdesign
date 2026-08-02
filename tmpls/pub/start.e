@@ -52,7 +52,8 @@
           </div>
           <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> Profile</a>
           <a class="dropdown-item" href="pub?action=editpass"><i class="fa fa-wrench"></i> Password</a>
-          <a class="dropdown-item" href="logout"><i class="fa fa-lock"></i> Logout</a>
+          <a class="dropdown-item" href="security?action=dashboard"><i class="fa fa-shield"></i> Account security</a>
+          <form method="post" action="logout"><button class="dropdown-item" type="submit"><i class="fa fa-lock"></i> Logout</button></form>
         </div>
       </li>
     </ul>
@@ -76,6 +77,9 @@
           </li>
           <li class="nav-item">
             <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> Access Control</a>
+          </li>
+          <li class="nav-item">
+            {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics" class="nav-link {{if eq $c `hostedpayment`}}active{{end}}"><i class="icon-wallet"></i> Payout account</a>{{end}}
           </li>
 
           {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_md5 }}<li class="nav-title">
@@ -104,6 +108,9 @@
           </li>
           <li class="nav-item">
              <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> Incomes</a>
+          </li>
+          <li class="nav-item">
+             <a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> Marketplace analytics</a>
           </li>
         </ul>
       </nav>

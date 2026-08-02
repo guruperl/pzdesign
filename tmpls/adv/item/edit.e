@@ -28,7 +28,7 @@
     </div>
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">After Click:</label>
     <div class="col-sm-4">
-        <input type=text class="form-control" name="item_click" value="{{$item.item_click}}" placeholder="http://www.sample.com/landing.html" />
+        <input type=text class="form-control" name="item_click" value="{{$item.item_click}}" placeholder="https://advertiser.example/landing.html" />
     </div>
 </div>
 
@@ -42,6 +42,8 @@
         <input type=text class="form-control" name="endx" value="{{$item.endx}}" placeholder="yyyy-mm-dd" />
     </div>
 </div>
+
+{{template "deliveryschedule" .}}
 
 <div class="form-group row">
     <label for="inputSizeID" class="col-sm-2 col-form-label text-right">Size:</label>
@@ -59,14 +61,13 @@
 </div>
 
 <div class="form-group row">
-    <label for="inputCost" class="col-sm-2 col-form-label text-right">Cost Type:</label>
-    <div class="col-sm-4">
-<input type=radio name=cost_type {{if eq $item.cost_type "ROI"}}checked{{end}} value=ROI>ROI
-<input type=radio name=cost_type {{if eq $item.cost_type "CPM"}}checked{{end}} value=CPM>CPM
-<input type=radio name=cost_type {{if eq $item.cost_type "CPC"}}checked{{end}} value=CPC>CPC
-<input type=radio name=cost_type {{if eq $item.cost_type "CPA"}}checked{{end}} value=CPA>CPA
+	<label for="inputCost" class="col-sm-2 col-form-label text-right">Cost Type:</label>
+	<div class="col-sm-4">
+	<input type=hidden name=cost_type value=CPM>
+	<span class="form-control-plaintext">CPM (USD per 1,000 impressions)</span>
+	{{if $item.legacy_cost_type}}<small class="text-warning">This is a legacy {{$item.cost_type}} record. Review its business meaning and enter a new CPM bid before saving; W8M does not auto-convert it.</small>{{end}}
 	</div>
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">Price:</label>
+	<label for="inputEndx" class="col-sm-2 col-form-label text-right">CPM Bid:</label>
     <div class="col-sm-4">
         <input type=text class="form-control" name="cost" value="{{$item.cost}}" placeholder="1.23" />
     </div>

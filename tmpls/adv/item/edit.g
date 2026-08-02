@@ -23,14 +23,13 @@
     <div class="col-sm-3">
         <input type=text class="form-control" name="item_name" value="{{$item.item_name}}">
     </div>
-    <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
-    <div class="col-sm-3">
-<input type=radio name=cost_type {{if eq $item.cost_type "ROI"}}checked{{end}} value=ROI>ROI
-<input type=radio name=cost_type {{if eq $item.cost_type "CPM"}}checked{{end}} value=CPM>CPM
-<input type=radio name=cost_type {{if eq $item.cost_type "CPC"}}checked{{end}} value=CPC>CPC
-<input type=radio name=cost_type {{if eq $item.cost_type "CPA"}}checked{{end}} value=CPA>CPA
+	<label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
+	<div class="col-sm-3">
+	<input type=hidden name=cost_type value=CPM>
+	<span class="form-control-plaintext">CPM（美元/千次曝光）</span>
+	{{if $item.legacy_cost_type}}<small class="text-warning">当前记录为旧 {{$item.cost_type}} 类型。保存前请按业务含义审核并填写新的 CPM 出价；系统不会自动换算。</small>{{end}}
 	</div>
-    <label for="inputEndx" class="col-sm-1 col-form-label text-right">价格:</label>
+	<label for="inputEndx" class="col-sm-1 col-form-label text-right">CPM 出价:</label>
     <div class="col-sm-2">
         <input type=text class="form-control" name="cost" value="{{$item.cost}}" />
     </div>
@@ -67,6 +66,8 @@
         <input type=text class="form-control" name="endx" value="{{ if $item.endx }}{{$item.endx}}{{end}}">
     </div>
 </div>
+
+{{template "deliveryschedule" .}}
 
 
 <div class="form-group row">

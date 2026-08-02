@@ -2,7 +2,9 @@ package pub
 
 import (
 	"net/http/httptest"
+	"net/url"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -30,5 +32,25 @@ func TestFilter(t *testing.T) {
 	}
 	if filter.R.Form.Get("ip") != "210.51.200.123" {
 		t.Errorf("%v\n", filter.R.Form)
+	}
+}
+
+func TestPublisherSellerEditAlwaysRequiresOperatorReapproval(t *testing.T) {
+	request := httptest.NewRequest("POST", "/pub", nil)
+	request.Form = url.Values{
+		"seller_id": {"seller-7"}, "seller_type": {"Publisher"}, "seller_asi": {"w8m.com"},
+		"seller_name": {"Example Media"}, "seller_domain": {"example.com"}, "seller_authorized": {"Yes"},
+	}
+	filter := &Filter{}
+	filter.Action, filter.Component, filter.RoleValue, filter.R = "update", "pub", "pub", request
+	if err := filter.Preset(); err != nil {
+		t.Fatal(err)
+	}
+	if got := request.Form.Get("seller_authorized"); got != "No" {
+		t.Fatalf("publisher kept seller authorization %q", got)
+	}
+	request.Form.Set("seller_id", `<script>`)
+	if err := filter.Preset(); err == nil || !strings.Contains(err.Error(), "seller") {
+		t.Fatalf("hostile seller error = %v", err)
 	}
 }

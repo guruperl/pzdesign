@@ -21,15 +21,17 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" name=passwd id="passwd" class="form-control" placeholder="Password">
+              <input type="password" name=passwd id="passwd" class="form-control" placeholder="Password (at least 12 characters)" minlength="12" required>
             </div>
 
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" name=confirm id="confirm" class="form-control" placeholder="Repeat password">
+              <input type="password" name=confirm id="confirm" class="form-control" placeholder="Repeat password" minlength="12" required>
             </div>
+
+            <div class="input-group mb-4"><input type="text" name="recovery_code" id="recovery_code" class="form-control" placeholder="Recovery code (required when 2FA is enabled)" autocomplete="one-time-code"></div>
 
             <div class="input-group mb-4">
             <button type="submit" class="btn btn-block btn-primary">Continue</button>
@@ -50,22 +52,22 @@ $(function (){
     rules: {
       passwd: {
         required: true,
-        minlength: 5
+        minlength: 12
       },
       confirm: {
         required: true,
-        minlength: 5,
+        minlength: 12,
         equalTo: '#passwd'
       }
     },
     messages: {
       passwd: {
         required: 'Please provide a password',
-        minlength: 'Your password must be at least 5 characters long'
+        minlength: 'Your password must be at least 12 characters long'
       },
       confirm: {
         required: 'Please provide a password',
-        minlength: 'Your password must be at least 5 characters long',
+        minlength: 'Your password must be at least 12 characters long',
         equalTo: 'Please enter the same password as above'
       }
     },

@@ -1,7 +1,9 @@
 package ledger
 
 import (
+	"fmt"
 	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/guruperl/pzdesign/summer"
@@ -35,13 +37,15 @@ func (self *Filter) Preset() error {
 
 	if summer.Grep([]string{
 		"topicsAdv24Hours", "topicsAdvTopItems", "topicsAdvTopSlots",
+		"topicsAdvActions", "topicsAdvActionBreakdown",
 		"topicsPub24Hours", "topicsPubTopSlots", "topicsPubTopCampaigns",
 		"topicsMid24Hours", "topicsMidTopBidders", "topicsMidTopSlots",
 		"topicsMidTopRoutes", "topicsMidTopPublishers",
+		"topicsMarketplace", "topicsMarketplaceFreshness", "topicsMarketplaceActions",
+		"topicsMarketplaceSummary",
 	}, action) {
 		if ARGS.Get("day") == "" {
-			day_time := time.Now().AddDate(0, 0, -1).String()
-			ARGS.Set("day", day_time[0:10])
+			ARGS.Set("day", time.Now().UTC().AddDate(0, 0, -1).Format("2006-01-02"))
 		}
 		if ARGS.Get("idays") == "" {
 			ARGS.Set("idays", "0")
@@ -49,8 +53,30 @@ func (self *Filter) Preset() error {
 		if ARGS.Get("top") == "" {
 			ARGS.Set("top", "200")
 		}
+		if err := validateReportWindow(ARGS, time.Now().UTC()); err != nil {
+			return err
+		}
 	}
 
+	return nil
+}
+
+func validateReportWindow(args url.Values, now time.Time) error {
+	day, err := time.Parse("2006-01-02", args.Get("day"))
+	if err != nil || day.Before(time.Date(2000, 1, 1, 0, 0, 0, 0, time.UTC)) || day.After(time.Date(now.UTC().Year(), now.UTC().Month(), now.UTC().Day(), 0, 0, 0, 0, time.UTC)) {
+		return fmt.Errorf("report day must be a UTC date from 2000-01-01 through today")
+	}
+	idays, err := strconv.Atoi(args.Get("idays"))
+	if err != nil || idays < 0 || idays > 90 {
+		return fmt.Errorf("report lookback must be between 0 and 90 days")
+	}
+	top, err := strconv.Atoi(args.Get("top"))
+	if err != nil || top < 1 || top > 200 {
+		return fmt.Errorf("report row limit must be between 1 and 200")
+	}
+	args.Set("day", day.Format("2006-01-02"))
+	args.Set("idays", strconv.Itoa(idays))
+	args.Set("top", strconv.Itoa(top))
 	return nil
 }
 

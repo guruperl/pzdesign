@@ -59,6 +59,7 @@
               <label for="agent-login-password">密码</label>
               <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input id="agent-login-password" class="form-control" name="{{.Password}}" type="password" placeholder="输入密码" autocomplete="current-password" required></div>
             </div>
+            <div class="account-field"><label for="agent-login-totp">身份验证器验证码或恢复代码</label><div class="account-control"><i class="fa fa-shield" aria-hidden="true"></i><input id="agent-login-totp" class="form-control" name="{{.TOTP}}" type="text" placeholder="已启用双重验证时填写" autocomplete="one-time-code"></div></div>
             <button type="submit" class="account-submit">登录代理商后台</button>
           </form>
         </section>

@@ -40,7 +40,7 @@ $(document).ready(function(){
     $('#startnewPopup,#editPopup,#balancePopup,#creativePopup').on('click',function(){
       var dataTITLE = $(this).attr('data-title');
       var dataURL = $(this).attr('data-href');
-      $('#d-title').html(dataTITLE);
+      $('#d-title').text(dataTITLE);
       $('#d-body').load(dataURL,function(){
         $('#myModal').modal({show:true});
       });

@@ -8,7 +8,8 @@
         <tr>
             <th>名称</th>
             <th>流量源</th>
-        	<th>URL</th>
+			<th>流量分类</th>
+            <th>URL</th>
 			<th>状态</th>
             <th>创建时间</th>
             <th></th>
@@ -17,8 +18,9 @@
         </thead>
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
-				<td><a href="slot?action=topics&pub_id={{.pub_id}}&site_id={{.site_id}}&site_name={{.site_name|urlquery}}">{{.site_name}}</a></td>
+				<td><a href="site?action=edit&site_id={{.site_id}}">{{.site_name}}</a> · <a href="slot?action=topics&pub_id={{.pub_id}}&site_id={{.site_id}}&site_name={{.site_name|urlquery}}">广告位</a></td>
 				<td>{{.company}}</td>
+				<td>{{.inventory_environment}} / {{.integration_mode}}</td>
 				<td>{{.site_url}}</td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>

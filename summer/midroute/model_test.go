@@ -1,6 +1,9 @@
 package midroute
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestRouteCacheFreshness(t *testing.T) {
 	tests := []struct {
@@ -31,7 +34,13 @@ func TestRouteCacheFreshness(t *testing.T) {
 
 func TestRouteHealthQueries(t *testing.T) {
 	queries := routeHealthQueries()
-	if len(queries) != 5 {
-		t.Fatalf("len(routeHealthQueries) = %d, want 5", len(queries))
+	if len(queries) != 7 {
+		t.Fatalf("len(routeHealthQueries) = %d, want 7", len(queries))
+	}
+	joined := strings.Join(queries, "\n")
+	for _, issue := range []string{"invalid_active_target", "synthetic_reporting_enabled"} {
+		if !strings.Contains(joined, issue) {
+			t.Fatalf("route health queries do not include %q", issue)
+		}
 	}
 }

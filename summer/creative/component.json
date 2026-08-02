@@ -1,6 +1,6 @@
 {
   "actions" : {
-    "insert" : {"groups":["adv"],"validate":["creative_name","content"]},
+    "insert" : {"groups":["adv"],"validate":["creative_name"]},
     "topics" : {"groups":["adv"],"validate":["item_id"]},
     "edit"   : {"groups":["adv"],"validate":["creative_id"]},
     "update" : {"groups":["adv"],"validate":["creative_id"]},

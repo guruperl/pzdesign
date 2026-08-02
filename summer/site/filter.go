@@ -2,8 +2,11 @@
 package site
 
 import (
+	"fmt"
 	"net/url"
+	"strings"
 
+	"github.com/guruperl/aofei/acl"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -24,8 +27,56 @@ func (self *Filter) Preset() error {
 			ARGS.Del("active")
 		}
 	}
+	if action == "insert" || (action == "update" && hasAnySupplyField(ARGS, "inventory_environment", "canonical_identity", "store_url", "integration_mode")) {
+		canonical := strings.TrimSpace(ARGS.Get("canonical_identity"))
+		if canonical == "" {
+			canonical = strings.TrimSpace(ARGS.Get("foreign_id"))
+			ARGS.Set("canonical_identity", canonical)
+		}
+		metadata := acl.SiteSupplyMetadata{
+			Environment:       canonicalSupplyValue(ARGS.Get("inventory_environment")),
+			CanonicalIdentity: canonical,
+			StoreURL:          strings.TrimSpace(ARGS.Get("store_url")),
+			IntegrationMode:   canonicalSupplyValue(ARGS.Get("integration_mode")),
+		}
+		if err := metadata.Validate(); err != nil {
+			return fmt.Errorf("invalid supply metadata: %w", err)
+		}
+		if metadata.Environment == "Web" && ARGS.Get("site_type") != "Web" {
+			return fmt.Errorf("web inventory environment requires Web site type")
+		}
+		if metadata.Environment == "App" && ARGS.Get("site_type") != "App" {
+			return fmt.Errorf("app inventory environment requires App site type")
+		}
+		if metadata.IntegrationMode == "BrowserTag" && ARGS.Get("site_type") != "Web" {
+			return fmt.Errorf("browser tag integration requires Web site type")
+		}
+		if metadata.IntegrationMode == "SDK" && ARGS.Get("site_type") != "App" {
+			return fmt.Errorf("SDK integration requires App site type")
+		}
+		ARGS.Set("inventory_environment", metadata.Environment)
+		ARGS.Set("integration_mode", metadata.IntegrationMode)
+		ARGS.Set("store_url", metadata.StoreURL)
+	}
 
 	return nil
+}
+
+func hasAnySupplyField(values url.Values, names ...string) bool {
+	for _, name := range names {
+		if _, ok := values[name]; ok {
+			return true
+		}
+	}
+	return false
+}
+
+func canonicalSupplyValue(value string) string {
+	value = strings.TrimSpace(value)
+	if value == "" {
+		return "Unknown"
+	}
+	return value
 }
 
 func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values) error {

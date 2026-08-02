@@ -547,6 +547,42 @@ WHERE g.active='Yes'
   )
 ORDER BY g.group_id`,
 		`
+SELECT 'invalid_active_target' AS issue_type, 'error' AS severity,
+	g.group_id, g.group_name, g.trigger_mode, g.active AS group_active,
+	NULL AS route_bidder_id, NULL AS bidder_id, NULL AS bidder_name, NULL AS credential_ref,
+	NULL AS credential_status, NULL AS bidder_active, NULL AS synthetic_campaign_id,
+	NULL AS synthetic_item_id, NULL AS synthetic_creative_id,
+	CONCAT('target_id=', t.target_id, ', entitytype_id=', COALESCE(t.entitytype_id, 'NULL'),
+	  ', entity_id=', COALESCE(t.entity_id, 'NULL'), ', size_id=', COALESCE(t.size_id, 'NULL')) AS detail
+FROM mid_route_group g
+INNER JOIN mid_route_target t USING (group_id)
+WHERE g.active='Yes' AND t.active='Yes' AND (
+	(t.entitytype_id IS NULL AND t.entity_id IS NOT NULL)
+	OR (t.entitytype_id IS NOT NULL AND t.entity_id IS NULL)
+	OR (t.entitytype_id IS NOT NULL AND t.entitytype_id NOT IN (3,31,32))
+	OR (t.entitytype_id=3 AND NOT EXISTS (SELECT 1 FROM pub p WHERE p.pub_id=t.entity_id AND p.active='Yes'))
+	OR (t.entitytype_id=31 AND NOT EXISTS (SELECT 1 FROM pub_site s WHERE s.site_id=t.entity_id AND s.active='Yes'))
+	OR (t.entitytype_id=32 AND NOT EXISTS (SELECT 1 FROM pub_slot sl WHERE sl.slot_id=t.entity_id AND sl.active='Yes'))
+	OR (t.size_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM def_size ds WHERE ds.size_id=t.size_id))
+)
+ORDER BY g.group_id, t.target_id`,
+		`
+SELECT 'synthetic_reporting_enabled' AS issue_type, 'error' AS severity,
+	g.group_id, g.group_name, g.trigger_mode, g.active AS group_active,
+	rb.route_bidder_id, b.bidder_id, b.bidder_name, b.credential_ref,
+	b.credential_status, b.active AS bidder_active, b.synthetic_campaign_id,
+	b.synthetic_item_id, b.synthetic_creative_id,
+	CONCAT('campaign=', c.active, ', item=', i.active, ', creative=', v.active) AS detail
+FROM mid_route_group g
+INNER JOIN mid_route_bidder rb USING (group_id)
+INNER JOIN adv_bidder b USING (bidder_id)
+INNER JOIN adv_campaign c ON (c.campaign_id=b.synthetic_campaign_id AND c.adv_id=b.adv_id)
+INNER JOIN adv_item i ON (i.item_id=b.synthetic_item_id AND i.campaign_id=c.campaign_id)
+INNER JOIN adv_creative v ON (v.creative_id=b.synthetic_creative_id AND v.item_id=i.item_id)
+WHERE g.active='Yes' AND rb.active='Yes'
+  AND (c.active='Yes' OR i.active='Yes' OR v.active='Yes')
+ORDER BY g.group_id, rb.route_bidder_id`,
+		`
 SELECT 'inactive_or_unapproved_bidder' AS issue_type, 'error' AS severity,
 	g.group_id, g.group_name, g.trigger_mode, g.active AS group_active,
 	rb.route_bidder_id, b.bidder_id, b.bidder_name, b.credential_ref,

@@ -18,7 +18,7 @@
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
 				<td><a href="item?action=edit&item_id={{.item_id}}">{{.item_name}}</a></td>
-				<td>{{.cost_type}} {{.cost}}</td>
+				<td>{{if eq .cost_type "CPM"}}{{.cost}} USD CPM{{else}}未启用（旧 {{.cost_type}} 记录）{{end}}</td>
 				<td>{{.startx}}</td>
 				<td>{{.endx}}</td>
 				<td>{{.active}}</td>

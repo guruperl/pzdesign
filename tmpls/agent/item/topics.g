@@ -18,7 +18,7 @@
         <tbody>{{ with .Lists }}{{ range . }}
 			<tr>
 				<td>{{.item_name}}</td>
-				<td>{{$qa_mime := .qa_mime}}{{range $k, $v := .creative_topics}}{{if eq $qa_mime "html"}}{{$v.content}}{{else if eq $qa_mime "js"}}<script>{{$v.content}}</script>{{else if eq $qa_mime "video"}}<video controls><source src="{{$v.content}}"></video>{{else}}<img src="{{$v.content}}" />{{end}}{{end}}
+				<td>{{range $k, $v := .creative_topics}}<pre class="creative-source">{{$v.content}}</pre>{{end}}
 				<td>{{.active}}</td>
 				<td>{{.startx}}</td>
 				<td>

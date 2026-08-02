@@ -6,6 +6,7 @@ import (
 	"net/url"
 	"strconv"
 
+	"github.com/guruperl/aofei/match"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -16,13 +17,16 @@ type Model struct {
 }
 
 type bidderApproval struct {
-	BidderID    int64
-	AdvID       int64
-	CampaignID  sql.NullInt64
-	ItemID      sql.NullInt64
-	CreativeID  sql.NullInt64
-	BidderName  string
-	EndpointURL string
+	BidderID       int64
+	AdvID          int64
+	CampaignID     sql.NullInt64
+	ItemID         sql.NullInt64
+	CreativeID     sql.NullInt64
+	BidderName     string
+	EndpointURL    string
+	OpenRTBVersion string
+	Seat           sql.NullString
+	TimeoutMS      int
 }
 
 func (self *Model) Approve(extra ...url.Values) error {
@@ -35,8 +39,8 @@ func (self *Model) Approve(extra ...url.Values) error {
 		return fmt.Errorf("bidder_id is required")
 	}
 	credentialRef := self.ARGS.Get("credential_ref")
-	if credentialRef == "" {
-		return fmt.Errorf("credential_ref is required")
+	if !match.ValidMiddlemanCredentialRefName(credentialRef) {
+		return fmt.Errorf("credential_ref must be an environment variable name")
 	}
 
 	tx, err := self.DB.Begin()
@@ -48,6 +52,17 @@ func (self *Model) Approve(extra ...url.Values) error {
 	bidder, err := loadBidderForApproval(tx, bidderID)
 	if err != nil {
 		return err
+	}
+	profile := url.Values{
+		"endpoint_url":    {bidder.EndpointURL},
+		"openrtb_version": {bidder.OpenRTBVersion},
+		"timeout_ms":      {strconv.Itoa(bidder.TimeoutMS)},
+	}
+	if bidder.Seat.Valid {
+		profile.Set("seat", bidder.Seat.String)
+	}
+	if err := validateEndpointFields(profile, "update"); err != nil {
+		return fmt.Errorf("bidder profile: %w", err)
 	}
 
 	campaignID, itemID, creativeID, err := self.approvalSyntheticIDs(tx, bidder)
@@ -86,7 +101,7 @@ func loadBidderForApproval(tx *sql.Tx, bidderID int64) (bidderApproval, error) {
 	var bidder bidderApproval
 	err := tx.QueryRow(`
 SELECT bidder_id, adv_id, synthetic_campaign_id, synthetic_item_id,
-	synthetic_creative_id, bidder_name, endpoint_url
+	synthetic_creative_id, bidder_name, endpoint_url, openrtb_version, seat, timeout_ms
 FROM adv_bidder
 WHERE bidder_id=?
 FOR UPDATE`, bidderID).Scan(
@@ -97,6 +112,9 @@ FOR UPDATE`, bidderID).Scan(
 		&bidder.CreativeID,
 		&bidder.BidderName,
 		&bidder.EndpointURL,
+		&bidder.OpenRTBVersion,
+		&bidder.Seat,
+		&bidder.TimeoutMS,
 	)
 	if err == sql.ErrNoRows {
 		return bidder, fmt.Errorf("bidder_id %d not found", bidderID)

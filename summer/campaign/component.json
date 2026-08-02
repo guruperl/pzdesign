@@ -25,10 +25,10 @@
     ]
   },
 
-  "insert_pars" :  [               "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","created","total_balance_id","daily_balance_id"],
-  "update_pars" :  ["campaign_id", "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active"],
-  "topics_pars" :  ["campaign_id", "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","created","total_balance_id","daily_balance_id"],
-  "edit_pars" :    ["campaign_id", "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","created","total_balance_id","daily_balance_id"],
+  "insert_pars" :  [               "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","created","total_balance_id","daily_balance_id","delivery_timezone","weekly_schedule","pacing_mode"],
+  "update_pars" :  ["campaign_id", "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","delivery_timezone","weekly_schedule","pacing_mode"],
+  "topics_pars" :  ["campaign_id", "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","created","total_balance_id","daily_balance_id","delivery_timezone","weekly_schedule","pacing_mode"],
+  "edit_pars" :    ["campaign_id", "adv_id","campaign_name","foreign_id","access_order","startx","endx","description","target_type","iurl","active","created","total_balance_id","daily_balance_id","delivery_timezone","weekly_schedule","pacing_mode"],
 
   "current_table" : "adv_campaign",
   "current_key" :  "campaign_id",
@@ -53,6 +53,9 @@
     "c.target_type":"target_type",
     "c.total_balance_id":"total_balance_id",
     "c.daily_balance_id":"daily_balance_id",
+    "c.delivery_timezone":"delivery_timezone",
+    "c.weekly_schedule":"weekly_schedule",
+    "c.pacing_mode":"pacing_mode",
     "c.active":"active",
     "DATE_FORMAT(c.created, '%Y-%m-%d')":"created",
     "d.company":"company",

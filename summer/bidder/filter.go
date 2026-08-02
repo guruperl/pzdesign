@@ -5,7 +5,9 @@ import (
 	"net"
 	"net/url"
 	"strconv"
+	"strings"
 
+	"github.com/guruperl/aofei/match"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -42,7 +44,35 @@ func validateEndpointFields(form url.Values, action string) error {
 	if err := validateEndpointURL(form, action); err != nil {
 		return err
 	}
+	if err := normalizeOpenRTBVersion(form, action); err != nil {
+		return err
+	}
+	if err := normalizeSeat(form); err != nil {
+		return err
+	}
+	if err := normalizeCredentialReference(form); err != nil {
+		return err
+	}
 	return normalizeTimeout(form, action)
+}
+
+func normalizeCredentialReference(form url.Values) error {
+	raw, ok := form["credential_ref"]
+	if !ok {
+		return nil
+	}
+	value := ""
+	if len(raw) != 0 {
+		value = raw[0]
+	}
+	if value == "" {
+		return nil
+	}
+	if !match.ValidMiddlemanCredentialRefName(value) {
+		return fmt.Errorf("credential_ref must be an environment variable name")
+	}
+	form.Set("credential_ref", value)
+	return nil
 }
 
 func validateEndpointURL(form url.Values, action string) error {
@@ -70,11 +100,52 @@ func validateEndpointURL(form url.Values, action string) error {
 	if parsed.User != nil {
 		return fmt.Errorf("endpoint_url must not contain user info")
 	}
+	if parsed.Fragment != "" {
+		return fmt.Errorf("endpoint_url must not contain a fragment")
+	}
 	if host := parsed.Hostname(); host == "" {
 		return fmt.Errorf("endpoint_url must include a host")
 	} else if ip := net.ParseIP(host); ip == nil && !validEndpointHostname(host) {
 		return fmt.Errorf("endpoint_url host is invalid")
 	}
+	return nil
+}
+
+func normalizeOpenRTBVersion(form url.Values, action string) error {
+	raw, ok := form["openrtb_version"]
+	if !ok {
+		if action == "insert" {
+			form.Set("openrtb_version", "2.5")
+		}
+		return nil
+	}
+	version := ""
+	if len(raw) != 0 {
+		version = strings.TrimSpace(raw[0])
+	}
+	if version == "" && action == "insert" {
+		version = "2.5"
+	}
+	if version != "2.5" {
+		return fmt.Errorf("openrtb_version must be exactly 2.5")
+	}
+	form.Set("openrtb_version", version)
+	return nil
+}
+
+func normalizeSeat(form url.Values) error {
+	raw, ok := form["seat"]
+	if !ok {
+		return nil
+	}
+	seat := ""
+	if len(raw) != 0 {
+		seat = strings.TrimSpace(raw[0])
+	}
+	if len(seat) > 128 || strings.IndexFunc(seat, func(r rune) bool { return r < 0x20 || r == 0x7f }) >= 0 {
+		return fmt.Errorf("seat must be at most 128 bytes without control characters")
+	}
+	form.Set("seat", seat)
 	return nil
 }
 

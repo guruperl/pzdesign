@@ -84,6 +84,47 @@ func TestMiddlemanLedgerTemplatesRender(t *testing.T) {
 	}
 }
 
+func TestAdvertiserActionReportEscapesUntrustedDimensions(t *testing.T) {
+	root := os.Getenv("PZDESIGN_TMPLS")
+	if root == "" {
+		root = filepath.Clean(filepath.Join("..", "..", "..", "pzdesign", "tmpls"))
+	}
+	if info, err := os.Stat(root); err != nil || !info.IsDir() {
+		t.Skipf("pzdesign templates not found at %s", root)
+	}
+	tmpl := template.New("topicsAdvActions.g").Option("missingkey=zero")
+	parsed, err := tmpl.ParseFiles(filepath.Join(root, "adv", "ledger", "topicsAdvActions.g"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	parsed, err = parsed.ParseGlob(filepath.Join(root, "adv", "*.g"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	hostile := `shop.</script><script>alert(1)</script>`
+	page := &genelet.Tmpl{
+		Lists: []map[string]interface{}{{"daily": "2026-08-01", "actions": 1}},
+		ARGS:  templateLedgerArgs("adv"),
+		Other: map[string]interface{}{
+			"Role": "adv", "Action": "topicsAdvActions", "Component": "ledger", "Tag": "g",
+			"ledger_topicsAdvActionBreakdown": []map[string]interface{}{{
+				"event_type": "custom", "action_name": hostile, "attribution_type": `click\" onmouseover=\"alert(2)`, "actions": 1,
+			}},
+		},
+		Success: true,
+	}
+	rendered, err := page.Get_page(parsed)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(rendered, hostile) || strings.Contains(rendered, "<script>alert(1)</script>") || strings.Contains(rendered, `onmouseover="alert(2)`) {
+		t.Fatalf("action report rendered unescaped hostile input: %s", rendered)
+	}
+	if !strings.Contains(rendered, "shop.&lt;/script&gt;") {
+		t.Fatalf("action report omitted the escaped action label: %s", rendered)
+	}
+}
+
 func templateLedgerArgs(role string) url.Values {
 	args := url.Values{}
 	switch role {

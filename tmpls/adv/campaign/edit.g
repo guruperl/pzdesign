@@ -25,13 +25,13 @@
 </div>
 
 <div class="form-group row">
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">Bundle/Domain:</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">外部业务编号：</label>
 	<div class="col-sm-4">
 		<input type=text class="form-control" name=foreign_id value="{{$item.foreign_id}}" />
 	</div>
-	<label for="inputCampaigName" class="col-sm-2 col-form-label">质监图片：</label>
+	<label for="inputCampaigName" class="col-sm-2 col-form-label">质量审核图片：</label>
 	<div class="col-sm-4">
-		<input type=text class="form-control" name=iurl value="{{$item.iurl}}" />
+		<input type=url class="form-control" name=iurl value="{{$item.iurl}}" />
 	</div>
 </div>
 
@@ -45,6 +45,8 @@
         <input type=text class="form-control" name="endx" value="{{$item.endx}}" />
     </div>
 </div>
+
+{{template "deliveryschedule" .}}
 
 <div class="form-group row">
 		<label for="inputCampaigName" class="col-sm-2 col-form-label">活动描述：</label>

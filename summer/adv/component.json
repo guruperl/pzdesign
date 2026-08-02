@@ -10,11 +10,10 @@
 
     "dashboard": {"groups":["adv"], "validate":["adv_id"]},
     "edit" :     {"groups":["adv"], "validate":["adv_id"]},
-    "balance" :  {"groups":["adv"], "validate":["adv_id"]},
     "update"  :  {"groups":["adv"], "validate":["adv_id"]},
     "topics"  :  {"groups":["agent"]},
-    "startpass": {"groups":["adv"], "options":["no_db", "no_method"]},
-    "updatepass":{"groups":["adv"], "validate":["adv_id", "passwd"]}
+    "startpass": {"groups":["adv"], "permission":["account.password.change"], "options":["no_db", "no_method"]},
+    "updatepass":{"groups":["adv"], "permission":["account.password.change"], "reauth":["mfa"], "validate":["adv_id", "passwd"]}
   },
   "fks":{
     "agent" : ["", "", "adv_id", "adv_md5"]
@@ -29,8 +28,8 @@
 
   "insert_pars" : ["adv_id","domain","email","passwd","address_id","firstname","lastname","address_id","created","active","access_order"],
   "update_pars" : ["adv_id","domain","address_id","firstname","lastname","address_id","active","access_order"],
-  "topics_pars" : ["adv_id","domain","address_id","firstname","lastname","balance","address_id","created","active","access_order"],
-  "edit_pars"   : ["adv_id","domain","address_id","firstname","lastname","balance","address_id","created","active","access_order"],
+  "topics_pars" : ["adv_id","domain","address_id","firstname","lastname","address_id","created","active","access_order"],
+  "edit_pars"   : ["adv_id","domain","address_id","firstname","lastname","address_id","created","active","access_order"],
 
   "current_table" : "adv",
   "current_key" : "adv_id",
@@ -45,7 +44,6 @@
     "p.email":"email",
     "p.firstname":"firstname",
     "p.lastname":"lastname",
-    "p.balance":"balance",
     "p.timezone_id":"timezone_id",
     "p.address_id":"address_id",
     "p.active":"active",

@@ -12,10 +12,10 @@
     "pub" : ["pub_id", "", "site_id", "site_md5", "slot_topics", "slot_id", "slot_md5"]
   },
 
-  "insert_pars" : [           "pub_id","foreign_id","site_name","site_type","description","site_url","access_order","created","active"],
-  "topics_pars" : ["site_id", "pub_id","foreign_id","site_name","site_type","description","site_url","access_order","created","active"],
-  "update_pars" : ["site_id", "pub_id","foreign_id","site_name","site_type","description","site_url","access_order",          "active"],
-  "edit_pars"   : ["site_id", "pub_id","foreign_id","site_name","site_type","description","site_url","access_order","created","active"],
+  "insert_pars" : [           "pub_id","foreign_id","site_name","site_type","description","site_url","access_order","created","active","inventory_environment","canonical_identity","store_url","integration_mode"],
+  "topics_pars" : ["site_id", "pub_id","foreign_id","site_name","site_type","description","site_url","access_order","created","active","inventory_environment","canonical_identity","store_url","integration_mode"],
+  "update_pars" : ["site_id", "pub_id","foreign_id","site_name","site_type","description","site_url","access_order",          "active","inventory_environment","canonical_identity","store_url","integration_mode"],
+  "edit_pars"   : ["site_id", "pub_id","foreign_id","site_name","site_type","description","site_url","access_order","created","active","inventory_environment","canonical_identity","store_url","integration_mode"],
 
   "current_table" : "pub_site",
     "current_key" : "site_id",
@@ -33,6 +33,9 @@
     "s.site_type":"site_type",
     "s.site_url":"site_url",
     "s.site_name":"site_name",
+    "s.inventory_environment":"inventory_environment",
+    "s.integration_mode":"integration_mode",
+    "s.canonical_identity":"canonical_identity",
     "s.active":"active",
     "DATE_FORMAT(s.created, '%Y-%m-%d')":"created",
     "d.company":"company"

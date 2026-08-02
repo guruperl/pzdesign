@@ -42,14 +42,14 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" name=passwd id="passwd" class="form-control" placeholder="Password">
+              <input type="password" name=passwd id="passwd" class="form-control" placeholder="Password (at least 12 characters)" minlength="12" required>
             </div>
 
             <div class="input-group mb-4">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="icon-lock"></i></span>
               </div>
-              <input type="password" name=confirm id="confirm" class="form-control" placeholder="Repeat password">
+              <input type="password" name=confirm id="confirm" class="form-control" placeholder="Repeat password" minlength="12" required>
             </div>
 
             <div class="input-group mb-4">
@@ -81,11 +81,11 @@ $(function (){
       lastname: 'required',
       passwd: {
         required: true,
-        minlength: 5
+        minlength: 12
       },
       confirm: {
         required: true,
-        minlength: 5,
+        minlength: 12,
         equalTo: '#passwd'
       },
       email: {
@@ -99,11 +99,11 @@ $(function (){
       lastname: 'Please enter your lastname',
       passwd: {
         required: 'Please provide a password',
-        minlength: 'Your password must be at least 5 characters long'
+        minlength: 'Your password must be at least 12 characters long'
       },
       confirm: {
         required: 'Please provide a password',
-        minlength: 'Your password must be at least 5 characters long',
+        minlength: 'Your password must be at least 12 characters long',
         equalTo: 'Please enter the same password as above'
       },
       email: 'Please enter a valid email address',

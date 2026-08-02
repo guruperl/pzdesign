@@ -55,6 +55,7 @@
                 <p>流量方账户用于管理网站、App 和广告位。登录页面位于 <code>/goto/pub/g/...</code>。</p>
                 <div class="hierarchy">流量方账户 <span>（发布商）</span><br>└── 流量源 <span>（网站或 App）</span><br>&nbsp;&nbsp;&nbsp;&nbsp;└── 广告位</div>
                 <p>仪表盘可查看主要广告位、主要广告活动和近 24 小时数据。报表由后台日志和账务任务定时汇总，不是请求级实时数据。</p>
+                <p>账户资料中的“卖方透明度”用于说明由谁销售广告资源，包括卖方 ID、类型、广告系统域名（ASI）、公开名称和域名。资料须经平台运营方复核；已授权内容一旦改变会恢复为待审核。这些资料用于 OpenRTB 供应链和报表分类，不改变当前流量方账户的收入归属、结算主体或收款方式。</p>
               </section>
 
               <section class="manual-section" id="site">
@@ -63,6 +64,9 @@
                 <ul>
                   <li>流量源名称与类型：<code>Web</code> 或 <code>App</code>。</li>
                   <li>Bundle/Domain：网站填写域名，Android App 填包名，iOS App 填商店数字 ID。</li>
+                  <li>流量环境与规范标识：网站填写审核域名，App 填写包名或应用标识。</li>
+                  <li>公开审核地址只填写不含账号密码的 <code>http</code> 或 <code>https</code> 页面。</li>
+                  <li>接入方式选择 ADX、网页广告码、SDK 或服务端 API，并与 Web/App 类型保持一致。</li>
                   <li>介绍网址、流量范围（白名单/黑名单）和启用状态。</li>
                 </ul>
                 <div class="notice"><strong>Web 来源校验：</strong>生产页面发送的 <code>Origin</code> 或 <code>Referer</code> 主机名必须与平台缓存中的站点主机名完全一致。不同子域名不会自动视为同一站点。</div>
@@ -71,18 +75,21 @@
 
               <section class="manual-section" id="slot">
                 <h2>3. 创建广告位</h2>
-                <p>在流量源下选择“添加广告位”，配置广告位名称、宽高、语言、设备平台、页面位置、可接受媒体类型、素材特点、质量条件、行业规则和状态。</p>
+                <p>在流量源下选择“添加广告位”，配置广告位名称、宽高、最低竞价（USD CPM）、语言、设备平台、页面位置、可接受媒体类型、素材特点、质量条件、行业规则和状态。</p>
                 <ul>
                   <li>广告位保存的尺寸是运行时可信尺寸。</li>
                   <li>浏览器或 SDK 请求中自报的宽高不能覆盖平台配置。</li>
                   <li>请求令牌携带的尺寸与缓存配置不一致时，服务会返回 <code>400</code>。</li>
+                  <li>最低竞价是服务端权威底价；请求可以提高但不能降低，实际采用两者中的较高值。</li>
+                  <li>选择媒体形式意向、展示位置、渲染场景、广告密度、流量审核状态、资源来源和管理责任方。</li>
+                  <li>刷新方式可为不刷新、定时刷新或事件触发；定时刷新须填写 15 至 3600 秒。</li>
                   <li>修改尺寸后，应重新取得接入代码，不要继续使用旧 <code>slot</code> 令牌。</li>
                 </ul>
               </section>
 
               <section class="manual-section" id="browser">
                 <h2>4. 获取并部署网页广告码</h2>
-                <p>广告位列表提供“广告码”“复制”“下载”和“API码”。推荐直接使用页面生成的样例，其中的 <code>site</code> 和 <code>slot</code> 是平台生成的打包标识，不要猜测、截断、交换或手工改写。</p>
+                <p>广告位列表会按流量源类型给出接入方式：<code>Web</code> 只显示网页广告码，<code>App</code> 只显示 SDK/API 代码。推荐直接使用页面生成的样例，其中的 <code>site</code> 和 <code>slot</code> 是平台生成的打包标识，不要猜测、截断、交换或手工改写。</p>
                 <pre><code>&lt;script src="https://w8m.com/js/ads.js"&gt;&lt;/script&gt;
 &lt;div id="pz-slot-13" style="width:300px;height:250px"&gt;&lt;/div&gt;
 &lt;script&gt;
@@ -106,6 +113,7 @@ pzLoadAds({
                   <li>浏览器请求必须携带有效来源，所有出现的来源主机都必须与缓存站点完全一致。</li>
                   <li><code>/pz</code> 跨域访问不携带凭据，不能依赖跨站 Cookie 一定可用。</li>
                 </ul>
+                <div class="notice"><strong>素材隔离：</strong><code>ads.js</code> 把填充素材放进不带 <code>allow-same-origin</code> 的独立沙箱 iframe，并把容器标记为 <code>filled</code>、<code>no-fill</code> 或 <code>error</code>。请勿移除沙箱或把返回字符串直接写入宿主页的 <code>innerHTML</code>。</div>
                 <h3>HTML 响应</h3>
                 <p>省略 <code>responseFormat</code> 或使用 <code>html</code> 时，成功响应是按广告位输入顺序排列的 HTML 字符串数组。未填充位置用空字符串表示：</p>
                 <pre><code>["&lt;iframe ...&gt;&lt;/iframe&gt;&lt;img ...&gt;", ""]</code></pre>
@@ -123,11 +131,6 @@ Content-Type: application/json</code></pre>
   "responseFormat": "json",
   "site": "&lt;页面生成的 site 令牌&gt;",
   "app": {"bundle": "example.com"},
-  "device": {
-    "ifa": "00000000-0000-0000-0000-000000000000",
-    "ua": "ExampleSDK/1.0"
-  },
-  "user": {"id": "example-user-id"},
   "adUnits": [{
     "code": "pz-slot-13",
     "slot": "&lt;页面生成的 slot 令牌&gt;",
@@ -135,8 +138,9 @@ Content-Type: application/json</code></pre>
   }]
 }</code></pre>
                 <ul>
-                  <li>SDK 可提供 OpenRTB 风格的 <code>app</code>、<code>device</code> 和 <code>user</code> 对象。</li>
-                  <li><code>device.ifa</code> 等设备 ID 进入正常身份和频控流程；HTTP 头可作为 IP、User-Agent 和语言的后备。</li>
+                  <li>本样例为上下文请求，特意省略用户和设备标识。SDK 可提供 OpenRTB 风格的 <code>app</code>、<code>device</code>、<code>user</code> 和 <code>regs</code> 对象。</li>
+                  <li>只有平台隐私决策允许个性化处理时，<code>device.ifa</code>、设备 ID、<code>user.id</code> 与 <code>buyeruid</code> 才会进入本地匹配；上下文或受限模式会删除这些标识。</li>
+                  <li>流量方必须从已审核的 CMP/隐私流程传递适用的 GDPR/TCF、GPP/US Privacy、COPPA、GPC/DNT/LMT 信号，不得伪造同意授权。</li>
                   <li><code>app.id</code>、<code>app.bundle</code> 或 <code>app.domain</code> 如提供，必须与平台验证出的流量源身份一致。</li>
                   <li>SDK 可省略 <code>Origin</code> 和 <code>Referer</code>，但只要提供就必须通过主机校验。</li>
                 </ul>
@@ -156,8 +160,9 @@ Content-Type: application/json</code></pre>
               <section class="manual-section" id="identity">
                 <h2>6. 浏览器身份、隐私与代理</h2>
                 <ul>
-                  <li>浏览器接入可将 <code>aofei_pz_uid</code> 用作尽力而为的匿名身份。</li>
-                  <li>Cookie 因跨域策略缺失时不阻止投放，系统仍可能使用 IP 与 User-Agent 作为后备。</li>
+                  <li>浏览器接入只有在当前请求通过已配置的个性化授权后，才可使用 <code>aofei_pz_uid</code> 作为尽力而为的假名身份。</li>
+                  <li>缺失、拒绝、退出、无效、COPPA 或尚未映射的 GPP 信号不会读取或设置 Cookie。</li>
+                  <li>Cookie 因跨域策略缺失时不阻止上下文投放；系统不会将 IP 与 User-Agent 拼成后备身份。</li>
                   <li>SDK 请求完全不读取、设置或传递该 Cookie，应提供合规的设备或用户标识。</li>
                   <li>只有 CDN 或反向代理出口已由运营方加入受信列表时，服务才会采用 <code>X-Forwarded-For</code> 或 <code>X-Real-IP</code>。</li>
                 </ul>
@@ -166,9 +171,12 @@ Content-Type: application/json</code></pre>
 
               <section class="manual-section" id="measurement">
                 <h2>7. 填充、测量与报表</h2>
-                <p>通过 <code>/pz</code> 投放的本地素材复用平台的签名展示和点击测量。账务中的展示与花费以有效展示跟踪到达为基础，点击以有效点击跟踪到达为基础。</p>
+                <p>通过 <code>/pz</code> 投放的本地素材复用平台的签名展示和点击测量。账务中的展示与结算金额以有效展示跟踪到达为基础，点击以有效点击跟踪到达为基础。竞价价格使用 USD CPM（千次展示价格）；一个有效展示对应的账务金额按 <code>CPM / 1000</code> 计算，例如 CPM 为 <code>2.5</code> 时计入 USD <code>0.0025</code>。</p>
                 <p>当平台启用外部 DSP / ADX 需求方竞价时，本地无填充可使用 Fallback 路由；只有独立 Always 开关同时启用时，外部竞价才可与本地广告竞争。这些选择对流量方接入协议透明，无需修改 <code>ads.js</code> 或请求结构。</p>
-                <p>报表由日志聚合与账务任务定时生成。持续缺失时，请向运营方提供时间范围、流量源、广告位和请求结果。</p>
+                <p>市场分析可按流量环境、接入方式、媒体形式、展示位置、刷新方式、质量分类和已授权卖方查看数据。历史或未填写的分类明确显示为 <code>Unknown</code>，未经授权的卖方不会归入某个卖方 ID。报表由日志聚合与账务任务定时生成；持续缺失时，请向运营方提供时间范围、流量源、广告位和请求结果。</p>
+                <h3>结算单</h3>
+                <p>平台运营方可按 UTC 日、UTC 自然周或 UTC 自然月，从已完成的日账务汇总生成流量方结算单。结算单经过草稿、暂停、确认、结算登记或更正流程；已确认记录的更正会保留原结算单，不会回写展示事实。</p>
+                <p>如需结算单或 CSV，请向运营方提供账户 ID 和账期。不要通过工作台、邮件或工单发送完整银行卡号、银行账号或路由号码。</p>
               </section>
 
               <section class="manual-section" id="errors">
@@ -177,7 +185,7 @@ Content-Type: application/json</code></pre>
                   <table class="manual-table">
                     <thead><tr><th>现象</th><th>常见原因</th><th>处理</th></tr></thead>
                     <tbody>
-                      <tr><td><code>400</code></td><td>JSON 或令牌错误、广告位不存在、尺寸不符、媒体类型不支持、<code>code</code> 重复</td><td>使用广告位页面最新样例，逐项核对请求字段。</td></tr>
+                      <tr><td><code>400</code></td><td>JSON 或令牌错误、广告位不存在、Web/App 类型不符、尺寸或底价非法、媒体类型不是唯一一项、<code>code</code> 缺失/非法/重复</td><td>使用广告位页面最新样例，逐项核对请求字段。</td></tr>
                       <tr><td><code>403</code></td><td>浏览器来源缺失或主机不完全匹配</td><td>核对生产页面主机、<code>Origin</code>、<code>Referer</code> 和缓存站点。</td></tr>
                       <tr><td><code>413</code></td><td>请求体超过限制</td><td>减少单次请求广告位数量或无关字段。</td></tr>
                       <tr><td><code>200</code> 且为空</td><td>请求合法，但没有匹配广告</td><td>当作正常 no-fill；排查时提供时间和广告位。</td></tr>
@@ -193,7 +201,10 @@ Content-Type: application/json</code></pre>
                 <h2>9. 上线验收清单</h2>
                 <ul class="checklist">
                   <li>流量源类型、Bundle/Domain、站点主机和状态正确。</li>
-                  <li>广告位尺寸、设备、媒体类型和质量规则正确。</li>
+                  <li>流量环境、规范标识、接入方式和公开审核地址正确。</li>
+                  <li>广告位尺寸、服务端最低竞价、媒体形式、展示位置、刷新和质量规则正确。</li>
+                  <li>卖方资料已由平台运营方审核；资料变更后已重新复核授权。</li>
+                  <li>Web 只使用网页广告码，App 只使用 SDK/API 样例。</li>
                   <li>使用广告位页面最新生成的 <code>site</code> 与 <code>slot</code> 令牌。</li>
                   <li>浏览器实际 <code>Origin</code>/<code>Referer</code> 与缓存站点完全一致。</li>
                   <li>每个非空 <code>code</code> 在请求内唯一，并有对应 DOM 容器。</li>

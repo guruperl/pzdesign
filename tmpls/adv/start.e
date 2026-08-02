@@ -26,12 +26,6 @@
     <!-- Custom Fonts -->
     <link href="/sb2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="w8m-workspace theme-advertiser">
@@ -63,11 +57,10 @@
                         </li>
                         <li><a href="adv?action=startpass"><i class="fa fa-gear fa-fw"></i> Change Password</a>
                         </li>
-                        <li><a href="payment?action=topics"><i class="fa fa-money fa-fw"></i> Add Payment</a>
+                        <li><a href="security?action=dashboard"><i class="fa fa-shield fa-fw"></i> Account Security</a></li>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
+                        <li><form method="post" action="logout"><button type="submit" class="btn btn-link"><i class="fa fa-sign-out fa-fw"></i> Logout</button></form></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -80,6 +73,12 @@
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="adv?action=dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="apicredential?action=topics"><i class="fa fa-key fa-fw"></i> Management API credentials</a>
+                        </li>
+                        <li>
+                            {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics"><i class="fa fa-credit-card fa-fw"></i> Advertiser funding</a>{{end}}
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Campaigns<span class="fa arrow"></span></a>
@@ -125,6 +124,8 @@
                         </li>
                         <li>
 			    <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
+			    <a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> Marketplace analytics</a>
+			    <a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> Actions &amp; Attribution</a>
                         </li>
                     </ul>
                 </div>

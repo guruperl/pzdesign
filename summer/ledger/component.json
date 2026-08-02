@@ -1,18 +1,25 @@
 {
   "actions": {
-      "editPub": {"groups":["pub"],"validate":["pub_id"]},
-      "topicsAdv24Hours" : {"groups":["adv"],"validate":["adv_id"]},
-      "topicsAdvTopItems": {"groups":["adv"],"validate":["adv_id"]},
-      "topicsAdvTopSlots": {"groups":["adv"],"validate":["adv_id"]},
-      "topicsPub24Hours" : {"groups":["pub"],"validate":["pub_id"]},
-      "topicsPubTopSlots": {"groups":["pub"],"validate":["pub_id"]},
-      "topicsPubTopCampaigns": {"groups":["pub"],"validate":["pub_id"]},
-      "topicsMid24Hours" : {"groups":["admin","adv"]},
-      "topicsMidTopBidders": {"groups":["admin","adv"]},
-      "topicsMidTopSlots": {"groups":["adv"],"validate":["adv_id"]},
-      "topicsMidTopRoutes": {"groups":["admin"]},
-      "topicsMidTopPublishers": {"groups":["admin"]},
-      "editAdv": {"groups":["adv"],"validate":["adv_id"]}
+      "editPub": {"groups":["pub"],"permission":["report.publisher.read"],"validate":["pub_id"]},
+      "topicsAdv24Hours" : {"groups":["adv"],"permission":["report.advertiser.read"],"validate":["adv_id"]},
+      "topicsAdvTopItems": {"groups":["adv"],"permission":["report.advertiser.read"],"validate":["adv_id"]},
+      "topicsAdvTopSlots": {"groups":["adv"],"permission":["report.advertiser.read"],"validate":["adv_id"]},
+      "topicsAdvActions": {"groups":["adv"],"permission":["report.advertiser.read"],"validate":["adv_id"]},
+      "topicsAdvActionBreakdown": {"groups":["adv"],"permission":["report.advertiser.read"],"validate":["adv_id"]},
+      "topicsMarketplace": {"groups":["admin","adv","pub","analyst"],"permission":["report.marketplace.read"],"resource":["marketplace","0"]},
+      "topicsMarketplaceFreshness": {"groups":["admin","adv","pub"],"permission":["report.marketplace.read"]},
+      "topicsMarketplaceSummary": {"groups":["admin","adv"],"permission":["report.marketplace.read"]},
+      "topicsMarketplaceActions": {"groups":["admin","adv"],"permission":["report.marketplace.read"]},
+      "topicsExperiments": {"groups":["admin"],"permission":["experiment.read"]},
+      "topicsPub24Hours" : {"groups":["pub"],"permission":["report.publisher.read"],"validate":["pub_id"]},
+      "topicsPubTopSlots": {"groups":["pub"],"permission":["report.publisher.read"],"validate":["pub_id"]},
+      "topicsPubTopCampaigns": {"groups":["pub"],"permission":["report.publisher.read"],"validate":["pub_id"]},
+      "topicsMid24Hours" : {"groups":["admin","adv"],"permission":["report.middleman.read"]},
+      "topicsMidTopBidders": {"groups":["admin","adv"],"permission":["report.middleman.read"]},
+      "topicsMidTopSlots": {"groups":["adv"],"permission":["report.middleman.read"],"validate":["adv_id"]},
+      "topicsMidTopRoutes": {"groups":["admin"],"permission":["report.middleman.read"]},
+      "topicsMidTopPublishers": {"groups":["admin"],"permission":["report.middleman.read"]},
+      "editAdv": {"groups":["adv"],"permission":["report.advertiser.read"],"validate":["adv_id"]}
   },
 
   "nextpages" : {

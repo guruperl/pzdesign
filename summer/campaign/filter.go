@@ -4,7 +4,9 @@
 package campaign
 
 import (
+	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/guruperl/pzdesign/summer"
 )
@@ -27,11 +29,38 @@ func (self *Filter) Preset() error {
 			ARGS.Del("active")
 		}
 	}
+	if who == "adv" && (action == "insert" || action == "update") {
+		ARGS.Set("foreign_id", strings.TrimSpace(ARGS.Get("foreign_id")))
+		if raw := strings.TrimSpace(ARGS.Get("iurl")); raw != "" {
+			if err := validateCampaignURL("quality image", raw); err != nil {
+				return err
+			}
+			ARGS.Set("iurl", raw)
+		}
+		if err := summer.ApplyDeliveryForm(ARGS, true); err != nil {
+			return err
+		}
+		if err := summer.ValidateBalanceLimits(ARGS); err != nil {
+			return err
+		}
+	}
 
 	if who == "adv" {
 		ARGS.Set("entitytype_id", "41")
 	}
 
+	return nil
+}
+
+func validateCampaignURL(name, raw string) error {
+	u, err := url.Parse(strings.TrimSpace(raw))
+	if err != nil {
+		return fmt.Errorf("%s URL: %w", name, err)
+	}
+	scheme := strings.ToLower(u.Scheme)
+	if (scheme != "http" && scheme != "https") || u.Hostname() == "" || u.User != nil {
+		return fmt.Errorf("%s URL must be an absolute HTTP(S) URL without credentials", name)
+	}
 	return nil
 }
 
@@ -83,8 +112,21 @@ func (self *Filter) After(model *Model) error {
 
 	if action == "startnew" {
 		summer.TranslateOne(other["channel_topics"], "channel_name", "channel_name_g")
+		other["delivery_schedule_rows"] = summer.DeliveryScheduleRows(nil, true)
+		other["delivery_schedule_rows_en"] = summer.DeliveryScheduleRows(nil, false)
+		other["delivery_schedule_enabled"] = false
+		other["delivery_has_timezone"] = true
+		other["delivery_timezone"] = "UTC"
+		other["delivery_pacing"] = "Fast"
 	} else if action == "edit" {
 		item := lists[0]
+		other["delivery_schedule_rows"] = summer.DeliveryScheduleRows(item["weekly_schedule"], true)
+		other["delivery_schedule_rows_en"] = summer.DeliveryScheduleRows(item["weekly_schedule"], false)
+		item["delivery_schedule_enabled"] = summer.DeliveryScheduleEnabled(item["weekly_schedule"])
+		other["delivery_schedule_enabled"] = item["delivery_schedule_enabled"]
+		other["delivery_has_timezone"] = true
+		other["delivery_timezone"] = item["delivery_timezone"]
+		other["delivery_pacing"] = item["pacing_mode"]
 		summer.TranslateOne(item, "access_order", "access_order_g")
 		summer.TranslateOne(item["chac_topics"], "channel_name", "channel_name_g")
 	} else if who == "adv" && action == "insert" {

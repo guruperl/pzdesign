@@ -94,7 +94,7 @@ LEFT JOIN ch_belong cb ON
 LEFT JOIN ch_ac ca ON
 	(ca.channel_id=cb.channel_id AND ca.entitytype_id=32 AND ca.entity_id=` + slotID + `)
 
-WHERE i.active='Yes' AND i.size_id =` + sizeID + `
+WHERE i.active='Yes' AND i.cost_type='CPM' AND i.size_id =` + sizeID + `
 
 AND (
 	(	c.access_order="Inherit"
@@ -167,17 +167,10 @@ func (self *Model) Insupd(extra ...url.Values) error {
 		if item["cost"] == nil || item["cost_type"] == nil {
 			continue
 		}
-		cost := item["cost"].(float64)
-		switch item["cost_type"].(string) {
-		case "CPM":
-			cost *= 1.0
-		case "CPC":
-			cost *= 10.0
-		case "CPA":
-			cost *= 0.01
-		default:
-			cost *= 1.0
+		if item["cost_type"].(string) != "CPM" {
+			continue
 		}
+		cost := item["cost"].(float64)
 		weight := cost * cost * cost
 		if weight < 0 {
 			weight *= -1.0
@@ -199,5 +192,5 @@ func (self *Model) Startnew(extra ...url.Values) error {
 	return self.SelectSQL(self.LISTS, `
 SELECT DISTINCT item_id, item_name, slot_id, slot_name, cost_type, cost
 FROM ViewSlot
-WHERE slot_id=?`, self.ARGS.Get("slot_id"))
+WHERE slot_id=? AND cost_type='CPM'`, self.ARGS.Get("slot_id"))
 }

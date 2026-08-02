@@ -10,9 +10,9 @@
 
     "dashboard" :   {"groups":["pub"], "validate":["pub_id"]},
     "edit" :        {"groups":["pub"], "validate":["pub_id"]},
-    "editpass":     {"groups":["pub"], "options":["no_db","no_method"]},
-    "update" :      {"groups":["pub"], "validate":["pub_id"]},
-    "updatepass" :  {"groups":["pub"], "validate":["pub_id","passwd"]},
+    "editpass":     {"groups":["pub"], "permission":["account.password.change"], "options":["no_db","no_method"]},
+    "update" :      {"groups":["pub"], "permission_pub":["supply.propose"], "permission_admin":["seller.authorize"], "resource_admin":["pub","$f:pub_id"], "reauth_admin":["mfa"], "validate":["pub_id"]},
+    "updatepass" :  {"groups":["pub"], "permission":["account.password.change"], "reauth":["mfa"], "validate":["pub_id","passwd"]},
     "delete" :      {"validate": ["pub_id"]},
     "topics" :      {}
   },
@@ -31,9 +31,9 @@
   },
 
   "insert_pars" : ["passwd","pub_id","email","domain","firstname","lastname","address_id","active",          "access_order"],
-  "update_pars" : [         "pub_id","email","domain","firstname","lastname","address_id","active",          "access_order"],
-  "topics_pars" : [         "pub_id","email","domain","firstname","lastname","address_id","active","created","access_order"],
-  "edit_pars" :   [         "pub_id","email","domain","firstname","lastname","address_id","active","created","access_order"],
+  "update_pars" : [         "pub_id","email","domain","firstname","lastname","address_id","active",          "access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
+  "topics_pars" : [         "pub_id","email","domain","firstname","lastname","address_id","active","created","access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
+  "edit_pars" :   [         "pub_id","email","domain","firstname","lastname","address_id","active","created","access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
 
   "current_table" : "pub",
   "current_key"   : "pub_id",

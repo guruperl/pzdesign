@@ -26,12 +26,6 @@
     <!-- Custom Fonts -->
     <link href="/sb2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body class="w8m-workspace theme-advertiser">
 
@@ -64,11 +58,10 @@
                         </li>
                         <li><a href="adv?action=startpass"><i class="fa fa-gear fa-fw"></i> 修改密码</a>
                         </li>
-                        <li><a href="payment?action=topics"><i class="fa fa-money fa-fw"></i> 余额管理</a>
+                        <li><a href="security?action=dashboard"><i class="fa fa-shield fa-fw"></i> 账户安全</a></li>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> 退出</a>
-                        </li>
+                        <li><form method="post" action="logout"><button type="submit" class="btn btn-link"><i class="fa fa-sign-out fa-fw"></i> 退出</button></form></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -81,6 +74,8 @@
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
+							<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> 转化与归因</a>
+							<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> 投放分析</a>
                         </li>
                         <li>
                             <a href="campaign?action=topics"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动</a>
@@ -89,13 +84,19 @@
                             <a href="bidder?action=topics"><i class="fa fa-exchange fa-fw"></i> 竞价端点</a>
                         </li>
                         <li>
+                            <a href="apicredential?action=topics"><i class="fa fa-key fa-fw"></i> 管理 API 凭证</a>
+                        </li>
+                        <li>
+                            {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics"><i class="fa fa-credit-card fa-fw"></i> 广告账户资金</a>{{end}}
+                        </li>
+                        <li>
                             <a href="ledger?action=topicsMid24Hours"><i class="fa fa-line-chart fa-fw"></i> 竞价报告</a>
                         </li>
 {{ if and (or (or (or (or (or (or (eq .Other.Component `ac`)) (eq .Other.Component `campaign`)) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) .ARGS.campaign_md5}}
 						<li>
                             <ul class="nav nav-second-level nav-compact-sm">
 								<li>
-                                 	<a href="javascript:void(0);">{{index .ARGS.campaign_name 0}}</a>
+								<span class="nav-link">{{index .ARGS.campaign_name 0}}</span>
                                 </li>
                                 <li>
                                     <a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">广告组</a>

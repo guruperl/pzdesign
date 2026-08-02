@@ -44,6 +44,7 @@
                 </div>
                 <input type="password" class="form-control" NAME="{{ .Password }}" placeholder="Password">
               </div>
+              <div class="input-group mb-4"><input type="text" class="form-control" name="{{.TOTP}}" placeholder="Authenticator or recovery code (if enabled)" autocomplete="one-time-code"></div>
               <div class="row">
                 <div class="col-6">
                   <button type="submit" class="btn btn-primary px-4">Login</button>

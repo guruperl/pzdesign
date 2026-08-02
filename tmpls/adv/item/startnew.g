@@ -22,14 +22,12 @@
     <div class="col-sm-3">
         <input type=text class="form-control" name="item_name" placeholder="输入广告组名称" />
     </div>
-    <label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
-    <div class="col-sm-3">
-        <input type=radio name=cost_type value=ROI>ROI
-        <input type=radio name=cost_type value=CPM>CPM
-        <input type=radio name=cost_type value=CPC>CPC
-        <input type=radio name=cost_type value=CPA>CPA
+	<label for="costType" class="col-sm-2 col-form-label text-right">计费方式:</label>
+	<div class="col-sm-3">
+		<input type=hidden name=cost_type value=CPM>
+		<span class="form-control-plaintext">CPM（美元/千次曝光）</span>
 	</div>
-    <label for="inputEndx" class="col-sm-1 col-form-label text-right">价格</label>
+	<label for="inputEndx" class="col-sm-1 col-form-label text-right">CPM 出价</label>
     <div class="col-sm-2">
         <input type=text class="form-control" name="cost" placeholder="1.23" />
     </div>
@@ -38,21 +36,21 @@
 <div class="form-group row">
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">落地页:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="item_click">落地 URL，可使用宏</textarea>
+		<textarea class="form-control" rows=2 name="item_click" placeholder="https://advertiser.example/landing（可在查询参数中使用宏）"></textarea>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">展示监测地址:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="imp_url">展示监测 URL，可使用宏；多个地址请用英文逗号分隔</textarea>
+		<textarea class="form-control" rows=2 name="imp_url" placeholder="可选；多个 HTTPS/HTTP 地址请用英文逗号分隔"></textarea>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">点击监测地址:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="click_url">点击监测 URL，可使用宏；多个地址请用英文逗号分隔</textarea>
+		<textarea class="form-control" rows=2 name="click_url" placeholder="可选；多个 HTTPS/HTTP 地址请用英文逗号分隔"></textarea>
     </div>
 </div>
 
@@ -66,6 +64,8 @@
         <input type=text class="form-control" name="endx" value="">
     </div>
 </div>
+
+{{template "deliveryschedule" .}}
 
 
 <div class="form-group row">

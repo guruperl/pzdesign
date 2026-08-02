@@ -8,6 +8,7 @@
         <tr>
             <th>广告位名</th>
             <th>尺寸</th>
+			<th>分类 / 质量</th>
 			<th>状态</th>
             <th>创建时间</th>
             <th></th>
@@ -18,6 +19,7 @@
 			<tr>
 				<td><a href="slot?action=edit&slot_id={{.slot_id}}">{{.slot_name}}</a></td>
 				<td>{{.w}} × {{.h}}</td>
+				<td>{{.media_intent}} / {{.placement}} / {{.traffic_quality}} / {{.source_quality}}</td>
 				<td>{{.active}}</td>
 				<td>{{.created}}</td>
 				<td>

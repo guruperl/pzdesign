@@ -15,7 +15,7 @@
     <div class="account-form-heading">
       <span class="account-kicker">密码重置</span>
       <h1>设置新密码</h1>
-      <p>当前密码规则要求至少 5 个字符。</p>
+      <p>新密码至少需要 12 个字符。</p>
     </div>
     <form id="advReset" action="adv" method="post">
       <input type="hidden" name="action" value="resetpass">
@@ -27,12 +27,13 @@
       <input type="hidden" name="md5" value="{{index .ARGS.md5 0}}">
       <div class="account-field">
         <label for="passwd">新密码</label>
-        <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="输入新密码" autocomplete="new-password" minlength="5" required></div>
+        <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="输入新密码" autocomplete="new-password" minlength="12" required></div>
       </div>
       <div class="account-field">
         <label for="confirm">确认新密码</label>
-        <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="再次输入新密码" autocomplete="new-password" minlength="5" required></div>
+        <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="再次输入新密码" autocomplete="new-password" minlength="12" required></div>
       </div>
+      <div class="account-field"><label for="recovery_code">恢复代码（已启用双重验证时必填）</label><div class="account-control"><i class="fa fa-shield" aria-hidden="true"></i><input type="text" name="recovery_code" id="recovery_code" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="one-time-code"></div></div>
       <button type="submit" class="account-submit">保存新密码</button>
     </form>
   </section>
@@ -43,12 +44,12 @@
 $(function () {
   $('#advReset').validate({
     rules: {
-      passwd: { required: true, minlength: 5 },
-      confirm: { required: true, minlength: 5, equalTo: '#passwd' }
+      passwd: { required: true, minlength: 12 },
+      confirm: { required: true, minlength: 12, equalTo: '#passwd' }
     },
     messages: {
-      passwd: { required: '请输入新密码', minlength: '密码至少需要 5 个字符' },
-      confirm: { required: '请再次输入新密码', minlength: '密码至少需要 5 个字符', equalTo: '两次输入的密码不一致' }
+      passwd: { required: '请输入新密码', minlength: '密码至少需要 12 个字符' },
+      confirm: { required: '请再次输入新密码', minlength: '密码至少需要 12 个字符', equalTo: '两次输入的密码不一致' }
     },
     errorElement: 'em',
     errorPlacement: function (error, element) {

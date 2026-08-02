@@ -1,9 +1,14 @@
 package pub
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
 	"net/url"
 	"strconv"
+	"strings"
 
+	"github.com/guruperl/aofei/acl"
 	"github.com/guruperl/aofei/adminapi"
 	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer"
@@ -34,11 +39,16 @@ func (self *Filter) Preset() error {
 			ARGS.Set("firstname", ARGS.Get("lastname"))
 		}
 		if ARGS.Get("passwd") == ARGS.Get("confirm") {
-			hash, err := genelet.HashPassword(ARGS.Get("passwd"))
-			if err != nil {
+			if err := genelet.ValidatePassword(ARGS.Get("passwd")); err != nil {
 				return err
 			}
-			ARGS.Set("passwd", hash)
+			if !(who == "pub" && action == "updatepass" && self.Identity != nil) {
+				hash, err := genelet.HashPassword(ARGS.Get("passwd"))
+				if err != nil {
+					return err
+				}
+				ARGS.Set("passwd", hash)
+			}
 			ARGS.Del("confirm")
 		} else {
 			return genelet.Err(3102)
@@ -48,6 +58,11 @@ func (self *Filter) Preset() error {
 	if who == "web" && (action == "activate" || action == "startreset" || action == "resetpass") {
 		if ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("pub_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
 			return genelet.Err(3102)
+		}
+		if self.Identity != nil && (action == "startreset" || action == "resetpass") {
+			if err := self.Identity.ValidateRecoveryTimestamp(ARGS.Get("stamp")); err != nil {
+				return genelet.Err(3102)
+			}
 		}
 	} else if who == "admin" && action == "insert" {
 		// needed for validation but not actually passed to the db
@@ -59,8 +74,39 @@ func (self *Filter) Preset() error {
 			ARGS.Del("active")
 		}
 	}
+	if action == "update" && hasAnySellerField(ARGS) {
+		seller := acl.SellerMetadata{
+			ID:         strings.TrimSpace(ARGS.Get("seller_id")),
+			Type:       strings.TrimSpace(ARGS.Get("seller_type")),
+			ASI:        strings.TrimSpace(ARGS.Get("seller_asi")),
+			Name:       strings.TrimSpace(ARGS.Get("seller_name")),
+			Domain:     strings.TrimSpace(ARGS.Get("seller_domain")),
+			Authorized: who == "admin" && ARGS.Get("seller_authorized") == "Yes",
+		}
+		if err := seller.Validate(); err != nil {
+			return fmt.Errorf("invalid seller transparency metadata: %w", err)
+		}
+		if who != "admin" {
+			ARGS.Set("seller_authorized", "No")
+		}
+		for key, value := range map[string]string{
+			"seller_id": seller.ID, "seller_type": seller.Type, "seller_asi": seller.ASI,
+			"seller_name": seller.Name, "seller_domain": seller.Domain,
+		} {
+			ARGS.Set(key, value)
+		}
+	}
 
 	return nil
+}
+
+func hasAnySellerField(values url.Values) bool {
+	for _, name := range []string{"seller_id", "seller_type", "seller_asi", "seller_name", "seller_domain", "seller_authorized"} {
+		if _, ok := values[name]; ok {
+			return true
+		}
+	}
+	return false
 }
 
 func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values) error {
@@ -73,6 +119,16 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 	ARGS := self.R.Form
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"
+	}
+	if action == "update" && hasAnySellerField(ARGS) {
+		if who == "admin" && strings.TrimSpace(ARGS.Get("reason")) == "" {
+			return fmt.Errorf("seller authorization requires an audited reason")
+		}
+		prior := make(map[string]interface{})
+		if err := model.GetSQL(prior, `SELECT seller_id, seller_type, seller_asi, seller_name, seller_domain, seller_authorized FROM pub WHERE pub_id=?`, ARGS.Get("pub_id")); err != nil {
+			return err
+		}
+		(*model.OTHER)["security_seller_prior"] = prior
 	}
 
 	if who == "admin" && action == "insert" {
@@ -113,6 +169,27 @@ func (self *Filter) After(model *Model) error {
 	who := self.RoleValue
 	lists := *model.LISTS
 	other := *model.OTHER
+	if action == "update" {
+		if prior, ok := other["security_seller_prior"].(map[string]interface{}); ok {
+			current := make(map[string]interface{})
+			if err := model.GetSQL(current, `SELECT seller_id, seller_type, seller_asi, seller_name, seller_domain, seller_authorized FROM pub WHERE pub_id=?`, ARGS.Get("pub_id")); err != nil {
+				return err
+			}
+			priorAuthorization := genelet.Interface2String(prior["seller_authorized"])
+			currentAuthorization := genelet.Interface2String(current["seller_authorized"])
+			ARGS.Set("_gaudit_prior_state", "SellerAuthorized="+priorAuthorization)
+			ARGS.Set("_gaudit_new_state", "SellerAuthorized="+currentAuthorization)
+			ARGS.Set("_gaudit_object_hash", sellerTupleHash(current))
+			if who == "admin" {
+				ARGS.Set("_gaudit_event", "SellerAuthorizationReviewed")
+				ARGS.Set("_gaudit_reason", strings.TrimSpace(ARGS.Get("reason")))
+			} else {
+				ARGS.Set("_gaudit_event", "PublisherSupplyMetadataProposed")
+				ARGS.Set("_gaudit_reason", "Publisher supply metadata proposal")
+			}
+			delete(other, "security_seller_prior")
+		}
+	}
 
 	if action == "topics" {
 		for _, item := range lists {
@@ -141,4 +218,13 @@ func (self *Filter) After(model *Model) error {
 	}
 
 	return nil
+}
+
+func sellerTupleHash(values map[string]interface{}) string {
+	parts := make([]string, 0, 5)
+	for _, key := range []string{"seller_id", "seller_type", "seller_asi", "seller_name", "seller_domain"} {
+		parts = append(parts, genelet.Interface2String(values[key]))
+	}
+	digest := sha256.Sum256([]byte(strings.Join(parts, "\x00")))
+	return hex.EncodeToString(digest[:])
 }

@@ -13,26 +13,28 @@
                 <tr>
                   <th>Name</th>
                   <th>Platform</th>
+                  <th>Minimum bid (USD CPM)</th>
                   <th>Active</th>
                   <th>Since</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-info" href="slot?action=startnew&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}">Create New</a> </th>
+                  <th colspan=3 class="text-right"><a class="btn btn-info" href="slot?action=startnew&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}&site_type={{index .ARGS.site_type 0 | urlquery}}">Create New</a> </th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
-<tr><td><a href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}">{{.slot_name}}</a></td>
+<tr><td><a href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}">{{.slot_name}}</a></td>
 <td>{{.qa_device}}</td>
+<td>{{printf "%.6f" .bidfloor}}</td>
 <td>{{.active}}</td>
 <td>{{.created}}</td>
-<td><button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Code</button></td>
-<td><button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">API</button></td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}">Del</a></td>
+<td>{{if .browser_code}}<button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Web ad tag</button>{{end}}</td>
+<td>{{if .api_code}}<button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">App SDK / API</button>{{end}}</td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your slot {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}">Del</a></td>
 {{end}}</tobdy>
 
 </table>
 </div>
 
 {{ range $item := .Lists }}
-<div class="modal fade" id="modal{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modal{{$item.slot_id}}Label" aria-hidden="true">
+{{if $item.browser_code}}<div class="modal fade" id="modal{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modal{{$item.slot_id}}Label" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -54,9 +56,9 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal -->
+        <!-- /.modal -->{{end}}
 
-<div class="modal fade" id="modalAPI{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modalAPI{{$item.slot_id}}Label" aria-hidden="true">
+{{if $item.api_code}}<div class="modal fade" id="modalAPI{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modalAPI{{$item.slot_id}}Label" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -77,7 +79,7 @@
           </div>
           <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal -->
+        <!-- /.modal -->{{end}}
 {{end}}
 
             </div>

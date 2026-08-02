@@ -10,7 +10,6 @@
         	<th>联系人</th>
         	<th>公司</th>
 			<th>状态</th>
-            <th>余款</th>
             <th>创建时间</th>
             <th></th>
             <th></th>
@@ -22,7 +21,6 @@
 				<td>{{.firstname}}</td>
 				<td>{{.company}}</td>
 				<td>{{.active}}</td>
-				<td>{{.balance}}</td>
 				<td>{{.created}}</td>
 				<td>
 {{if eq .active "New"}}<a class="btn btn-sm btn-primary" href="adv?action=update&active=Yes&adv_id={{.adv_id}}">激活</a>{{end}}

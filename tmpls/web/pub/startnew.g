@@ -47,11 +47,11 @@
         </div>
         <div class="account-field">
           <label for="passwd">密码 <span>*</span></label>
-          <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="输入密码" autocomplete="new-password" required></div>
+          <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="输入密码（至少 12 个字符）" autocomplete="new-password" minlength="12" required></div>
         </div>
         <div class="account-field">
           <label for="confirm">确认密码 <span>*</span></label>
-          <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="再次输入密码" autocomplete="new-password" required></div>
+          <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="再次输入密码" autocomplete="new-password" minlength="12" required></div>
         </div>
         <div class="account-field account-field-wide">
           <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>我已阅读并接受平台用户协议及账户使用规则。</span></label>
@@ -73,15 +73,15 @@ $(function () {
   $('#pubForm').validate({
     rules: {
       lastname: 'required',
-      passwd: { required: true, minlength: 5 },
-      confirm: { required: true, minlength: 5, equalTo: '#passwd' },
+      passwd: { required: true, minlength: 12 },
+      confirm: { required: true, minlength: 12, equalTo: '#passwd' },
       email: { required: true, email: true },
       agree: 'required'
     },
     messages: {
       lastname: '请输入联系人姓名',
-      passwd: { required: '请输入密码', minlength: '密码至少需要 5 个字符' },
-      confirm: { required: '请再次输入密码', minlength: '密码至少需要 5 个字符', equalTo: '两次输入的密码不一致' },
+      passwd: { required: '请输入密码', minlength: '密码至少需要 12 个字符' },
+      confirm: { required: '请再次输入密码', minlength: '密码至少需要 12 个字符', equalTo: '两次输入的密码不一致' },
       email: '请输入有效的电子邮箱',
       agree: '请先接受平台用户协议及账户使用规则'
     },

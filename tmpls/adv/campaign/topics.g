@@ -19,19 +19,19 @@
                   <th>预算</th>
                   <th>曝光</th>
                   <th>点击</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="javascript:void(0);" data-title="添加广告活动" data-href="campaign?action=startnew" id="startnewPopup">创建广告活动</a></th>
+                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="#" data-title="添加广告活动" data-href="campaign?action=startnew" id="startnewPopup">创建广告活动</a></th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-<td><a href="javascript:void(0);" data-title="活动更新：{{.campaign_name}}" data-href="campaign?action=edit&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}" id="editPopup">{{.campaign_name}}</a></td>
+<td><a href="#" data-title="活动更新：{{.campaign_name}}" data-href="campaign?action=edit&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}" id="editPopup">{{.campaign_name}}</a></td>
 <td>{{.target_type}}</td>
 <td>{{.created}}</td>
 <td>{{.limit_spend}}</td>
 <td>{{.limit_imp}}</td>
 <td>{{.limit_cli}}</td>
 <td><a class="btn btn-sm btn-primary" href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}">广告组</a></td>
-<td><a class="btn btn-sm btn-info" href="javascript:void(0);" data-title="活动预算：{{.campaign_name}}" data-href="balance?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}&entitytype_id=41" id="balancePopup">活动预算</a></td>
+<td><a class="btn btn-sm btn-info" href="#" data-title="活动预算：{{.campaign_name}}" data-href="balance?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}&entitytype_id=41" id="balancePopup">活动预算</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告活动“{{.campaign_name}}”吗？此操作不可撤销。')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
 </tr>
 {{end}}{{end}}</tobdy>

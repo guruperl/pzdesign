@@ -13,21 +13,21 @@
 <div class="form-group row">
     <label for="inputCurrentPass" class="col-sm-3 col-form-label">当前密码：</label>
     <div class="col-sm-8">
-        <input type=password class="form-control" name=passwd_old placeholder="输入当前密码" />
+        <input type=password class="form-control" name=passwd_old placeholder="输入当前密码" autocomplete="current-password" required />
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputNewPass" class="col-sm-3 col-form-label">新密码：</label>
+    <label for="inputNewPass" class="col-sm-3 col-form-label">新密码（至少 12 个字符）：</label>
     <div class="col-sm-8">
-        <input type=password class="form-control" name=passwd placeholder="输入新密码" />
+        <input type=password class="form-control" name=passwd placeholder="输入新密码" autocomplete="new-password" minlength=12 required />
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputConfirm" class="col-sm-3 col-form-label">确认新密码：</label>
     <div class="col-sm-8">
-        <input type=password class="form-control" name=confirm placeholder="再次输入新密码" />
+        <input type=password class="form-control" name=confirm placeholder="再次输入新密码" autocomplete="new-password" minlength=12 required />
     </div>
 </div>
 
