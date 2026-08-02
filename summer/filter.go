@@ -21,7 +21,15 @@ type Filter struct {
 	genelet.Filter
 }
 
-const MarketplaceReportingStorageKey = "MarketplaceReportingEnabled"
+const (
+	ActionReportingStorageKey      = "ActionReportingEnabled"
+	MarketplaceReportingStorageKey = "MarketplaceReportingEnabled"
+)
+
+func ActionReportingEnabled(storage map[string]interface{}) bool {
+	enabled, _ := storage[ActionReportingStorageKey].(bool)
+	return enabled
+}
 
 func MarketplaceReportingEnabled(storage map[string]interface{}) bool {
 	enabled, _ := storage[MarketplaceReportingStorageKey].(bool)
@@ -367,6 +375,7 @@ func (self *Filter) AfterItemSet(name, str string) []map[string]interface{} {
 func (self *Filter) After(model *Model) error {
 	ARGS := self.R.Form
 	other := *model.OTHER
+	other["ActionReportingEnabled"] = ActionReportingEnabled(model.Storage)
 	other["HostedPaymentEnabled"] = model.Storage["HostedPayment"] != nil
 	other["MarketplaceReportingEnabled"] = MarketplaceReportingEnabled(model.Storage)
 

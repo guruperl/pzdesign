@@ -22,6 +22,9 @@ type observingHTTPServer struct {
 }
 
 func TestMarketplaceReportingAvailabilityFailsClosedWithoutDatabase(t *testing.T) {
+	if actionReportingAvailable(context.Background(), nil) {
+		t.Fatal("action reporting was enabled without a database schema")
+	}
 	if marketplaceReportingAvailable(context.Background(), nil) {
 		t.Fatal("marketplace reporting was enabled without a database schema")
 	}

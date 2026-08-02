@@ -125,7 +125,7 @@
                         <li>
 			    <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
 			    {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> Marketplace analytics</a>{{end}}
-			    <a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> Actions &amp; Attribution</a>
+			    {{if .Other.ActionReportingEnabled}}<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> Actions &amp; Attribution</a>{{end}}
                         </li>
                     </ul>
                 </div>

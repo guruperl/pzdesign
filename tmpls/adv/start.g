@@ -74,7 +74,7 @@
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
-							<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> 转化与归因</a>
+							{{if .Other.ActionReportingEnabled}}<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> 转化与归因</a>{{end}}
 							{{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> 投放分析</a>{{end}}
                         </li>
                         <li>

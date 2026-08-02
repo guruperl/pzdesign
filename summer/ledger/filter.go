@@ -83,6 +83,9 @@ func validateReportWindow(args url.Values, now time.Time) error {
 }
 
 func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values) error {
+	if strings.HasPrefix(self.Action, "topicsAdvAction") && !summer.ActionReportingEnabled(model.Storage) {
+		return genelet.Err(503, "转化与归因报表尚未在当前环境启用")
+	}
 	if strings.HasPrefix(self.Action, "topicsMarketplace") && !summer.MarketplaceReportingEnabled(model.Storage) {
 		return genelet.Err(503, "市场分析尚未在当前环境启用")
 	}

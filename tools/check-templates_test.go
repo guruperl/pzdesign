@@ -362,6 +362,19 @@ func TestMarketplaceNavigationFollowsSchemaAvailability(t *testing.T) {
 	}
 }
 
+func TestActionNavigationFollowsSchemaAvailability(t *testing.T) {
+	args := values(map[string]string{"a_company": "Advertiser", "a_email": "adv@example.test"})
+	action := filepath.Join("..", "tmpls", "adv", "attrname", "topics.g")
+	disabled := renderRoleTemplateWithOther(t, action, "topics", nil, args, map[string]interface{}{"ActionReportingEnabled": false})
+	if strings.Contains(disabled, `href="ledger?action=topicsAdvActions"`) {
+		t.Fatal("inactive action report remained in advertiser navigation")
+	}
+	enabled := renderRoleTemplateWithOther(t, action, "topics", nil, args, map[string]interface{}{"ActionReportingEnabled": true})
+	if !strings.Contains(enabled, `href="ledger?action=topicsAdvActions"`) {
+		t.Fatal("active action report is missing from advertiser navigation")
+	}
+}
+
 func TestAdvertiserMaintenanceErrorExplainsInactiveFeature(t *testing.T) {
 	parsed, err := template.ParseFiles(filepath.Join("..", "tmpls", "adv", "error.g"))
 	if err != nil {

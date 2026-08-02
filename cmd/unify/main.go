@@ -81,6 +81,7 @@ func run(ctx context.Context, localFlagSet bool) error {
 		return err
 	}
 	gc.DB = sc.DB
+	gc.Storage[summer.ActionReportingStorageKey] = actionReportingAvailable(ctx, sc.DB)
 	gc.Storage[summer.MarketplaceReportingStorageKey] = marketplaceReportingAvailable(ctx, sc.DB)
 	identity, err := genelet.NewIdentityService(gc.C, gc.DB)
 	if err != nil {
@@ -155,17 +156,29 @@ FROM information_schema.tables
 WHERE table_schema=DATABASE()
   AND table_name IN ('report_delivery','measurement_action','mid_callback_retry','daily_log')`
 
+const actionReportingSchemaQuery = `SELECT COUNT(*)
+FROM information_schema.tables
+WHERE table_schema=DATABASE() AND table_name='measurement_action'`
+
+func actionReportingAvailable(ctx context.Context, db *sql.DB) bool {
+	return schemaQueryMatches(ctx, db, actionReportingSchemaQuery, 1)
+}
+
 func marketplaceReportingAvailable(ctx context.Context, db *sql.DB) bool {
+	return schemaQueryMatches(ctx, db, marketplaceReportingSchemaQuery, 4)
+}
+
+func schemaQueryMatches(ctx context.Context, db *sql.DB, query string, want int) bool {
 	if db == nil {
 		return false
 	}
 	checkCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
 	defer cancel()
 	var tableCount int
-	if err := db.QueryRowContext(checkCtx, marketplaceReportingSchemaQuery).Scan(&tableCount); err != nil {
+	if err := db.QueryRowContext(checkCtx, query).Scan(&tableCount); err != nil {
 		return false
 	}
-	return tableCount == 4
+	return tableCount == want
 }
 
 func storeHostedPayment(storage map[string]interface{}, service *hostedpayment.Service) {
