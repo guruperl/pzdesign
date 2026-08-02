@@ -300,6 +300,9 @@ func (self *Filter) Preset() error {
 
 func (self *Filter) BalanceBefore(model *Model) error {
 	ARGS := self.R.Form
+	if err := ValidateBalanceLimits(ARGS); err != nil {
+		return err
+	}
 
 	total := url.Values{}
 	for _, name := range []string{"limit_spend", "limit_imp", "limit_cli"} {
@@ -357,6 +360,7 @@ func (self *Filter) AfterItemSet(name, str string) []map[string]interface{} {
 func (self *Filter) After(model *Model) error {
 	ARGS := self.R.Form
 	other := *model.OTHER
+	other["HostedPaymentEnabled"] = model.Storage["HostedPayment"] != nil
 
 	who := self.RoleValue
 	action := self.Action

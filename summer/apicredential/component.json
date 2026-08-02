@@ -1,0 +1,8 @@
+{
+  "actions": {
+    "topics": {"groups":["admin","adv"], "permission":["api.credential.read"], "resource":["adv","$f:adv_id"], "options":["no_db","no_method"], "template":["page"]},
+    "issue": {"groups":["admin","adv"], "permission":["api.credential.issue"], "resource":["adv","$f:adv_id"], "reauth":["mfa"], "validate":["credential_name","scope","expires_days","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "rotate": {"groups":["admin","adv"], "permission":["api.credential.rotate"], "resource":["adv","$f:adv_id"], "reauth":["mfa"], "validate":["credential_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "revoke": {"groups":["admin","adv"], "permission":["api.credential.revoke"], "resource":["adv","$f:adv_id"], "reauth":["mfa"], "validate":["credential_id","reason"], "options":["no_db","no_method"], "template":["page"]}
+  }
+}

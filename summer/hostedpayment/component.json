@@ -1,0 +1,18 @@
+{
+  "actions": {
+    "topics": {"groups":["admin","adv","pub"], "permission":["payment.read"], "options":["no_db","no_method"], "template":["page"]},
+    "fundingCustomer": {"groups":["admin","adv"], "permission":["payment.funding.bind"], "resource_adv":["adv","$f:adv_id"], "reauth":["mfa"], "validate":["adv_id","request_key","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "payoutOnboarding": {"groups":["admin","pub"], "permission":["payment.payout.bind"], "resource_pub":["pub","$f:pub_id"], "reauth":["mfa"], "validate":["pub_id","country","request_key","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "refreshOnboarding": {"groups":["admin","pub"], "permission":["payment.payout.bind"], "resource_pub":["pub","$f:pub_id"], "reauth":["mfa"], "validate":["pub_id","binding_id","binding_version","request_key","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "approveBinding": {"groups":["admin"], "permission":["payment.binding.approve"], "reauth":["mfa"], "validate":["binding_id","binding_version","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "proposeFunding": {"groups":["admin","adv"], "permission":["payment.checkout.propose"], "resource_adv":["adv","$f:adv_id"], "reauth":["mfa"], "validate":["adv_id","statement_id","amount","request_key","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "proposePayout": {"groups":["admin"], "permission":["payment.payout.propose"], "reauth":["mfa"], "validate":["pub_id","statement_id","amount","request_key","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "proposeRefund": {"groups":["admin"], "permission":["payment.refund.propose"], "reauth":["mfa"], "validate":["adv_id","statement_id","parent_operation_id","amount","request_key","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "approveOperation": {"groups":["admin"], "permission":["payment.operation.approve"], "reauth":["mfa"], "validate":["operation_id","operation_version","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "executeOperation": {"groups":["admin","adv"], "permission":["payment.operation.execute"], "reauth":["mfa"], "validate":["operation_id","operation_version"], "options":["no_db","no_method"], "template":["page"]},
+    "cancelOperation": {"groups":["admin","adv"], "permission":["payment.operation.cancel"], "reauth":["mfa"], "validate":["operation_id","operation_version","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "reconcile": {"groups":["admin"], "permission":["payment.reconcile"], "reauth":["mfa"], "validate":["operation_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "resolveReconciliation": {"groups":["admin"], "permission":["payment.reconcile"], "reauth":["mfa"], "validate":["reconciliation_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "secretReadiness": {"groups":["admin"], "permission":["payment.secret.readiness"], "reauth":["mfa"], "validate":["reason"], "options":["no_db","no_method"], "template":["page"]}
+  }
+}

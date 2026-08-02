@@ -12,11 +12,16 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync/atomic"
 	"syscall"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/guruperl/aofei/adminapi"
 	"github.com/guruperl/aofei/dsp"
+	"github.com/guruperl/aofei/hostedpayment"
+	"github.com/guruperl/aofei/managementapi"
+	"github.com/guruperl/aofei/trafficquality"
 	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer/registry"
 	"go.uber.org/zap"
@@ -62,6 +67,9 @@ func run(ctx context.Context, localFlagSet bool) error {
 	}
 	defer sc.Close()
 	sc.Logger = logger
+	if err := adminapi.SetUploadedAudienceTTL(sc.C.PrivacyAudienceTTLSeconds); err != nil {
+		return err
+	}
 	if err := applyLocalModeFlag(sc, localFlagSet, isLocal); err != nil {
 		return err
 	}
@@ -71,6 +79,36 @@ func run(ctx context.Context, localFlagSet bool) error {
 		return err
 	}
 	gc.DB = sc.DB
+	identity, err := genelet.NewIdentityService(gc.C, gc.DB)
+	if err != nil {
+		return fmt.Errorf("initialize identity security: %w", err)
+	}
+	gc.Identity = identity
+	gc.Storage["Identity"] = identity
+	apiService, err := managementapi.NewService(sc.C.ManagementAPI, sc.DB, sc.Redis)
+	if err != nil {
+		return fmt.Errorf("initialize management API: %w", err)
+	}
+	if apiService != nil && identity == nil {
+		return fmt.Errorf("management API requires the Summer identity boundary")
+	}
+	gc.Storage["ManagementAPI"] = apiService
+	qualityService, err := trafficquality.NewService(sc.C.TrafficQuality, sc.DB)
+	if err != nil {
+		return fmt.Errorf("initialize traffic-quality review: %w", err)
+	}
+	if qualityService != nil && identity == nil {
+		return fmt.Errorf("traffic-quality review requires the Summer identity boundary")
+	}
+	gc.Storage["TrafficQuality"] = qualityService
+	paymentService, err := hostedpayment.NewService(sc.C.HostedPayments, sc.DB)
+	if err != nil {
+		return fmt.Errorf("initialize hosted payments: %w", err)
+	}
+	if paymentService != nil && identity == nil {
+		return fmt.Errorf("hosted payments require the Summer identity boundary")
+	}
+	gc.Storage["HostedPayment"] = paymentService
 	gc.Storage["Redis"] = sc.Redis
 	gc.Storage["Nc"] = sc.Nc
 	gc.Storage["Spread"] = sc.C.Spread // pass the top to genelet, so it can use the same IO for local mode
@@ -87,20 +125,51 @@ func run(ctx context.Context, localFlagSet bool) error {
 		gc.C.ConnectArray = sc.C.ConnectArray
 	}
 
-	mux := newServeMux(sc, gc)
+	health := newServiceHealth(sc)
+	mux := newServeMuxWithServices(sc, gc, health, apiService, paymentService)
 
 	server := &http.Server{
-		Addr:           ":" + sc.C.ServerPort,
-		Handler:        mux,
-		ReadTimeout:    15 * time.Second, // 15 seconds
-		WriteTimeout:   15 * time.Second, // 15 seconds
-		MaxHeaderBytes: 1 << 20,          // 1 MB
+		Addr:              ":" + sc.C.ServerPort,
+		Handler:           mux,
+		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       15 * time.Second,
+		WriteTimeout:      15 * time.Second,
+		IdleTimeout:       60 * time.Second,
+		MaxHeaderBytes:    1 << 20,
 	}
 	listener, err := net.Listen("tcp", server.Addr)
 	if err != nil {
 		return err
 	}
-	return runHTTPServer(ctx, server, listener, shutdownTimeout)
+	health.accepting.Store(true)
+	return runHTTPServer(ctx, server, listener, shutdownTimeout, func() {
+		health.accepting.Store(false)
+	})
+}
+
+type serviceHealth struct {
+	controller *dsp.Controller
+	accepting  atomic.Bool
+}
+
+func newServiceHealth(controller *dsp.Controller) *serviceHealth {
+	return &serviceHealth{controller: controller}
+}
+
+func (h *serviceHealth) live(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Cache-Control", "no-store")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.WriteHeader(http.StatusNoContent)
+}
+
+func (h *serviceHealth) ready(w http.ResponseWriter, _ *http.Request) {
+	w.Header().Set("Cache-Control", "no-store")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	if h == nil || !h.accepting.Load() || h.controller == nil || h.controller.ServingReadiness(time.Now()) != nil {
+		http.Error(w, "service unavailable", http.StatusServiceUnavailable)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
 
 type gracefulHTTPServer interface {
@@ -109,7 +178,7 @@ type gracefulHTTPServer interface {
 	Close() error
 }
 
-func runHTTPServer(ctx context.Context, server gracefulHTTPServer, listener net.Listener, timeout time.Duration) error {
+func runHTTPServer(ctx context.Context, server gracefulHTTPServer, listener net.Listener, timeout time.Duration, beforeShutdown ...func()) error {
 	if server == nil || listener == nil {
 		return fmt.Errorf("HTTP server and listener are required")
 	}
@@ -128,6 +197,11 @@ func runHTTPServer(ctx context.Context, server gracefulHTTPServer, listener net.
 		}
 		return err
 	case <-ctx.Done():
+	}
+	for _, callback := range beforeShutdown {
+		if callback != nil {
+			callback()
+		}
 	}
 
 	shutdownCtx, cancel := context.WithTimeout(context.Background(), timeout)
@@ -167,15 +241,42 @@ func applyLocalModeFlag(sc *dsp.Controller, flagSet, enabled bool) error {
 	}
 	sc.C.IsLocal = enabled
 	if enabled {
-		return sc.ReloadLocalStaticCache()
+		if err := sc.ReloadLocalStaticCache(); err != nil {
+			return err
+		}
+		sc.StartLocalStaticCacheReload()
+	} else {
+		sc.StopLocalStaticCacheReload()
 	}
 	return nil
 }
 
-func newServeMux(sc *dsp.Controller, geneletHandler http.Handler) *http.ServeMux {
+func newServeMux(sc *dsp.Controller, geneletHandler http.Handler, healthStates ...*serviceHealth) *http.ServeMux {
+	var health *serviceHealth
+	if len(healthStates) != 0 {
+		health = healthStates[0]
+	}
+	return newServeMuxWithManagementAPI(sc, geneletHandler, health, nil)
+}
+
+func newServeMuxWithManagementAPI(sc *dsp.Controller, geneletHandler http.Handler, suppliedHealth *serviceHealth, apiService *managementapi.Service) *http.ServeMux {
+	return newServeMuxWithServices(sc, geneletHandler, suppliedHealth, apiService, nil)
+}
+
+func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, suppliedHealth *serviceHealth, apiService *managementapi.Service, paymentService *hostedpayment.Service) *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /bid/{domain}", sc.ServeBid)
-	mux.HandleFunc("POST /pz", pzCORS(sc.ServeSSP))
+	health := newServiceHealth(sc)
+	health.accepting.Store(true)
+	if suppliedHealth != nil {
+		health = suppliedHealth
+	}
+	traffic := dsp.NewTrafficGate(sc.C)
+	mux.HandleFunc("POST /bid/{domain}", traffic.Handler("adx", func(r *http.Request) string {
+		return "adx:" + r.PathValue("domain")
+	}, sc.ServeBid))
+	mux.HandleFunc("POST /pz", pzCORS(traffic.Handler("ssp", func(*http.Request) string {
+		return "ssp"
+	}, sc.ServeSSP)))
 	mux.HandleFunc("OPTIONS /pz", pzCORS(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNoContent)
 	}))
@@ -183,11 +284,23 @@ func newServeMux(sc *dsp.Controller, geneletHandler http.Handler) *http.ServeMux
 	mux.HandleFunc("GET /loss", sc.ServeWinLoss)
 	mux.HandleFunc("GET /clk", sc.ServeWinLoss)
 	mux.HandleFunc("GET /imp", sc.ServeWinLoss)
+	mux.HandleFunc("POST /action", sc.ServeAction)
 	mux.HandleFunc("GET /mid/win", sc.ServeMiddlemanCallback)
 	mux.HandleFunc("GET /mid/loss", sc.ServeMiddlemanCallback)
 	mux.HandleFunc("GET /mid/bill", sc.ServeMiddlemanCallback)
 	mux.HandleFunc("GET /mid/click", sc.ServeMiddlemanCallback)
-	mux.Handle("GET /debug/vars", expvar.Handler())
+	mux.Handle("GET /debug/vars", sc.MetricsHandler(expvar.Handler()))
+	mux.HandleFunc("GET /healthz", health.live)
+	mux.HandleFunc("GET /readyz", health.ready)
+	if apiService != nil {
+		mux.Handle("/api/v1/", apiService.Handler())
+	} else {
+		mux.Handle("/api/", http.NotFoundHandler())
+	}
+	if paymentService != nil {
+		mux.Handle("POST /webhooks/stripe", paymentService.WebhookHandler())
+	}
+	mux.Handle("/webhooks/", http.NotFoundHandler())
 	mux.Handle("/", geneletHandler)
 	return mux
 }

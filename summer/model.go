@@ -3,6 +3,7 @@
 package summer
 
 import (
+	"context"
 	"net/url"
 	"strconv"
 
@@ -13,7 +14,7 @@ type Model struct {
 	genelet.Model
 }
 
-var addressTables []string = []string{"pub", "adv", "pay_cc", "pay_cheque", "testing"}
+var addressTables []string = []string{"pub", "adv", "testing"}
 
 func (self *Model) Dashboard(extra ...url.Values) error {
 	return self.Topics(extra...)
@@ -107,6 +108,13 @@ func (self *Model) Resetpass(extra ...url.Values) error {
 func (self *Model) Updatepass(extra ...url.Values) error {
 	id := self.CurrentKey
 	ARGS := self.ARGS
+	if identity, _ := self.Storage["Identity"].(*genelet.IdentityService); identity != nil {
+		ctx := self.Context
+		if ctx == nil {
+			ctx = context.Background()
+		}
+		return identity.ChangePassword(ctx, genelet.IdentityAccount{Role: ARGS.Get("_grole"), ID: ARGS.Get(id)}, ARGS.Get("passwd_old"), ARGS.Get("passwd"))
+	}
 	hash := make(map[string]interface{})
 	if err := self.GetSQL(hash, `SELECT passwd FROM `+self.CurrentTable+` WHERE `+id+`=?`, ARGS.Get(id)); err != nil {
 		return err
@@ -117,6 +125,9 @@ func (self *Model) Updatepass(extra ...url.Values) error {
 	}
 	if err := genelet.CheckPasswordHash(ARGS.Get("passwd_old"), genelet.Interface2String(stored)); err != nil {
 		return genelet.Err(1031)
+	}
+	if err := genelet.ValidatePassword(ARGS.Get("passwd")); err != nil {
+		return err
 	}
 	passwd, err := genelet.EnsurePasswordHash(ARGS.Get("passwd"))
 	if err != nil {
@@ -153,6 +164,9 @@ func (self *Model) ChangePasswdAdmin(extra ...url.Values) error {
 	table := self.CurrentTable
 	id := self.CurrentKey
 	ARGS := self.ARGS
+	if err := genelet.ValidatePassword(ARGS.Get("passwd")); err != nil {
+		return err
+	}
 	passwd, err := genelet.EnsurePasswordHash(ARGS.Get("passwd"))
 	if err != nil {
 		return err

@@ -1,0 +1,17 @@
+{
+  "actions": {
+    "dashboard": {"groups":["admin"], "permission":["quality.evidence.read"], "options":["no_db","no_method"], "template":["page"]},
+    "topicsAdv": {"groups":["admin","adv","agent","analyst"], "permission":["quality.evidence.read"], "resource":["adv","$f:adv_id"], "validate":["adv_id"], "options":["no_db","no_method"], "template":["page"]},
+    "topicsPub": {"groups":["admin","pub","agent","analyst"], "permission":["quality.evidence.read"], "resource":["pub","$f:pub_id"], "validate":["pub_id"], "options":["no_db","no_method"], "template":["page"]},
+    "topicsPartner": {"groups":["admin","agent","analyst"], "permission":["quality.evidence.read"], "resource":["bidder","$f:partner_id"], "validate":["partner_id"], "options":["no_db","no_method"], "template":["page"]},
+    "createRule": {"groups":["admin"], "permission":["quality.rule.draft"], "reauth":["mfa"], "validate":["rule_key","signal","rule_action","scope_type","scope_id","threshold","window_seconds","reason_code","evidence_hours","aggregate_days","false_positive_bps","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "setMode": {"groups":["admin"], "permission":["quality.rule.activate"], "reauth":["mfa"], "validate":["rule_id","expected_mode","next_mode","canary_bps","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "resolve": {"groups":["admin"], "permission":["quality.review.resolve"], "reauth":["mfa"], "validate":["case_id","case_version","resolution","scope_type","scope_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "appeal": {"groups":["adv","pub"], "permission":["quality.appeal.submit"], "resource_adv":["adv","$f:adv_id"], "resource_pub":["pub","$f:pub_id"], "validate":["case_id","case_version","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "resolveAppeal": {"groups":["admin"], "permission":["quality.appeal.resolve"], "reauth":["mfa"], "validate":["case_id","case_version","appeal_result","scope_type","scope_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "enforce": {"groups":["admin"], "permission":["quality.enforcement.activate"], "reauth":["mfa"], "validate":["decision_id","enforcement_action","canary_bps","ttl_hours","scope_type","scope_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "rollback": {"groups":["admin"], "permission":["quality.enforcement.rollback"], "reauth":["mfa"], "validate":["enforcement_id","scope_type","scope_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "recommendBilling": {"groups":["admin"], "permission":["quality.billing.recommend"], "reauth":["mfa"], "validate":["decision_id","statement_id","billable_key","disposition","scope_type","scope_id","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "approveBilling": {"groups":["admin"], "permission":["quality.billing.approve"], "reauth":["mfa"], "validate":["billing_id","approve","reason"], "options":["no_db","no_method"], "template":["page"]}
+  }
+}

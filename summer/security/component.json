@@ -1,0 +1,9 @@
+{
+  "actions": {
+    "dashboard": {"groups":["admin","adv","pub","agent","analyst"], "permission":["account.security.read"], "options":["no_db","no_method"], "template":["page"]},
+    "enroll": {"groups":["admin","adv","pub","agent","analyst"], "permission":["account.security.enroll"], "reauth":["recent"], "options":["no_db","no_method"], "template":["page"]},
+    "confirm": {"groups":["admin","adv","pub","agent","analyst"], "permission":["account.security.enroll"], "reauth":["recent"], "validate":["totp"], "options":["no_db","no_method"], "template":["page"]},
+    "rotateRecovery": {"groups":["admin","adv","pub","agent","analyst"], "permission":["account.security.recovery.rotate"], "reauth":["mfa"], "validate":["totp"], "options":["no_db","no_method"], "template":["page"]},
+    "disable": {"groups":["admin","adv","pub","agent","analyst"], "permission":["account.security.disable"], "reauth":["mfa"], "validate":["totp","reason"], "options":["no_db","no_method"], "template":["page"]}
+  }
+}

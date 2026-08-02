@@ -5,6 +5,7 @@ go 1.22
 toolchain go1.23.5
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/guruperl/aofei v0.0.0
 	github.com/mediocregopher/radix/v4 v4.1.4
@@ -18,6 +19,7 @@ require (
 	github.com/lib/pq v1.12.3 // indirect
 	github.com/mattn/go-sqlite3 v1.14.44 // indirect
 	golang.org/x/crypto v0.31.0 // indirect
+	golang.org/x/text v0.21.0 // indirect
 )
 
 require (
