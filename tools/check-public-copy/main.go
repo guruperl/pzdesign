@@ -56,9 +56,25 @@ var forbidden = []string{
 var requiredSnippets = map[string][]string{
 	"www/index.html": {
 		"W8M 广告投放与流量接入平台",
+		"DSP、SSP 与 ADX 一体化工作流",
+		"OpenRTB 2.5 受控兼容与开放 API",
+		"隐私信号、流量质量与运行观测",
 		"选择账户类型",
 		"广告主使用流程",
 		"流量方接入流程",
+		"创建和检查广告活动",
+		"配置和检查广告组",
+		"添加和测试广告素材",
+		"上线投放并查看报表",
+		"创建和审核流量源",
+		"配置和检查广告位",
+		"部署网页广告码或 App/API",
+		"验证接入并查看报表",
+		"只启用活动本身不会绕过下层规则",
+		"广告投放详细使用指南",
+		"流量接入详细使用指南",
+		"页面显示“已保存”不代表已经进入生产投放",
+		"200</code> 空结果是正常无填充",
 		"覆盖 DSP、SSP 与 ADX 的平台能力",
 		"DSP 投放与竞价",
 		"SSP 直连流量变现",
@@ -75,8 +91,17 @@ var requiredSnippets = map[string][]string{
 		"使用说明与常见问题",
 		"联系技术支持",
 	},
-	"www/manuals/advertiser.html":   {"广告主与代理商使用手册", "外部 DSP / ADX 需求方接入与竞价"},
-	"www/manuals/publisher.html":    {"流量方（发布商）接入手册", "获取并部署网页广告码"},
+	"www/manuals/advertiser.html": {"广告主与代理商使用手册", "外部 DSP / ADX 需求方接入与竞价"},
+	"www/manuals/publisher.html":  {"流量方（发布商）接入手册", "获取并部署网页广告码"},
+	"www/css/w8m-home.css": {
+		`#capabilities .capability-card,`,
+		`.capability-modal[id^="capability-"] .capability-modal-icon`,
+		`.capability-modal[id^="capability-"] .capability-status`,
+		`--capability-accent: #6b46c1`,
+		`--font-reading: "DengXian"`,
+		`.journey-step p {`,
+		`font-size: .875rem`,
+	},
 	"tmpls/adv/login.g":             {"广告投放管理", "广告主账户登录"},
 	"tmpls/pub/login.g":             {"流量接入管理", "流量方账户登录"},
 	"tmpls/agent/login.g":           {"代理商后台登录", "/goto/agent/g/"},
@@ -131,6 +156,22 @@ var capabilityModalIDs = []string{
 	"capability-quality",
 	"capability-accounting",
 	"capability-operations",
+}
+
+var roleGuideModalIDs = []string{
+	"role-guide-advertiser",
+	"role-guide-publisher",
+}
+
+var journeyModalIDs = []string{
+	"journey-advertiser-campaign",
+	"journey-advertiser-ad-group",
+	"journey-advertiser-creative",
+	"journey-advertiser-reporting",
+	"journey-publisher-source",
+	"journey-publisher-slot",
+	"journey-publisher-integration",
+	"journey-publisher-validation",
 }
 
 func main() {
@@ -215,13 +256,45 @@ func check(root string) ([]string, error) {
 		return nil, err
 	}
 	indexText := string(indexBody)
-	if got := strings.Count(indexText, `data-toggle="modal"`); got != len(capabilityModalIDs) {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d capability modal triggers, want %d", got, len(capabilityModalIDs)))
+	wantModalTriggers := len(capabilityModalIDs) + len(roleGuideModalIDs) + len(journeyModalIDs)
+	if got := strings.Count(indexText, `data-toggle="modal"`); got != wantModalTriggers {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d modal triggers, want %d", got, wantModalTriggers))
 	}
-	if got := strings.Count(indexText, `class="modal fade capability-modal"`); got != len(capabilityModalIDs) {
+	if got := strings.Count(indexText, `class="modal fade capability-modal" id="capability-`); got != len(capabilityModalIDs) {
 		failures = append(failures, fmt.Sprintf("www/index.html has %d capability modals, want %d", got, len(capabilityModalIDs)))
 	}
+	if got := strings.Count(indexText, `capability-card-measurement`); got != len(capabilityModalIDs)*2 {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d measurement-themed capability elements, want %d", got, len(capabilityModalIDs)*2))
+	}
 	for _, modalID := range capabilityModalIDs {
+		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
+		}
+		if strings.Count(indexText, `id="`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("www/index.html must contain one modal with id %s", modalID))
+		}
+	}
+	if got := strings.Count(indexText, `class="modal fade capability-modal role-guide-modal`); got != len(roleGuideModalIDs) {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d role-guide modals, want %d", got, len(roleGuideModalIDs)))
+	}
+	for _, modalID := range roleGuideModalIDs {
+		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
+		}
+		if strings.Count(indexText, `id="`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("www/index.html must contain one modal with id %s", modalID))
+		}
+	}
+	if got := strings.Count(indexText, `class="modal fade capability-modal journey-modal`); got != len(journeyModalIDs) {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d journey modals, want %d", got, len(journeyModalIDs)))
+	}
+	if got := strings.Count(indexText, `class="journey-step journey-step-action`); got != len(journeyModalIDs) {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d clickable journey cards, want %d", got, len(journeyModalIDs)))
+	}
+	if got := strings.Count(indexText, `role="button" tabindex="0" data-toggle="modal" data-target="#journey-`); got != len(journeyModalIDs) {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d keyboard-accessible journey cards, want %d", got, len(journeyModalIDs)))
+	}
+	for _, modalID := range journeyModalIDs {
 		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
 			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
 		}

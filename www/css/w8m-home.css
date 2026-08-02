@@ -9,6 +9,8 @@
   --publisher: #0f9d8a;
   --publisher-dark: #087f70;
   --night: #0b1f33;
+  --font-ui: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  --font-reading: "DengXian", "PingFang SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
 }
 
 html {
@@ -18,8 +20,23 @@ html {
 body {
   color: var(--ink);
   background: var(--paper);
-  font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+  font-family: var(--font-ui);
   line-height: 1.75;
+}
+
+.hero-lead,
+.section-intro > p:last-child,
+.contact-section p,
+.role-heading p,
+.journey-step p,
+.check-list,
+.capability-card p,
+.capability-modal-lead,
+.capability-list,
+.capability-status,
+.entry-card p,
+.faq-list p {
+  font-family: var(--font-reading);
 }
 
 a {
@@ -383,6 +400,9 @@ code {
   border: 1px solid #f4d2c9;
   border-radius: 1rem;
   background: #fff8f5;
+  color: var(--ink);
+  font-family: inherit;
+  text-align: left;
 }
 
 .journey-step > span {
@@ -395,7 +415,7 @@ code {
   line-height: 1;
 }
 
-.journey-step i {
+.journey-step > i {
   margin-bottom: 1.25rem;
   color: var(--advertiser);
   font-size: 1.6rem;
@@ -409,7 +429,8 @@ code {
 .journey-step p {
   margin: 0;
   color: var(--ink-soft);
-  font-size: .92rem;
+  font-size: .875rem;
+  line-height: 1.6;
 }
 
 .publisher-step {
@@ -421,8 +442,51 @@ code {
   color: rgba(15, 157, 138, .12);
 }
 
-.publisher-step i {
+.publisher-step > i {
   color: var(--publisher);
+}
+
+.journey-step-action {
+  width: 100%;
+  cursor: pointer;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.journey-step-action:hover,
+.journey-step-action:focus {
+  border-color: var(--advertiser);
+  outline: 0;
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(93, 47, 34, .12);
+}
+
+.journey-more {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: 1rem;
+  color: var(--advertiser-dark);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.journey-more i {
+  transition: transform .2s ease;
+}
+
+.journey-step-action:hover .journey-more i,
+.journey-step-action:focus .journey-more i {
+  transform: translateX(3px);
+}
+
+.publisher-step.journey-step-action:hover,
+.publisher-step.journey-step-action:focus {
+  border-color: var(--publisher);
+  box-shadow: 0 15px 30px rgba(18, 91, 82, .12);
+}
+
+.publisher-step .journey-more {
+  color: var(--publisher-dark);
 }
 
 .role-footer {
@@ -499,6 +563,31 @@ code {
 
 .btn-outline-publisher:hover {
   color: #fff;
+  background: var(--publisher);
+}
+
+.btn-role-detail {
+  border: 1px solid #f2c7bb;
+  color: var(--advertiser-dark);
+  background: #fff2ed;
+}
+
+.btn-role-detail:hover,
+.btn-role-detail:focus {
+  border-color: var(--advertiser);
+  color: #fff;
+  background: var(--advertiser);
+}
+
+.btn-role-detail-publisher {
+  border-color: #b9ddd7;
+  color: var(--publisher-dark);
+  background: #edf9f7;
+}
+
+.btn-role-detail-publisher:hover,
+.btn-role-detail-publisher:focus {
+  border-color: var(--publisher);
   background: var(--publisher);
 }
 
@@ -585,6 +674,7 @@ code {
   margin-bottom: .65rem;
   font-size: 1.1rem;
   font-weight: 800;
+  line-height: 1.4;
 }
 
 .capability-card p {
@@ -592,7 +682,8 @@ code {
   z-index: 1;
   margin: 0 0 1.1rem;
   color: var(--ink-soft);
-  font-size: 1rem;
+  font-size: .875rem;
+  line-height: 1.6;
 }
 
 .capability-more {
@@ -600,7 +691,7 @@ code {
   z-index: 1;
   margin-top: auto;
   color: var(--capability-accent);
-  font-size: 1rem;
+  font-size: .9rem;
   font-weight: 800;
 }
 
@@ -745,7 +836,8 @@ code {
   margin: 0;
   padding: 0;
   color: var(--ink-soft);
-  font-size: 1rem;
+  font-size: .875rem;
+  line-height: 1.7;
   list-style: none;
 }
 
@@ -807,6 +899,105 @@ code {
 
 .capability-manual-link-publisher {
   color: var(--publisher-dark);
+}
+
+#capabilities .capability-card,
+.capability-modal[id^="capability-"] .capability-modal-icon {
+  --capability-accent: #6b46c1;
+  --capability-tint: #f5f0ff;
+  --capability-border: #d6c8f2;
+}
+
+.capability-modal[id^="capability-"] .capability-status {
+  border-left-color: #5a7187;
+  color: #3d566e;
+  background: #f2f6f9;
+}
+
+.capability-modal[id^="capability-"] .capability-manual-link {
+  color: #6b46c1;
+}
+
+.capability-modal[id^="capability-"] .capability-manual-link:hover,
+.capability-modal[id^="capability-"] .capability-manual-link:focus {
+  color: #553c9a;
+}
+
+.role-guide-modal-advertiser .modal-header {
+  background: #fff7f3;
+}
+
+.role-guide-modal-publisher .modal-header {
+  background: #f1faf8;
+}
+
+.journey-modal-advertiser .modal-header {
+  background: #fff7f3;
+}
+
+.journey-modal-publisher .modal-header {
+  background: #f1faf8;
+}
+
+.role-modal-path {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .55rem;
+  margin: 0 0 1.65rem;
+  padding: .85rem 1rem;
+  border: 1px solid #f2c7bb;
+  border-radius: .8rem;
+  color: #7e3524;
+  background: #fff8f5;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.role-modal-path span {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  white-space: nowrap;
+}
+
+.role-modal-path b {
+  display: inline-grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--advertiser);
+  font-size: .78rem;
+}
+
+.role-modal-path > i {
+  color: #d8907d;
+}
+
+.role-modal-path-publisher {
+  border-color: #b9ddd7;
+  color: #176f64;
+  background: #f1faf8;
+}
+
+.role-modal-path-publisher b {
+  background: var(--publisher);
+}
+
+.role-modal-path-publisher > i {
+  color: #65afa5;
+}
+
+.role-modal-footer {
+  flex-wrap: wrap;
+  gap: .55rem;
+}
+
+.role-modal-footer .btn {
+  font-size: .9rem;
+  font-weight: 800;
 }
 
 .entry-section {
@@ -1043,6 +1234,24 @@ code {
 
   .capability-detail > div + div {
     margin-top: 1.5rem;
+  }
+
+  .role-modal-path {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .role-modal-path > i {
+    display: none;
+  }
+
+  .role-modal-footer {
+    justify-content: flex-start;
+  }
+
+  .role-modal-footer .capability-manual-link {
+    width: 100%;
+    margin: 0 0 .35rem;
   }
 
   .site-footer p {
