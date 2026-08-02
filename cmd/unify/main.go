@@ -3,6 +3,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"expvar"
 	"flag"
@@ -23,6 +24,7 @@ import (
 	"github.com/guruperl/aofei/managementapi"
 	"github.com/guruperl/aofei/trafficquality"
 	"github.com/guruperl/genelet"
+	"github.com/guruperl/pzdesign/summer"
 	"github.com/guruperl/pzdesign/summer/registry"
 	"go.uber.org/zap"
 )
@@ -79,6 +81,7 @@ func run(ctx context.Context, localFlagSet bool) error {
 		return err
 	}
 	gc.DB = sc.DB
+	gc.Storage[summer.MarketplaceReportingStorageKey] = marketplaceReportingAvailable(ctx, sc.DB)
 	identity, err := genelet.NewIdentityService(gc.C, gc.DB)
 	if err != nil {
 		return fmt.Errorf("initialize identity security: %w", err)
@@ -108,7 +111,7 @@ func run(ctx context.Context, localFlagSet bool) error {
 	if paymentService != nil && identity == nil {
 		return fmt.Errorf("hosted payments require the Summer identity boundary")
 	}
-	gc.Storage["HostedPayment"] = paymentService
+	storeHostedPayment(gc.Storage, paymentService)
 	gc.Storage["Redis"] = sc.Redis
 	gc.Storage["Nc"] = sc.Nc
 	gc.Storage["Spread"] = sc.C.Spread // pass the top to genelet, so it can use the same IO for local mode
@@ -145,6 +148,32 @@ func run(ctx context.Context, localFlagSet bool) error {
 	return runHTTPServer(ctx, server, listener, shutdownTimeout, func() {
 		health.accepting.Store(false)
 	})
+}
+
+const marketplaceReportingSchemaQuery = `SELECT COUNT(DISTINCT table_name)
+FROM information_schema.tables
+WHERE table_schema=DATABASE()
+  AND table_name IN ('report_delivery','measurement_action','mid_callback_retry','daily_log')`
+
+func marketplaceReportingAvailable(ctx context.Context, db *sql.DB) bool {
+	if db == nil {
+		return false
+	}
+	checkCtx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+	var tableCount int
+	if err := db.QueryRowContext(checkCtx, marketplaceReportingSchemaQuery).Scan(&tableCount); err != nil {
+		return false
+	}
+	return tableCount == 4
+}
+
+func storeHostedPayment(storage map[string]interface{}, service *hostedpayment.Service) {
+	if service == nil {
+		delete(storage, "HostedPayment")
+		return
+	}
+	storage["HostedPayment"] = service
 }
 
 type serviceHealth struct {

@@ -21,6 +21,25 @@ type observingHTTPServer struct {
 	shutdownCalled chan struct{}
 }
 
+func TestMarketplaceReportingAvailabilityFailsClosedWithoutDatabase(t *testing.T) {
+	if marketplaceReportingAvailable(context.Background(), nil) {
+		t.Fatal("marketplace reporting was enabled without a database schema")
+	}
+}
+
+func TestDisabledHostedPaymentIsAbsentFromSharedStorage(t *testing.T) {
+	storage := map[string]interface{}{"HostedPayment": (*hostedpayment.Service)(nil)}
+	storeHostedPayment(storage, nil)
+	if _, found := storage["HostedPayment"]; found {
+		t.Fatal("disabled hosted-payment service remained visible to navigation")
+	}
+	service := &hostedpayment.Service{}
+	storeHostedPayment(storage, service)
+	if storage["HostedPayment"] != service {
+		t.Fatal("enabled hosted-payment service was not registered")
+	}
+}
+
 func TestServeMuxExposesOnlyAuthenticatedHostedPaymentWebhookWhenEnabled(t *testing.T) {
 	controller := &dsp.Controller{C: &dsp.Config{}}
 	payment := &hostedpayment.Service{

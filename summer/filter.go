@@ -21,6 +21,13 @@ type Filter struct {
 	genelet.Filter
 }
 
+const MarketplaceReportingStorageKey = "MarketplaceReportingEnabled"
+
+func MarketplaceReportingEnabled(storage map[string]interface{}) bool {
+	enabled, _ := storage[MarketplaceReportingStorageKey].(bool)
+	return enabled
+}
+
 func CleanUploadName(file string) (string, error) {
 	name := filepath.Base(file)
 	if name != file || name == "." || name == string(filepath.Separator) {
@@ -361,6 +368,7 @@ func (self *Filter) After(model *Model) error {
 	ARGS := self.R.Form
 	other := *model.OTHER
 	other["HostedPaymentEnabled"] = model.Storage["HostedPayment"] != nil
+	other["MarketplaceReportingEnabled"] = MarketplaceReportingEnabled(model.Storage)
 
 	who := self.RoleValue
 	action := self.Action
