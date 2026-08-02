@@ -251,7 +251,7 @@ func TestAdvertiserWorkspaceShell(t *testing.T) {
 		nil,
 	)
 	for _, want := range []string{
-		`href="/css/w8m-workspace.css?v=20260801-4"`,
+		`href="/css/w8m-workspace.css?v=20260802-1"`,
 		`<body class="w8m-workspace theme-advertiser">`,
 		`<span class="navbar-brand">W8M 广告主工作台</span>`,
 	} {
@@ -261,6 +261,24 @@ func TestAdvertiserWorkspaceShell(t *testing.T) {
 	}
 	if strings.Contains(rendered, `<a class="navbar-brand"`) {
 		t.Error("workspace name must not link away from the advertiser portal")
+	}
+}
+
+func TestWorkspaceDangerButtonTextContrast(t *testing.T) {
+	css, err := os.ReadFile(filepath.Join("..", "www", "css", "w8m-workspace.css"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	const want = `.w8m-workspace .btn-danger,
+.w8m-workspace .btn-danger:hover,
+.w8m-workspace .btn-danger:focus,
+.w8m-workspace .btn-danger:active,
+.w8m-workspace .btn-danger.active,
+.w8m-workspace a.btn-danger:visited {
+  color: #fff;
+}`
+	if !strings.Contains(string(css), want) {
+		t.Error("workspace danger buttons must retain white text in every interaction state")
 	}
 }
 
@@ -275,7 +293,7 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 		args,
 	)
 	for _, want := range []string{
-		`href="/css/w8m-workspace.css?v=20260801-4"`,
+		`href="/css/w8m-workspace.css?v=20260802-1"`,
 		`w8m-workspace theme-publisher`,
 		`<span class="navbar-brand">W8M <small>流量方工作台</small></span>`,
 		`class="navbar-toggler mobile-sidebar-toggler d-lg-none"`,

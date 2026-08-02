@@ -312,6 +312,15 @@ body.w8m-workspace.theme-publisher {
   background: var(--workspace-night);
 }
 
+.w8m-workspace .btn-danger,
+.w8m-workspace .btn-danger:hover,
+.w8m-workspace .btn-danger:focus,
+.w8m-workspace .btn-danger:active,
+.w8m-workspace .btn-danger.active,
+.w8m-workspace a.btn-danger:visited {
+  color: #fff;
+}
+
 .w8m-workspace .form-control,
 .w8m-workspace input[type="text"],
 .w8m-workspace input[type="email"],
