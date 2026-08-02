@@ -59,7 +59,18 @@ var requiredSnippets = map[string][]string{
 		"选择账户类型",
 		"广告主使用流程",
 		"流量方接入流程",
-		"平台功能",
+		"覆盖 DSP、SSP 与 ADX 的平台能力",
+		"DSP 投放与竞价",
+		"SSP 直连流量变现",
+		"ADX 与 OpenRTB 互通",
+		"测量、归因与分析",
+		"隐私、身份与渲染安全",
+		"流量质量与风险控制",
+		"账务、结算与托管支付",
+		"开放 API 与生产运行",
+		"OpenRTB 2.5 受控兼容规范",
+		"维护型 Android/iOS 原生 SDK 将在具体集成需求确认后提供",
+		"平台不会在缺少连续生产测量和服务商恢复记录时宣称已经达到 99.9%",
 		"账户入口",
 		"使用说明与常见问题",
 		"联系技术支持",
@@ -109,6 +120,17 @@ var accountActions = []string{
 	"startnew.g",
 	"startreset.g",
 	"startretrieve.g",
+}
+
+var capabilityModalIDs = []string{
+	"capability-dsp",
+	"capability-ssp",
+	"capability-openrtb",
+	"capability-measurement",
+	"capability-security",
+	"capability-quality",
+	"capability-accounting",
+	"capability-operations",
 }
 
 func main() {
@@ -185,6 +207,26 @@ func check(root string) ([]string, error) {
 			if !strings.Contains(string(body), snippet) {
 				failures = append(failures, fmt.Sprintf("%s is missing required copy or contract %q", rel, snippet))
 			}
+		}
+	}
+
+	indexBody, err := os.ReadFile(filepath.Join(root, "www", "index.html"))
+	if err != nil {
+		return nil, err
+	}
+	indexText := string(indexBody)
+	if got := strings.Count(indexText, `data-toggle="modal"`); got != len(capabilityModalIDs) {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d capability modal triggers, want %d", got, len(capabilityModalIDs)))
+	}
+	if got := strings.Count(indexText, `class="modal fade capability-modal"`); got != len(capabilityModalIDs) {
+		failures = append(failures, fmt.Sprintf("www/index.html has %d capability modals, want %d", got, len(capabilityModalIDs)))
+	}
+	for _, modalID := range capabilityModalIDs {
+		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
+		}
+		if strings.Count(indexText, `id="`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("www/index.html must contain one modal with id %s", modalID))
 		}
 	}
 
