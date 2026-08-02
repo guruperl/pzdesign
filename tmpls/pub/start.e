@@ -110,7 +110,7 @@
              <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> Incomes</a>
           </li>
           <li class="nav-item">
-             <a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> Marketplace analytics</a>
+             {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> Marketplace analytics</a>{{end}}
           </li>
         </ul>
       </nav>

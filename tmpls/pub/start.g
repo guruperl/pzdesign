@@ -97,7 +97,7 @@
              <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> 收入报表</a>
           </li>
           <li class="nav-item">
-             <a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> 流量收益分析</a>
+             {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> 流量收益分析</a>{{end}}
           </li>
           <li class="nav-item">
              {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics" class="nav-link {{if eq $c `hostedpayment`}}active{{end}}"><i class="icon-wallet"></i> 收益结算账户</a>{{end}}

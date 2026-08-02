@@ -80,11 +80,11 @@ h1, h2, h3, h4, h5, h6, button {
                   外部 DSP / ADX 需求方报表 {{ if and (eq .Other.Component "ledger") (eq .Other.Action "topicsMid24Hours") }}<span class="sr-only">(current)</span>{{ end }}
                 </a>
               </li>
-              <li class="nav-item">
+              {{if .Other.MarketplaceReportingEnabled}}<li class="nav-item">
                 <a class="nav-link{{ if and (eq .Other.Component `ledger`) (eq .Other.Action `topicsMarketplace`) }} active{{end}}" href="ledger?action=topicsMarketplace">
                   市场经营分析
                 </a>
-              </li>
+              </li>{{end}}
               <li class="nav-item">
                 <a class="nav-link{{ if and (eq .Other.Component `ledger`) (eq .Other.Action `topicsExperiments`) }} active{{end}}" href="ledger?action=topicsExperiments">
                   实验状态

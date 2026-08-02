@@ -339,6 +339,43 @@ func TestHostedPaymentNavigationFollowsServiceAvailability(t *testing.T) {
 	}
 }
 
+func TestMarketplaceNavigationFollowsSchemaAvailability(t *testing.T) {
+	tests := []struct {
+		role   string
+		action string
+		args   url.Values
+	}{
+		{"adv", filepath.Join("..", "tmpls", "adv", "attrname", "topics.g"), values(map[string]string{"a_company": "Advertiser", "a_email": "adv@example.test"})},
+		{"pub", filepath.Join("..", "tmpls", "pub", "site", "topics.g"), values(map[string]string{"p_email": "pub@example.test"})},
+	}
+	for _, test := range tests {
+		t.Run(test.role, func(t *testing.T) {
+			disabled := renderRoleTemplateWithOther(t, test.action, "topics", nil, test.args, map[string]interface{}{"MarketplaceReportingEnabled": false})
+			if strings.Contains(disabled, `href="ledger?action=topicsMarketplace"`) {
+				t.Fatal("inactive marketplace report remained in navigation")
+			}
+			enabled := renderRoleTemplateWithOther(t, test.action, "topics", nil, test.args, map[string]interface{}{"MarketplaceReportingEnabled": true})
+			if !strings.Contains(enabled, `href="ledger?action=topicsMarketplace"`) {
+				t.Fatal("active marketplace report is missing from navigation")
+			}
+		})
+	}
+}
+
+func TestAdvertiserMaintenanceErrorExplainsInactiveFeature(t *testing.T) {
+	parsed, err := template.ParseFiles(filepath.Join("..", "tmpls", "adv", "error.g"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var output strings.Builder
+	if err := parsed.Execute(&output, genelet.Gerror{Code: 503}); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(output.String(), "此功能尚未启用") {
+		t.Fatal("advertiser 503 page does not explain the inactive feature")
+	}
+}
+
 func TestPublisherSlotTopicsShowsCommercialFloorAndPreservesSiteType(t *testing.T) {
 	args := values(map[string]string{
 		"p_email": "publisher@example.test", "site_id": "11",
