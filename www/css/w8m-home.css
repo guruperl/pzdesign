@@ -520,40 +520,293 @@ code {
 }
 
 .capability-card {
+  --capability-accent: var(--advertiser-dark);
+  --capability-tint: #fff2ed;
+  --capability-border: #f2c7bb;
+  position: relative;
+  display: flex;
+  width: 100%;
   height: 100%;
+  min-height: 285px;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 1.7rem;
-  border: 1px solid var(--line);
+  overflow: hidden;
+  border: 1px solid var(--capability-border);
   border-radius: 1rem;
   background: #fff;
-  transition: transform .2s ease, box-shadow .2s ease;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
 }
 
-.capability-card:hover {
+.capability-card::after {
+  position: absolute;
+  right: -36px;
+  bottom: -52px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: var(--capability-tint);
+  content: "";
+  opacity: .8;
+}
+
+.capability-card:hover,
+.capability-card:focus {
+  border-color: var(--capability-accent);
+  outline: 0;
   transform: translateY(-4px);
-  box-shadow: 0 18px 38px rgba(25, 55, 82, .1);
+  box-shadow: 0 18px 38px rgba(25, 55, 82, .13);
 }
 
-.capability-card i {
+.capability-icon {
   display: grid;
   width: 50px;
   height: 50px;
   margin-bottom: 1.2rem;
   place-items: center;
   border-radius: 14px;
-  color: var(--advertiser-dark);
-  background: #fff0eb;
+  color: var(--capability-accent);
+  background: var(--capability-tint);
   font-size: 1.25rem;
 }
 
+.capability-kicker {
+  margin-bottom: .35rem;
+  color: var(--capability-accent);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
 .capability-card h3 {
+  margin-bottom: .65rem;
   font-size: 1.1rem;
   font-weight: 800;
 }
 
 .capability-card p {
-  margin: 0;
+  position: relative;
+  z-index: 1;
+  margin: 0 0 1.1rem;
   color: var(--ink-soft);
-  font-size: .94rem;
+  font-size: 1rem;
+}
+
+.capability-more {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  color: var(--capability-accent);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.capability-more i {
+  margin-left: .3rem;
+  transition: transform .2s ease;
+}
+
+.capability-card:hover .capability-more i,
+.capability-card:focus .capability-more i {
+  transform: translateX(3px);
+}
+
+.capability-card-advertiser {
+  --capability-accent: #d94828;
+  --capability-tint: #fff2ed;
+  --capability-border: #f2c7bb;
+}
+
+.capability-card-publisher {
+  --capability-accent: #087f70;
+  --capability-tint: #edf9f7;
+  --capability-border: #b9ddd7;
+}
+
+.capability-card-exchange {
+  --capability-accent: #2b6cb0;
+  --capability-tint: #edf5ff;
+  --capability-border: #bfd5ed;
+}
+
+.capability-card-measurement {
+  --capability-accent: #6b46c1;
+  --capability-tint: #f5f0ff;
+  --capability-border: #d6c8f2;
+}
+
+.capability-card-security {
+  --capability-accent: #334e68;
+  --capability-tint: #eef3f7;
+  --capability-border: #c8d4df;
+}
+
+.capability-card-quality {
+  --capability-accent: #a65f00;
+  --capability-tint: #fff7e6;
+  --capability-border: #ead2a8;
+}
+
+.capability-card-accounting {
+  --capability-accent: #b8325a;
+  --capability-tint: #fff0f5;
+  --capability-border: #ebc2cf;
+}
+
+.capability-card-operations {
+  --capability-accent: #087e8b;
+  --capability-tint: #edf9fa;
+  --capability-border: #b9dadd;
+}
+
+.capability-modal {
+  color: var(--ink);
+}
+
+.capability-modal .modal-dialog {
+  max-width: 940px;
+}
+
+.capability-modal .modal-content {
+  overflow: hidden;
+  border: 0;
+  border-radius: 1.15rem;
+  box-shadow: 0 28px 70px rgba(7, 24, 39, .24);
+}
+
+.capability-modal .modal-header {
+  align-items: center;
+  padding: 1.4rem 1.6rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-warm);
+}
+
+.capability-modal .close {
+  margin: -1rem -1rem -1rem auto;
+  color: var(--ink);
+}
+
+.capability-modal-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.capability-modal-heading > div > span {
+  display: block;
+  margin-bottom: .15rem;
+  color: var(--ink-soft);
+  font-size: .76rem;
+  font-weight: 700;
+}
+
+.capability-modal-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  place-items: center;
+  border-radius: 15px;
+  color: var(--capability-accent);
+  background: var(--capability-tint);
+  font-size: 1.25rem;
+}
+
+.capability-modal .modal-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.capability-modal .modal-body {
+  padding: 1.8rem 2rem 2rem;
+}
+
+.capability-modal-lead {
+  max-width: 800px;
+  margin-bottom: 1.5rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.capability-detail h3 {
+  margin-bottom: .8rem;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.capability-list {
+  display: grid;
+  gap: .55rem;
+  margin: 0;
+  padding: 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  list-style: none;
+}
+
+.capability-list li {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.capability-list li::before {
+  position: absolute;
+  top: .66rem;
+  left: .1rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #5a7187;
+  content: "";
+}
+
+.capability-status {
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  border-left: 4px solid #5a7187;
+  border-radius: .55rem;
+  color: #3d566e;
+  background: #f2f6f9;
+  font-size: 1rem;
+}
+
+.capability-status-publisher {
+  border-left-color: var(--publisher);
+  color: #176f64;
+  background: #eef9f7;
+}
+
+.capability-status-gated {
+  border-left-color: #c67a0a;
+  color: #76500f;
+  background: #fff8e8;
+}
+
+.capability-modal .modal-footer {
+  padding: 1rem 1.6rem;
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+
+.capability-modal .btn-secondary {
+  border-color: #d6dee6;
+  background: #526b82;
+}
+
+.capability-manual-link {
+  margin-right: auto;
+  color: var(--advertiser-dark);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.capability-manual-link-publisher {
+  color: var(--publisher-dark);
 }
 
 .entry-section {
@@ -706,6 +959,10 @@ code {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .capability-card {
+    min-height: 265px;
+  }
+
   .role-actions {
     margin-top: 1.5rem;
     justify-content: flex-start;
@@ -767,6 +1024,25 @@ code {
 
   .journey-step {
     min-height: auto;
+  }
+
+  .capability-card {
+    min-height: auto;
+  }
+
+  .capability-modal .modal-dialog {
+    margin: .75rem;
+  }
+
+  .capability-modal .modal-header,
+  .capability-modal .modal-body,
+  .capability-modal .modal-footer {
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+  }
+
+  .capability-detail > div + div {
+    margin-top: 1.5rem;
   }
 
   .site-footer p {
