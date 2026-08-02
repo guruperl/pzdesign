@@ -3,12 +3,17 @@ package main
 import (
 	"html/template"
 	"net/url"
+	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/guruperl/genelet"
+	"golang.org/x/net/html"
 )
+
+const hostileTemplateValue = `"><img src=x onerror="S04XSS"><script>S04XSS</script><a href="javascript:S04XSS">unsafe</a>`
 
 func TestHasAssembledQuery(t *testing.T) {
 	tests := []struct {
@@ -38,6 +43,160 @@ func TestHasAssembledQuery(t *testing.T) {
 				t.Fatalf("hasAssembledQuery() = %v, want %v", got, test.want)
 			}
 		})
+	}
+}
+
+func TestTemplateSourceFindings(t *testing.T) {
+	tests := []struct {
+		name string
+		text string
+		want int
+	}{
+		{
+			name: "unsafe script URL",
+			text: `<a href="javascript:alert(1)">run</a>`,
+			want: 1,
+		},
+		{
+			name: "remote script",
+			text: `<script src="https://cdn.example.test/library.js"></script>`,
+			want: 1,
+		},
+		{
+			name: "stored markup iframe",
+			text: `<iframe srcdoc="{{.content}}"></iframe>`,
+			want: 1,
+		},
+		{
+			name: "escaped source display",
+			text: `<pre class="creative-source">{{.content}}</pre>`,
+			want: 0,
+		},
+		{
+			name: "local reviewed asset",
+			text: `<script src="/admin/assets/js/vendor/jquery-slim.min.js"></script>`,
+			want: 0,
+		},
+		{
+			name: "raw modal title sink",
+			text: `<script>$('#title').html(dataTitle);</script>`,
+			want: 1,
+		},
+		{
+			name: "text-only modal title",
+			text: `<script>$('#title').text(dataTitle);</script>`,
+			want: 0,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if got := len(templateSourceFindings([]byte(test.text))); got != test.want {
+				t.Fatalf("templateSourceFindings() returned %d findings, want %d", got, test.want)
+			}
+		})
+	}
+}
+
+func TestFindForbiddenTemplateTypes(t *testing.T) {
+	root := t.TempDir()
+	files := map[string]string{
+		"safe.go": `package fixture
+import "html/template"
+var _ = template.HTMLEscapeString
+// template.HTML in documentation is not a conversion.
+`,
+		"unsafe.go": `package fixture
+import "html/template"
+var unsafe template.HTML
+`,
+		"alias.go": `package fixture
+import ht "html/template"
+var unsafeAlias ht.URL
+`,
+		"dot.go": `package fixture
+import . "html/template"
+`,
+	}
+	for name, content := range files {
+		if err := os.WriteFile(filepath.Join(root, name), []byte(content), 0o600); err != nil {
+			t.Fatal(err)
+		}
+	}
+	findings, err := findForbiddenTemplateTypes(root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	joined := strings.Join(findings, "\n")
+	if len(findings) != 3 ||
+		!strings.Contains(joined, "alias.go: template.URL") ||
+		!strings.Contains(joined, "dot.go: dot import of html/template") ||
+		!strings.Contains(joined, "unsafe.go: template.HTML") {
+		t.Fatalf("findForbiddenTemplateTypes() = %v", findings)
+	}
+}
+
+func TestDirectSSPBrowserRendererUsesAnIsolatedDeliveryHTMLSink(t *testing.T) {
+	data, err := os.ReadFile(filepath.Join("..", "www", "js", "ads.js"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := string(data)
+	if strings.Contains(source, "innerHTML") || strings.Count(source, "frame.srcdoc = markup;") != 1 {
+		t.Fatalf("direct SSP browser delivery HTML boundary changed:\n%s", source)
+	}
+	for _, required := range []string{
+		`frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox");`,
+		`frame.setAttribute("referrerpolicy", "no-referrer");`,
+		`target.setAttribute("data-pz-state", "filled");`,
+		`target.setAttribute("data-pz-state", emptyState || "no-fill");`,
+	} {
+		if !strings.Contains(source, required) {
+			t.Fatalf("direct SSP browser renderer is missing %q", required)
+		}
+	}
+	for _, forbidden := range []string{"allow-same-origin", "document.write", "insertAdjacentHTML", "outerHTML", "eval("} {
+		if strings.Contains(source, forbidden) {
+			t.Fatalf("direct SSP browser delivery contains unapproved sink %q", forbidden)
+		}
+	}
+}
+
+func TestDirectSSPBrowserRendererFillAndNoFillBehavior(t *testing.T) {
+	if _, err := exec.LookPath("node"); err != nil {
+		t.Skip("node is unavailable; source-policy checks still run")
+	}
+	scriptPath := filepath.Join("..", "www", "js", "ads.js")
+	harness := `
+const fs = require("fs");
+eval(fs.readFileSync(process.argv[1], "utf8"));
+function element(tag) {
+  return {
+    tagName: tag,
+    attributes: {},
+    style: {},
+    children: [],
+    firstChild: null,
+    setAttribute: function(k, v) { this.attributes[k] = v; },
+    appendChild: function(v) { this.children.push(v); this.firstChild = this.children[0]; },
+    removeChild: function() { this.children.shift(); this.firstChild = this.children[0] || null; }
+  };
+}
+global.document = { createElement: element };
+const target = element("div");
+pzRenderAd(target, "<img src='/imp'>", {mediaTypes:{banner:{size:[300,250]}}}, "no-fill");
+if (target.children.length !== 1 || target.children[0].tagName !== "iframe") throw new Error("filled iframe missing");
+const frame = target.children[0];
+if (frame.srcdoc !== "<img src='/imp'>" || frame.width !== "300" || frame.height !== "250") throw new Error("filled markup or dimensions changed");
+if (!frame.attributes.sandbox || frame.attributes.sandbox.includes("allow-same-origin") || frame.attributes.referrerpolicy !== "no-referrer") throw new Error("iframe isolation changed");
+if (target.attributes["data-pz-state"] !== "filled") throw new Error("filled state missing");
+pzRenderAd(target, "", {mediaTypes:{banner:{size:[300,250]}}}, "no-fill");
+if (target.children.length !== 0 || target.attributes["data-pz-state"] !== "no-fill") throw new Error("no-fill behavior changed");
+pzRenderAd(target, {unexpected:true}, {}, "error");
+if (target.children.length !== 0 || target.attributes["data-pz-state"] !== "error") throw new Error("error behavior changed");
+`
+	command := exec.Command("node", "-e", harness, scriptPath)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("browser renderer behavior: %v\n%s", err, output)
 	}
 }
 
@@ -139,6 +298,88 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 	}
 }
 
+func TestHostedPaymentNavigationFollowsServiceAvailability(t *testing.T) {
+	tests := []struct {
+		role   string
+		action string
+		args   url.Values
+	}{
+		{"adv", filepath.Join("..", "tmpls", "adv", "attrname", "topics.g"), values(map[string]string{"a_company": "Advertiser", "a_email": "adv@example.test"})},
+		{"pub", filepath.Join("..", "tmpls", "pub", "site", "topics.g"), values(map[string]string{"p_email": "pub@example.test"})},
+	}
+	for _, test := range tests {
+		t.Run(test.role, func(t *testing.T) {
+			disabled := renderRoleTemplateWithOther(t, test.action, "topics", nil, test.args, map[string]interface{}{"HostedPaymentEnabled": false})
+			if strings.Contains(disabled, `href="hostedpayment?action=topics"`) {
+				t.Fatal("disabled hosted-payment service remained in navigation")
+			}
+			enabled := renderRoleTemplateWithOther(t, test.action, "topics", nil, test.args, map[string]interface{}{"HostedPaymentEnabled": true})
+			if !strings.Contains(enabled, `href="hostedpayment?action=topics"`) {
+				t.Fatal("enabled hosted-payment service is missing from navigation")
+			}
+		})
+	}
+}
+
+func TestPublisherSlotTopicsShowsCommercialFloorAndPreservesSiteType(t *testing.T) {
+	args := values(map[string]string{
+		"p_email": "publisher@example.test", "site_id": "11",
+		"site_md5": "fixture", "site_name": "Example App", "site_type": "App",
+	})
+	rendered := renderRoleTemplate(
+		t,
+		filepath.Join("..", "tmpls", "pub", "slot", "topics.g"),
+		"slot",
+		[]map[string]interface{}{{
+			"slot_id": 13, "slot_md5": "slot-fixture", "slot_name": "Leaderboard",
+			"qa_device_g": "移动设备", "bidfloor": float64(1.25), "active": "Yes",
+			"created": "2026-08-01", "browser_code": "", "api_code": "POST /pz",
+		}},
+		args,
+	)
+	for _, want := range []string{
+		`最低竞价（USD CPM）`, `1.250000`, `App SDK / API 接入代码`,
+		`site_type=App`,
+	} {
+		if !strings.Contains(rendered, want) {
+			t.Errorf("rendered publisher slot topics does not contain %q", want)
+		}
+	}
+	if strings.Contains(rendered, `>网页广告码</button>`) {
+		t.Error("App inventory exposed a browser tag action")
+	}
+}
+
+func TestPublisherSupplyMetadataIsEscapedInFormsAndReports(t *testing.T) {
+	args := values(map[string]string{
+		"p_email": "publisher@example.test", "site_id": "11", "site_md5": "fixture",
+		"site_name": hostileTemplateValue, "site_type": "Web", "day": "2026-08-01", "idays": "1", "top": "20",
+	})
+	site := renderRoleTemplate(t, filepath.Join("..", "tmpls", "pub", "site", "edit.g"), "site", []map[string]interface{}{{
+		"site_id": 11, "site_name": hostileTemplateValue, "site_type": "Web", "foreign_id": "example.com",
+		"site_url": hostileTemplateValue, "inventory_environment": "Web", "integration_mode": "BrowserTag",
+		"canonical_identity": hostileTemplateValue, "store_url": hostileTemplateValue,
+	}}, args)
+	assertHostileTemplateValueIsInert(t, site)
+
+	profile := renderRoleTemplateWithOther(t, filepath.Join("..", "tmpls", "pub", "pub", "edit.g"), "pub", []map[string]interface{}{{
+		"domain": "example.com", "seller_id": hostileTemplateValue, "seller_type": "Publisher",
+		"seller_asi": hostileTemplateValue, "seller_name": hostileTemplateValue,
+		"seller_domain": hostileTemplateValue, "seller_authorized": "No",
+	}}, args, map[string]interface{}{"address_states": []map[string]interface{}{}})
+	assertHostileTemplateValueIsInert(t, profile)
+
+	report := renderRoleTemplate(t, filepath.Join("..", "tmpls", "pub", "ledger", "topicsMarketplace.g"), "ledger", []map[string]interface{}{{
+		"demand_source": "Local", "site_name": hostileTemplateValue, "slot_name": hostileTemplateValue,
+		"inventory_environment": hostileTemplateValue, "integration_mode": hostileTemplateValue,
+		"media_intent": hostileTemplateValue, "placement": hostileTemplateValue,
+		"traffic_quality": hostileTemplateValue, "source_quality": hostileTemplateValue,
+		"seller_type": "Publisher", "seller_id": hostileTemplateValue,
+		"imps": 1, "clis": 0, "ctr": float64(0), "revenue_usd": "0.000000", "effective_cpm": float64(0),
+	}}, args)
+	assertHostileTemplateValueIsInert(t, report)
+}
+
 func TestRegistrationRoleThemes(t *testing.T) {
 	tests := []struct {
 		role  string
@@ -208,6 +449,187 @@ func TestLoginRoleThemes(t *testing.T) {
 	}
 }
 
+func TestHostileLoginValuesAreContextuallyEscaped(t *testing.T) {
+	for _, role := range []string{"adv", "pub", "admin", "agent", "analyst"} {
+		t.Run(role, func(t *testing.T) {
+			path := filepath.Join("..", "tmpls", role, "login.g")
+			parsed, err := template.ParseFiles(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var output strings.Builder
+			if err := parsed.Execute(&output, map[string]interface{}{
+				"LoginName": "javascript:S04XSS",
+				"GoURIName": hostileTemplateValue,
+				"GoURI":     hostileTemplateValue,
+				"Login":     hostileTemplateValue,
+				"Password":  hostileTemplateValue,
+				"TOTP":      hostileTemplateValue,
+				"Errorstr":  hostileTemplateValue,
+			}); err != nil {
+				t.Fatal(err)
+			}
+			assertHostileTemplateValueIsInert(t, output.String())
+			if role == "pub" && !strings.Contains(output.String(), `#ZgotmplZ`) {
+				t.Fatalf("%s login did not reject an unsafe form action: %s", role, output.String())
+			}
+		})
+	}
+}
+
+func TestIdentitySecurityTemplatesEscapeEnrollmentAndRecoveryMaterial(t *testing.T) {
+	argsByRole := map[string]url.Values{
+		"adv":     values(map[string]string{"adv_id": "1", "a_email": "adv@example.test", "a_company": "Advertiser"}),
+		"pub":     values(map[string]string{"pub_id": "2", "p_email": "pub@example.test", "p_company": "Publisher", "p_contact": "Operator", "p_timezone_id": "UTC"}),
+		"admin":   values(map[string]string{"admin_id": "3", "admin_login": "admin"}),
+		"agent":   values(map[string]string{"agent_id": "4", "agent_login": "agent", "agent_level": "1"}),
+		"analyst": values(map[string]string{"analyst_id": "5", "analyst_login": "analyst"}),
+	}
+	for role, args := range argsByRole {
+		t.Run(role, func(t *testing.T) {
+			rendered := renderRoleTemplateWithOther(t,
+				filepath.Join("..", "tmpls", role, "security", "page.g"), "security", nil, args,
+				map[string]interface{}{
+					"Required": true, "MFAState": "Enabled", "RecoveryRemaining": 2,
+					"Enrollment":    genelet.TOTPEnrollment{Secret: hostileTemplateValue, URI: hostileTemplateValue},
+					"RecoveryCodes": []string{hostileTemplateValue}, "CSRFInput": hostileTemplateValue,
+				})
+			assertHostileTemplateValueIsInert(t, rendered)
+			if strings.Contains(rendered, `<script>S04XSS</script>`) || strings.Contains(rendered, `href="javascript:`) {
+				t.Fatalf("identity material became executable markup: %s", rendered)
+			}
+		})
+	}
+}
+
+func TestStoredCreativeMarkupIsDisplayedAsSource(t *testing.T) {
+	tests := []struct {
+		name      string
+		action    string
+		component string
+		lists     []map[string]interface{}
+		args      url.Values
+	}{
+		{
+			name:      "advertiser management",
+			action:    filepath.Join("..", "tmpls", "adv", "creative", "topics.g"),
+			component: "creative",
+			lists: []map[string]interface{}{{
+				"creative_id": 9, "creative_name": hostileTemplateValue,
+				"content": hostileTemplateValue,
+			}},
+			args: values(map[string]string{
+				"a_company": "advertiser", "a_email": "adv@example.test",
+				"qa_mime": "img", "active": "Yes", "campaign_name": "campaign",
+				"item_name": "item",
+			}),
+		},
+		{
+			name:      "publisher review",
+			action:    filepath.Join("..", "tmpls", "pub", "item", "topics.g"),
+			component: "item",
+			lists: []map[string]interface{}{{
+				"item_name":       hostileTemplateValue,
+				"creative_topics": []map[string]interface{}{{"content": hostileTemplateValue}},
+			}},
+			args: values(map[string]string{"p_email": "pub@example.test"}),
+		},
+		{
+			name:      "agent review",
+			action:    filepath.Join("..", "tmpls", "agent", "item", "topics.g"),
+			component: "item",
+			lists: []map[string]interface{}{{
+				"item_id": 7, "item_name": hostileTemplateValue, "active": "Yes",
+				"creative_topics": []map[string]interface{}{{"content": hostileTemplateValue}},
+			}},
+			args: values(map[string]string{
+				"agent_login": "reviewer", "agent_level": "1",
+				"campaign_id": "4", "campaign_md5": "fixture",
+			}),
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			rendered := renderRoleTemplate(t, test.action, test.component, test.lists, test.args)
+			assertHostileTemplateValueIsInert(t, rendered)
+			if !strings.Contains(rendered, `<pre class="creative-source">`) || !strings.Contains(rendered, `&lt;img`) {
+				t.Fatalf("stored creative was not shown as escaped source: %s", rendered)
+			}
+		})
+	}
+}
+
+func TestHostileAccountAndReportValuesAreContextuallyEscaped(t *testing.T) {
+	admin := renderRoleTemplate(
+		t,
+		filepath.Join("..", "tmpls", "admin", "adv", "topics.g"),
+		"adv",
+		[]map[string]interface{}{{
+			"adv_id": 7, "email": hostileTemplateValue, "firstname": hostileTemplateValue,
+			"company": hostileTemplateValue, "active": "Yes",
+		}},
+		values(map[string]string{"admin_login": "admin", "admin_id": "1"}),
+	)
+	assertHostileTemplateValueIsInert(t, admin)
+
+	campaign := renderRoleTemplate(
+		t,
+		filepath.Join("..", "tmpls", "adv", "campaign", "topics.g"),
+		"campaign",
+		[]map[string]interface{}{{
+			"campaign_id": 4, "campaign_md5": "fixture", "campaign_name": hostileTemplateValue,
+			"active": "Yes", "budget": "10.00", "startx": "2026-08-01", "endx": "2026-08-02",
+		}},
+		values(map[string]string{"a_company": "advertiser", "a_email": "adv@example.test"}),
+	)
+	assertHostileTemplateValueIsInert(t, campaign)
+
+	report := renderRoleTemplateWithOther(
+		t,
+		filepath.Join("..", "tmpls", "adv", "ledger", "topicsMid24Hours.g"),
+		"ledger",
+		[]map[string]interface{}{{
+			"hours": hostileTemplateValue, "imps": hostileTemplateValue,
+			"clis": hostileTemplateValue, "spend": hostileTemplateValue,
+		}},
+		values(map[string]string{"a_company": "advertiser", "a_email": "adv@example.test"}),
+		map[string]interface{}{
+			"ledger_topicsMidTopBidders": []map[string]interface{}{},
+			"ledger_topicsMidTopSlots":   []map[string]interface{}{},
+		},
+	)
+	assertHostileTemplateValueIsInert(t, report)
+	if strings.Contains(report, `</script><script>S04XSS`) {
+		t.Fatalf("report value broke out of its JavaScript string context: %s", report)
+	}
+}
+
+func TestMailTemplateValuesRemainPlainEscapedContent(t *testing.T) {
+	for _, role := range []string{"adv", "pub"} {
+		t.Run(role, func(t *testing.T) {
+			path := filepath.Join("..", "tmpls", "web", role, "insert.mail.g")
+			parsed, err := template.ParseFiles(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			args := values(map[string]string{
+				"serverUrl": "https://www.example.test", role + "_id": "7",
+				"email": hostileTemplateValue, "stamp": hostileTemplateValue,
+				"md5": hostileTemplateValue, "firstname": hostileTemplateValue,
+				"lastname": hostileTemplateValue,
+			})
+			page := &genelet.Tmpl{ARGS: args}
+			var output strings.Builder
+			if err := parsed.Execute(&output, page); err != nil {
+				t.Fatal(err)
+			}
+			if strings.Contains(output.String(), "<img") || strings.Contains(output.String(), "<script") {
+				t.Fatalf("mail template emitted hostile markup: %s", output.String())
+			}
+		})
+	}
+}
+
 func renderAdvertiserTemplate(t *testing.T, action, component string, lists []map[string]interface{}) string {
 	t.Helper()
 	args := url.Values{}
@@ -217,6 +639,11 @@ func renderAdvertiserTemplate(t *testing.T, action, component string, lists []ma
 }
 
 func renderRoleTemplate(t *testing.T, action, component string, lists []map[string]interface{}, args url.Values) string {
+	t.Helper()
+	return renderRoleTemplateWithOther(t, action, component, lists, args, nil)
+}
+
+func renderRoleTemplateWithOther(t *testing.T, action, component string, lists []map[string]interface{}, args url.Values, extraOther map[string]interface{}) string {
 	t.Helper()
 	ext := filepath.Ext(action)
 	files, err := roleFiles(filepath.Join("..", "tmpls"), action, ext)
@@ -228,13 +655,17 @@ func renderRoleTemplate(t *testing.T, action, component string, lists []map[stri
 		t.Fatal(err)
 	}
 
+	other := map[string]interface{}{
+		"Action":    strings.TrimSuffix(filepath.Base(action), ext),
+		"Component": component,
+	}
+	for key, value := range extraOther {
+		other[key] = value
+	}
 	page := &genelet.Tmpl{
-		Lists: lists,
-		ARGS:  args,
-		Other: map[string]interface{}{
-			"Action":    strings.TrimSuffix(filepath.Base(action), ext),
-			"Component": component,
-		},
+		Lists:   lists,
+		ARGS:    args,
+		Other:   other,
 		Success: true,
 	}
 	rendered, err := page.Get_page(parsed)
@@ -242,6 +673,63 @@ func renderRoleTemplate(t *testing.T, action, component string, lists []map[stri
 		t.Fatal(err)
 	}
 	return rendered
+}
+
+func values(entries map[string]string) url.Values {
+	result := url.Values{}
+	for key, value := range entries {
+		result.Set(key, value)
+	}
+	return result
+}
+
+func assertHostileTemplateValueIsInert(t *testing.T, rendered string) {
+	t.Helper()
+	doc, err := html.Parse(strings.NewReader(rendered))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode {
+			for _, attr := range node.Attr {
+				key := strings.ToLower(attr.Key)
+				value := strings.ToLower(strings.TrimSpace(attr.Val))
+				if key == "onerror" {
+					t.Errorf("hostile value created an event handler on <%s>", node.Data)
+				}
+				if strings.HasPrefix(key, "on") && (strings.Contains(value, "<img") || strings.Contains(value, "<script")) {
+					t.Errorf("hostile value escaped its event-handler string context on <%s>: %q", node.Data, attr.Val)
+				}
+				if (key == "href" || key == "src" || key == "action" || key == "data-href") &&
+					(strings.HasPrefix(value, "javascript:") || strings.HasPrefix(value, "vbscript:") || strings.HasPrefix(value, "data:text/html")) {
+					t.Errorf("hostile value created unsafe %s=%q on <%s>", key, attr.Val, node.Data)
+				}
+			}
+			if node.Data == "script" && strings.TrimSpace(nodeText(node)) == "S04XSS" {
+				t.Error("hostile value created an executable script element")
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(doc)
+}
+
+func nodeText(node *html.Node) string {
+	var result strings.Builder
+	var walk func(*html.Node)
+	walk = func(current *html.Node) {
+		if current.Type == html.TextNode {
+			result.WriteString(current.Data)
+		}
+		for child := current.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(node)
+	return result.String()
 }
 
 func advertiserProfileFixture() map[string]interface{} {
