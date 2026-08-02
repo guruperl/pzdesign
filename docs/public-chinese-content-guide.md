@@ -51,3 +51,5 @@ git diff --check
 ```
 
 Aofei 下的广告主/代理商和流量方 Markdown 手册是内容基准；`www/manuals/` 中的公共 HTML 应在同一批变更中同步更新。
+
+页面文案和数据库字段一律作为普通字符串交给 `html/template`，不得为保留排版而转换为原始 HTML。素材管理和审核页面只显示经过转义的素材源内容，不加载素材地址，也不执行素材代码。涉及链接、报表脚本、邮件或素材展示的修改，还必须遵守 [rendering-security.md](rendering-security.md) 并运行其中的恶意输入回归测试。

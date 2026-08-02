@@ -73,6 +73,25 @@ Login flows are handled by OAuth2, OAuth1, or procedure issuers. Login/logout
 status handling only treats `genelet.Gerror` as a framework status error; other
 errors are returned as server errors with their diagnostic string.
 
+With `Identity.Enabled=true`, `cmd/unify` initializes Genelet's database-backed
+identity service. `Identity.KeyEnv` names a required deployment environment
+variable containing one base64- or hex-encoded 32-byte key; the value is never
+put in JSON. The existing signed role cookie is then paired with a second
+opaque session cookie whose keyed digest, absolute/idle expiry, MFA state, and
+revocation live in MySQL. Login accepts a current RFC 6238 TOTP or one unused
+recovery code. Required but unenrolled roles can access only the `security`
+component. Logout is POST-only, validates CSRF, revokes the database session,
+and expires both cookies.
+
+Roles declare `Permissions`; an analyst also declares `RequireGrant`. An action
+uses `permission_<role>`, `permission`, or the default
+`<component>.<action>`, plus optional `resource_<role>`/`resource` and
+`reauth_<role>`/`reauth`. A `$f:<field>` resource id is read only after verified
+identity fields have replaced caller claims. JSON report reads require the
+separate `.export` permission and recent MFA. Full data, operator, rollout, and
+rollback policy is in
+`../aofei/docs/identity-access-security.md`.
+
 ## Components
 
 Each Summer module has a `component.json`. Components declare actions, role
@@ -97,14 +116,17 @@ Controller handling follows this order:
 2. Set model defaults with request args, output lists, `other`, and storage.
 3. Set filter base/action/component state.
 4. Read the action rule and foreign-key rule from `Filter.GetAll`.
-5. Copy role/auth metadata into request args.
-6. Enforce action group access and foreign-key signatures.
-7. Run `Filter.Preset`.
-8. Set the model DB unless action options include `no_db`.
-9. Run `Filter.Before`.
-10. Run the model action unless action options suppress the model method.
-11. Assign foreign-key signatures for returned lists.
-12. Run `Filter.After`, send optional mail blocks, then render JSON/template.
+5. Copy verified role/auth metadata into request args, replacing caller claims.
+6. Resolve and enforce the named permission, exact resource grant, required
+   TOTP, and recent reauthentication when identity is enabled.
+7. Enforce action group access and foreign-key signatures.
+8. Run `Filter.Preset`.
+9. Set the model DB unless action options include `no_db`.
+10. Run `Filter.Before`.
+11. Run the model action unless action options suppress the model method.
+12. Assign foreign-key signatures for returned lists.
+13. Run `Filter.After`, append the completed security event, send optional mail
+    blocks, then render JSON/template.
 
 Reflection dispatch is guarded by `TryInvoke`, `InvokeVoid`, and
 `InvokeError`. Missing methods, wrong arity, wrong argument types, and panics
