@@ -157,11 +157,16 @@ The matching Summer config must set `ProjectRoot` to the pzdesign checkout so
 component loading resolves `summer/*/component.json`.
 
 Public advertiser/publisher registration and password retrieval require a
-complete `Blks._gmail` SMTP block. If it is absent or incomplete, those actions
-return a Chinese maintenance error before database mutation. Login, activation
-links already issued, and authenticated workspaces remain available. Removing
-the block is the supported emergency email-disable control after credential
-exposure.
+complete `Blks._gmail` mail block. For Gmail API delivery, set `Transport` to
+`gmail-api`, keep only non-secret `From` and optional `Reply-To` metadata in
+JSON, and inject `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and
+`GOOGLE_REFRESH_TOKEN` through an owner-only deployment environment file.
+Credentials are checked before account mutation. If mail configuration is
+absent, incomplete, or rejected by Google, those actions return a Chinese
+maintenance error. Login, activation links already issued, and authenticated
+workspaces remain available. Removing the block is the supported emergency
+email-disable control after credential exposure. Legacy SMTP blocks remain
+compatible.
 
 Summer/Genelet identity hardening is optional and the checked-in Aofei example
 keeps it disabled. When enabled after the S02 schema migration, `cmd/unify`

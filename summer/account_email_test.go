@@ -1,6 +1,7 @@
 package summer
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/guruperl/genelet"
@@ -10,6 +11,9 @@ func TestAccountEmailAvailable(t *testing.T) {
 	t.Setenv("SMTPUSER", "")
 	t.Setenv("SMTPPASS", "")
 	t.Setenv("SMTPHOST", "")
+	t.Setenv("GOOGLE_CLIENT_ID", "")
+	t.Setenv("GOOGLE_CLIENT_SECRET", "")
+	t.Setenv("GOOGLE_REFRESH_TOKEN", "")
 
 	tests := []struct {
 		name   string
@@ -51,6 +55,26 @@ func TestAccountEmailAvailable(t *testing.T) {
 	}
 }
 
+func TestAccountEmailAvailableForGmailAPI(t *testing.T) {
+	t.Setenv("GOOGLE_CLIENT_ID", "client-id")
+	t.Setenv("GOOGLE_CLIENT_SECRET", "client-secret")
+	t.Setenv("GOOGLE_REFRESH_TOKEN", "refresh-token")
+	config := &genelet.Config{Blks: map[string]map[string]string{
+		"_gmail": {
+			"Transport": "gmail-api",
+			"Reply-To":  "support@w8m.com",
+		},
+	}}
+	if !AccountEmailAvailable(config) {
+		t.Fatal("environment-backed Gmail API configuration should be available")
+	}
+
+	t.Setenv("GOOGLE_REFRESH_TOKEN", "")
+	if AccountEmailAvailable(config) {
+		t.Fatal("Gmail API configuration without a refresh token should be unavailable")
+	}
+}
+
 func TestAccountEmailAvailableFromEnvironment(t *testing.T) {
 	t.Setenv("SMTPUSER", "local-smtp-user")
 	t.Setenv("SMTPPASS", "local-smtp-password")
@@ -83,5 +107,24 @@ func TestRequireAccountEmail(t *testing.T) {
 		if err := RequireAccountEmail(config, test.role, test.action); err != nil {
 			t.Fatalf("RequireAccountEmail(%s, %s) = %v", test.role, test.action, err)
 		}
+	}
+}
+
+func TestRequireAccountEmailRejectsFailedGmailPreflight(t *testing.T) {
+	t.Setenv("GOOGLE_CLIENT_ID", "client-id")
+	t.Setenv("GOOGLE_CLIENT_SECRET", "client-secret")
+	t.Setenv("GOOGLE_REFRESH_TOKEN", "refresh-token")
+	config := &genelet.Config{Blks: map[string]map[string]string{
+		"_gmail": {"Transport": "gmail-api"},
+	}}
+	original := checkAccountEmailCredentials
+	checkAccountEmailCredentials = func(*genelet.Config) error {
+		return errors.New("invalid grant")
+	}
+	t.Cleanup(func() { checkAccountEmailCredentials = original })
+
+	err := RequireAccountEmail(config, "web", "insert")
+	if err == nil || err.Error() != "邮件服务暂时停用，请稍后再试或联系技术支持。" {
+		t.Fatalf("RequireAccountEmail invalid Gmail credential error = %v", err)
 	}
 }

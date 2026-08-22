@@ -45,8 +45,8 @@ func CleanUploadName(file string) (string, error) {
 }
 
 // AccountEmailAvailable reports whether the public account workflows have a
-// complete SMTP configuration. Registration and password retrieval must check
-// this before they mutate account state or claim that a message was sent.
+// structurally complete mail configuration. Gmail API credentials stay in the
+// deployment environment; SMTP remains available for legacy deployments.
 func AccountEmailAvailable(config *genelet.Config) bool {
 	if config == nil {
 		return false
@@ -54,6 +54,11 @@ func AccountEmailAvailable(config *genelet.Config) bool {
 	mail, ok := config.Blks["_gmail"]
 	if !ok {
 		return false
+	}
+	if strings.EqualFold(strings.TrimSpace(mail["Transport"]), "gmail-api") {
+		return strings.TrimSpace(os.Getenv("GOOGLE_CLIENT_ID")) != "" &&
+			strings.TrimSpace(os.Getenv("GOOGLE_CLIENT_SECRET")) != "" &&
+			strings.TrimSpace(os.Getenv("GOOGLE_REFRESH_TOKEN")) != ""
 	}
 	username := strings.TrimSpace(mail["Username"])
 	if username == "" {
@@ -74,12 +79,25 @@ func AccountEmailUnavailableError() error {
 	return genelet.Err(1063, "邮件服务暂时停用，请稍后再试或联系技术支持。")
 }
 
+var checkAccountEmailCredentials = func(config *genelet.Config) error {
+	return config.CheckMail("_gmail")
+}
+
 // RequireAccountEmail rejects only the public actions that need to send an
-// account message. Start pages, activation links, and authenticated actions do
-// not depend on SMTP availability.
+// account message. Gmail API credentials are verified before the model mutates
+// account state. Start pages, activation links, and authenticated actions do
+// not depend on mail availability.
 func RequireAccountEmail(config *genelet.Config, role, action string) error {
-	if role == "web" && (action == "insert" || action == "retrieve") && !AccountEmailAvailable(config) {
-		return AccountEmailUnavailableError()
+	if role == "web" && (action == "insert" || action == "retrieve") {
+		if !AccountEmailAvailable(config) {
+			return AccountEmailUnavailableError()
+		}
+		mail := config.Blks["_gmail"]
+		if strings.EqualFold(strings.TrimSpace(mail["Transport"]), "gmail-api") {
+			if err := checkAccountEmailCredentials(config); err != nil {
+				return AccountEmailUnavailableError()
+			}
+		}
 	}
 	return nil
 }
