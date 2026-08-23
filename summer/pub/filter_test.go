@@ -54,3 +54,25 @@ func TestPublisherSellerEditAlwaysRequiresOperatorReapproval(t *testing.T) {
 		t.Fatalf("hostile seller error = %v", err)
 	}
 }
+
+func TestPublisherProtectionIgnoresClientSuppliedAdminMarker(t *testing.T) {
+	request := httptest.NewRequest("POST", "/pub", nil)
+	request.Form = url.Values{
+		"_gadmin":   {"1"},
+		"passwd":    {"local-demo-password"},
+		"confirm":   {"local-demo-password"},
+		"firstname": {"Local"},
+		"lastname":  {"Publisher"},
+	}
+	filter := &Filter{}
+	filter.Action, filter.Component, filter.RoleValue, filter.R = "insert", "pub", "web", request
+	if err := filter.Preset(); err != nil {
+		t.Fatal(err)
+	}
+	if got := request.Form.Get("firstname"); got == "1" {
+		t.Fatalf("public publisher submission was treated as admin: firstname overwritten with dummy %q", got)
+	}
+	if got := request.Form.Get("passwd"); got == "" || got == "local-demo-password" || got == "1" {
+		t.Fatalf("public publisher submission passwd = %q, want a hashed value", got)
+	}
+}

@@ -26,9 +26,6 @@ func (self *Filter) Preset() error {
 	ARGS := self.R.Form
 	action := self.Action
 	who := self.RoleValue
-	if ARGS.Get("_gadmin") == "1" {
-		who = "admin"
-	}
 	if err := summer.VerifyPublicAccountHuman(self.Storage, self.R, who, "pub", action); err != nil {
 		return err
 	}
