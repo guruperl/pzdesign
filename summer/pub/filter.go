@@ -29,7 +29,7 @@ func (self *Filter) Preset() error {
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"
 	}
-	if err := summer.RequireAccountEmail(self.C, who, action); err != nil {
+	if err := summer.VerifyPublicAccountHuman(self.Storage, self.R, who, "pub", action); err != nil {
 		return err
 	}
 
@@ -110,12 +110,22 @@ func hasAnySellerField(values url.Values) bool {
 }
 
 func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values) error {
+	who := self.RoleValue
+	if self.R.Form.Get("_gadmin") == "1" {
+		who = "admin"
+	}
+	if err := summer.AdmitPublicAccountSubmission(model.Storage, self.R, self.C, who, "pub", self.Action); err != nil {
+		return err
+	}
+	if err := summer.RequireAccountEmail(self.C, who, self.Action); err != nil {
+		return err
+	}
 	if err := self.Filter.Before(&model.Model, extra, nextextra); err != nil {
 		return err
 	}
 
 	action := self.Action
-	who := self.RoleValue
+	who = self.RoleValue
 	ARGS := self.R.Form
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"

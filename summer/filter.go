@@ -400,6 +400,9 @@ func (self *Filter) After(model *Model) error {
 	who := self.RoleValue
 	action := self.Action
 	obj := ARGS.Get("_gobj")
+	if err := AddPublicAccountProtectionView(other, model.Storage, who, obj, action); err != nil {
+		return err
+	}
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"
 	}

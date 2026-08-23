@@ -81,6 +81,13 @@ func run(ctx context.Context, localFlagSet bool) error {
 		return err
 	}
 	gc.DB = sc.DB
+	publicAccountProtector, err := summer.NewPublicAccountProtectorFromEnv(sc.Redis)
+	if err != nil {
+		return fmt.Errorf("initialize public account protection: %w", err)
+	}
+	if publicAccountProtector != nil {
+		gc.Storage[summer.PublicAccountProtectorStorageKey] = publicAccountProtector
+	}
 	gc.Storage[summer.ActionReportingStorageKey] = actionReportingAvailable(ctx, sc.DB)
 	gc.Storage[summer.MarketplaceReportingStorageKey] = marketplaceReportingAvailable(ctx, sc.DB)
 	identity, err := genelet.NewIdentityService(gc.C, gc.DB)

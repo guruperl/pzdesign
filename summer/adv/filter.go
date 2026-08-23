@@ -20,7 +20,7 @@ func (self *Filter) Preset() error {
 	ARGS := self.R.Form
 	action := self.Action
 	who := self.RoleValue
-	if err := summer.RequireAccountEmail(self.C, who, action); err != nil {
+	if err := summer.VerifyPublicAccountHuman(self.Storage, self.R, who, "adv", action); err != nil {
 		return err
 	}
 
@@ -67,6 +67,12 @@ func (self *Filter) Preset() error {
 }
 
 func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values) error {
+	if err := summer.AdmitPublicAccountSubmission(model.Storage, self.R, self.C, self.RoleValue, "adv", self.Action); err != nil {
+		return err
+	}
+	if err := summer.RequireAccountEmail(self.C, self.RoleValue, self.Action); err != nil {
+		return err
+	}
 	if err := self.Filter.Before(&model.Model, extra, nextextra); err != nil {
 		return err
 	}

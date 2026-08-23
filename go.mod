@@ -6,6 +6,7 @@ toolchain go1.23.5
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
+	github.com/alicebob/miniredis/v2 v2.35.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/guruperl/aofei v0.0.0
 	github.com/mediocregopher/radix/v4 v4.1.4
@@ -18,6 +19,7 @@ require (
 	github.com/delongw/go-int-cipher v0.0.0-20151122132803-cb275de15ba8 // indirect
 	github.com/lib/pq v1.12.3 // indirect
 	github.com/mattn/go-sqlite3 v1.14.44 // indirect
+	github.com/yuin/gopher-lua v1.1.1 // indirect
 	golang.org/x/crypto v0.31.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 )
