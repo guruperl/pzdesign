@@ -73,7 +73,7 @@ type turnstileResponse struct {
 
 type publicAccountHumanContextKey struct{}
 
-var publicAccountQuotaScript = `
+var publicAccountQuotaEval = radix.NewEvalScript(`
 for i = 1, #KEYS do
   local current = tonumber(redis.call('GET', KEYS[i]) or '0')
   local limit = tonumber(ARGV[(i - 1) * 2 + 1])
@@ -88,7 +88,7 @@ for i = 1, #KEYS do
   end
 end
 return 1
-`
+`)
 
 // NewPublicAccountProtectorFromEnv returns nil when protection is explicitly
 // disabled. Enabling is fail-closed: Turnstile, Redis, hostname, proxy, and
@@ -400,13 +400,10 @@ func (protector *PublicAccountProtector) admit(request *http.Request, config *ge
 		keys = append(keys, "aofei:public-account:v1:{public-account}:"+limit.scope+":"+identity)
 		args = append(args, strconv.Itoa(limit.limit), strconv.FormatInt(int64(limit.window/time.Second), 10))
 	}
-	command := []string{"EVAL", publicAccountQuotaScript, strconv.Itoa(len(keys))}
-	command = append(command, keys...)
-	command = append(command, args...)
 	ctx, cancel := context.WithTimeout(request.Context(), publicAccountRedisTimeout)
 	defer cancel()
 	var result int64
-	if err := protector.redis.Do(ctx, radix.Cmd(&result, command[0], command[1:]...)); err != nil {
+	if err := protector.redis.Do(ctx, publicAccountQuotaEval.Cmd(&result, keys, args...)); err != nil {
 		publicAccountDependencies.Add("redis", 1)
 		return genelet.Err(http.StatusServiceUnavailable, "账户服务保护暂时不可用，请稍后再试。")
 	}
