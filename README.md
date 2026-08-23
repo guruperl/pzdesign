@@ -168,6 +168,17 @@ workspaces remain available. Removing the block is the supported emergency
 email-disable control after credential exposure. Legacy SMTP blocks remain
 compatible.
 
+Public account abuse protection is independently default-off. When
+`PUBLIC_ACCOUNT_PROTECTION_ENABLED=true`, `cmd/unify` requires Redis, complete
+Turnstile site/secret keys, exact allowed hostnames, and reviewed trusted-proxy
+CIDRs at startup. Advertiser/publisher registration and recovery validate the
+single-use token and fixed action before password hashing or shared/provider
+work, then atomically consume pseudonymous IP/email/global Redis quotas before
+Gmail or database mutation. Only the public site key enters templates. Follow
+the sibling Aofei `docs/public-account-abuse-protection.md` activation,
+monitoring, rotation, and rollback contract; no Cloudflare or Turnstile secret
+belongs in this repository.
+
 Summer/Genelet identity hardening is optional and the checked-in Aofei example
 keeps it disabled. When enabled after the S02 schema migration, `cmd/unify`
 pairs the signed role cookie with an opaque database session, enforces required

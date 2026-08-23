@@ -16,6 +16,11 @@ import (
 
 var assembledQueryPattern = regexp.MustCompile("\\bprint\\s+[`\"][^`\"\\n]*[A-Za-z_][A-Za-z0-9_]*=")
 
+// Cloudflare requires its Turnstile bootstrap to be loaded from this exact
+// origin and path. Keep the exception byte-for-byte narrow so every other
+// remote executable resource remains a template-check failure.
+var approvedTurnstileBootstrap = regexp.MustCompile(`(?i)<script src="https://challenges\.cloudflare\.com/turnstile/v0/api\.js" async defer></script>`)
+
 var templateSourceRules = []struct {
 	description string
 	pattern     *regexp.Regexp
@@ -160,6 +165,7 @@ func hasAssembledQuery(data []byte) bool {
 }
 
 func templateSourceFindings(data []byte) []string {
+	data = approvedTurnstileBootstrap.ReplaceAll(data, nil)
 	var findings []string
 	for _, rule := range templateSourceRules {
 		if rule.pattern.Match(data) {

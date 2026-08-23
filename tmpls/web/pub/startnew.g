@@ -56,6 +56,12 @@
         <div class="account-field account-field-wide">
           <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>我已阅读并接受平台用户协议及账户使用规则。</span></label>
         </div>
+        {{ if .Other.TurnstileSiteKey }}
+        <div class="account-field account-field-wide account-human-check">
+          <div class="cf-turnstile" data-sitekey="{{ .Other.TurnstileSiteKey }}" data-action="{{ .Other.TurnstileAction }}" data-appearance="interaction-only" data-language="zh-cn"></div>
+          <p>人机验证由 Cloudflare 提供，用于防止批量注册和垃圾邮件。</p>
+        </div>
+        {{ end }}
       </div>
       <button type="submit" class="account-submit">提交注册申请</button>
       <div class="account-form-links">
@@ -68,6 +74,7 @@
 
 {{ template "footer" }}
 
+{{ if .Other.TurnstileSiteKey }}<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{{ end }}
 <script>
 $(function () {
   $('#pubForm').validate({

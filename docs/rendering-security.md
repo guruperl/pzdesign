@@ -80,6 +80,13 @@ validity of the creative payload itself.
   reviewed `www/` tree.
 - Templates must not contain `javascript:`, `vbscript:`, HTML `data:` URLs, or
   remotely hosted script, stylesheet, frame, object, embed, or source assets.
+  S06 has one exact vendor-required exception: public registration/recovery may
+  load `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+  async defer></script>`. The template checker removes only that byte-for-byte
+  bootstrap before applying the remote-resource rule; another host, path,
+  query, attribute, or embedding element still fails. The widget receives only
+  an escaped public site key and one fixed action, never the secret or response
+  token.
 - Query values are written directly in URL attributes and passed through
   `urlquery` when they are names or free-form text. Do not assemble a query
   string with `print` and then insert the result into a URL context.
@@ -119,7 +126,10 @@ assembled queries and unsafe template-source patterns, and scans pzdesign Go
 code for prohibited raw template types. Its hostile fixtures cover public
 login/TOTP values, TOTP enrollment and recovery material, account/campaign
 data, every authenticated role family, creative source views, report
-JavaScript contexts, unsafe form actions, and account mail.
+JavaScript contexts, unsafe form actions, and account mail. It also renders all
+advertiser/publisher registration and recovery variants with scoped Turnstile
+metadata and proves that only the exact approved bootstrap survives the
+remote-resource source rule.
 Genelet separately tests the fixed CSRF helper and the uniqueness of its raw
 HTML boundary.
 

@@ -18,6 +18,13 @@
               <input type="text" name=email id="email" class="form-control" placeholder="Email">
             </div>
 
+            {{ if .Other.TurnstileSiteKey }}
+            <div class="input-group mb-4 account-human-check">
+              <div class="cf-turnstile" data-sitekey="{{ .Other.TurnstileSiteKey }}" data-action="{{ .Other.TurnstileAction }}" data-appearance="interaction-only" data-language="en"></div>
+              <p>Cloudflare provides human verification to prevent automated recovery email requests.</p>
+            </div>
+            {{ end }}
+
             <div class="input-group mb-4">
             <button type="submit" class="btn btn-block btn-primary">Continue</button>
             </div>
@@ -30,6 +37,7 @@
 
 {{ template "footer" }}
 
+  {{ if .Other.TurnstileSiteKey }}<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{{ end }}
   <!-- Custom scripts required by form validation-->
   <script>
 $(function (){

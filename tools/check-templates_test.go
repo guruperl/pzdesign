@@ -63,6 +63,16 @@ func TestTemplateSourceFindings(t *testing.T) {
 			want: 1,
 		},
 		{
+			name: "exact Turnstile bootstrap",
+			text: `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>`,
+			want: 0,
+		},
+		{
+			name: "modified Turnstile bootstrap",
+			text: `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=run"></script>`,
+			want: 1,
+		},
+		{
 			name: "stored markup iframe",
 			text: `<iframe srcdoc="{{.content}}"></iframe>`,
 			want: 1,
@@ -466,7 +476,7 @@ func TestRegistrationRoleThemes(t *testing.T) {
 				url.Values{},
 			)
 			for _, want := range []string{
-				`href="/css/w8m-account.css?v=20260801-3"`,
+				`href="/css/w8m-account.css?v=20260822-1"`,
 				`<body class="w8m-public-account ` + test.theme + `">`,
 				`<div class="account-card ` + test.theme + `">`,
 			} {
@@ -475,6 +485,49 @@ func TestRegistrationRoleThemes(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestPublicAccountFormsRenderScopedTurnstileWidgets(t *testing.T) {
+	tests := []struct {
+		role   string
+		page   string
+		action string
+	}{
+		{role: "adv", page: "startnew", action: "register_adv"},
+		{role: "adv", page: "startretrieve", action: "recover_adv"},
+		{role: "pub", page: "startnew", action: "register_pub"},
+		{role: "pub", page: "startretrieve", action: "recover_pub"},
+	}
+	for _, test := range tests {
+		for _, ext := range []string{"g", "e"} {
+			t.Run(test.role+"_"+test.page+"_"+ext, func(t *testing.T) {
+				rendered := renderRoleTemplateWithOther(
+					t,
+					filepath.Join("..", "tmpls", "web", test.role, test.page+"."+ext),
+					test.role,
+					nil,
+					url.Values{},
+					map[string]interface{}{
+						"TurnstileSiteKey": "0x4-public-site-key",
+						"TurnstileAction":  test.action,
+					},
+				)
+				for _, want := range []string{
+					`class="cf-turnstile"`,
+					`data-sitekey="0x4-public-site-key"`,
+					`data-action="` + test.action + `"`,
+					`src="https://challenges.cloudflare.com/turnstile/v0/api.js"`,
+				} {
+					if !strings.Contains(rendered, want) {
+						t.Errorf("rendered form does not contain %q", want)
+					}
+				}
+				if strings.Contains(rendered, "private-secret") {
+					t.Error("rendered form contains a Turnstile secret")
+				}
+			})
+		}
 	}
 }
 

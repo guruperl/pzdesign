@@ -353,6 +353,21 @@ body.w8m-public-account {
   color: var(--role-dark);
 }
 
+.account-human-check {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0.2rem 0 1rem;
+}
+
+.account-human-check p {
+  color: var(--account-muted);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
 .account-control {
   display: flex;
   min-height: 49px;

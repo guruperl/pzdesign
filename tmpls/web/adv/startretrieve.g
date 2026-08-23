@@ -23,6 +23,12 @@
         <label for="email">注册邮箱</label>
         <div class="account-control"><i class="fa fa-envelope-o" aria-hidden="true"></i><input type="email" name="email" id="email" class="form-control" placeholder="name@example.com" autocomplete="email" required></div>
       </div>
+      {{ if .Other.TurnstileSiteKey }}
+      <div class="account-human-check">
+        <div class="cf-turnstile" data-sitekey="{{ .Other.TurnstileSiteKey }}" data-action="{{ .Other.TurnstileAction }}" data-appearance="interaction-only" data-language="zh-cn"></div>
+        <p>人机验证由 Cloudflare 提供，用于防止批量发送重置邮件。</p>
+      </div>
+      {{ end }}
       <button type="submit" class="account-submit">发送密码重置邮件</button>
     </form>
   </section>
@@ -30,6 +36,7 @@
 
 {{ template "footer" }}
 
+{{ if .Other.TurnstileSiteKey }}<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{{ end }}
 <script>
 $(function () {
   $('#advRetrieve').validate({
