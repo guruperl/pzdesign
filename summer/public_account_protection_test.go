@@ -277,8 +277,16 @@ func TestAddPublicAccountProtectionViewExposesNoSecret(t *testing.T) {
 
 func assertPublicAccountErrorCode(t *testing.T, err error, want int) {
 	t.Helper()
-	gerr, ok := err.(genelet.Gerror)
-	if !ok || gerr.Code != want {
+	switch e := err.(type) {
+	case genelet.Gerror:
+		if e.Code != want {
+			t.Fatalf("error = %#v, want code %d", err, want)
+		}
+	case genelet.ClientSafeError:
+		if e.Code != want {
+			t.Fatalf("error = %#v, want code %d", err, want)
+		}
+	default:
 		t.Fatalf("error = %#v, want Gerror code %d", err, want)
 	}
 }

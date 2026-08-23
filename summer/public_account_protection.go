@@ -258,7 +258,7 @@ func VerifyPublicAccountHuman(storage map[string]interface{}, request *http.Requ
 	}
 	protector, err := storedPublicAccountProtector(storage)
 	if err != nil {
-		return genelet.Err(http.StatusServiceUnavailable, "账户服务保护配置异常，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "账户服务保护配置异常，请稍后再试。")
 	}
 	if protector == nil {
 		return nil
@@ -276,14 +276,14 @@ func AdmitPublicAccountSubmission(storage map[string]interface{}, request *http.
 	}
 	protector, err := storedPublicAccountProtector(storage)
 	if err != nil {
-		return genelet.Err(http.StatusServiceUnavailable, "账户服务保护配置异常，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "账户服务保护配置异常，请稍后再试。")
 	}
 	if protector == nil {
 		return nil
 	}
 	validatedPurpose, _ := request.Context().Value(publicAccountHumanContextKey{}).(string)
 	if validatedPurpose != purpose {
-		return genelet.Err(http.StatusBadRequest, "人机验证已失效，请刷新页面后重试。")
+		return genelet.ClientSafeErr(http.StatusBadRequest, "人机验证已失效，请刷新页面后重试。")
 	}
 	return protector.admit(request, config, purpose)
 }
@@ -319,12 +319,12 @@ func (protector *PublicAccountProtector) verify(request *http.Request, purpose s
 	request.Form.Del("cf-turnstile-response")
 	if token == "" || len(token) > turnstileTokenLimit {
 		publicAccountTurnstile.Add(purpose, 1)
-		return genelet.Err(http.StatusBadRequest, "请完成人机验证后再提交。")
+		return genelet.ClientSafeErr(http.StatusBadRequest, "请完成人机验证后再提交。")
 	}
 	clientIP, err := protector.clientIP(request)
 	if err != nil {
 		publicAccountTurnstile.Add(purpose, 1)
-		return genelet.Err(http.StatusBadRequest, "无法确认请求来源，请刷新页面后重试。")
+		return genelet.ClientSafeErr(http.StatusBadRequest, "无法确认请求来源，请刷新页面后重试。")
 	}
 	form := url.Values{
 		"secret":   {protector.config.secretKey},
@@ -337,35 +337,35 @@ func (protector *PublicAccountProtector) verify(request *http.Request, purpose s
 	verifyRequest, err := http.NewRequestWithContext(request.Context(), http.MethodPost, protector.config.verifyURL, strings.NewReader(form.Encode()))
 	if err != nil {
 		publicAccountDependencies.Add("turnstile", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
 	}
 	verifyRequest.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	response, err := protector.client.Do(verifyRequest)
 	if err != nil {
 		publicAccountDependencies.Add("turnstile", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
 	}
 	defer response.Body.Close()
 	if response.StatusCode != http.StatusOK {
 		_, _ = io.Copy(io.Discard, io.LimitReader(response.Body, turnstileResponseLimit))
 		publicAccountDependencies.Add("turnstile", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
 	}
 	body, err := io.ReadAll(io.LimitReader(response.Body, turnstileResponseLimit+1))
 	if err != nil || len(body) > turnstileResponseLimit {
 		publicAccountDependencies.Add("turnstile", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
 	}
 	var result turnstileResponse
 	if err := json.Unmarshal(body, &result); err != nil {
 		publicAccountDependencies.Add("turnstile", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "人机验证服务暂时不可用，请稍后再试。")
 	}
 	hostname := strings.ToLower(strings.TrimSuffix(strings.TrimSpace(result.Hostname), "."))
 	_, hostnameAllowed := protector.config.hostnames[hostname]
 	if !result.Success || !hostnameAllowed || result.Action != purpose {
 		publicAccountTurnstile.Add(purpose, 1)
-		return genelet.Err(http.StatusBadRequest, "人机验证未通过，请刷新页面后重试。")
+		return genelet.ClientSafeErr(http.StatusBadRequest, "人机验证未通过，请刷新页面后重试。")
 	}
 	*request = *request.WithContext(context.WithValue(request.Context(), publicAccountHumanContextKey{}, purpose))
 	return nil
@@ -374,15 +374,15 @@ func (protector *PublicAccountProtector) verify(request *http.Request, purpose s
 func (protector *PublicAccountProtector) admit(request *http.Request, config *genelet.Config, purpose string) error {
 	email, err := normalizePublicAccountEmail(request.Form.Get("email"))
 	if err != nil {
-		return genelet.Err(http.StatusBadRequest, "请输入有效的电子邮箱。")
+		return genelet.ClientSafeErr(http.StatusBadRequest, "请输入有效的电子邮箱。")
 	}
 	clientIP, err := protector.clientIP(request)
 	if err != nil || !clientIP.IsValid() {
-		return genelet.Err(http.StatusBadRequest, "无法确认请求来源，请刷新页面后重试。")
+		return genelet.ClientSafeErr(http.StatusBadRequest, "无法确认请求来源，请刷新页面后重试。")
 	}
 	if config == nil || strings.TrimSpace(config.Secret) == "" {
 		publicAccountDependencies.Add("config", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "账户服务保护配置异常，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "账户服务保护配置异常，请稍后再试。")
 	}
 
 	emailDigest := publicAccountDigest(config.Secret, "email", email)
@@ -405,7 +405,7 @@ func (protector *PublicAccountProtector) admit(request *http.Request, config *ge
 	var result int64
 	if err := protector.redis.Do(ctx, publicAccountQuotaEval.Cmd(&result, keys, args...)); err != nil {
 		publicAccountDependencies.Add("redis", 1)
-		return genelet.Err(http.StatusServiceUnavailable, "账户服务保护暂时不可用，请稍后再试。")
+		return genelet.ClientSafeErr(http.StatusServiceUnavailable, "账户服务保护暂时不可用，请稍后再试。")
 	}
 	if result < 0 {
 		index := int(-result) - 1
@@ -414,7 +414,7 @@ func (protector *PublicAccountProtector) admit(request *http.Request, config *ge
 			scope = protector.config.limits[index].scope
 		}
 		publicAccountRateLimited.Add(scope, 1)
-		return genelet.Err(http.StatusTooManyRequests, "提交过于频繁，请稍后再试；如需帮助请联系 support@w8m.com。")
+		return genelet.ClientSafeErr(http.StatusTooManyRequests, "提交过于频繁，请稍后再试；如需帮助请联系 support@w8m.com。")
 	}
 	publicAccountSubmissions.Add(purpose+"_admitted", 1)
 	return nil
