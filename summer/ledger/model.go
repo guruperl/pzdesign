@@ -162,7 +162,7 @@ func (self *Model) TopicsMarketplace(extra ...url.Values) error {
 	}
 	decorateMarketplaceRows(*self.LISTS)
 	(*self.OTHER)["marketplace_contract"] = map[string]interface{}{
-		"currency": "USD", "timezone": "UTC", "accounting_version": "usd-cpm-impression-v2",
+		"currency": "USD", "timezone": "UTC", "accounting_version": "usd-cpm-impression-v3",
 		"from": args.Get("day"), "lookback_days": args.Get("idays"),
 	}
 	if err := self.CallOnce(map[string]interface{}{"model": "ledger", "action": "topicsMarketplaceFreshness"}, make(url.Values)); err != nil {
