@@ -6,6 +6,7 @@
               Current List of <em>{{index .ARGS.site_name 0}}</em>
             </div>
             <div class="card-body">
+{{with (index .ARGS "direct_token_version")}}			  <p class="text-muted">Integration locators: {{index . 0}}.{{with (index $.ARGS "request_authentication")}} App request authentication: {{index . 0}}.{{end}}</p>{{end}}
 
 <div class="table-responsive">
 <table class="table table-striped table-sm">

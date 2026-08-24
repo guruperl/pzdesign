@@ -126,6 +126,16 @@ identity and places a new token only in the escaped response that issued or
 rotated it; it never persists or logs plaintext. The separate `/api/v1`
 handler—not a Summer JSON chartag—owns the public contract.
 
+`summer/slot` receives a narrow controller-owned direct-SSP token issuer from
+`cmd/unify`. Before it renders or offers a download, the topics action resolves
+the active site by the authenticated publisher/site tuple. The issuer emits
+historical v1 locators only while the Aofei gate is disabled and current-epoch
+v2 locators when enabled; it exposes no token key. App samples show the four
+publisher request-signing header placeholders and the safe authentication mode,
+but never the one-time private credential. `summer/publishercredential`
+remains the separate S02-scoped issue/read/rotate/revoke surface; Summer
+sessions and I03 advertiser credentials are not `/pz` runtime credentials.
+
 `summer/trafficquality` is the S03 review surface and remains inert unless
 `cmd/unify` initialized Aofei's traffic-quality service and S02 identity.
 Advertiser/publisher routes replace request scope with the verified account id;
@@ -232,6 +242,7 @@ Storage adapters are supplied by `cmd/unify` through `model.Storage`:
 Redis  -> radix.Client
 Nc     -> *nats.Conn
 Spread -> string spread root
+DirectSSPTokenIssuer -> controller-owned public locator issuer
 ```
 
 Summer accesses those through typed helper functions so a missing adapter is a

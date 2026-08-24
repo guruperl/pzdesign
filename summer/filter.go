@@ -24,6 +24,7 @@ type Filter struct {
 const (
 	ActionReportingStorageKey      = "ActionReportingEnabled"
 	MarketplaceReportingStorageKey = "MarketplaceReportingEnabled"
+	DirectSSPTokenIssuerStorageKey = "DirectSSPTokenIssuer"
 )
 
 func ActionReportingEnabled(storage map[string]interface{}) bool {

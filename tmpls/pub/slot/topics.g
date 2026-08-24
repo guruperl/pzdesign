@@ -6,6 +6,7 @@
               流量源“<em>{{index .ARGS.site_name 0}}</em>”下的广告位
             </div>
             <div class="card-body">
+{{with (index .ARGS "direct_token_version")}}			  <p class="text-muted">接入定位令牌版本：{{index . 0}}。{{with (index $.ARGS "request_authentication")}}App 请求认证模式：{{index . 0}}。{{end}}</p>{{end}}
 
 <div class="table-responsive">
 <table class="table table-striped table-sm">

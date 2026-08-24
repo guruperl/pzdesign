@@ -101,6 +101,7 @@ func run(ctx context.Context, localFlagSet bool) error {
 		return fmt.Errorf("direct SSP publisher authentication requires the Summer identity boundary")
 	}
 	gc.Storage["PublisherAuth"] = publisherAuthService
+	gc.Storage[summer.DirectSSPTokenIssuerStorageKey] = sc.DirectSSPTokenIssuer()
 	apiService, err := managementapi.NewService(sc.C.ManagementAPI, sc.DB, sc.Redis)
 	if err != nil {
 		return fmt.Errorf("initialize management API: %w", err)

@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/guruperl/aofei/acl"
+	"github.com/guruperl/aofei/dsp"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -177,9 +178,17 @@ func (self *Filter) After(model *Model) error {
 		}
 		ARGS.Set("serverUrl", serverURL)
 		ARGS.Set("serverScript", serverURL+"/pz")
+		pubID, err := strconv.ParseUint(ARGS.Get("pub_id"), 10, 32)
+		if err != nil || pubID == 0 {
+			return fmt.Errorf("publisher scope is invalid")
+		}
+		siteID, err := strconv.ParseUint(ARGS.Get("site_id"), 10, 32)
+		if err != nil || siteID == 0 {
+			return fmt.Errorf("site scope is invalid")
+		}
 		siteType := strings.TrimSpace(ARGS.Get("site_type"))
 		if model.DB != nil {
-			if err := model.DB.QueryRow(`SELECT site_type FROM pub_site WHERE site_id = ?`, ARGS.Get("site_id")).Scan(&siteType); err != nil {
+			if err := model.DB.QueryRow(`SELECT site_type FROM pub_site WHERE pub_id = ? AND site_id = ? AND active IN ('New','Yes')`, pubID, siteID).Scan(&siteType); err != nil {
 				return err
 			}
 		}
@@ -187,15 +196,14 @@ func (self *Filter) After(model *Model) error {
 			siteType = "Web"
 		}
 		ARGS.Set("site_type", siteType)
-		pubID, err := strconv.ParseUint(ARGS.Get("pub_id"), 10, 32)
-		if err != nil {
-			return err
+		issuer, _ := model.Storage[summer.DirectSSPTokenIssuerStorageKey].(*dsp.DirectSSPTokenIssuer)
+		if issuer == nil {
+			return fmt.Errorf("direct SSP token issuer is unavailable")
 		}
-		siteID, err := strconv.ParseUint(ARGS.Get("site_id"), 10, 32)
-		if err != nil {
-			return err
-		}
-		siteStr, err := acl.PackDirectToken(uint32(pubID), uint32(siteID))
+		metadata := issuer.Metadata()
+		ARGS.Set("direct_token_version", metadata.TokenVersion)
+		ARGS.Set("request_authentication", metadata.RequestAuthentication)
+		siteStr, err := issuer.PackSite(uint32(pubID), uint32(siteID))
 		if err != nil {
 			return err
 		}
@@ -208,7 +216,7 @@ func (self *Filter) After(model *Model) error {
 			}
 			sizeID := uint32(item["size_id"].(int64))
 			summer.SetWH(item)
-			item["slot_str"], err = acl.PackDirectToken(slotID, sizeID)
+			item["slot_str"], err = issuer.PackSlot(uint32(pubID), uint32(siteID), slotID, sizeID)
 			if err != nil {
 				return err
 			}
@@ -219,7 +227,7 @@ func (self *Filter) After(model *Model) error {
 				item["api_code"] = ""
 			} else {
 				item["browser_code"] = ""
-				item["api_code"] = apiSample(serverURL+"/pz", siteStr, item)
+				item["api_code"] = apiSample(serverURL+"/pz", siteStr, item, metadata.RequestAuthentication)
 			}
 			if created := item["created"]; created != nil {
 				item["created"] = summer.DateDisplay(created)
@@ -365,10 +373,14 @@ pzLoadAds({
 </html>`, serverURL, html.EscapeString(code), w, h, siteStr, code, slot, mimeFormat(item))
 }
 
-func apiSample(endpoint, siteStr string, item map[string]interface{}) string {
+func apiSample(endpoint, siteStr string, item map[string]interface{}, authenticationMode string) string {
 	code := item["code"].(string)
 	slot := item["slot_str"].(string)
 	return fmt.Sprintf(`POST %s
+X-W8M-PZ-Credential: w8m_pz_v1_<public-id>
+X-W8M-PZ-Timestamp: <canonical Unix seconds>
+X-W8M-PZ-Nonce: <canonical unpadded base64url, 16-32 bytes>
+X-W8M-PZ-Signature: <canonical unpadded base64url Ed25519 signature>
 
 {
 	"platform": "sdk",
@@ -405,5 +417,9 @@ This is a contextual example and intentionally omits user/device identifiers.
 Propagate applicable regs, user.consent, GPP/US Privacy, COPPA, GPC/DNT/LMT
 signals from an approved privacy flow; never invent a consent grant.
 
-Set "responseFormat": "openrtb" for an OpenRTB BidResponse.`, endpoint, siteStr, code, slot, mimeFormat(item))
+Authentication mode: %s. Sign the exact decompressed JSON body with the
+publisher/App private value shown once by the credential lifecycle page. Never
+embed that private value in source, a downloaded sample, logs, or a browser tag.
+
+Set "responseFormat": "openrtb" for an OpenRTB BidResponse.`, endpoint, siteStr, code, slot, mimeFormat(item), authenticationMode)
 }

@@ -1,14 +1,16 @@
 package slot
 
 import (
+	"database/sql"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/guruperl/aofei/acl"
+	"github.com/guruperl/aofei/dsp"
 	"github.com/guruperl/genelet"
+	"github.com/guruperl/pzdesign/summer"
 )
 
 func TestFilter(t *testing.T) {
@@ -130,7 +132,8 @@ func TestTopicsBuildsDirectSSPTagData(t *testing.T) {
 	lists := []map[string]interface{}{slotTopicsFixture()}
 	other := map[string]interface{}{}
 	model := &Model{}
-	model.SetDefaults(req.Form, &lists, &other, nil)
+	issuer := topicsTokenIssuer(t)
+	model.SetDefaults(req.Form, &lists, &other, map[string]interface{}{summer.DirectSSPTokenIssuerStorageKey: issuer})
 
 	filter := &Filter{}
 	filter.SetAll(genelet.Base{C: &genelet.Config{ServerURL: "https://aofei.example/"}, R: req}, "topics", "slot", &other)
@@ -138,11 +141,11 @@ func TestTopicsBuildsDirectSSPTagData(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	siteToken, err := acl.PackDirectToken(7, 11)
+	siteToken, err := issuer.PackSite(7, 11)
 	if err != nil {
 		t.Fatal(err)
 	}
-	slotToken, err := acl.PackDirectToken(13, 19661050)
+	slotToken, err := issuer.PackSlot(7, 11, 13, 19661050)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -152,6 +155,9 @@ func TestTopicsBuildsDirectSSPTagData(t *testing.T) {
 	}
 	if got := req.Form.Get("site_str"); got != siteToken {
 		t.Fatalf("site_str = %q, want %q", got, siteToken)
+	}
+	if got := req.Form.Get("direct_token_version"); got != "v2" {
+		t.Fatalf("direct_token_version = %q, want v2", got)
 	}
 	if got := item["slot_str"]; got != slotToken {
 		t.Fatalf("slot_str = %q, want %q", got, slotToken)
@@ -185,7 +191,8 @@ func TestTopicsBuildsDirectSSPAppSDKData(t *testing.T) {
 	lists := []map[string]interface{}{slotTopicsFixture()}
 	other := map[string]interface{}{}
 	model := &Model{}
-	model.SetDefaults(req.Form, &lists, &other, nil)
+	issuer := topicsTokenIssuer(t)
+	model.SetDefaults(req.Form, &lists, &other, map[string]interface{}{summer.DirectSSPTokenIssuerStorageKey: issuer})
 	filter := &Filter{}
 	filter.SetAll(genelet.Base{C: &genelet.Config{ServerURL: "https://aofei.example/"}, R: req}, "topics", "slot", &other)
 	if err := filter.After(model); err != nil {
@@ -198,6 +205,10 @@ func TestTopicsBuildsDirectSSPAppSDKData(t *testing.T) {
 	api := item["api_code"].(string)
 	for _, want := range []string{
 		"POST https://aofei.example/pz",
+		"X-W8M-PZ-Credential: w8m_pz_v1_<public-id>",
+		"X-W8M-PZ-Timestamp: <canonical Unix seconds>",
+		"X-W8M-PZ-Nonce: <canonical unpadded base64url, 16-32 bytes>",
+		"X-W8M-PZ-Signature: <canonical unpadded base64url Ed25519 signature>",
 		`"responseFormat": "json"`,
 		`"app": {`,
 		`"name": "Example App"`,
@@ -205,6 +216,9 @@ func TestTopicsBuildsDirectSSPAppSDKData(t *testing.T) {
 		`"impressionUrl": "https://aofei.example/imp?...`,
 		`intentionally omits user/device identifiers`,
 		`never invent a consent grant`,
+		`Authentication mode: required`,
+		`Sign the exact decompressed JSON body`,
+		`Never`,
 		`Set "responseFormat": "openrtb"`,
 	} {
 		if !strings.Contains(api, want) {
@@ -224,8 +238,8 @@ func TestTopicsUsesAuthoritativeSiteType(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer db.Close()
-	mock.ExpectQuery(`SELECT site_type FROM pub_site WHERE site_id = \?`).
-		WithArgs("11").
+	mock.ExpectQuery(`SELECT site_type FROM pub_site WHERE pub_id = \? AND site_id = \? AND active IN \('New','Yes'\)`).
+		WithArgs(uint64(7), uint64(11)).
 		WillReturnRows(sqlmock.NewRows([]string{"site_type"}).AddRow("App"))
 
 	req := httptest.NewRequest("GET", "/slot", nil)
@@ -238,7 +252,7 @@ func TestTopicsUsesAuthoritativeSiteType(t *testing.T) {
 	lists := []map[string]interface{}{slotTopicsFixture()}
 	other := map[string]interface{}{}
 	model := &Model{}
-	model.SetDefaults(req.Form, &lists, &other, nil)
+	model.SetDefaults(req.Form, &lists, &other, map[string]interface{}{summer.DirectSSPTokenIssuerStorageKey: topicsTokenIssuer(t)})
 	model.SetDB(db)
 	filter := &Filter{}
 	filter.SetAll(genelet.Base{C: &genelet.Config{ServerURL: "https://aofei.example/"}, R: req}, "topics", "slot", &other)
@@ -250,6 +264,35 @@ func TestTopicsUsesAuthoritativeSiteType(t *testing.T) {
 	}
 	if lists[0]["browser_code"].(string) != "" || lists[0]["api_code"].(string) == "" {
 		t.Fatalf("authoritative App site generated wrong samples: %#v", lists[0])
+	}
+	if err := mock.ExpectationsWereMet(); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestTopicsRejectsUnownedSiteBeforeTokenGeneration(t *testing.T) {
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer db.Close()
+	mock.ExpectQuery(`SELECT site_type FROM pub_site WHERE pub_id = \? AND site_id = \? AND active IN \('New','Yes'\)`).
+		WithArgs(uint64(7), uint64(99)).
+		WillReturnError(sql.ErrNoRows)
+	req := httptest.NewRequest("GET", "/slot", nil)
+	req.Form = url.Values{"pub_id": {"7"}, "site_id": {"99"}, "site_type": {"Web"}, "_gobj": {"slot"}}
+	lists := []map[string]interface{}{slotTopicsFixture()}
+	other := map[string]interface{}{}
+	model := &Model{}
+	model.SetDefaults(req.Form, &lists, &other, map[string]interface{}{summer.DirectSSPTokenIssuerStorageKey: topicsTokenIssuer(t)})
+	model.SetDB(db)
+	filter := &Filter{}
+	filter.SetAll(genelet.Base{C: &genelet.Config{ServerURL: "https://aofei.example/"}, R: req}, "topics", "slot", &other)
+	if err := filter.After(model); err == nil {
+		t.Fatal("After error = nil, want publisher/site scope rejection")
+	}
+	if req.Form.Get("site_str") != "" || lists[0]["slot_str"] != nil {
+		t.Fatalf("unowned site generated token data: site=%q slot=%v", req.Form.Get("site_str"), lists[0]["slot_str"])
 	}
 	if err := mock.ExpectationsWereMet(); err != nil {
 		t.Fatal(err)
@@ -307,6 +350,21 @@ func slotTopicsFixture() map[string]interface{} {
 		"channel_order": "Black",
 		"active":        "Yes",
 	}
+}
+
+func topicsTokenIssuer(t *testing.T) *dsp.DirectSSPTokenIssuer {
+	t.Helper()
+	t.Setenv("P03_PZDESIGN_TOKEN_KEY", "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=")
+	config := &dsp.Config{DirectSSPTokens: dsp.DirectSSPTokenConfig{
+		Enabled: true, LegacyReadMode: "allow",
+		Current: dsp.DirectSSPTokenKeyConfig{KeyID: "primary", Epoch: 3, KeyEnv: "P03_PZDESIGN_TOKEN_KEY"},
+	}}
+	config.DirectSSPAuth.Enabled = true
+	issuer, err := dsp.NewDirectSSPTokenIssuer(config)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return issuer
 }
 
 func contains(items []string, want string) bool {
