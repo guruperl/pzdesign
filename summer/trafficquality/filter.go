@@ -195,23 +195,22 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 }
 
 func qualityActor(f *Filter) (quality.Actor, quality.Scope, error) {
-	args := f.R.Form
-	recentMFA, err := summer.VerifiedSessionState(args)
+	principal, roleConfig, err := f.AuthorizedPrincipal()
 	if err != nil {
-		return quality.Actor{}, quality.Scope{}, err
+		return quality.Actor{}, quality.Scope{}, fmt.Errorf("quality-review portal requires a verified identity: %w", err)
 	}
-	role := args.Get("_grole")
-	roleConfig, ok := f.C.Roles[role]
-	if !ok || roleConfig.Id_name == "" {
-		return quality.Actor{}, quality.Scope{}, fmt.Errorf("authenticated quality-review actor is unavailable")
-	}
-	id := args.Get(roleConfig.Id_name)
+	args := f.R.Form
+	role := principal.Role
+	id := principal.AccountID
 	if _, err := positiveUint(id, "actor id"); err != nil {
 		return quality.Actor{}, quality.Scope{}, err
 	}
 	scope, err := qualityScopeForAction(role, id, f.Action, args)
 	if err != nil {
 		return quality.Actor{}, quality.Scope{}, err
+	}
+	if !qualityPrincipalMatchesScope(principal, scope) {
+		return quality.Actor{}, quality.Scope{}, genelet.Err(403, "quality-review authorization scope does not match request")
 	}
 	permissions := make(map[string]bool)
 	for _, permission := range qualityPermissions {
@@ -228,8 +227,28 @@ func qualityActor(f *Filter) (quality.Actor, quality.Scope, error) {
 	}
 	return quality.Actor{
 		Role: role, ID: id, Scope: actorScope, Permissions: permissions,
-		RecentMFA: recentMFA,
+		RecentMFA: principal.HasRecentMFA(time.Now()),
 	}, scope, nil
+}
+
+func qualityPrincipalMatchesScope(principal genelet.VerifiedPrincipal, scope quality.Scope) bool {
+	var resourceRole string
+	switch scope.Type {
+	case quality.ScopeAdvertiser:
+		resourceRole = "adv"
+	case quality.ScopePublisher:
+		resourceRole = "pub"
+	case quality.ScopePartner:
+		resourceRole = "bidder"
+	default:
+		return true
+	}
+	if principal.ResourceRole != resourceRole {
+		// Actions without an explicit resource are authorized to the actor's
+		// own principal and rely on the service's server-derived actor scope.
+		return principal.ResourceRole == principal.Role && principal.ResourceID == principal.AccountID
+	}
+	return principal.ResourceID == strconv.FormatUint(scope.ID, 10)
 }
 
 func qualityScopeForAction(role, actorID, action string, args url.Values) (quality.Scope, error) {

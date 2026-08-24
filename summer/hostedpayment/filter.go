@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/guruperl/aofei/accounting"
 	payment "github.com/guruperl/aofei/hostedpayment"
@@ -217,17 +218,13 @@ func proposeOperation(service *payment.Service, f *Filter, actor payment.Actor) 
 }
 
 func paymentActor(f *Filter) (payment.Actor, payment.Scope, error) {
-	args := f.R.Form
-	recentMFA, err := summer.VerifiedSessionState(args)
+	principal, roleConfig, err := f.AuthorizedPrincipal()
 	if err != nil {
-		return payment.Actor{}, payment.Scope{}, err
+		return payment.Actor{}, payment.Scope{}, fmt.Errorf("payment portal requires a verified identity: %w", err)
 	}
-	role := args.Get("_grole")
-	roleConfig, ok := f.C.Roles[role]
-	if !ok || roleConfig.Id_name == "" {
-		return payment.Actor{}, payment.Scope{}, fmt.Errorf("authenticated payment actor is unavailable")
-	}
-	id := args.Get(roleConfig.Id_name)
+	args := f.R.Form
+	role := principal.Role
+	id := principal.AccountID
 	if _, err := requiredUint(id, "actor id"); err != nil {
 		return payment.Actor{}, payment.Scope{}, err
 	}
@@ -265,7 +262,7 @@ func paymentActor(f *Filter) (payment.Actor, payment.Scope, error) {
 			scope = payment.Scope{PartyType: party, PartyID: partyID}
 		}
 	}
-	return payment.Actor{Role: role, ID: id, Scope: actorScope, Permissions: permissions, RecentMFA: recentMFA}, scope, nil
+	return payment.Actor{Role: role, ID: id, Scope: actorScope, Permissions: permissions, RecentMFA: principal.HasRecentMFA(time.Now())}, scope, nil
 }
 
 func paymentActionRequiresMFA(action string) bool {

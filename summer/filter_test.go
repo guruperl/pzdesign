@@ -33,21 +33,23 @@ func TestFilter(t *testing.T) {
 	}
 }
 
-func TestVerifiedSessionStateFailsClosedAndUsesOnlyGeneletMarker(t *testing.T) {
-	if _, err := VerifiedSessionState(url.Values{genelet.RecentMFAField: {"1"}}); err == nil {
-		t.Fatal("recent-MFA marker without verified session source accepted")
+func TestAuthorizedPrincipalRejectsCallerControlledIdentityStrings(t *testing.T) {
+	filter := &Filter{}
+	filter.C = &genelet.Config{Roles: map[string]genelet.Role{
+		"admin": {Id_name: "admin_id", Permissions: []string{"*"}},
+	}}
+	filter.R = httptest.NewRequest("GET", "/goto/admin/g/trafficquality?action=dashboard", nil)
+	filter.R.Form = url.Values{
+		"_grole": {"admin"}, "admin_id": {"2"}, "_gpermission": {"quality.evidence.read"},
 	}
-	args := url.Values{genelet.PrincipalSourceField: {genelet.PrincipalSession}}
-	if recent, err := VerifiedSessionState(args); err != nil || recent {
-		t.Fatalf("verified session without reauthentication recent=%t err=%v", recent, err)
-	}
-	args.Set(genelet.RecentMFAField, "1")
-	if recent, err := VerifiedSessionState(args); err != nil || !recent {
-		t.Fatalf("verified recent-MFA state recent=%t err=%v", recent, err)
-	}
-	args.Set(genelet.RecentMFAField, "true")
-	if _, err := VerifiedSessionState(args); err == nil {
-		t.Fatal("non-canonical recent-MFA marker accepted")
+	filter.Identity = &genelet.IdentityService{}
+	filter.RoleValue = "admin"
+	filter.Component = "trafficquality"
+	filter.Action = "dashboard"
+	filter.R.Header.Set("X-Forwarded-User", "2")
+	filter.R.Header.Set("X-Forwarded-MFA", "1")
+	if principal, _, err := filter.AuthorizedPrincipal(); err == nil {
+		t.Fatalf("caller strings created verified principal %#v", principal)
 	}
 }
 

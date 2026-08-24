@@ -13,20 +13,11 @@ type Filter struct {
 }
 
 func (f *Filter) account() (genelet.IdentityAccount, error) {
-	args := f.R.Form
-	if _, err := summer.VerifiedSessionState(args); err != nil {
-		return genelet.IdentityAccount{}, err
+	principal, _, err := f.AuthorizedPrincipal()
+	if err != nil {
+		return genelet.IdentityAccount{}, fmt.Errorf("account security portal requires a verified identity: %w", err)
 	}
-	role := args.Get("_grole")
-	configRole, ok := f.C.Roles[role]
-	if !ok || configRole.Id_name == "" {
-		return genelet.IdentityAccount{}, fmt.Errorf("identity role is unavailable")
-	}
-	account := genelet.IdentityAccount{Role: role, ID: args.Get(configRole.Id_name)}
-	if account.ID == "" {
-		return genelet.IdentityAccount{}, fmt.Errorf("authenticated identity is unavailable")
-	}
-	return account, nil
+	return genelet.IdentityAccount{Role: principal.Role, ID: principal.AccountID}, nil
 }
 
 func (f *Filter) Before(_ *Model, _, _ url.Values) error {

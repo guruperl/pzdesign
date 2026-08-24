@@ -37,24 +37,6 @@ func MarketplaceReportingEnabled(storage map[string]interface{}) bool {
 	return enabled
 }
 
-// VerifiedSessionState returns the recent-MFA state that Genelet derived from
-// an authorized database session. Reserved form fields are scrubbed before
-// Genelet repopulates them, so application filters must not infer this state
-// from action names or ordinary request values.
-func VerifiedSessionState(args url.Values) (bool, error) {
-	if args.Get(genelet.PrincipalSourceField) != genelet.PrincipalSession {
-		return false, fmt.Errorf("verified Genelet session is unavailable")
-	}
-	switch args.Get(genelet.RecentMFAField) {
-	case "":
-		return false, nil
-	case "1":
-		return true, nil
-	default:
-		return false, fmt.Errorf("verified Genelet recent-MFA state is invalid")
-	}
-}
-
 func CleanUploadName(file string) (string, error) {
 	name := filepath.Base(file)
 	if name != file || name == "." || name == string(filepath.Separator) {

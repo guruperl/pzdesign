@@ -26,17 +26,13 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	if service == nil {
 		return genelet.Err(503, "发布商请求认证尚未启用")
 	}
-	args := f.R.Form
-	recentMFA, err := summer.VerifiedSessionState(args)
+	principal, roleConfig, err := f.AuthorizedPrincipal()
 	if err != nil {
-		return err
+		return fmt.Errorf("publisher credential portal requires a verified identity: %w", err)
 	}
-	role := args.Get("_grole")
-	roleConfig, ok := f.C.Roles[role]
-	if !ok || roleConfig.Id_name == "" {
-		return fmt.Errorf("authenticated publisher credential actor is unavailable")
-	}
-	actorID, err := strconv.ParseUint(args.Get(roleConfig.Id_name), 10, 64)
+	args := f.R.Form
+	role := principal.Role
+	actorID, err := strconv.ParseUint(principal.AccountID, 10, 64)
 	if err != nil || actorID == 0 {
 		return fmt.Errorf("authenticated publisher credential actor is invalid")
 	}
@@ -55,7 +51,10 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	if pubErr != nil || pubID == 0 {
 		return fmt.Errorf("publisher id is required")
 	}
-	actor := publisherCredentialActor(role, actorID, roleConfig.Permissions, recentMFA)
+	if principal.ResourceRole != "pub" || principal.ResourceID != strconv.FormatUint(pubID, 10) {
+		return genelet.Err(403, "publisher credential authorization scope does not match publisher")
+	}
+	actor := publisherCredentialActor(role, actorID, roleConfig.Permissions, principal.HasRecentMFA(time.Now()))
 	other["PublisherCredentialPubID"] = pubID
 	privateValueIssued := false
 	switch f.Action {

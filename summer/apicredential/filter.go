@@ -20,16 +20,13 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	if service == nil {
 		return genelet.Err(503, "管理 API 尚未启用")
 	}
+	principal, _, err := f.AuthorizedPrincipal()
+	if err != nil {
+		return fmt.Errorf("API credential portal requires a verified identity: %w", err)
+	}
 	args := f.R.Form
-	if _, err := summer.VerifiedSessionState(args); err != nil {
-		return err
-	}
-	role := args.Get("_grole")
-	roleConfig, ok := f.C.Roles[role]
-	if !ok || roleConfig.Id_name == "" {
-		return fmt.Errorf("authenticated API credential actor is unavailable")
-	}
-	actorID, err := strconv.ParseUint(args.Get(roleConfig.Id_name), 10, 64)
+	role := principal.Role
+	actorID, err := strconv.ParseUint(principal.AccountID, 10, 64)
 	if err != nil || actorID == 0 {
 		return fmt.Errorf("authenticated API credential actor is invalid")
 	}
@@ -55,6 +52,9 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	}
 	if advErr != nil || advID == 0 {
 		return fmt.Errorf("advertiser id is required")
+	}
+	if principal.ResourceRole != "adv" || principal.ResourceID != strconv.FormatUint(advID, 10) {
+		return genelet.Err(403, "API credential authorization scope does not match advertiser")
 	}
 	actor := managementapi.Actor{Role: role, ID: actorID}
 	other["APIAdvID"] = advID
