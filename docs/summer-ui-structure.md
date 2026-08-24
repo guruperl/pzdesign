@@ -152,9 +152,9 @@ current/partial/unavailable freshness. Action facts are queried separately so
 geo/device grouping cannot multiply conversions. The experiment page is
 read-only and aggregates per-variant exposure and declared primary/guardrail
 outcomes plus bounded retention; it never renders assignment salts, subject
-hashes, idempotency keys, or audit reasons and has no bid/budget mutation
-action. Expired/exact-subject deletion remains command-only. The source, metric,
-retention, benchmark, and rollout contract is the sibling Aofei document
+hashes, idempotency keys, stop/audit reasons, or per-subject rows and has no
+bid/budget mutation action. Expired/exact-subject deletion remains command-only.
+The source, metric, retention, benchmark, and rollout contract is the sibling Aofei document
 `docs/marketplace-analytics-experiments.md`.
 
 Admins review bidders through

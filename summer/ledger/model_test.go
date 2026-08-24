@@ -91,6 +91,23 @@ func TestMarketplaceSummarySQLPreservesAccountScopeAndRatios(t *testing.T) {
 	}
 }
 
+func TestMarketplaceExperimentExportIsAggregateAndPrivacySafe(t *testing.T) {
+	for _, forbidden := range []string{"assignment_salt", "subject_hash", "idempotency_key", "stop_reason", "audit.reason"} {
+		if strings.Contains(marketplaceExperimentsSQL, forbidden) {
+			t.Errorf("experiment export selects sensitive field %q", forbidden)
+		}
+	}
+	for _, required := range []string{
+		"COUNT(DISTINCT x.exposure_id)",
+		"COUNT(DISTINCT CASE WHEN o.metric_name=e2.primary_metric THEN o.outcome_id END)",
+		"COUNT(DISTINCT CASE WHEN o.metric_name=e2.guardrail_metric THEN o.outcome_id END)",
+	} {
+		if !strings.Contains(marketplaceExperimentsSQL, required) {
+			t.Errorf("experiment export is missing aggregate %q", required)
+		}
+	}
+}
+
 func TestMarketplaceFreshnessQueryScopesEveryAccountSubquery(t *testing.T) {
 	for name, test := range map[string]struct {
 		args       url.Values

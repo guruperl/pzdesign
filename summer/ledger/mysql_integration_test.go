@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"strings"
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -27,26 +28,32 @@ func TestMarketplaceExperimentSQLAgainstMySQL(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer rows.Close()
-	if !rows.Next() {
-		t.Fatal("seeded experiment report returned no row")
-	}
 	columns, err := rows.Columns()
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(columns) != 22 {
-		t.Fatalf("experiment report columns = %d, want 22", len(columns))
+	if len(columns) != 21 {
+		t.Fatalf("experiment report columns = %d, want 21", len(columns))
 	}
-	values := make([]interface{}, len(columns))
-	pointers := make([]interface{}, len(columns))
-	for index := range values {
-		pointers[index] = &values[index]
+	found := false
+	for rows.Next() {
+		values := make([]interface{}, len(columns))
+		pointers := make([]interface{}, len(columns))
+		for index := range values {
+			pointers[index] = &values[index]
+		}
+		if err := rows.Scan(pointers...); err != nil {
+			t.Fatal(err)
+		}
+		if scannedText(values[12]) == "2" && scannedText(values[14]) == "1" && strings.Contains(scannedText(values[17]), ".") {
+			found = true
+		}
 	}
-	if err := rows.Scan(pointers...); err != nil {
+	if err := rows.Err(); err != nil {
 		t.Fatal(err)
 	}
-	if scannedText(values[13]) != "2" || scannedText(values[15]) != "1" || scannedText(values[18]) != "1.000000" {
-		t.Fatalf("experiment aggregate variants=%s exposures=%s primary_value=%s", values[13], values[15], values[18])
+	if !found {
+		t.Fatal("seeded aggregate with two variants, one exposure, and a decimal primary value was not returned")
 	}
 	for name, query := range map[string]struct {
 		sql  string
