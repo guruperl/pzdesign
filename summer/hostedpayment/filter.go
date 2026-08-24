@@ -174,7 +174,7 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	}
 	var statements []accounting.Statement
 	if scope.PartyType != "" {
-		statements, err = (accounting.Service{DB: service.DB}).ListStatements(f.R.Context(), scope.PartyType, scope.PartyID)
+		statements, err = (accounting.Service{DB: service.DB}).ListStatements(f.R.Context(), accounting.PartyStatementScope(scope.PartyType, scope.PartyID))
 		if err != nil {
 			return err
 		}
