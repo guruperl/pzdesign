@@ -162,8 +162,9 @@ func (self *Model) TopicsMarketplace(extra ...url.Values) error {
 	}
 	decorateMarketplaceRows(*self.LISTS)
 	(*self.OTHER)["marketplace_contract"] = map[string]interface{}{
-		"currency": "USD", "timezone": "UTC", "accounting_version": "usd-cpm-impression-v3",
-		"from": args.Get("day"), "lookback_days": args.Get("idays"),
+		"currency": "USD", "timezone": "UTC", "accounting_version": "per-row",
+		"active_accounting_version": "usd-cpm-impression-v3",
+		"from":                      args.Get("day"), "lookback_days": args.Get("idays"),
 	}
 	if err := self.CallOnce(map[string]interface{}{"model": "ledger", "action": "topicsMarketplaceFreshness"}, make(url.Values)); err != nil {
 		return err
@@ -197,7 +198,7 @@ func (self *Model) TopicsMarketplaceSummary(extra ...url.Values) error {
 }
 
 const marketplaceSummarySelect = `
-SELECT d.impressions, d.clicks,
+SELECT d.accounting_versions, d.impressions, d.clicks,
        COALESCE(d.clicks/NULLIF(d.impressions,0),0) AS ctr,
        a.actions,
        COALESCE(a.actions/NULLIF(d.clicks,0),0) AS cvr,
@@ -207,7 +208,8 @@ SELECT d.impressions, d.clicks,
 FROM (`
 
 const marketplaceAdvertiserSummarySQL = marketplaceSummarySelect + `
-  SELECT COALESCE(SUM(imps),0) AS impressions,
+  SELECT COALESCE(GROUP_CONCAT(DISTINCT accounting_version ORDER BY accounting_version),'') AS accounting_versions,
+         COALESCE(SUM(imps),0) AS impressions,
          COALESCE(SUM(clis),0) AS clicks,
          CAST(COALESCE(SUM(spend_usd),0) AS DECIMAL(20,6)) AS spend_usd
   FROM report_delivery
@@ -220,7 +222,8 @@ const marketplaceAdvertiserSummarySQL = marketplaceSummarySelect + `
 ) a`
 
 const marketplaceOperatorSummarySQL = marketplaceSummarySelect + `
-  SELECT COALESCE(SUM(imps),0) AS impressions,
+  SELECT COALESCE(GROUP_CONCAT(DISTINCT accounting_version ORDER BY accounting_version),'') AS accounting_versions,
+         COALESCE(SUM(imps),0) AS impressions,
          COALESCE(SUM(clis),0) AS clicks,
          CAST(COALESCE(SUM(spend_usd),0) AS DECIMAL(20,6)) AS spend_usd
   FROM report_delivery
@@ -233,7 +236,7 @@ const marketplaceOperatorSummarySQL = marketplaceSummarySelect + `
 ) a`
 
 const marketplaceAdvertiserSQL = `
-SELECT r.demand_source, r.campaign_id, c.campaign_name, r.item_id, i.item_name,
+SELECT r.accounting_version, r.demand_source, r.campaign_id, c.campaign_name, r.item_id, i.item_name,
        r.creative_id, v.creative_name, r.pub_id, r.site_id, r.slot_id,
        COALESCE(s.slot_name,'') AS slot_name,
        r.country_id, COALESCE(dc.country_name,'') AS country_name,
@@ -254,7 +257,7 @@ LEFT JOIN pub_slot s USING (slot_id)
 LEFT JOIN def_country dc USING (country_id)
 LEFT JOIN def_state ds USING (state_id)
 WHERE r.adv_id=? AND r.timely>=DATE_SUB(?, INTERVAL ? DAY) AND r.timely<DATE_ADD(?, INTERVAL 1 DAY)
-GROUP BY r.demand_source, r.campaign_id, c.campaign_name, r.item_id, i.item_name,
+GROUP BY r.accounting_version, r.demand_source, r.campaign_id, c.campaign_name, r.item_id, i.item_name,
          r.creative_id, v.creative_name, r.pub_id, r.site_id, r.slot_id, s.slot_name,
          r.country_id, dc.country_name, r.state_id, ds.state_name, r.device_os, r.device_type,
          r.inventory_environment, r.integration_mode, r.media_intent, r.placement,
@@ -263,7 +266,7 @@ GROUP BY r.demand_source, r.campaign_id, c.campaign_name, r.item_id, i.item_name
 ORDER BY spend_usd DESC, r.campaign_id, r.item_id, r.creative_id LIMIT ?`
 
 const marketplacePublisherSQL = `
-SELECT r.demand_source, r.pub_id, r.site_id, ps.site_name, r.slot_id,
+SELECT r.accounting_version, r.demand_source, r.pub_id, r.site_id, ps.site_name, r.slot_id,
        sl.slot_name, r.country_id, COALESCE(dc.country_name,'') AS country_name,
        r.state_id, COALESCE(ds.state_name,'') AS state_name,
        r.device_os, r.device_type,
@@ -280,7 +283,7 @@ LEFT JOIN pub_slot sl USING (slot_id)
 LEFT JOIN def_country dc USING (country_id)
 LEFT JOIN def_state ds USING (state_id)
 WHERE r.pub_id=? AND r.timely>=DATE_SUB(?, INTERVAL ? DAY) AND r.timely<DATE_ADD(?, INTERVAL 1 DAY)
-GROUP BY r.demand_source, r.pub_id, r.site_id, ps.site_name, r.slot_id, sl.slot_name,
+GROUP BY r.accounting_version, r.demand_source, r.pub_id, r.site_id, ps.site_name, r.slot_id, sl.slot_name,
          r.country_id, dc.country_name, r.state_id, ds.state_name, r.device_os, r.device_type,
          r.inventory_environment, r.integration_mode, r.media_intent, r.placement,
          r.render_context, r.refresh_mode, r.refresh_seconds, r.ad_density, r.traffic_quality,
@@ -288,7 +291,7 @@ GROUP BY r.demand_source, r.pub_id, r.site_id, ps.site_name, r.slot_id, sl.slot_
 ORDER BY revenue_usd DESC, r.site_id, r.slot_id LIMIT ?`
 
 const marketplaceOperatorSQL = `
-SELECT r.demand_source, r.adv_id, r.campaign_id, r.item_id, r.creative_id,
+SELECT r.accounting_version, r.demand_source, r.adv_id, r.campaign_id, r.item_id, r.creative_id,
        r.bidder_id, COALESCE(b.bidder_name,'') AS bidder_name,
        r.group_id, COALESCE(g.group_name,'') AS group_name,
        r.route_bidder_id, r.target_id, r.pub_id, r.site_id, r.slot_id,
@@ -314,7 +317,7 @@ LEFT JOIN mid_route_group g USING (group_id)
 LEFT JOIN def_country dc USING (country_id)
 LEFT JOIN def_state ds USING (state_id)
 WHERE r.timely>=DATE_SUB(?, INTERVAL ? DAY) AND r.timely<DATE_ADD(?, INTERVAL 1 DAY)
-GROUP BY r.demand_source, r.adv_id, r.campaign_id, r.item_id, r.creative_id,
+GROUP BY r.accounting_version, r.demand_source, r.adv_id, r.campaign_id, r.item_id, r.creative_id,
          r.bidder_id, b.bidder_name, r.group_id, g.group_name,
          r.route_bidder_id, r.target_id, r.pub_id, r.site_id, r.slot_id,
          r.country_id, dc.country_name, r.state_id, ds.state_name, r.device_os, r.device_type,

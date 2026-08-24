@@ -81,6 +81,7 @@ func TestMarketplaceSummarySQLPreservesAccountScopeAndRatios(t *testing.T) {
 		"WHERE adv_id=?", "actions/NULLIF(d.clicks,0)",
 		"(a.purchase_value_usd-d.spend_usd)/NULLIF(d.spend_usd,0)",
 		"a.purchase_value_usd/NULLIF(d.spend_usd,0)",
+		"GROUP_CONCAT(DISTINCT accounting_version",
 	} {
 		if !strings.Contains(marketplaceAdvertiserSummarySQL, required) {
 			t.Errorf("advertiser summary is missing %q", required)
@@ -88,6 +89,18 @@ func TestMarketplaceSummarySQLPreservesAccountScopeAndRatios(t *testing.T) {
 	}
 	if strings.Contains(marketplaceAdvertiserSummarySQL, "DATE(timely)") {
 		t.Fatal("advertiser summary disables the scoped timely index")
+	}
+}
+
+func TestMarketplaceDetailsKeepAccountingVersionsSeparate(t *testing.T) {
+	for name, query := range map[string]string{
+		"advertiser": marketplaceAdvertiserSQL,
+		"publisher":  marketplacePublisherSQL,
+		"operator":   marketplaceOperatorSQL,
+	} {
+		if !strings.Contains(query, "SELECT r.accounting_version") || !strings.Contains(query, "GROUP BY r.accounting_version") {
+			t.Errorf("%s detail can merge or omit accounting versions", name)
+		}
 	}
 }
 

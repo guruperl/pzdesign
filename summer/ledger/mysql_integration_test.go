@@ -66,9 +66,12 @@ func TestMarketplaceExperimentSQLAgainstMySQL(t *testing.T) {
 			row := db.QueryRow(query.sql, query.args...)
 			var impressions, clicks, actions uint64
 			var ctr, cvr, roi, roas float64
-			var spend, purchase string
-			if err := row.Scan(&impressions, &clicks, &ctr, &actions, &cvr, &spend, &purchase, &roi, &roas); err != nil {
+			var versions, spend, purchase string
+			if err := row.Scan(&versions, &impressions, &clicks, &ctr, &actions, &cvr, &spend, &purchase, &roi, &roas); err != nil {
 				t.Fatal(err)
+			}
+			if versions == "" {
+				t.Fatal("summary omitted accounting versions")
 			}
 		})
 	}
@@ -90,7 +93,7 @@ func TestMarketplaceExperimentSQLAgainstMySQL(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			for _, required := range []string{"inventory_environment", "integration_mode", "refresh_seconds", "seller_type", "seller_id"} {
+			for _, required := range []string{"accounting_version", "inventory_environment", "integration_mode", "refresh_seconds", "seller_type", "seller_id"} {
 				if !containsColumn(columns, required) {
 					t.Fatalf("columns do not include %s: %v", required, columns)
 				}
