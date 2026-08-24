@@ -222,7 +222,9 @@ Summer filter `After` methods publish cache updates for selected admin actions:
 - targetname insert and admin item update can refresh audience or advertiser
   cache entries.
 - publisher take-down updates publisher cache entries.
-- advertiser attrname upload can feed uploaded audience values into Redis.
+- advertiser attrname upload can feed uploaded audience values into Redis. The
+  form emits canonical `buyeruid`, `userid`, `ip`, `did`, `dpid`, or `mac`
+  markers; Aofei validates and normalizes the bounded marker set before writes.
 
 Storage adapters are supplied by `cmd/unify` through `model.Storage`:
 
