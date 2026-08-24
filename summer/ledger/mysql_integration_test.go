@@ -34,8 +34,8 @@ func TestMarketplaceExperimentSQLAgainstMySQL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(columns) != 21 {
-		t.Fatalf("experiment report columns = %d, want 21", len(columns))
+	if len(columns) != 22 {
+		t.Fatalf("experiment report columns = %d, want 22", len(columns))
 	}
 	values := make([]interface{}, len(columns))
 	pointers := make([]interface{}, len(columns))
@@ -45,8 +45,8 @@ func TestMarketplaceExperimentSQLAgainstMySQL(t *testing.T) {
 	if err := rows.Scan(pointers...); err != nil {
 		t.Fatal(err)
 	}
-	if scannedText(values[12]) != "2" || scannedText(values[14]) != "1" || scannedText(values[17]) != "1.000000" {
-		t.Fatalf("experiment aggregate variants=%s exposures=%s primary_value=%s", values[12], values[14], values[17])
+	if scannedText(values[13]) != "2" || scannedText(values[15]) != "1" || scannedText(values[18]) != "1.000000" {
+		t.Fatalf("experiment aggregate variants=%s exposures=%s primary_value=%s", values[13], values[15], values[18])
 	}
 	for name, query := range map[string]struct {
 		sql  string

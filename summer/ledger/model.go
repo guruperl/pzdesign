@@ -440,7 +440,7 @@ func (self *Model) TopicsExperiments(extra ...url.Values) error {
 
 const marketplaceExperimentsSQL = `
 SELECT e.experiment_id, e.owner_type, e.adv_id, e.experiment_name,
-       e.experiment_version, e.status, e.primary_metric, e.guardrail_metric,
+       e.experiment_version, e.assignment_algorithm_version, e.status, e.primary_metric, e.guardrail_metric,
        e.retention_hours, e.starts_at, e.ends_at, e.stop_reason,
        COALESCE(s.variants,0) AS variants,
        COALESCE(s.allocation_basis_points,0) AS allocation_basis_points,
