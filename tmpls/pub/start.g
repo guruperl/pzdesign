@@ -69,6 +69,9 @@
           <li class="nav-item">
             <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> 网站与 App</a>
           </li>
+          {{if .Other.PublisherAuthEnabled}}<li class="nav-item">
+            <a href="publishercredential?action=topics" class="nav-link {{if eq $c `publishercredential`}}active{{end}}"><i class="icon-key"></i> 请求凭证</a>
+          </li>{{end}}
           <li class="nav-item">
             <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> 广告审核</a>
           </li>

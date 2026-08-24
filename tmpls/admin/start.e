@@ -59,6 +59,11 @@ Welcome&nbsp; <em>{{index .ARGS.admin_login 0}}</em> ! Your ID&nbsp; <em>{{index
                   Management API credentials
                 </a>
               </li>
+              {{if .Other.PublisherAuthEnabled}}<li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `publishercredential` }} active{{end}}" href="publishercredential?action=topics">
+                  Publisher request credentials
+                </a>
+              </li>{{end}}
               {{if .Other.HostedPaymentEnabled}}<li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `hostedpayment` }} active{{end}}" href="hostedpayment?action=topics">
                   Hosted funding and payouts

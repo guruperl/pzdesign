@@ -396,6 +396,7 @@ func (self *Filter) After(model *Model) error {
 	other["ActionReportingEnabled"] = ActionReportingEnabled(model.Storage)
 	other["HostedPaymentEnabled"] = model.Storage["HostedPayment"] != nil
 	other["MarketplaceReportingEnabled"] = MarketplaceReportingEnabled(model.Storage)
+	other["PublisherAuthEnabled"] = model.Storage["PublisherAuth"] != nil
 
 	who := self.RoleValue
 	action := self.Action

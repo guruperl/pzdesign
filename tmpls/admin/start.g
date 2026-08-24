@@ -70,6 +70,11 @@ h1, h2, h3, h4, h5, h6, button {
                   管理 API 凭证
                 </a>
               </li>
+              {{if .Other.PublisherAuthEnabled}}<li class="nav-item">
+                <a class="nav-link{{ if eq .Other.Component `publishercredential` }} active{{end}}" href="publishercredential?action=topics">
+                  流量方请求凭证
+                </a>
+              </li>{{end}}
               {{if .Other.HostedPaymentEnabled}}<li class="nav-item">
                 <a class="nav-link{{ if eq .Other.Component `hostedpayment` }} active{{end}}" href="hostedpayment?action=topics">
                   托管资金与结算

@@ -20,6 +20,7 @@ import (
 	"github.com/guruperl/pzdesign/summer/manage"
 	"github.com/guruperl/pzdesign/summer/midroute"
 	"github.com/guruperl/pzdesign/summer/pub"
+	"github.com/guruperl/pzdesign/summer/publishercredential"
 	"github.com/guruperl/pzdesign/summer/security"
 	"github.com/guruperl/pzdesign/summer/site"
 	"github.com/guruperl/pzdesign/summer/slot"
@@ -55,6 +56,7 @@ var Entries = []Entry{
 	{"manage", func() interface{} { return new(manage.Model) }, func() interface{} { return new(manage.Model) }, func() interface{} { return new(manage.Filter) }},
 	{"midroute", func() interface{} { return new(midroute.Model) }, func() interface{} { return new(midroute.Model) }, func() interface{} { return new(midroute.Filter) }},
 	{"pub", func() interface{} { return new(pub.Model) }, func() interface{} { return new(pub.Model) }, func() interface{} { return new(pub.Filter) }},
+	{"publishercredential", func() interface{} { return new(publishercredential.Model) }, func() interface{} { return new(publishercredential.Model) }, func() interface{} { return new(publishercredential.Filter) }},
 	{"security", func() interface{} { return new(security.Model) }, func() interface{} { return new(security.Model) }, func() interface{} { return new(security.Filter) }},
 	{"site", func() interface{} { return new(site.Model) }, func() interface{} { return new(site.Model) }, func() interface{} { return new(site.Filter) }},
 	{"slot", func() interface{} { return new(slot.Model) }, func() interface{} { return new(slot.Model) }, func() interface{} { return new(slot.Filter) }},

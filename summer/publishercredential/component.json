@@ -1,0 +1,8 @@
+{
+  "actions": {
+    "topics": {"groups":["admin","pub"], "permission":["publisher.credential.read"], "resource":["pub","$f:pub_id"], "options":["no_db","no_method"], "template":["page"]},
+    "issue": {"groups":["admin","pub"], "permission":["publisher.credential.issue"], "resource":["pub","$f:pub_id"], "reauth":["mfa"], "validate":["pub_id","site_id","credential_name","expires_days","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "rotate": {"groups":["admin","pub"], "permission":["publisher.credential.rotate"], "resource":["pub","$f:pub_id"], "reauth":["mfa"], "validate":["pub_id","credential_id","overlap_minutes","reason"], "options":["no_db","no_method"], "template":["page"]},
+    "revoke": {"groups":["admin","pub"], "permission":["publisher.credential.revoke"], "resource":["pub","$f:pub_id"], "reauth":["mfa"], "validate":["pub_id","credential_id","reason"], "options":["no_db","no_method"], "template":["page"]}
+  }
+}

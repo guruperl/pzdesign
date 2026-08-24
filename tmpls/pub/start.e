@@ -75,6 +75,9 @@
           <li class="nav-item">
             <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> Create App or Site</a>
           </li>
+          {{if .Other.PublisherAuthEnabled}}<li class="nav-item">
+            <a href="publishercredential?action=topics" class="nav-link {{if eq $c `publishercredential`}}active{{end}}"><i class="icon-key"></i> Request credentials</a>
+          </li>{{end}}
           <li class="nav-item">
             <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> Access Control</a>
           </li>
