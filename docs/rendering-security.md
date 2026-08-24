@@ -67,11 +67,18 @@ direct-SSP creative materialization belongs to Aofei's delivery contract and
 the D02 creative-validation milestone; it is not a template preview exception.
 
 `www/js/ads.js` is the one named browser-side delivery sink: after a successful
-`/pz` response it assigns the ordered HTML result to the publisher-selected ad
-container. It is not used by a W8M control-plane page. A focused source test
-keeps this as one explicit `innerHTML` assignment and rejects additional raw
-DOM sinks; P01 owns publisher integration isolation and D02 owns the safety and
-validity of the creative payload itself.
+`/pz` response it places the ordered HTML result in exactly one `srcdoc` iframe
+inside the publisher-selected ad container. It never assigns the result to the
+host page's `innerHTML`. The iframe has an opaque origin because its sandbox
+omits `allow-same-origin`; it also removes the referrer and denies camera,
+microphone, geolocation, payment, USB, serial, Bluetooth, and clipboard
+permissions. Scripts, forms, and popup landing behavior remain explicitly
+allowed for the reviewed advertising contract, but top/parent navigation is
+not. This sink is not used by a W8M control-plane page. Focused source and Node
+fixtures lock down the single sink, exact sandbox/permissions attributes,
+hostile markup containment, and deterministic fill states. P01 owns publisher
+integration isolation and D02/S05 own the creative acceptance and consumer
+boundaries.
 
 ## URL, Attribute, And Asset Policy
 
@@ -104,7 +111,11 @@ validity of the creative payload itself.
 
 A site-wide Content Security Policy is not part of this audit because current
 templates and supported ad delivery still contain compatibility-sensitive
-inline behavior. Introduce CSP only through a separate compatibility milestone.
+inline behavior. A publisher CSP is also inherited by `srcdoc` and can disable
+approved creative scripts. S05 therefore adds the compatible narrow iframe
+permissions policy while retaining the opaque-origin sandbox. Introduce a
+stricter script/style/network CSP only with measured creative compatibility,
+an explicit migration, and rollback evidence.
 
 ## Required Checks
 

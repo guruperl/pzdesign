@@ -157,6 +157,7 @@ func TestDirectSSPBrowserRendererUsesAnIsolatedDeliveryHTMLSink(t *testing.T) {
 	for _, required := range []string{
 		`frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox");`,
 		`frame.setAttribute("referrerpolicy", "no-referrer");`,
+		`frame.setAttribute("allow", "camera 'none'; microphone 'none'; geolocation 'none'; payment 'none'; usb 'none'; serial 'none'; bluetooth 'none'; clipboard-read 'none'; clipboard-write 'none'");`,
 		`target.setAttribute("data-pz-state", "filled");`,
 		`target.setAttribute("data-pz-state", emptyState || "no-fill");`,
 	} {
@@ -198,7 +199,12 @@ if (target.children.length !== 1 || target.children[0].tagName !== "iframe") thr
 const frame = target.children[0];
 if (frame.srcdoc !== "<img src='/imp'>" || frame.width !== "300" || frame.height !== "250") throw new Error("filled markup or dimensions changed");
 if (!frame.attributes.sandbox || frame.attributes.sandbox.includes("allow-same-origin") || frame.attributes.referrerpolicy !== "no-referrer") throw new Error("iframe isolation changed");
+if (!frame.attributes.allow || !frame.attributes.allow.includes("camera 'none'") || !frame.attributes.allow.includes("clipboard-write 'none'")) throw new Error("iframe permissions policy changed");
 if (target.attributes["data-pz-state"] !== "filled") throw new Error("filled state missing");
+const hostile = '</iframe><img src=x onerror=alert(1)><script>window.parent.document.body.textContent="owned"</script>';
+pzRenderAd(target, hostile, {mediaTypes:{banner:{size:[300,250]}}}, "no-fill");
+if (target.children.length !== 1 || target.children[0].tagName !== "iframe" || target.children[0].srcdoc !== hostile) throw new Error("hostile markup escaped the single srcdoc boundary");
+if (target.attributes["data-pz-state"] !== "filled") throw new Error("hostile fixture changed deterministic state");
 pzRenderAd(target, "", {mediaTypes:{banner:{size:[300,250]}}}, "no-fill");
 if (target.children.length !== 0 || target.attributes["data-pz-state"] !== "no-fill") throw new Error("no-fill behavior changed");
 pzRenderAd(target, {unexpected:true}, {}, "error");

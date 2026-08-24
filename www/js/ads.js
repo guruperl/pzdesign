@@ -74,6 +74,7 @@ function pzRenderAd(target, markup, adunit, emptyState) {
 	frame.setAttribute("title", "Advertisement");
 	frame.setAttribute("sandbox", "allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox");
 	frame.setAttribute("referrerpolicy", "no-referrer");
+	frame.setAttribute("allow", "camera 'none'; microphone 'none'; geolocation 'none'; payment 'none'; usb 'none'; serial 'none'; bluetooth 'none'; clipboard-read 'none'; clipboard-write 'none'");
 	frame.setAttribute("scrolling", "no");
 	frame.setAttribute("frameborder", "0");
 	frame.style.border = "0";
