@@ -153,8 +153,10 @@ remote-resource source rule.
 scans every first-party JavaScript file for raw DOM insertion APIs after
 removing the one exact reviewed `ads.js` assignment, and scans the command,
 Summer, template, and JavaScript trees for Android/iOS WebView renderer APIs.
-A new sink or native renderer therefore fails the ordinary `go test ./...`
-gate until its boundary and tests are reviewed.
+It separately scans the entire repository for those APIs in Java, Kotlin,
+Swift, Objective-C/C++, C#, Dart, TypeScript/JSX, and XML source while ignoring
+dependency/build directories. A new sink or native renderer therefore fails
+the ordinary `go test ./...` gate until its boundary and tests are reviewed.
 Genelet separately tests the fixed CSRF helper and the uniqueness of its raw
 HTML boundary.
 

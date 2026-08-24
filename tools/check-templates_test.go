@@ -217,10 +217,18 @@ func TestCreativeDeliveryConsumerInventory(t *testing.T) {
 
 	nativeRendererMarkers := []string{
 		"android.webkit.WebView",
+		"Android.Webkit.WebView",
 		"WKWebView",
+		"UIWebView",
+		"<WebView",
+		"react-native-webview",
+		"WebViewController(",
+		"WebViewWidget(",
 		"loadDataWithBaseURL(",
 		"loadHTMLString(",
 		"addJavascriptInterface(",
+		"evaluateJavascript(",
+		"evaluateJavaScript(",
 	}
 	for _, root := range []string{"cmd", "summer", "tmpls", filepath.Join("www", "js")} {
 		err := filepath.Walk(filepath.Join("..", root), func(path string, info os.FileInfo, walkErr error) error {
@@ -249,6 +257,41 @@ func TestCreativeDeliveryConsumerInventory(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
+	}
+
+	platformExtensions := map[string]bool{
+		".java": true, ".kt": true, ".kts": true,
+		".swift": true, ".m": true, ".mm": true, ".h": true, ".hpp": true,
+		".cs": true, ".dart": true, ".ts": true, ".tsx": true, ".jsx": true, ".xml": true,
+	}
+	err = filepath.Walk("..", func(path string, info os.FileInfo, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		if info.IsDir() {
+			switch info.Name() {
+			case ".git", ".gradle", "build", "DerivedData", "node_modules", "Pods", "vendor":
+				return filepath.SkipDir
+			default:
+				return nil
+			}
+		}
+		if !platformExtensions[strings.ToLower(filepath.Ext(path))] {
+			return nil
+		}
+		data, readErr := os.ReadFile(path)
+		if readErr != nil {
+			return readErr
+		}
+		for _, marker := range nativeRendererMarkers {
+			if strings.Contains(string(data), marker) {
+				t.Errorf("undocumented native creative renderer marker %q in %s", marker, path)
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
 }
 
