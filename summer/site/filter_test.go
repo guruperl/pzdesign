@@ -1,9 +1,11 @@
 package site
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/guruperl/genelet"
@@ -15,6 +17,29 @@ func TestComponentCarriesSupplyTaxonomy(t *testing.T) {
 		if !siteContains(component.InsertPars, field) || !siteContains(component.UpdatePars, field) || !siteContains(component.EditPars, field) {
 			t.Fatalf("site component is missing %s", field)
 		}
+	}
+}
+
+func TestPresetTreatsPrivateHostReviewURLAsUnfetchedMetadata(t *testing.T) {
+	var requests atomic.Int32
+	server := httptest.NewServer(http.HandlerFunc(func(http.ResponseWriter, *http.Request) {
+		requests.Add(1)
+	}))
+	defer server.Close()
+
+	request := httptest.NewRequest("POST", "/site", nil)
+	request.Form = url.Values{
+		"site_type": {"Web"}, "foreign_id": {"example.com"},
+		"inventory_environment": {"Web"}, "integration_mode": {"BrowserTag"},
+		"canonical_identity": {"example.com"}, "store_url": {server.URL + "/review"},
+	}
+	filter := &Filter{}
+	filter.Action, filter.Component, filter.R = "insert", "site", request
+	if err := filter.Preset(); err != nil {
+		t.Fatal(err)
+	}
+	if requests.Load() != 0 {
+		t.Fatalf("management review URL was fetched %d times", requests.Load())
 	}
 }
 

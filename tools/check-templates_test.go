@@ -1,6 +1,9 @@
 package main
 
 import (
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"html/template"
 	"net/url"
 	"os"
@@ -168,6 +171,64 @@ func TestDirectSSPBrowserRendererUsesAnIsolatedDeliveryHTMLSink(t *testing.T) {
 	for _, forbidden := range []string{"allow-same-origin", "document.write", "insertAdjacentHTML", "outerHTML", "eval("} {
 		if strings.Contains(source, forbidden) {
 			t.Fatalf("direct SSP browser delivery contains unapproved sink %q", forbidden)
+		}
+	}
+}
+
+func TestSourceOnlyManagementPackagesHaveNoOutboundHTTPPrimitive(t *testing.T) {
+	packages := []string{"campaign", "creative", "item", "site"}
+	forbiddenHTTP := map[string]bool{
+		"Client": true, "Transport": true, "DefaultClient": true, "DefaultTransport": true,
+		"Get": true, "Head": true, "Post": true, "PostForm": true,
+	}
+	for _, packageName := range packages {
+		root := filepath.Join("..", "summer", packageName)
+		err := filepath.Walk(root, func(path string, info os.FileInfo, walkErr error) error {
+			if walkErr != nil {
+				return walkErr
+			}
+			if info.IsDir() || filepath.Ext(path) != ".go" || strings.HasSuffix(path, "_test.go") {
+				return nil
+			}
+			fileSet := token.NewFileSet()
+			file, err := parser.ParseFile(fileSet, path, nil, 0)
+			if err != nil {
+				return err
+			}
+			httpAliases := map[string]bool{}
+			for _, imported := range file.Imports {
+				if imported.Path.Value == `"net"` {
+					t.Errorf("source-only management package imports raw network access in %s", path)
+					continue
+				}
+				if imported.Path.Value != `"net/http"` {
+					continue
+				}
+				alias := "http"
+				if imported.Name != nil {
+					alias = imported.Name.Name
+				}
+				if alias == "." {
+					t.Errorf("source-only management package dot-imports net/http in %s", path)
+					continue
+				}
+				httpAliases[alias] = true
+			}
+			ast.Inspect(file, func(node ast.Node) bool {
+				selector, ok := node.(*ast.SelectorExpr)
+				if !ok {
+					return true
+				}
+				identifier, qualified := selector.X.(*ast.Ident)
+				if qualified && httpAliases[identifier.Name] && forbiddenHTTP[selector.Sel.Name] {
+					t.Errorf("source-only management package contains outbound primitive %s.%s in %s", identifier.Name, selector.Sel.Name, path)
+				}
+				return true
+			})
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
 		}
 	}
 }

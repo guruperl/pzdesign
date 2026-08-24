@@ -1,9 +1,11 @@
 package creative
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/guruperl/aofei/match"
@@ -18,6 +20,31 @@ func creativeFilterForPreset(values url.Values) *Filter {
 	filter.RoleValue = "adv"
 	filter.R = req
 	return filter
+}
+
+func TestManagementCreativeURLsAreValidatedWithoutFetching(t *testing.T) {
+	var requests atomic.Int32
+	server := httptest.NewServer(http.HandlerFunc(func(http.ResponseWriter, *http.Request) {
+		requests.Add(1)
+	}))
+	defer server.Close()
+
+	filter := creativeFilterForPreset(url.Values{
+		"creative_name": {"private-host metadata"}, "media_type": {"Native"}, "weight": {"1"},
+		"w": {"300"}, "h": {"250"}, "title": {"Title"}, "description": {"Description"},
+		"cta": {"Open"}, "mainImg": {server.URL + "/main.png"},
+	})
+	if err := filter.Preset(); err != nil {
+		t.Fatal(err)
+	}
+	if err := validateCreativeSourceForm(url.Values{
+		"media_type": {"Banner"}, "content": {server.URL + "/banner.html"},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if requests.Load() != 0 {
+		t.Fatalf("management creative URL was fetched %d times", requests.Load())
+	}
 }
 
 func TestPresetPersistsStructuredNativeCreative(t *testing.T) {

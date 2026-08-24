@@ -65,6 +65,14 @@ This rule covers both markup and URL creatives: an `<iframe src>`, `<img src>`,
 review page into an execution or server-directed fetch surface. Actual bid and
 direct-SSP creative materialization belongs to Aofei's delivery contract and
 the D02 creative-validation milestone; it is not a template preview exception.
+The same source-only rule applies to publisher `store_url` review metadata.
+Private-host tripwire tests pass loopback site and creative URLs through the
+real Summer filters and require zero HTTP requests. A production-source guard
+also rejects outbound `net/http` clients, transports, or convenience fetch
+functions in the campaign, item, site, and creative management packages.
+Private-address syntax on these unfetched metadata fields is not classified as
+SSRF; adding a preview, crawler, or verifier would create a new reviewed
+outbound boundary.
 
 `www/js/ads.js` is the one named browser-side delivery sink: after a successful
 `/pz` response it places the ordered HTML result in exactly one `srcdoc` iframe
