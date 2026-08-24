@@ -149,6 +149,12 @@ JavaScript contexts, unsafe form actions, and account mail. It also renders all
 advertiser/publisher registration and recovery variants with scoped Turnstile
 metadata and proves that only the exact approved bootstrap survives the
 remote-resource source rule.
+`tools/check-templates_test.go` also closes the creative-consumer inventory: it
+scans every first-party JavaScript file for raw DOM insertion APIs after
+removing the one exact reviewed `ads.js` assignment, and scans the command,
+Summer, template, and JavaScript trees for Android/iOS WebView renderer APIs.
+A new sink or native renderer therefore fails the ordinary `go test ./...`
+gate until its boundary and tests are reviewed.
 Genelet separately tests the fixed CSRF helper and the uniqueness of its raw
 HTML boundary.
 

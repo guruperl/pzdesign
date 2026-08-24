@@ -175,6 +175,83 @@ func TestDirectSSPBrowserRendererUsesAnIsolatedDeliveryHTMLSink(t *testing.T) {
 	}
 }
 
+func TestCreativeDeliveryConsumerInventory(t *testing.T) {
+	rawDOMMarkers := []string{
+		"innerHTML",
+		"outerHTML",
+		"insertAdjacentHTML",
+		"document.write",
+		".html(",
+		"srcdoc",
+	}
+	jsRoot := filepath.Join("..", "www", "js")
+	adsPath := filepath.Clean(filepath.Join(jsRoot, "ads.js"))
+	err := filepath.Walk(jsRoot, func(path string, info os.FileInfo, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		if info.IsDir() || filepath.Ext(path) != ".js" {
+			return nil
+		}
+		data, readErr := os.ReadFile(path)
+		if readErr != nil {
+			return readErr
+		}
+		source := string(data)
+		if filepath.Clean(path) == adsPath {
+			if strings.Count(source, "frame.srcdoc = markup;") != 1 {
+				t.Errorf("%s must contain exactly one reviewed creative sink", path)
+			}
+			source = strings.Replace(source, "frame.srcdoc = markup;", "", 1)
+		}
+		for _, marker := range rawDOMMarkers {
+			if strings.Contains(source, marker) {
+				t.Errorf("unreviewed first-party DOM sink %q in %s", marker, path)
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	nativeRendererMarkers := []string{
+		"android.webkit.WebView",
+		"WKWebView",
+		"loadDataWithBaseURL(",
+		"loadHTMLString(",
+		"addJavascriptInterface(",
+	}
+	for _, root := range []string{"cmd", "summer", "tmpls", filepath.Join("www", "js")} {
+		err := filepath.Walk(filepath.Join("..", root), func(path string, info os.FileInfo, walkErr error) error {
+			if walkErr != nil {
+				return walkErr
+			}
+			if info.IsDir() {
+				return nil
+			}
+			switch filepath.Ext(path) {
+			case ".go", ".js", ".g", ".e":
+			default:
+				return nil
+			}
+			data, readErr := os.ReadFile(path)
+			if readErr != nil {
+				return readErr
+			}
+			for _, marker := range nativeRendererMarkers {
+				if strings.Contains(string(data), marker) {
+					t.Errorf("undocumented native creative renderer marker %q in %s", marker, path)
+				}
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
 func TestSourceOnlyManagementPackagesHaveNoOutboundHTTPPrimitive(t *testing.T) {
 	packages := []string{"campaign", "creative", "item", "site"}
 	forbiddenHTTP := map[string]bool{
