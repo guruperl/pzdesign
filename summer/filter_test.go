@@ -2,6 +2,7 @@ package summer
 
 import (
 	"net/http/httptest"
+	"net/url"
 	"strconv"
 	"testing"
 	"time"
@@ -29,6 +30,24 @@ func TestFilter(t *testing.T) {
 	}
 	if filter.R.Form.Get("ip") != "210.51.200.123" {
 		t.Errorf("%v\n", filter.R.Form)
+	}
+}
+
+func TestVerifiedSessionStateFailsClosedAndUsesOnlyGeneletMarker(t *testing.T) {
+	if _, err := VerifiedSessionState(url.Values{genelet.RecentMFAField: {"1"}}); err == nil {
+		t.Fatal("recent-MFA marker without verified session source accepted")
+	}
+	args := url.Values{genelet.PrincipalSourceField: {genelet.PrincipalSession}}
+	if recent, err := VerifiedSessionState(args); err != nil || recent {
+		t.Fatalf("verified session without reauthentication recent=%t err=%v", recent, err)
+	}
+	args.Set(genelet.RecentMFAField, "1")
+	if recent, err := VerifiedSessionState(args); err != nil || !recent {
+		t.Fatalf("verified recent-MFA state recent=%t err=%v", recent, err)
+	}
+	args.Set(genelet.RecentMFAField, "true")
+	if _, err := VerifiedSessionState(args); err == nil {
+		t.Fatal("non-canonical recent-MFA marker accepted")
 	}
 }
 

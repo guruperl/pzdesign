@@ -186,7 +186,10 @@ TOTP/recovery and named action/resource permissions, protects logout with
 POST+CSRF, and records immutable redacted security evidence. The same 32-byte
 environment key must be present on every HTTP node. `cmd/identity-admin` is the
 restricted non-HTTP interface for analyst creation, exact grants, TOTP reset,
-and bounded retention. Follow the sibling Aofei
+and bounded retention. It has no actor-id flag: the kernel-reported effective
+Unix UID must map to a reviewed administrator id in the restricted Summer
+`Identity.MaintenanceActors` configuration, and the launcher UID is included
+in every stored reason. Follow the sibling Aofei
 `docs/identity-access-security.md` contract before activation. The same binary
 also exposes `-action=prune-api-audit` for bounded management-API evidence
 retention when run with the separated maintenance database configuration.

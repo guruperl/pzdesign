@@ -27,6 +27,10 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 		return genelet.Err(503, "发布商请求认证尚未启用")
 	}
 	args := f.R.Form
+	recentMFA, err := summer.VerifiedSessionState(args)
+	if err != nil {
+		return err
+	}
 	role := args.Get("_grole")
 	roleConfig, ok := f.C.Roles[role]
 	if !ok || roleConfig.Id_name == "" {
@@ -51,7 +55,7 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	if pubErr != nil || pubID == 0 {
 		return fmt.Errorf("publisher id is required")
 	}
-	actor := publisherCredentialActor(role, actorID, roleConfig.Permissions, f.Action)
+	actor := publisherCredentialActor(role, actorID, roleConfig.Permissions, recentMFA)
 	other["PublisherCredentialPubID"] = pubID
 	privateValueIssued := false
 	switch f.Action {
@@ -116,7 +120,7 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 	return nil
 }
 
-func publisherCredentialActor(role string, id uint64, grants []string, action string) publisherauth.Actor {
+func publisherCredentialActor(role string, id uint64, grants []string, recentMFA bool) publisherauth.Actor {
 	permissions := make(map[string]bool)
 	for _, permission := range credentialPermissions {
 		if hasPermission(grants, permission) {
@@ -128,7 +132,7 @@ func publisherCredentialActor(role string, id uint64, grants []string, action st
 	}
 	return publisherauth.Actor{
 		Role: role, ID: id, Permissions: permissions,
-		RecentMFA: action == "issue" || action == "rotate" || action == "revoke",
+		RecentMFA: recentMFA,
 	}
 }
 

@@ -21,6 +21,9 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 		return genelet.Err(503, "管理 API 尚未启用")
 	}
 	args := f.R.Form
+	if _, err := summer.VerifiedSessionState(args); err != nil {
+		return err
+	}
 	role := args.Get("_grole")
 	roleConfig, ok := f.C.Roles[role]
 	if !ok || roleConfig.Id_name == "" {

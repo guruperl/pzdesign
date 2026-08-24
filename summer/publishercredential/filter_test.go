@@ -20,13 +20,13 @@ func TestDisabledPublisherAuthenticationProducesControlledMaintenanceError(t *te
 	}
 }
 
-func TestPublisherCredentialActorUsesOnlyRolePermissionsAndActionMFA(t *testing.T) {
-	actor := publisherCredentialActor("pub", 42, []string{"publisher.credential.*"}, "rotate")
+func TestPublisherCredentialActorUsesOnlyRolePermissionsAndVerifiedMFA(t *testing.T) {
+	actor := publisherCredentialActor("pub", 42, []string{"publisher.credential.*"}, true)
 	if actor.Role != "pub" || actor.ID != 42 || !actor.RecentMFA ||
 		!actor.Can(publisherauth.PermissionCredentialRead) || !actor.Can(publisherauth.PermissionCredentialRotate) {
 		t.Fatalf("publisher credential actor = %#v", actor)
 	}
-	read := publisherCredentialActor("pub", 42, []string{publisherauth.PermissionCredentialRead}, "topics")
+	read := publisherCredentialActor("pub", 42, []string{publisherauth.PermissionCredentialRead}, false)
 	if read.RecentMFA || !read.Can(publisherauth.PermissionCredentialRead) || read.Can(publisherauth.PermissionCredentialIssue) {
 		t.Fatalf("read actor = %#v", read)
 	}

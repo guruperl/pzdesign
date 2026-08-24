@@ -14,6 +14,9 @@ type Filter struct {
 
 func (f *Filter) account() (genelet.IdentityAccount, error) {
 	args := f.R.Form
+	if _, err := summer.VerifiedSessionState(args); err != nil {
+		return genelet.IdentityAccount{}, err
+	}
 	role := args.Get("_grole")
 	configRole, ok := f.C.Roles[role]
 	if !ok || configRole.Id_name == "" {

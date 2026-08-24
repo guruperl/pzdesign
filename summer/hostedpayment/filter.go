@@ -218,6 +218,10 @@ func proposeOperation(service *payment.Service, f *Filter, actor payment.Actor) 
 
 func paymentActor(f *Filter) (payment.Actor, payment.Scope, error) {
 	args := f.R.Form
+	recentMFA, err := summer.VerifiedSessionState(args)
+	if err != nil {
+		return payment.Actor{}, payment.Scope{}, err
+	}
 	role := args.Get("_grole")
 	roleConfig, ok := f.C.Roles[role]
 	if !ok || roleConfig.Id_name == "" {
@@ -261,7 +265,7 @@ func paymentActor(f *Filter) (payment.Actor, payment.Scope, error) {
 			scope = payment.Scope{PartyType: party, PartyID: partyID}
 		}
 	}
-	return payment.Actor{Role: role, ID: id, Scope: actorScope, Permissions: permissions, RecentMFA: paymentActionRequiresMFA(f.Action)}, scope, nil
+	return payment.Actor{Role: role, ID: id, Scope: actorScope, Permissions: permissions, RecentMFA: recentMFA}, scope, nil
 }
 
 func paymentActionRequiresMFA(action string) bool {

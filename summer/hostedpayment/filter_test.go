@@ -28,7 +28,7 @@ func TestAdvertiserPaymentScopeComesFromAuthenticatedIdentity(t *testing.T) {
 	}}
 	filter.Action = "topics"
 	filter.R = httptest.NewRequest("GET", "/goto/adv/g/hostedpayment", nil)
-	filter.R.Form = url.Values{"_grole": {"adv"}, "adv_id": {"7"}, "party_type": {"publisher"}, "party_id": {"999"}}
+	filter.R.Form = url.Values{genelet.PrincipalSourceField: {genelet.PrincipalSession}, "_grole": {"adv"}, "adv_id": {"7"}, "party_type": {"publisher"}, "party_id": {"999"}}
 	actor, scope, err := paymentActor(filter)
 	if err != nil {
 		t.Fatal(err)
@@ -49,7 +49,7 @@ func TestFinancialMutationActorRequiresRecentMFA(t *testing.T) {
 	}}
 	filter.Action = "approveOperation"
 	filter.R = httptest.NewRequest("POST", "/goto/admin/g/hostedpayment", nil)
-	filter.R.Form = url.Values{"_grole": {"admin"}, "admin_id": {"2"}}
+	filter.R.Form = url.Values{genelet.PrincipalSourceField: {genelet.PrincipalSession}, genelet.RecentMFAField: {"1"}, "_grole": {"admin"}, "admin_id": {"2"}}
 	actor, _, err := paymentActor(filter)
 	if err != nil {
 		t.Fatal(err)
@@ -66,7 +66,7 @@ func TestUnknownPaymentActionCannotAssumeRecentMFA(t *testing.T) {
 	}}
 	filter.Action = "futureMutation"
 	filter.R = httptest.NewRequest("POST", "/goto/admin/g/hostedpayment", nil)
-	filter.R.Form = url.Values{"_grole": {"admin"}, "admin_id": {"2"}}
+	filter.R.Form = url.Values{genelet.PrincipalSourceField: {genelet.PrincipalSession}, "_grole": {"admin"}, "admin_id": {"2"}}
 	actor, _, err := paymentActor(filter)
 	if err != nil {
 		t.Fatal(err)

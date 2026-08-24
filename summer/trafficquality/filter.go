@@ -196,6 +196,10 @@ func (f *Filter) Before(model *Model, _, _ url.Values) error {
 
 func qualityActor(f *Filter) (quality.Actor, quality.Scope, error) {
 	args := f.R.Form
+	recentMFA, err := summer.VerifiedSessionState(args)
+	if err != nil {
+		return quality.Actor{}, quality.Scope{}, err
+	}
 	role := args.Get("_grole")
 	roleConfig, ok := f.C.Roles[role]
 	if !ok || roleConfig.Id_name == "" {
@@ -224,7 +228,7 @@ func qualityActor(f *Filter) (quality.Actor, quality.Scope, error) {
 	}
 	return quality.Actor{
 		Role: role, ID: id, Scope: actorScope, Permissions: permissions,
-		RecentMFA: actionRequiresMFA(f.Action),
+		RecentMFA: recentMFA,
 	}, scope, nil
 }
 
@@ -328,15 +332,6 @@ func roleHasPermission(grants []string, required string) bool {
 		}
 	}
 	return false
-}
-
-func actionRequiresMFA(action string) bool {
-	switch action {
-	case "createRule", "setMode", "resolve", "resolveAppeal", "enforce", "rollback", "recommendBilling", "approveBilling":
-		return true
-	default:
-		return false
-	}
 }
 
 func setQualityAudit(args url.Values, event string, objectID uint64, prior, next string) {
