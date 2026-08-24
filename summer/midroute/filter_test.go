@@ -19,6 +19,12 @@ func TestNormalizeGroupFields(t *testing.T) {
 	if got := form.Get("active"); got != "Yes" {
 		t.Fatalf("active=%q", got)
 	}
+	if got := form.Get("margin_pct"); got != "0.0000" {
+		t.Fatalf("margin_pct=%q", got)
+	}
+	if got := form.Get("min_margin_cpm"); got != "0.000000" {
+		t.Fatalf("min_margin_cpm=%q", got)
+	}
 }
 
 func TestNormalizeUpdateFieldsDoesNotDefaultMissingValues(t *testing.T) {
@@ -77,6 +83,8 @@ func TestNormalizeGroupFieldsRejectsInvalidValues(t *testing.T) {
 		{"group_name": {"fallback"}, "total_timeout_ms": {"5001"}},
 		{"group_name": {"fallback"}, "margin_pct": {"1.5"}},
 		{"group_name": {"fallback"}, "min_margin_cpm": {"-0.01"}},
+		{"group_name": {"fallback"}, "margin_pct": {"0.00001"}},
+		{"group_name": {"fallback"}, "min_margin_cpm": {"1.0000004"}},
 	}
 	for _, form := range tests {
 		if err := normalizeActionFields(form, "insert"); err == nil {

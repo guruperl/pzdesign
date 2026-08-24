@@ -2,12 +2,12 @@ package summer
 
 import (
 	"fmt"
-	"math"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/guruperl/aofei/accounting"
 	"github.com/guruperl/genelet"
 )
 
@@ -115,10 +115,11 @@ func ValidateBalanceLimits(args url.Values) error {
 		if value == "" {
 			continue
 		}
-		number, err := strconv.ParseFloat(value, 64)
-		if err != nil || math.IsNaN(number) || math.IsInf(number, 0) || number < 0 {
-			return fmt.Errorf("费用限额必须为非负数")
+		amount, err := accounting.ParseNano(value)
+		if err != nil || amount < 0 {
+			return fmt.Errorf("费用限额必须为最多九位小数的精确非负数")
 		}
+		args.Set(name, amount.String())
 	}
 	for _, name := range []string{"limit_imp", "limit_cli", "daily_imp", "daily_cli"} {
 		value := strings.TrimSpace(args.Get(name))

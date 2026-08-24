@@ -66,13 +66,18 @@ func TestDeliveryScheduleRows(t *testing.T) {
 }
 
 func TestValidateBalanceLimits(t *testing.T) {
-	if err := ValidateBalanceLimits(url.Values{"limit_spend": {"1.25"}, "daily_imp": {"10"}}); err != nil {
+	valid := url.Values{"limit_spend": {"1.25"}, "daily_imp": {"10"}}
+	if err := ValidateBalanceLimits(valid); err != nil {
 		t.Fatal(err)
+	}
+	if got := valid.Get("limit_spend"); got != "1.250000000" {
+		t.Fatalf("canonical spend limit = %q", got)
 	}
 	for _, args := range []url.Values{
 		{"limit_spend": {"-1"}},
 		{"limit_spend": {"NaN"}},
 		{"limit_spend": {"+Inf"}},
+		{"limit_spend": {"1.0000000004"}},
 		{"daily_cli": {"1.5"}},
 	} {
 		if err := ValidateBalanceLimits(args); err == nil {

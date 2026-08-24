@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/guruperl/aofei/accounting"
 	"github.com/guruperl/aofei/acl"
 	"github.com/guruperl/aofei/dsp"
 	"github.com/guruperl/pzdesign/summer"
@@ -34,11 +35,11 @@ func (self *Filter) Preset() error {
 		if floorText == "" {
 			floorText = "0"
 		}
-		floor, err := strconv.ParseFloat(floorText, 64)
-		if err != nil || floor < 0 || math.IsNaN(floor) || math.IsInf(floor, 0) {
-			return fmt.Errorf("bidfloor must be a finite non-negative USD CPM value")
+		floor, err := accounting.ParseCPM(floorText)
+		if err != nil {
+			return fmt.Errorf("bidfloor must be an exact non-negative USD CPM value with at most six decimal places")
 		}
-		ARGS.Set("bidfloor", strconv.FormatFloat(floor, 'f', 6, 64))
+		ARGS.Set("bidfloor", floor.String())
 		if action == "insert" || hasAnySlotSupplyField(ARGS) {
 			refreshSeconds, err := strconv.ParseUint(defaultSupplyValue(ARGS.Get("refresh_seconds"), "0"), 10, 16)
 			if err != nil {
@@ -303,31 +304,36 @@ func normalizeSlotBidFloor(item map[string]interface{}) error {
 	if item == nil {
 		return fmt.Errorf("slot is nil")
 	}
-	var floor float64
+	var floor accounting.CPM
+	var err error
 	switch raw := item["bidfloor"].(type) {
 	case nil:
-		floor = 0
+		floor = accounting.CPM(0)
 	case float64:
-		floor = raw
-	case float32:
-		floor = float64(raw)
-	case int64:
-		floor = float64(raw)
-	case int:
-		floor = float64(raw)
-	case string:
-		parsed, err := strconv.ParseFloat(strings.TrimSpace(raw), 64)
-		if err != nil {
-			return fmt.Errorf("invalid stored bidfloor %q", raw)
+		if math.IsNaN(raw) || math.IsInf(raw, 0) {
+			return fmt.Errorf("stored bidfloor must be an exact non-negative USD CPM value")
 		}
-		floor = parsed
+		floor, err = accounting.ParseCPM(strconv.FormatFloat(raw, 'f', -1, 64))
+	case float32:
+		if math.IsNaN(float64(raw)) || math.IsInf(float64(raw), 0) {
+			return fmt.Errorf("stored bidfloor must be an exact non-negative USD CPM value")
+		}
+		floor, err = accounting.ParseCPM(strconv.FormatFloat(float64(raw), 'f', -1, 32))
+	case int64:
+		floor, err = accounting.ParseCPM(strconv.FormatInt(raw, 10))
+	case int:
+		floor, err = accounting.ParseCPM(strconv.Itoa(raw))
+	case string:
+		floor, err = accounting.ParseCPM(raw)
+	case []byte:
+		floor, err = accounting.ParseCPM(string(raw))
 	default:
 		return fmt.Errorf("invalid stored bidfloor type %T", raw)
 	}
-	if floor < 0 || math.IsNaN(floor) || math.IsInf(floor, 0) {
-		return fmt.Errorf("stored bidfloor must be a finite non-negative USD CPM value")
+	if err != nil {
+		return fmt.Errorf("invalid stored bidfloor: %w", err)
 	}
-	item["bidfloor"] = floor
+	item["bidfloor"] = floor.String()
 	return nil
 }
 

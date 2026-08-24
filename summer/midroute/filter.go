@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
+	"strings"
 
+	"github.com/guruperl/aofei/accounting"
 	"github.com/guruperl/pzdesign/summer"
 )
 
@@ -55,7 +57,7 @@ func normalizeGroupFields(form url.Values, action string) error {
 		if err := normalizeDecimal(form, "margin_pct", true, "0", 0, 1); err != nil {
 			return err
 		}
-		return normalizeDecimal(form, "min_margin_cpm", true, "0", 0, 100000)
+		return normalizeCPM(form, "min_margin_cpm", true, "0", 100000)
 	}
 	if form.Has("group_name") && form.Get("group_name") == "" {
 		return fmt.Errorf("group_name is required")
@@ -72,7 +74,7 @@ func normalizeGroupFields(form url.Values, action string) error {
 	if err := normalizePresentDecimal(form, "margin_pct", 0, 1); err != nil {
 		return err
 	}
-	return normalizePresentDecimal(form, "min_margin_cpm", 0, 100000)
+	return normalizePresentCPM(form, "min_margin_cpm", 100000)
 }
 
 func normalizeRouteBidderFields(form url.Values, action string) error {
@@ -95,7 +97,7 @@ func normalizeRouteBidderFields(form url.Values, action string) error {
 		if err := normalizeOptionalDecimal(form, "margin_pct", 0, 1); err != nil {
 			return err
 		}
-		return normalizeOptionalDecimal(form, "min_margin_cpm", 0, 100000)
+		return normalizeOptionalCPM(form, "min_margin_cpm", 100000)
 	}
 	if form.Has("bidder_id") && form.Get("bidder_id") == "" {
 		return fmt.Errorf("bidder_id is required")
@@ -115,7 +117,7 @@ func normalizeRouteBidderFields(form url.Values, action string) error {
 	if err := normalizeOptionalDecimal(form, "margin_pct", 0, 1); err != nil {
 		return err
 	}
-	return normalizeOptionalDecimal(form, "min_margin_cpm", 0, 100000)
+	return normalizeOptionalCPM(form, "min_margin_cpm", 100000)
 }
 
 func normalizeRouteTargetFields(form url.Values, action string) error {
@@ -229,18 +231,19 @@ func normalizeOptionalInt(form url.Values, name string, min, max int) error {
 }
 
 func normalizeDecimal(form url.Values, name string, required bool, def string, min, max float64) error {
-	value := form.Get(name)
+	value := strings.TrimSpace(form.Get(name))
 	if value == "" {
 		if required {
-			form.Set(name, def)
+			value = def
+		} else {
+			return nil
 		}
-		return nil
 	}
-	n, err := strconv.ParseFloat(value, 64)
-	if err != nil || n < min || n > max {
+	units, err := parseFraction4(value)
+	if err != nil || min != 0 || max != 1 {
 		return fmt.Errorf("%s must be between %.4f and %.4f", name, min, max)
 	}
-	form.Set(name, strconv.FormatFloat(n, 'f', -1, 64))
+	form.Set(name, fmt.Sprintf("%d.%04d", units/10000, units%10000))
 	return nil
 }
 
@@ -248,18 +251,78 @@ func normalizePresentDecimal(form url.Values, name string, min, max float64) err
 	if !form.Has(name) {
 		return nil
 	}
-	value := form.Get(name)
+	value := strings.TrimSpace(form.Get(name))
 	if value == "" {
 		return fmt.Errorf("%s is required", name)
 	}
-	n, err := strconv.ParseFloat(value, 64)
-	if err != nil || n < min || n > max {
+	units, err := parseFraction4(value)
+	if err != nil || min != 0 || max != 1 {
 		return fmt.Errorf("%s must be between %.4f and %.4f", name, min, max)
 	}
-	form.Set(name, strconv.FormatFloat(n, 'f', -1, 64))
+	form.Set(name, fmt.Sprintf("%d.%04d", units/10000, units%10000))
 	return nil
 }
 
 func normalizeOptionalDecimal(form url.Values, name string, min, max float64) error {
 	return normalizeDecimal(form, name, false, "", min, max)
+}
+
+func parseFraction4(raw string) (uint64, error) {
+	parts := strings.Split(strings.TrimSpace(raw), ".")
+	if len(parts) > 2 || parts[0] == "" || len(parts) == 2 && len(parts[1]) > 4 {
+		return 0, fmt.Errorf("invalid four-place fraction")
+	}
+	whole, err := strconv.ParseUint(parts[0], 10, 64)
+	if err != nil {
+		return 0, err
+	}
+	fraction := ""
+	if len(parts) == 2 {
+		fraction = parts[1]
+	}
+	for len(fraction) < 4 {
+		fraction += "0"
+	}
+	frac := uint64(0)
+	if fraction != "" {
+		frac, err = strconv.ParseUint(fraction, 10, 64)
+		if err != nil {
+			return 0, err
+		}
+	}
+	if whole > 1 || whole == 1 && frac != 0 {
+		return 0, fmt.Errorf("fraction is outside zero through one")
+	}
+	return whole*10000 + frac, nil
+}
+
+func normalizeCPM(form url.Values, name string, required bool, def string, maxWhole int64) error {
+	value := strings.TrimSpace(form.Get(name))
+	if value == "" {
+		if required {
+			value = def
+		} else {
+			return nil
+		}
+	}
+	cpm, err := accounting.ParseCPM(value)
+	if err != nil || cpm > accounting.CPM(maxWhole*accounting.CPMScale) {
+		return fmt.Errorf("%s must be an exact USD CPM from 0 through %d with at most six decimal places", name, maxWhole)
+	}
+	form.Set(name, cpm.String())
+	return nil
+}
+
+func normalizePresentCPM(form url.Values, name string, maxWhole int64) error {
+	if !form.Has(name) {
+		return nil
+	}
+	if strings.TrimSpace(form.Get(name)) == "" {
+		return fmt.Errorf("%s is required", name)
+	}
+	return normalizeCPM(form, name, false, "", maxWhole)
+}
+
+func normalizeOptionalCPM(form url.Values, name string, maxWhole int64) error {
+	return normalizeCPM(form, name, false, "", maxWhole)
 }

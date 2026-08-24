@@ -2,11 +2,11 @@ package item
 
 import (
 	"fmt"
-	"math"
 	"net/url"
 	"strconv"
 	"strings"
 
+	"github.com/guruperl/aofei/accounting"
 	"github.com/guruperl/aofei/match"
 	"github.com/guruperl/genelet"
 	"github.com/guruperl/pzdesign/summer"
@@ -33,11 +33,11 @@ func (self *Filter) Preset() error {
 		if ARGS.Get("cost_type") != "CPM" {
 			return fmt.Errorf("W8M v1 only supports reviewed USD CPM pricing; legacy ROI, CPC, and CPA records must be migrated explicitly")
 		}
-		cost, err := strconv.ParseFloat(strings.TrimSpace(ARGS.Get("cost")), 64)
-		if err != nil || cost <= 0 || math.IsNaN(cost) || math.IsInf(cost, 0) {
-			return fmt.Errorf("cost must be a finite positive USD CPM value")
+		cost, err := accounting.ParseCPM(ARGS.Get("cost"))
+		if err != nil || cost <= 0 {
+			return fmt.Errorf("cost must be an exact positive USD CPM value with at most six decimal places")
 		}
-		ARGS.Set("cost", strconv.FormatFloat(cost, 'f', 6, 64))
+		ARGS.Set("cost", cost.String())
 		if err := validateCommercialURL("landing", ARGS.Get("item_click")); err != nil {
 			return err
 		}
@@ -110,9 +110,9 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 			return fmt.Errorf("load item pricing before activation: %w", err)
 		}
 		costType := strings.TrimSpace(genelet.Interface2String(commercial["cost_type"]))
-		cost, err := strconv.ParseFloat(strings.TrimSpace(genelet.Interface2String(commercial["cost"])), 64)
-		if costType != "CPM" || err != nil || cost <= 0 || math.IsNaN(cost) || math.IsInf(cost, 0) {
-			return fmt.Errorf("item cannot be activated until its legacy or invalid price is reviewed and saved as a finite positive USD CPM value")
+		cost, err := accounting.ParseCPM(genelet.Interface2String(commercial["cost"]))
+		if costType != "CPM" || err != nil || cost <= 0 {
+			return fmt.Errorf("item cannot be activated until its legacy or invalid price is reviewed and saved as an exact positive USD CPM value")
 		}
 		if err := match.DBValidateItemCreativesForActivation(self.R.Context(), model.DB, ARGS.Get("item_id")); err != nil {
 			return fmt.Errorf("item cannot be activated until its active creatives pass validation: %w", err)

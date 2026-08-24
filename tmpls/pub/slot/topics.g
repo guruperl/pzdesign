@@ -25,7 +25,7 @@
 <tr><td><a href="#" data-title="广告位更新：{{.slot_name}}" data-href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}" id="editPopup">{{.slot_name}}</a></td>
 <td>{{.qa_device_g}}</td>
 <td>{{.media_intent}} / {{.placement}}</td>
-<td>{{printf "%.6f" .bidfloor}}</td>
+<td>{{.bidfloor}}</td>
 <td>{{if eq "Yes" .active}}&check; {{else if eq "No" .active}}&#10007;{{else}}&check;{{end}}</td>
 <td>{{.created}}</td>
 <td>{{if .browser_code}}<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">网页广告码</button>{{end}}</td>

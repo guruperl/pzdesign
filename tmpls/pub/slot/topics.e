@@ -23,7 +23,7 @@
               <tbody>{{ range .Lists }}
 <tr><td><a href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}">{{.slot_name}}</a></td>
 <td>{{.qa_device}}</td>
-<td>{{printf "%.6f" .bidfloor}}</td>
+<td>{{.bidfloor}}</td>
 <td>{{.active}}</td>
 <td>{{.created}}</td>
 <td>{{if .browser_code}}<button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Web ad tag</button>{{end}}</td>

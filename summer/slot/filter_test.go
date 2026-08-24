@@ -91,7 +91,7 @@ func TestPresetPersistsPackedSlotSize(t *testing.T) {
 }
 
 func TestPresetRejectsInvalidBidFloor(t *testing.T) {
-	for _, floor := range []string{"-0.01", "NaN", "+Inf", "not-a-price"} {
+	for _, floor := range []string{"-0.01", "NaN", "+Inf", "not-a-price", "1.0000004"} {
 		t.Run(floor, func(t *testing.T) {
 			req := httptest.NewRequest("POST", "/slot", nil)
 			req.Form = url.Values{"bidfloor": {floor}}
@@ -99,7 +99,7 @@ func TestPresetRejectsInvalidBidFloor(t *testing.T) {
 			filter.Action = "insert"
 			filter.Component = "slot"
 			filter.R = req
-			if err := filter.Preset(); err == nil || !strings.Contains(err.Error(), "finite non-negative USD CPM") {
+			if err := filter.Preset(); err == nil || !strings.Contains(err.Error(), "exact non-negative USD CPM") {
 				t.Fatalf("Preset bidfloor %q error = %v", floor, err)
 			}
 		})
@@ -303,12 +303,12 @@ func TestNormalizeSlotBidFloor(t *testing.T) {
 	for _, test := range []struct {
 		name    string
 		value   interface{}
-		want    float64
+		want    string
 		wantErr bool
 	}{
-		{name: "database string", value: "1.250000", want: 1.25},
-		{name: "driver float", value: float64(2.5), want: 2.5},
-		{name: "missing defaults zero", value: nil, want: 0},
+		{name: "database string", value: "1.250000", want: "1.250000"},
+		{name: "driver float", value: float64(2.5), want: "2.500000"},
+		{name: "missing defaults zero", value: nil, want: "0.000000"},
 		{name: "negative", value: "-1", wantErr: true},
 		{name: "not numeric", value: "bad", wantErr: true},
 	} {
@@ -324,7 +324,7 @@ func TestNormalizeSlotBidFloor(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if got := item["bidfloor"].(float64); got != test.want {
+			if got := item["bidfloor"].(string); got != test.want {
 				t.Fatalf("bidfloor = %v, want %v", got, test.want)
 			}
 		})

@@ -48,12 +48,12 @@ func TestPresetRejectsLegacyPricingWithoutConversion(t *testing.T) {
 			t.Fatalf("cost type %q error = %v", costType, err)
 		}
 	}
-	for _, cost := range []string{"0", "-1", "NaN", "+Inf", "invalid"} {
+	for _, cost := range []string{"0", "-1", "NaN", "+Inf", "invalid", "1.0000004"} {
 		filter := itemFilterForPreset(url.Values{
 			"cost_type": {"CPM"}, "cost": {cost},
 			"item_click": {"https://advertiser.example/landing"},
 		})
-		if err := filter.Preset(); err == nil || !strings.Contains(err.Error(), "finite positive") {
+		if err := filter.Preset(); err == nil || !strings.Contains(err.Error(), "exact positive") {
 			t.Fatalf("cost %q error = %v", cost, err)
 		}
 	}
