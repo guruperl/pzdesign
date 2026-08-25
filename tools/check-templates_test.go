@@ -597,7 +597,7 @@ func TestPublisherSlotTopicsShowsCommercialFloorAndPreservesSiteType(t *testing.
 		"slot",
 		[]map[string]interface{}{{
 			"slot_id": 13, "slot_md5": "slot-fixture", "slot_name": "Leaderboard",
-			"qa_device_g": "移动设备", "bidfloor": float64(1.25), "active": "Yes",
+			"qa_device_g": "移动设备", "bidfloor": "1.250000", "active": "Yes",
 			"created": "2026-08-01", "browser_code": "", "api_code": "POST /pz",
 		}},
 		args,
