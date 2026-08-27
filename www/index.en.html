@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="W8M provides advertisers with campaign, ad group, creative, targeting, and reporting tools. Publishers can integrate websites, apps, and ad slots.">
+    <meta name="author" content="W8M">
+    <meta name="theme-color" content="#102a43">
+    <link rel="shortcut icon" href="logo.png">
+
+    <title>W8M Advertising and Traffic Integration Platform</title>
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/w8m-home.css?v=20260802-11" rel="stylesheet">
+    <link rel="alternate" hreflang="zh-CN" href="/goto/web/g/">
+    <link rel="alternate" hreflang="en" href="/goto/web/e/">
+    <link rel="alternate" hreflang="x-default" href="/goto/web/e/">
+  </head>
+
+  <body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" aria-label="Main navigation">
+      <div class="container">
+        <a class="navbar-brand" href="#page-top" aria-label="W8M Home">
+          <span class="brand-mark">W8M</span>
+          <span class="brand-copy">Advertising Platform</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#role-guide">Guide</a></li>
+            <li class="nav-item"><a class="nav-link" href="#capabilities">Capabilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="#help">FAQ</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            <li class="nav-item ml-lg-2"><a class="btn btn-sm btn-outline-light nav-login" href="#entry">Log In</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="container hero-content">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <p class="eyebrow">Platform Services</p>
+            <h1>W8M Advertising and Traffic Integration Platform</h1>
+            <p class="hero-lead">W8M provides advertisers with a complete workflow from campaigns, ad groups, creatives, and targeting to reporting. Publishers can integrate websites, apps, web ad codes, and API endpoints.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary btn-lg" href="#advertiser-guide" data-role-tab="advertiser">Launch Ads</a>
+              <a class="btn btn-light btn-lg" href="#publisher-guide" data-role-tab="publisher">Monetize Traffic</a>
+            </div>
+          </div>
+          <div class="col-lg-4 d-none d-lg-block">
+            <div class="hero-panel">
+              <span class="hero-panel-label">Account Types</span>
+              <div class="hero-panel-row">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <div><strong>Advertiser</strong><small>Create campaigns and ad groups, configure targeting, manage creatives</small></div>
+              </div>
+              <div class="hero-panel-row">
+                <i class="fa fa-code" aria-hidden="true"></i>
+                <div><strong>Publisher</strong><small>Manage traffic sources and ad slots, deploy ad code, view reports</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="signal-strip" aria-label="Platform Features">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-md-4 signal-item"><i class="fa fa-exchange" aria-hidden="true"></i><span>DSP, SSP, and ADX integrated workflow</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-code" aria-hidden="true"></i><span>OpenRTB 2.5 controlled compatibility and open API</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-shield" aria-hidden="true"></i><span>Privacy signals, traffic quality, and operational observability</span></div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section id="role-guide" class="section role-guide">
+        <div class="container">
+          <div class="section-intro text-center">
+            <p class="eyebrow eyebrow-dark">Account Types</p>
+            <h2>Choose Your Account Type</h2>
+            <p>Advertisers manage ad campaigns. Publishers manage website, app, and ad slot integration.</p>
+          </div>
+
+          <ul class="nav nav-pills role-tabs justify-content-center" id="roleTabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="advertiser-tab" data-toggle="pill" href="#advertiser-guide" role="tab" aria-controls="advertiser-guide" aria-selected="true">
+                <i class="fa fa-bullseye" aria-hidden="true"></i> Advertiser / Agency
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="publisher-tab" data-toggle="pill" href="#publisher-guide" role="tab" aria-controls="publisher-guide" aria-selected="false">
+                <i class="fa fa-globe" aria-hidden="true"></i> Publisher
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content role-content" id="roleTabContent">
+            <div class="tab-pane fade show active" id="advertiser-guide" role="tabpanel" aria-labelledby="advertiser-tab">
+              <div class="role-heading">
+                <div>
+                  <span class="role-kicker">Advertiser</span>
+                  <h3>Advertiser Workflow</h3>
+                  <p>Set up campaigns and ad groups first, then gradually tighten budgets, targeting, and supply-side rules. Saving is not the same as launching; complete end-to-end validation before enabling.</p>
+                </div>
+                <span class="role-badge">ADV</span>
+              </div>
+
+              <div class="journey-grid">
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-campaign" aria-haspopup="dialog"><span>01</span><i class="fa fa-folder-open-o" aria-hidden="true"></i><h4>Create Campaign</h4><p>Set flight dates, total budget, daily budget, and traffic scope.</p><small class="journey-more">View setup instructions <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-ad-group" aria-haspopup="dialog"><span>02</span><i class="fa fa-sliders" aria-hidden="true"></i><h4>Configure Ad Group</h4><p>Set CPM price, landing page, frequency, devices, geo, and audience targeting.</p><small class="journey-more">View setup instructions <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-creative" aria-haspopup="dialog"><span>03</span><i class="fa fa-picture-o" aria-hidden="true"></i><h4>Add and Test Creatives</h4><p>Verify dimensions, media type, impression pixel, and click-through tracking.</p><small class="journey-more">View creative guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-reporting" aria-haspopup="dialog"><span>04</span><i class="fa fa-line-chart" aria-hidden="true"></i><h4>Launch and View Reports</h4><p>Confirm status and cache propagation, then observe impressions, clicks, and spend.</p><small class="journey-more">View launch guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+              </div>
+
+              <div class="role-footer row align-items-center">
+                <div class="col-lg-7">
+                  <h4>Pre-launch Checklist</h4>
+                  <ul class="check-list">
+                    <li>Account, campaign, ad group, and at least one creative are all active</li>
+                    <li>Budget, dates, creative dimensions match target ad slots</li>
+                    <li>Banners requiring click tracking must use <code>{CLICK_URL}</code></li>
+                  </ul>
+                </div>
+                <div class="col-lg-5 role-actions">
+                  <button type="button" class="btn btn-role-detail" data-toggle="modal" data-target="#role-guide-advertiser" aria-haspopup="dialog">View Detailed Guide</button>
+                  <a class="btn btn-primary" href="/goto/web/e/adv?action=startnew">Create Advertiser Account</a>
+                  <a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Advertiser Log In</a>
+                  <a class="manual-link" href="manuals/advertiser.en.html">Read Full Manual <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="publisher-guide" role="tabpanel" aria-labelledby="publisher-tab">
+              <div class="role-heading publisher-heading">
+                <div>
+                  <span class="role-kicker">Publisher</span>
+                  <h3>Publisher Integration Workflow</h3>
+                  <p>Websites, apps, and ad slots belong to publisher accounts. Use platform-generated traffic source and ad slot tokens to integrate. Do not modify tokens or override configuration with request dimensions.</p>
+                </div>
+                <span class="role-badge publisher-badge">PUB</span>
+              </div>
+
+              <div class="journey-grid">
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-source" aria-haspopup="dialog"><span>01</span><i class="fa fa-sitemap" aria-hidden="true"></i><h4>Create Traffic Source</h4><p>Register domain or app bundle, confirm source host.</p><small class="journey-more">View resource guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-slot" aria-haspopup="dialog"><span>02</span><i class="fa fa-object-group" aria-hidden="true"></i><h4>Configure Ad Slot</h4><p>Set dimensions, media type, devices, and content quality rules.</p><small class="journey-more">View setup instructions <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-integration" aria-haspopup="dialog"><span>03</span><i class="fa fa-code" aria-hidden="true"></i><h4>Deploy Integration Code</h4><p>Copy web ad code or use SDK/API samples to integrate <code>/pz</code>.</p><small class="journey-more">View integration guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-validation" aria-haspopup="dialog"><span>04</span><i class="fa fa-bar-chart" aria-hidden="true"></i><h4>Validate Integration and View Reports</h4><p>Test with and without fill, verify report performance.</p><small class="journey-more">View acceptance guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+              </div>
+
+              <div class="role-footer row align-items-center">
+                <div class="col-lg-7">
+                  <h4>Pre-integration Checklist</h4>
+                  <ul class="check-list publisher-checks">
+                    <li>Actual page host exactly matches platform-registered site host</li>
+                    <li>Use latest-generated <code>site</code> and <code>slot</code> tokens from ad slot page</li>
+                    <li><code>200</code> with empty content is normal no-fill, do not retry quickly</li>
+                  </ul>
+                </div>
+                <div class="col-lg-5 role-actions">
+                  <button type="button" class="btn btn-role-detail btn-role-detail-publisher" data-toggle="modal" data-target="#role-guide-publisher" aria-haspopup="dialog">View Detailed Guide</button>
+                  <a class="btn btn-publisher" href="/goto/web/e/pub?action=startnew">Create Publisher Account</a>
+                  <a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Publisher Log In</a>
+                  <a class="manual-link publisher-link" href="manuals/publisher.en.html">Read Full Manual <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-advertiser" id="journey-advertiser-campaign" tabindex="-1" role="dialog" aria-labelledby="journey-advertiser-campaign-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-folder-open-o" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 1</span><h2 class="modal-title" id="journey-advertiser-campaign-title">Create and Check Campaign</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">A campaign is the top-level boundary for ad groups and creatives, controlling flight dates, traffic scope, budget, and status. Save as disabled first, then enable after configuring and testing lower levels.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Campaign Fields to Verify</h3>
+                  <ul class="capability-list">
+                    <li><strong>Name:</strong> Use a name for team recognition and report search. Avoid keys or personal information.</li>
+                    <li><strong>Flight Dates:</strong> Set specific start and end dates, verify current time is within the valid range</li>
+                    <li><strong>Traffic Scope:</strong> Choose supply scope that matches targeting goals; too narrow or conflicting ranges may lack qualified traffic</li>
+                    <li><strong>Total and Daily Budget:</strong> Set clear limits for the campaign and verify both are not exhausted</li>
+                    <li><strong>Status:</strong> Keep disabled during setup. Enable after ad groups, creatives, targeting, and small-traffic testing complete.</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Configuration Order After Saving</h3>
+                  <ul class="capability-list">
+                    <li>Create ad groups under the campaign; set USD CPM price, landing page, ad group budget, dates, and frequency</li>
+                    <li>Add at least one creative matching dimensions, media type, and target ad slots</li>
+                    <li>Start with broad geo, device, audience, and supply targeting for small-traffic validation, then tighten gradually</li>
+                    <li>Verify account, campaign, ad group, and creative statuses are consistent; wait for changes to enter runtime cache</li>
+                    <li>After launch, check impressions, clicks, and spend reports. Reports are generated by backend jobs, not real-time.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>No bids:</strong> Check account and campaign status, flight dates, total and daily budget, ad group status, creative dimensions, USD floor, traffic scope, and targeting. Enabling the campaign alone does not bypass lower-level rules.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#workflow">Read Full Workflow</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Manage Campaigns</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-advertiser" id="journey-advertiser-ad-group" tabindex="-1" role="dialog" aria-labelledby="journey-advertiser-ad-group-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-sliders" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 2</span><h2 class="modal-title" id="journey-advertiser-ad-group-title">Configure and Check Ad Group</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">An ad group sits under the campaign and sets the actual bid price, landing page, budget, frequency, and targeting. A single campaign can have multiple ad groups serving different audiences or supply.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Price, Duration, and Frequency</h3>
+                  <ul class="capability-list">
+                    <li><strong>Bid Price:</strong> Use positive USD CPM for production. Price must meet target ad slot server-side floor.</li>
+                    <li><strong>Landing Page:</strong> Use HTTPS URL publicly accessible. Test direct access and final redirect separately.</li>
+                    <li><strong>Duration and Budget:</strong> Ad group dates must fall within campaign dates. Set appropriate total and daily budgets.</li>
+                    <li><strong>Frequency:</strong> Set impression/click caps and minimum display intervals per your needs. Avoid overly strict test conditions.</li>
+                    <li><strong>Status:</strong> Keep disabled during setup. Enable together with the parent campaign after adding and testing at least one creative.</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Targeting Configuration and Validation</h3>
+                  <ul class="capability-list">
+                    <li>Target by country, state/province, city, language, device type, OS, browser, date, hour, and day of week</li>
+                    <li>Supply-side conditions can limit publishers, websites/apps, ad slots, category, channel, and activity</li>
+                    <li>Uploaded audiences match by configured ID types; multiple ID conditions may require matching all at once</li>
+                    <li>Start with broad single conditions for small-traffic testing, then add other conditions and observe changes</li>
+                    <li>Before enabling, verify campaign and ad group dates, budgets, and statuses have no conflicts; wait for cache refresh</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>Price Boundary:</strong> Production bids use USD CPM. Historical CPC, CPA, or ROI values do not auto-convert to payable prices; when bids are missing, check floor, targeting, and supply scope together.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#workflow">View Ad Group Setup</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Select Campaign</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-advertiser" id="journey-advertiser-creative" tabindex="-1" role="dialog" aria-labelledby="journey-advertiser-creative-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-picture-o" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 3</span><h2 class="modal-title" id="journey-advertiser-creative-title">Add and Test Creatives</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Creatives define the actual displayed content. Only creatives with active status, matching dimensions, media type, and request conditions enter the weight rotation inside winning ad groups.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Creative Fields and Matching</h3>
+                  <ul class="capability-list">
+                    <li>Provide clear creative name, dimensions, media type, content, weight, and active status</li>
+                    <li>Banner, video, and native creatives must use appropriate structures; dimensions must exactly match target ad slots</li>
+                    <li>Creative weight only affects rotation within a winning ad group, not cross-ad-group bid priority</li>
+                    <li>URLs, callback addresses, native assets, and VAST resources must be HTTPS and match media formats</li>
+                    <li>Start with a single creative to test impressions and clicks, then add other sizes, versions, or weight combinations</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Impression and Click Testing</h3>
+                  <ul class="capability-list">
+                    <li>Banners requiring platform click measurement must explicitly use <code>{CLICK_URL}</code></li>
+                    <li><code>{LANDING_URL}</code> is the direct landing page; platform does not auto-rewrite third-party iframes or links in HTML</li>
+                    <li>Do not modify platform-generated <code>/imp</code>, <code>/clk</code>, <code>sig</code>, or <code>sig_ts</code> parameters</li>
+                    <li>During testing, verify creatives load, impression tracking fires, click-through works, and check browser console and network</li>
+                    <li>For video, check VAST resources and MIME. For native, check required assets. Test actual ad slots, not just preview.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>Matching Boundary:</strong> Enabling a creative alone does not bypass account, campaign, or ad group status, nor does it bypass time, budget, dimensions, floor, targeting, or supply-side rules.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#workflow">View Creative and Tracking Guide</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Select Campaign</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-advertiser" id="journey-advertiser-reporting" tabindex="-1" role="dialog" aria-labelledby="journey-advertiser-reporting-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-line-chart" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 4</span><h2 class="modal-title" id="journey-advertiser-reporting-title">Launch and View Reports</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Before launch, complete checks on object status, budget, dates, dimensions, landing pages, tracking, and cache. After launch, use unified impression, click, and spend metrics to observe performance, not just save status.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Pre-launch Checklist</h3>
+                  <ul class="capability-list">
+                    <li>Advertiser account, campaign, ad group, and at least one creative are all active</li>
+                    <li>Current time falls within active campaign and ad group dates; total and daily budgets are not exhausted</li>
+                    <li>Creative dimensions and media type match target ad slots; landing page and third-party tracking URLs are accessible</li>
+                    <li>Banners needing click tracking use <code>{CLICK_URL}</code>; impression and click paths have been tested</li>
+                    <li>Price and ad slot floor use compatible USD CPM; targeting and supply scope do not conflict; changes are in runtime cache</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Report and Measurement Basis</h3>
+                  <ul class="capability-list">
+                    <li><strong>Impressions:</strong> Counted after valid, correctly-signed <code>/imp</code> tracking arrives</li>
+                    <li><strong>Clicks:</strong> Counted after valid, correctly-signed <code>/clk</code> tracking arrives</li>
+                    <li><strong>Spend:</strong> Calculated as USD CPM from valid impression records divided by 1000</li>
+                    <li><strong>Win/Loss:</strong> Used for bid analysis but not as current accounting spend basis</li>
+                    <li>Dashboard shows last 24 hours and main objects; when data is missing, provide test time and object info</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>Data Timing:</strong> Reports are generated by log aggregation and accounting tasks on a schedule, not real-time. After launch, keep test time and object info; allow time for backend processing.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#measurement">View Report and Measurement Basis</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Open Advertiser Dashboard</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-publisher" id="journey-publisher-source" tabindex="-1" role="dialog" aria-labelledby="journey-publisher-source-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-sitemap" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 1</span><h2 class="modal-title" id="journey-publisher-source-title">Create and Review Traffic Source</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">A traffic source represents a website or app under a publisher account and is the top boundary for ad slots and source verification. Confirm web/app type and real identity first, then choose matching integration approach.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Traffic Source Identity and Type</h3>
+                  <ul class="capability-list">
+                    <li><strong>Type:</strong> Select web for websites; select app for mobile apps (integration code differs by type)</li>
+                    <li><strong>Bundle/Domain:</strong> Use formal domain for websites; package name for Android; store ID for iOS</li>
+                    <li><strong>Review ID:</strong> Use review domain, package name, or app ID. Provide public review address without account login.</li>
+                    <li><strong>Integration Method:</strong> Choose ADX, web ad code, SDK, or server API. Must match web/app type.</li>
+                    <li><strong>Scope and Status:</strong> Configure allowed or blocked traffic scope; enable after resources and ad slots are ready</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Review, Transparency, and Cache</h3>
+                  <ul class="capability-list">
+                    <li>Browser page <code>Origin</code> or <code>Referer</code> host must exactly match the registered site host in cache</li>
+                    <li>Different subdomains are not auto-treated as the same site; confirm each request source before production</li>
+                    <li>Seller ID, type, ad system domain, public name, and domain transparency require platform operator review</li>
+                    <li>When authorized seller information changes, it reverts to review-pending; do not use old info for external disclosure</li>
+                    <li>After modifying traffic source, if integration uses old data, contact platform to refresh runtime cache and confirm timestamp</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-publisher"><strong>Source Boundary:</strong> Web requests without source or mismatched host are rejected. Do not use test domain, other subdomains, or request params as substitute for formal registered site identity.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#site">View Traffic Source Setup</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Manage Traffic Sources</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-publisher" id="journey-publisher-slot" tabindex="-1" role="dialog" aria-labelledby="journey-publisher-slot-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-object-group" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 2</span><h2 class="modal-title" id="journey-publisher-slot-title">Configure and Check Ad Slot</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">An ad slot defines trusted dimensions, server-side floor, media types, and quality requirements for a sellable position. Client requests can provide context but cannot lower or override platform-saved config.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Ad Slot Core Config</h3>
+                  <ul class="capability-list">
+                    <li>Provide a name for operations and reporting; set accurate width and height</li>
+                    <li>Floor uses positive USD CPM; server takes the higher of platform floor and request floor</li>
+                    <li>Select Banner, Video, or Native media types; set device, language, and page position</li>
+                    <li>Configure creative spec, quality conditions, category rules, traffic audit status, and responsibility owner</li>
+                    <li>Refresh mode can be none, periodic, or event-triggered; periodic intervals must be 15 to 3600 seconds</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Runtime Trusted Boundary</h3>
+                  <ul class="capability-list">
+                    <li>Ad slot dimensions are runtime-trusted; browser or SDK self-reported dimensions cannot override</li>
+                    <li>When request token dimensions differ from cache config, server returns <code>400</code></li>
+                    <li>Requests can raise floor but cannot lower platform floor, preventing client bypass of business rules</li>
+                    <li>After changing dimensions, source, or key config, get new integration sample and latest <code>slot</code> token</li>
+                    <li>Before enabling, verify traffic source is reviewed and ad slot status is correct; wait for config to enter runtime cache</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-publisher"><strong>Token Boundary:</strong> Do not manually edit, swap, or reuse old ad slot tokens. After dimension or key config change, you must get new integration code from the ad slot page.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#slot">View Ad Slot Setup</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Select Traffic Source</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-publisher" id="journey-publisher-integration" tabindex="-1" role="dialog" aria-labelledby="journey-publisher-integration-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-code" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 3</span><h2 class="modal-title" id="journey-publisher-integration-title">Deploy Web Ad Code or App/API</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Web traffic uses page-generated ad code. App or backend integration uses corresponding API samples. Both request <code>POST /pz</code> with platform-generated <code>site</code> and <code>slot</code> tokens.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Web Ad Code</h3>
+                  <ul class="capability-list">
+                    <li>Web traffic sources must use the web ad code from the ad slot page and create matching DOM containers</li>
+                    <li><code>adUnits[].code</code> is the container ID and response sequence flag; non-empty values must be unique in one request</li>
+                    <li><code>site</code> identifies publisher and traffic source; <code>slot</code> identifies ad slot and dimensions; cannot swap or modify</li>
+                    <li><code>ads.js</code> defaults to same-origin <code>/pz</code>; only specify endpoint explicitly when static resources and ad service are separate</li>
+                    <li>Web sample puts creatives in an unprivileged sandbox iframe; do not remove sandbox or write to host page <code>innerHTML</code></li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>App and Backend API</h3>
+                  <ul class="capability-list">
+                    <li>App/API use JSON requests; choose HTML, structured JSON, or OpenRTB <code>BidResponse</code> per scenario</li>
+                    <li>If providing <code>app.id</code>, <code>app.bundle</code>, or <code>app.domain</code>, it must match platform-verified traffic source identity</li>
+                    <li>Send real, applicable TCF, GPP, COPPA, GPC/DNT/LMT privacy signals; do not fabricate consent</li>
+                    <li>SDK requests do not use browser cookies; only send compliant device or user identifiers when privacy policy allows</li>
+                    <li>Structured responses must be safely rendered by the integrator per media type and measurement triggered per protocol</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-publisher"><strong>Mobile Integration:</strong> Currently provides <code>/pz</code> protocol, JSON/OpenRTB responses, and SDK/API samples. Native Android/iOS SDKs will be provided after specific integration needs are confirmed.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#browser">View Full Integration Examples</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Get Integration Code</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal journey-modal journey-modal-publisher" id="journey-publisher-validation" tabindex="-1" role="dialog" aria-labelledby="journey-publisher-validation-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-bar-chart" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 4</span><h2 class="modal-title" id="journey-publisher-validation-title">Validate Integration and View Reports</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Launch validation covers resource identity, request format, fill and no-fill, safe rendering, measurement, and reporting. Keep test time, traffic source, ad slot, source page, and response for troubleshooting cache or match issues.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Request and Response Validation</h3>
+                  <ul class="capability-list">
+                    <li>Verify traffic source type, bundle/domain, ad slot dimensions, server floor, media type, and status are correct</li>
+                    <li>For web, check <code>Origin</code>/<code>Referer</code>; for app, check app identity, privacy signals, and platform</li>
+                    <li>Validate at least one fill response; verify DOM container, sandbox rendering, impression tracking, and click work</li>
+                    <li>Also validate one no-fill; <code>200</code> empty result is normal no-fill, not a network error; do not retry quickly</li>
+                    <li><code>400</code> usually means field, token, or dimension issues; <code>403</code> means source issues; <code>413</code> means request body too large</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Measurement, Reports, and Settlement</h3>
+                  <ul class="capability-list">
+                    <li>Valid impressions and clicks count after signed tracking arrives; spend is calculated as USD CPM ÷ 1000</li>
+                    <li>Dashboard and reports show main ad slots, campaigns, and last 24 hours of data</li>
+                    <li>Reports are generated by log aggregation and accounting tasks on a schedule, not real-time</li>
+                    <li>When behavior remains old after change, first check runtime cache timestamp; if still missing, provide full test context</li>
+                    <li>For settlement reports or CSV, provide account ID and period to platform; do not send complete bank details via form or email</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-publisher"><strong>No-Fill Semantics:</strong> <code>200</code> with empty content means the request is valid but no matching ads exist right now. Clients should hide/recycle the container and continue requesting at normal traffic pace.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#errors">View Validation and Troubleshooting</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Open Publisher Dashboard</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal role-guide-modal role-guide-modal-advertiser" id="role-guide-advertiser" tabindex="-1" role="dialog" aria-labelledby="role-guide-advertiser-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-bullseye" aria-hidden="true"></i></span><div><span>Advertiser / Agency</span><h2 class="modal-title" id="role-guide-advertiser-title">Detailed Advertiser Guide</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Advertisers own their targeting and reporting; agencies can only view or review within authorization. Follow the order: account, campaign, ad group, creative, then launch validation.</p>
+              <div class="role-modal-path" aria-label="Advertiser Setup Order">
+                <span><b>1</b>Account</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>2</b>Campaign</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>3</b>Ad Group</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>4</b>Creative</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>5</b>Launch</span>
+              </div>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Account, Hierarchy, and Campaign Config</h3>
+                  <ul class="capability-list">
+                    <li><strong>Campaign:</strong> Set name, dates, traffic scope, total budget, daily budget, and enable status</li>
+                    <li><strong>Ad Group:</strong> Set USD CPM price, landing page, budget, impression/click frequency, geo, device, audience, and supply targeting</li>
+                    <li><strong>Creative:</strong> Check banner, video, or native dimensions, media type, content, weight, and enable status</li>
+                    <li>Start with broad rules to validate small traffic, then tighten targeting gradually. Avoid multiple mutually-exclusive conditions.</li>
+                    <li>When running external DSP, maintain the bid endpoint; platform manages credentials, review, traffic scope, and routing</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Launch, Measurement, and Troubleshooting</h3>
+                  <ul class="capability-list">
+                    <li>Account, campaign, ad group, and at least one creative must all be active at the same time; dates, budget, and dimensions must also match</li>
+                    <li>Banners needing platform click tracking must explicitly use <code>{CLICK_URL}</code>; do not modify signed impression or click params</li>
+                    <li>Impressions and clicks count after valid tracking arrives; spend is calculated from USD CPM of valid impressions ÷ 1000</li>
+                    <li>Reports aggregate from logs and accounting tasks on a schedule, not real-time; save test time and object info for troubleshooting</li>
+                    <li>When bids are missing, check account and campaign status, dates, budget, creative dimensions, USD floor, supply scope, and targeting in order</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>Launch Boundary:</strong> Saving does not mean launched into production. Verify all parent object status, runtime cache, and config requiring operator approval are active.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html">Read Full Advertiser and Agency Manual</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Log In</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal role-guide-modal role-guide-modal-publisher" id="role-guide-publisher" tabindex="-1" role="dialog" aria-labelledby="role-guide-publisher-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-globe" aria-hidden="true"></i></span><div><span>Publisher</span><h2 class="modal-title" id="role-guide-publisher-title">Detailed Publisher Integration Guide</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Publisher accounts organize traffic sources (websites/apps) and their ad slots. After resource review and slot config, use page-generated latest tokens to integrate and validate fill and no-fill separately.</p>
+              <div class="role-modal-path role-modal-path-publisher" aria-label="Publisher Setup Order">
+                <span><b>1</b>Traffic Source</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>2</b>Ad Slot</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>3</b>Integration</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>4</b>Request Validation</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>5</b>Report Acceptance</span>
+              </div>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Resource, Ad Slot, and Integration Config</h3>
+                  <ul class="capability-list">
+                    <li><strong>Traffic Source:</strong> Choose web or app, domain/package name, and integration method (web ad code, SDK, or API)</li>
+                    <li><strong>Ad Slot:</strong> Set trusted dimensions, USD CPM floor, media types, devices, position, refresh, and quality rules</li>
+                    <li>Server takes the higher of platform floor and request floor; request dimensions cannot override platform config</li>
+                    <li>Always use latest-generated <code>site</code> and <code>slot</code> tokens from the ad slot page; do not guess, truncate, swap, or edit manually</li>
+                    <li>Browser actual <code>Origin</code>/<code>Referer</code> host must exactly match the platform-registered site host</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Requests, Privacy, and Launch Validation</h3>
+                  <ul class="capability-list">
+                    <li>Web ad code and app/backend samples both request <code>POST /pz</code>; choose HTML, JSON, or OpenRTB response per need</li>
+                    <li>Banner, video, and native are supported; structured responses must be safely rendered per media type; web samples use sandbox iframe</li>
+                    <li><code>200</code> empty is normal no-fill, not a network error; do not retry quickly</li>
+                    <li>Send real applicable TCF, GPP, COPPA, GPC/DNT/LMT privacy signals; SDK integration must not rely on browser cookies</li>
+                    <li>Launch validation must test at least one fill, one no-fill, cache propagation, and report processing; save test time and slot info</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-publisher"><strong>App Integration Note:</strong> Currently provides <code>/pz</code> protocol, JSON/OpenRTB responses, and SDK/API samples. Native Android/iOS SDKs will be provided after specific integration needs are confirmed.</div>
+            </div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html">Read Full Publisher Manual</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Log In</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <section id="capabilities" class="section capabilities">
+        <div class="container">
+          <div class="section-intro text-center">
+            <p class="eyebrow eyebrow-dark">Technology and Product Capabilities</p>
+            <h2>Platform Capabilities Across DSP, SSP, and ADX</h2>
+            <p>Eight capability modules span ad delivery, traffic monetization, and OpenRTB interchange, plus measurement, privacy, traffic quality, accounting, and operations. Click a card for details.</p>
+          </div>
+          <div class="row capability-grid">
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-dsp" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-crosshairs" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Advertiser Delivery · DSP</span>
+                <h3>DSP Delivery and Bidding</h3>
+                <p>CPM bidding, budget and time controls, multi-dimensional targeting, frequency, and multi-format creatives.</p>
+                <span class="capability-more">View delivery capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-ssp" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Traffic Integration · SSP</span>
+                <h3>SSP Direct Traffic Monetization</h3>
+                <p>Web and app traffic with server-side floors, ad slot integration, and supply transparency.</p>
+                <span class="capability-more">View traffic capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-openrtb" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-exchange" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Trade Interchange · ADX / OpenRTB</span>
+                <h3>ADX and OpenRTB Interchange</h3>
+                <p>OpenRTB 2.5 controlled-compatible spec with multi-placement, compression, and per-bidder isolation.</p>
+                <span class="capability-more">View interchange spec <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-measurement" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Measurement and Analysis</span>
+                <h3>Measurement, Attribution, and Analysis</h3>
+                <p>Unified impression, click, conversion, attribution, account reports, and controlled experiments.</p>
+                <span class="capability-more">View measurement capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-security" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-shield" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Privacy and Access Control</span>
+                <h3>Privacy, Identity, and Render Safety</h3>
+                <p>Context by default plus signal assessment, data minimization, dual auth, and safe rendering.</p>
+                <span class="capability-more">View security boundary <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-quality" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Traffic Quality</span>
+                <h3>Traffic Quality and Risk Control</h3>
+                <p>Explainable, gradable, and human-reviewable rule-based flow to reduce anomalies and settlement errors.</p>
+                <span class="capability-more">View quality control <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-accounting" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-calculator" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Accounting and Settlement</span>
+                <h3>Accounting, Settlement, and Managed Payments</h3>
+                <p>Auditable invoices in unified USD CPM basis with optional managed payment and collection.</p>
+                <span class="capability-more">View accounting capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-operations" aria-haspopup="dialog">
+                <span class="capability-icon"><i class="fa fa-cogs" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Admin Interface and Operations</span>
+                <h3>Open API and Production Operations</h3>
+                <p>Versioned management API, traffic protection, operational metrics, health checks, and single-region recovery.</p>
+                <span class="capability-more">View platform engineering <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="modal fade capability-modal" id="capability-dsp" tabindex="-1" role="dialog" aria-labelledby="capability-dsp-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-crosshairs" aria-hidden="true"></i></span><div><span>Advertiser Delivery · DSP</span><h2 class="modal-title" id="capability-dsp-title">DSP Delivery and Bidding</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Predictable CPM bidding, enforced delivery boundaries, and strict creative validation make up the main advertiser delivery path.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Delivery Control</h3>
+                  <ul class="capability-list">
+                    <li>Full hierarchy: advertiser, campaign, ad group, creative</li>
+                    <li>Total and daily spend caps, impression/click caps, flight dates, and weekly time windows</li>
+                    <li>Fast or even pacing; deterministic pacing, not auto-model-adjusted</li>
+                    <li>Geo, device, language, media, category, channel, and uploaded audience targeting</li>
+                    <li>Per-user impression/click frequency and minimum impression interval</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Bidding and Creatives</h3>
+                  <ul class="capability-list">
+                    <li>Production bidding uses positive USD CPM; highest qualified ad group wins</li>
+                    <li>Creative weight only rotates within a winning ad group, not across ad group priority</li>
+                    <li>Banner, video, and structured native creatives match by dimensions, media type, and MIME</li>
+                    <li>HTTPS, callback URLs, native assets, and VAST resources validated before bid entry</li>
+                    <li>Shared Redis atomic budget reserve; failure and callback follow explicit rules for release or confirm</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>Pricing Boundary:</strong> Production bidding is USD CPM only; historical CPC, CPA, ROI values do not auto-convert to payable prices.</div>
+            </div>
+            <div class="modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html">Advertiser and Agency Manual</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-ssp" tabindex="-1" role="dialog" aria-labelledby="capability-ssp-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-globe" aria-hidden="true"></i></span><div><span>Traffic Integration · SSP</span><h2 class="modal-title" id="capability-ssp-title">SSP Direct Traffic Monetization</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Publisher account, traffic source, and ad slot ownership boundaries provide unified direct integration and business review for websites and apps.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Integration and Response</h3>
+                  <ul class="capability-list">
+                    <li>Web ad code and <code>POST /pz</code> use platform-generated site/slot tokens</li>
+                    <li>Web validates source host; app validates bundle/ID and integration type</li>
+                    <li>Support ordered HTML, JSON, and OpenRTB response with clear no-fill semantics</li>
+                    <li>Server uses the higher of platform floor and request floor; client cannot lower slot floor</li>
+                    <li>Web creatives load in unprivileged sandbox iframe, isolating from host page DOM</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Supply Management and Transparency</h3>
+                  <ul class="capability-list">
+                    <li>Website, app, slot, dimensions, media type, position, refresh, quality classification</li>
+                    <li>Publisher-submitted seller info, platform-reviewed for external disclosure</li>
+                    <li>Generate standard <code>source.schain</code> from approved info; do not trust client seller claims</li>
+                    <li>Traffic source, seller type, supply classification in privacy-safe report dimensions</li>
+                    <li>Pre-launch validation, cache publish, gradual rollout, pause, and rollback process</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-publisher"><strong>Mobile Integration Note:</strong> Currently provides app <code>/pz</code> protocol, JSON/OpenRTB responses, and SDK/API samples. Native Android/iOS SDKs will be provided after specific integration needs are confirmed.</div>
+            </div>
+            <div class="modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html">Publisher Manual</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-openrtb" tabindex="-1" role="dialog" aria-labelledby="capability-openrtb-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-exchange" aria-hidden="true"></i></span><div><span>Trade Interchange · ADX / OpenRTB</span><h2 class="modal-title" id="capability-openrtb-title">ADX and OpenRTB Interchange</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">OpenRTB 2.5 controlled-compatible spec for ad exchanges and external DSPs emphasizing compatibility, auditability, and per-bidder isolation.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Protocol Compatibility</h3>
+                  <ul class="capability-list">
+                    <li>OpenRTB 2.5 request and response with multi-placement support</li>
+                    <li>Explicit compatibility rules for banner, video, native, USD CPM/floor</li>
+                    <li>Negotiated gzip for request/response with separate pre/post-compression size limits</li>
+                    <li>Strict validation of request ID, placement ID, seat, media, dimensions, price, currency, timeout</li>
+                    <li>Callback, creative, and landing URL execution with HTTPS and security checks</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>External Demand-Side Bidding</h3>
+                  <ul class="capability-list">
+                    <li>Advertiser-owned bid endpoints; platform manages credentials, review, routing, and supply scope</li>
+                    <li>Fallback for no local fill; optional always-mode for qualified CPM competition</li>
+                    <li>Each bidder receives only assigned placements and cleaned-up context requests</li>
+                    <li>Invalid, late, or sub-floor external responses cannot replace qualified local results</li>
+                    <li>Proxy win/loss/impression/click callbacks; retry enables charge/pay/margin facts</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> OpenRTB support is a verified compatible subset, not unconditional pass-through of all optional extensions. External demand flow requires endpoint, credentials, routing, privacy disclosure, and gradual rollout acceptance before enabling per DSP.</div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-measurement" tabindex="-1" role="dialog" aria-labelledby="capability-measurement-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-bar-chart" aria-hidden="true"></i></span><div><span>Measurement and Analysis</span><h2 class="modal-title" id="capability-measurement-title">Measurement, Attribution, and Analysis</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Signatures, idempotency, and fixed basis keep data interpretable and auditable from bid callback through conversion and business reports.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Measurement and Attribution</h3>
+                  <ul class="capability-list">
+                    <li>Win, loss, impression, click callbacks use HMAC signature and explicit validity window</li>
+                    <li>Impression/click de-duplication; shared state failure does not block valid measurement events</li>
+                    <li>Backend behavior API supports conversion, purchase, download, video complete, named custom actions</li>
+                    <li>Advertiser event ID is idempotent; same delivery chain uses last-click-first, then view-through attribution</li>
+                    <li>Behavior data is analysis fact, not reverse-modify CPM accounting or budget reserve</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Reports and Experiments</h3>
+                  <ul class="capability-list">
+                    <li>Advertisers, publishers, and platform ops see reports scoped to their account login</li>
+                    <li>Impressions, clicks, CTR, actions, CVR, spend, revenue, cost, margin, ROI, ROAS</li>
+                    <li>Unified UTC, USD, data source, formulas, refresh timing, and partial data notes</li>
+                    <li>Deterministic grouping, additive exposure, and idempotent results support controlled experiments</li>
+                    <li>Experiments provide observation and analysis only, not auto-adjust bidding, budget, or rules</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status"><strong>Data Basis:</strong> Reports distinguish no data, partial data, and zero values; accounting is based on accepted impression facts, raw win/loss for analysis only.</div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-security" tabindex="-1" role="dialog" aria-labelledby="capability-security-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-shield" aria-hidden="true"></i></span><div><span>Privacy and Access Control</span><h2 class="modal-title" id="capability-security-title">Privacy, Identity, and Render Safety</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Place privacy decision before matching and external disclosure; restrict account permissions, audit, and creative execution to clear boundaries.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Privacy and Data Governance</h3>
+                  <ul class="capability-list">
+                    <li>Recognize applicable GDPR/TCF v2.3, US Privacy, GPP, COPPA, GPC, DNT/LMT signals</li>
+                    <li>Missing, refused, conflicting, or unsupported signals use context delivery; COPPA uses restricted mode</li>
+                    <li>All modes drop exact coordinates; context mode also drops user-identifying and detailed device data</li>
+                    <li>Frequency control and measurement IDs use domain-split HMAC pseudonyms; audit and external requests cleaned separately</li>
+                    <li>Logs, audiences, actions, and experiment facts all have configurable retention and deletion</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Account and Content Safety</h3>
+                  <ul class="capability-list">
+                    <li>Optional database session, TOTP dual auth, single-use recovery codes, and session revocation</li>
+                    <li>Role/action/account/resource authz; sensitive actions require recent re-auth</li>
+                    <li>Security events use fixed fields and immutable audit; sensitive credentials not in audit body</li>
+                    <li>Public and dashboard pages use context escaping; creative review shows escaped source only</li>
+                    <li>Executable creatives load only in ad delivery sandbox, not trusted HTML on admin pages</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Privacy minimization and render safety are baseline; enhanced session, dual auth, and fine-grained permissions enable after deployment completes key, email, migration, and permission acceptance.</div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-quality" tabindex="-1" role="dialog" aria-labelledby="capability-quality-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-search" aria-hidden="true"></i></span><div><span>Traffic Quality</span><h2 class="modal-title" id="capability-quality-title">Traffic Quality and Risk Control</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Explainable, gradable, human-reviewable rule flow to reduce anomalies and settlement errors, not opaque auto-classification.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Signals and Rules</h3>
+                  <ul class="capability-list">
+                    <li>Replay, event sequence anomalies, source/app mismatches, ID format anomalies</li>
+                    <li>Anomalous rates, anomalous CTR, automation evidence, partner policy signals</li>
+                    <li>Rule versions progress through draft, observe, gradual-rollout, enable, or disable</li>
+                    <li>Support observe, flag, rate-limit, reject, and isolate graduated actions</li>
+                    <li>When evidence missing or incomplete, auto-reduce enforcement strength; infrastructure failures not anomaly evidence</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Review and Accounting Boundary</h3>
+                  <ul class="capability-list">
+                    <li>Advertisers, publishers, partners see authorized cases and controlled evidence only</li>
+                    <li>Case history, manual review, appeals, independent action, rule rollback all auditable</li>
+                    <li>Invalid traffic generates exclusion, hold, or chargeback suggestions; accounting changes still need separate approval</li>
+                    <li>Internal events and partner IDs use HMAC digest; evidence and aggregate records have retention periods</li>
+                    <li>Delivery reads immutable snapshot; after snapshot expires, old rules do not block continued traffic</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Traffic quality off by default; requires permissions, rules, evidence sources, observation period, false-positive rate, appeals, and rollback acceptance before phased enable.</div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-accounting" tabindex="-1" role="dialog" aria-labelledby="capability-accounting-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-calculator" aria-hidden="true"></i></span><div><span>Accounting and Settlement</span><h2 class="modal-title" id="capability-accounting-title">Accounting, Settlement, and Managed Payments</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">Unified advertiser charge, publisher revenue, and external demand cost basis with auditable invoices, approvals, payment status, and exception reconciliation.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Accounting and Manual Settlement</h3>
+                  <ul class="capability-list">
+                    <li><code>usd-cpm-impression-v2</code> unifies USD CPM bid recording and settles impressions by CPM÷1000</li>
+                    <li>Separate advertiser cost, publisher revenue, and external demand charge/pay/margin records</li>
+                    <li>Daily, weekly, or monthly immutable source snapshot and stable CSV export</li>
+                    <li>Adjustments, confirmations, settlement, corrections use append records, not silent modification of original facts</li>
+                    <li>Create, review, settlement by different operators; retain external credential references</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Optional Managed Payment and Collection</h3>
+                  <ul class="capability-list">
+                    <li>Advertisers can fund via Stripe Checkout hosted page</li>
+                    <li>Publishers can submit collection account via Stripe Connect Express</li>
+                    <li>Platform holds only opaque processor object IDs, never full card/bank account or identity docs</li>
+                    <li>Signed callbacks, idempotent submit, and binding freeze prevent duplicate deposit or target swap</li>
+                    <li>Fees, refunds, disputes, reversal, transfer failure enter separate reconciliation exception flow</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Manual invoices are ongoing valid financial basis and failure fallback. Managed payment off by default; test or production both need separate legal, finance, tax, risk, privacy, and support approval.</div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade capability-modal" id="capability-operations" tabindex="-1" role="dialog" aria-labelledby="capability-operations-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-cogs" aria-hidden="true"></i></span><div><span>Admin Interface and Operations</span><h2 class="modal-title" id="capability-operations-title">Open API and Production Operations</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+              <p class="capability-modal-lead">External management interface, traffic admission, cache publish, operational metrics, and recovery process as a unified versioned platform engineering capability.</p>
+              <div class="row capability-detail">
+                <div class="col-md-6">
+                  <h3>Advertiser Management API</h3>
+                  <ul class="capability-list">
+                    <li>Independent versioned <code>/api/v1</code> described as OpenAPI 3.1 public contract</li>
+                    <li>Manage advertiser profile, campaigns, ad groups, creatives, targeting, publish actions, reports</li>
+                    <li>One-time credentials bind single advertiser, fixed permission, expiry, rotation, revocation</li>
+                    <li>Writes use Idempotency-Key; changes use ETag; cache validity confirmed by operation status</li>
+                    <li>Redis separately limits credential and advertiser quota; cross-account access rejected at resource boundary</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Traffic and Availability Engineering</h3>
+                  <ul class="capability-list">
+                    <li>Per-partner QPS, concurrency, body size, decompressed size, request time controls</li>
+                    <li>Protected metrics span rejection reason, latency, dependencies, cache freshness, queue, callbacks</li>
+                    <li><code>/healthz</code> and <code>/readyz</code> separate process alive and traffic-accept conditions</li>
+                    <li>Multi-node single-region supports graceful drain, 15-sec in-flight request flush, singleton task lease</li>
+                    <li>MySQL source-of-truth, Redis provides shared state/cache, NATS best-effort audit; cache atomic by-generation publish</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Management API off by default. Single-region has defined backup, recovery, and SLO evidence requirements, but platform does not claim 99.9% without continuous production measurement and recovery records.</div>
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
+          </div>
+        </div>
+      </div>
+
+      <section id="entry" class="section entry-section">
+        <div class="container">
+          <div class="section-intro text-center text-white">
+            <p class="eyebrow">Log In and Sign Up</p>
+            <h2>Account Entry Points</h2>
+            <p>Choose the correct account entry. Account status, balance, and production enable are determined by platform operations policy.</p>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-5 mb-4">
+              <article class="entry-card advertiser-entry">
+                <i class="fa fa-bullseye" aria-hidden="true"></i>
+                <h3>Advertiser / Agency</h3>
+                <p>Manage campaigns, ad groups, creatives, targeting, bid endpoints, and delivery reports.</p>
+                <div class="entry-links"><a href="/goto/adv/e/campaign?action=topics">Log In to Advertiser Dashboard</a><a href="/goto/agent/e/adv?action=topics">Log In to Agency Console</a><a href="manuals/advertiser.en.html">View Manual</a></div>
+              </article>
+            </div>
+            <div class="col-lg-5 mb-4">
+              <article class="entry-card publisher-entry">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+                <h3>Publisher</h3>
+                <p>Manage websites, apps, ad slots, integration code, and last-24h reports.</p>
+                <div class="entry-links"><a href="/goto/pub/e/site?action=topics">Log In to Publisher Dashboard</a><a href="manuals/publisher.en.html">View Manual</a></div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="help" class="section help-section">
+        <div class="container">
+          <div class="section-intro text-center">
+            <p class="eyebrow eyebrow-dark">Help</p>
+            <h2>Guide and FAQ</h2>
+          </div>
+          <div class="faq-list">
+            <details><summary>Why does the page show "saved" but the campaign or ad slot behavior hasn't changed?</summary><p>Delivery requests read runtime cache, not the database. Verify object status first, then contact platform to check if cache has refreshed to the running nodes.</p></details>
+            <details><summary>Why is there no bid even though the advertiser already has a creative?</summary><p>Check account and parent object status, flight dates, budget, creative dimensions, USD floor, supply traffic scope, and audience targeting in order. Enabling the creative alone is not enough to bypass parent rules.</p></details>
+            <details><summary>The publisher request returns 200, but ad content is empty. Is this a failure?</summary><p>Not necessarily. Valid requests also return 200 when no matching ads exist; empty string or unfilled object is normal no-fill. Clients should hide or recycle the container.</p></details>
+            <details><summary>Why are reports not instant-updated?</summary><p>Impression, click, and accounting data are generated from log aggregation and scheduled tasks, so there is processing delay. During validation, save test time, account, campaign or slot info.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-8"><p class="eyebrow eyebrow-dark">Technical Support</p><h2>Contact Technical Support</h2><p>When contacting, provide occurrence time, account type, campaign or ad slot, request result, and recently modified config.</p></div>
+            <div class="col-lg-4 text-lg-right"><a class="btn btn-primary btn-lg" href="mailto:support@w8m.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> support@w8m.com</a></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container d-md-flex justify-content-between align-items-center">
+        <p>&copy; 2026 W8M Network Inc.</p>
+        <nav aria-label="Footer navigation"><a href="manuals/advertiser.en.html">Advertiser and Agency Manual</a><a href="manuals/publisher.en.html">Publisher Integration Manual</a><a href="#page-top">Back to Top</a></nav>
+      </div>
+    </footer>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      (function () {
+        var nav = document.getElementById('mainNav');
+        function updateNav() {
+          nav.classList.toggle('navbar-scrolled', window.scrollY > 24);
+        }
+        updateNav();
+        window.addEventListener('scroll', updateNav, { passive: true });
+
+        document.querySelectorAll('[data-role-tab]').forEach(function (link) {
+          link.addEventListener('click', function (event) {
+            event.preventDefault();
+            var tab = link.getAttribute('data-role-tab') === 'publisher' ? '#publisher-tab' : '#advertiser-tab';
+            $(tab).tab('show');
+            document.getElementById('role-guide').scrollIntoView({ behavior: 'smooth' });
+          });
+        });
+
+        document.querySelectorAll('.journey-step-action').forEach(function (card) {
+          card.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              card.click();
+            }
+          });
+        });
+
+        document.querySelectorAll('#navbarResponsive a[href^="#"]').forEach(function (link) {
+          link.addEventListener('click', function () { $('#navbarResponsive').collapse('hide'); });
+        });
+      }());
+    </script>
+  </body>
+</html>
