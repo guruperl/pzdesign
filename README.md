@@ -16,9 +16,10 @@ Aofei/Winter DSP checkout. It depends on the external Genelet framework module
   and module tests.
 - `tmpls/<role>/*.g` contains shared role-level layout fragments such as
   headers, sidebars, and footers.
-- `*.g` templates are the active UI templates.
-- `*.e` templates are English variants kept parse-clean where practical, but
-  they are not the primary runtime surface.
+- `*.g` templates are the Chinese-language UI templates.
+- `*.e` templates are English-language variants; both are first-class runtime
+  surfaces, Chinese is the source of truth, and English must be structurally
+  identical.
 - `www/` is the static document root used by the UI templates.
 - `tools/check-templates.go` parses the templates with Go's `html/template`,
   rejects unsafe URL/resource/stored-markup source patterns, and prevents raw

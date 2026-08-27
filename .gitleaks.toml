@@ -8,7 +8,4 @@ description = "Ignored logs and uploaded media are not repository inputs"
 paths = [
   '''^logs/''',
   '''^www/uploads/''',
-  '''^www/1\.0\.8/vendors/js/quill\.min\.js$''',
-  '''^www/admin/assets/js/docs\.min\.js$''',
-  '''^www/admin/assets/js/src/application\.js$''',
 ]

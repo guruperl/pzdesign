@@ -1,0 +1,31 @@
+# Disposable multi-milestone launch reference.
+# Reconcile this suggestion against milestone.md and the current status files.
+# Delete it after launching the goal, or whenever it becomes stale.
+
+Using GOAL.md, execute this loop.
+
+STATUS_ORDER:
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03
+
+STATUS_FILE_MAP:
+L01 = memory-bank/status-L01.md
+L02 = memory-bank/status-L02.md
+L03 = memory-bank/status-L03.md
+T02 = memory-bank/status-T02.md
+T01 = memory-bank/status-T01.md
+L04 = memory-bank/status-L04.md
+T03 = memory-bank/status-T03.md
+
+DOWNSTREAM_IMPACTS:
+L01 -> L04, T01, T02, T03
+L02 -> T01
+L03 -> L04, T02
+T02 -> L04, T03
+T01 -> L04
+
+COMMIT_POLICY: task
+EXTERNAL_MUTATIONS: none
+
+Completion condition: every required status is complete, every triggered
+conditional status is complete, and every milestone's documented verification
+passes.

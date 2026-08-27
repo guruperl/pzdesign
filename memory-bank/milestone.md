@@ -1,0 +1,138 @@
+# Milestones
+
+## Delivery outcome
+
+A visitor reaching W8M is served the front page in their browser's language, can
+switch language with one click, and finds a complete English edition behind that
+switch. The active horizon delivers that end to end for the public surface:
+land in English, register in English, read English manuals, toggle both ways.
+
+## Lanes
+
+| Lane | Meaning |
+|---|---|
+| `L` | Language platform — negotiation, cookie, toggle, chartag entry links, guards, and policy documents. Reviewed as code. |
+| `T` | Translation — producing the English editions of templates, the landing page, and the manuals. Reviewed as copy, and long-lived through parity maintenance. |
+
+Lane letters `A`, `D`, `I`, `P`, `R`, and `S` are reserved: this repository's
+prose uses them as Aofei milestone identifiers. Lane `M` is reserved as the
+archive lane in `memory-bank/architecture.md`.
+
+## Execution order
+
+```text
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03
+```
+
+| ID | Milestone | Status file | Depends on | Downstream |
+|---|---|---|---|---|
+| L01 | English content standard and copy guard | [status-L01](status-L01.md) | — | L04, T01, T02, T03 |
+| L02 | `.g`/`.e` structural parity check | [status-L02](status-L02.md) | — | T01 |
+| L03 | Front-page negotiation and language cookie | [status-L03](status-L03.md) | — | L04, T02 |
+| T02 | English front page | [status-T02](status-T02.md) | L01, L03 | L04, T03 |
+| T01 | Public account surface in English | [status-T01](status-T01.md) | L01, L02 | L04 |
+| L04 | Language toggle and entry-point links | [status-L04](status-L04.md) | L01, L03, T01, T02 | — |
+| T03 | English manuals | [status-T03](status-T03.md) | L01, T02 | — |
+
+## Acceptance
+
+Every milestone must leave the repository-wide pipeline green:
+
+```bash
+GOWORK=off go test ./...
+GOWORK=off go vet ./...
+GOWORK=off go run ./tools/check-templates.go -ext=.g,.e
+GOWORK=off go run ./tools/check-public-copy
+./tools/check-public-data.sh
+git diff --check
+```
+
+Per-milestone acceptance, including the added guards and the named manual
+browser pass, is recorded in each status file.
+
+## Horizon boundary
+
+The horizon ends at T03. Translating the six role workspaces is approved scope,
+not deferred work, but it is 205 further files of mechanical translation that
+does not change what a visitor can verify. It is sequenced as the next horizon
+and gets permanent IDs only when that breakdown is approved:
+
+- Advertiser workspace — 67 files (51 action templates, 16 role fragments)
+- Publisher workspace — 43 files (32 action, 11 fragments)
+- Admin workspace — 74 files (60 action, 14 fragments)
+- Agent workspace — 14 files (7 action, 7 fragments)
+- Analyst workspace — 7 files (3 action, 4 fragments)
+
+## Candidate Directions
+
+| Direction | Why deferred | Promotion trigger |
+|---|---|---|
+| Message-catalog i18n replacing the dual template sets | The chartag mechanism already works and the parity check contains the drift risk; replacing it would change the Genelet and Summer rendering contract | A third language is requested, or parity maintenance becomes the dominant cost of template work |
+| English editions of the Aofei-sourced operational manuals | Their Chinese sources live in `../aofei/docs/` and are outside this repository's boundary | Non-Chinese-reading operators join and need the operational manuals |
+
+Candidate directions have no lane letter, no ID, no status file, and no launch
+entry. When a trigger becomes true, reconsider the candidate and obtain approval
+before allocating the next unused permanent ID.
+
+## Review finding severity
+
+P1 and P2 are **engineering review priorities**. They are not product-domain
+terms, not milestone execution priority, and not status markers.
+
+- **P1** — a defect that breaks correctness, security, privacy, or data
+  integrity for a realistic input or state. Typical examples here: a value
+  reaching a template without contextual escaping, a scope derived from request
+  input instead of the verified session, money handled as a float, a stored
+  creative source fetched or executed by a control-plane page, or an English
+  form whose field contract diverges from its Chinese twin.
+- **P2** — a defect that degrades a documented contract, guard, or operational
+  behavior without an immediate correctness break. Typical examples: a guard
+  that no longer covers the surface it claims, a template that parses but omits
+  a required account action, a negotiation path with no test, or documentation
+  that contradicts the code it governs.
+
+Classification follows impact, likelihood, and affected scope — never fix size.
+A one-line change can be P1 and a large refactor can be below P2. Definitions in
+`AGENTS.md` or a linked project review policy override these defaults.
+
+**Gate effect:** a P1 or P2 finding blocks milestone completion until fixed and
+re-reviewed. Lower-severity findings do not block; record them and, if they are
+worth doing, raise them as candidate directions or rows in a later milestone.
+
+## Milestone review procedure
+
+The initial deep-review pass of a milestone is **iteration 1**. After every P1,
+P2, or higher-severity fix, rerun the affected verification and review the whole
+milestone again — not only the changed lines. The gate passes only when a review
+finds no P1, P2, or higher-severity issue.
+
+The gate is limited to **10 iterations**, which never reset across sessions or
+reviewers. Persist the current iteration number in the milestone's status notes
+so it survives a context change. If iteration 10 still finds a blocking issue,
+leave the milestone incomplete and record the findings with a `[!]` blocked row
+naming owner, missing input, impact, and unblock condition.
+
+## New review intake
+
+For a code, architecture, or security review received after this harness exists:
+
+1. **Revalidate against current state.** A finding written against an older tree
+   may already be fixed, moved, or invalidated. Confirm each one in the current
+   repository before acting on it.
+2. **Preserve both severities.** Record the source's severity and your local
+   severity when they differ, with the reason for the difference.
+3. **Get approval before writing.** Propose the disposition of every finding and
+   every file action, and wait.
+4. **Place confirmed work.** In-scope findings join an open or pending milestone
+   whose owner already covers that area. Completed history is never reopened; a
+   defect found in finished work gets a remediation milestone that names its
+   lineage.
+5. **Sequence by severity.** P1, P2, or higher findings enter the
+   dependency-closed active horizon. Optional lower-severity findings go to
+   Candidate Directions.
+6. **Record provenance portably** in the affected milestone and status notes —
+   review name, date, and finding identifier. Do not add a copy of the review or
+   a separate finding ledger to the repository.
+
+An intake review counts as a bounded-gate iteration only when it was explicitly
+requested as the next pass of an already active persisted gate.

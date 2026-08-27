@@ -9,8 +9,10 @@ URLs, and JavaScript string contexts.
 
 Genelet composes each authenticated action template with the shared files at
 `tmpls/<role>/*.{g,e}`. Public web actions use the same renderer with the
-`tmpls/web` layout. The active Chinese surface is `.g`; `.e` remains secondary
-but is subject to the same parser and source-policy checks.
+`tmpls/web` layout. Both `.g` (Chinese) and `.e` (English) are first-class
+runtime surfaces; Chinese is the source of truth, and both are subject to the
+same parser and source-policy checks. English editions must be structurally
+identical to their Chinese source.
 
 | Surface | Entry points | Untrusted or stored inputs | Required treatment |
 |---|---|---|---|
