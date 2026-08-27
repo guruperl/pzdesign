@@ -13,6 +13,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"strings"
 	"sync/atomic"
 	"syscall"
 	"time"
@@ -319,6 +321,10 @@ func newServeMuxWithManagementAPI(sc *dsp.Controller, geneletHandler http.Handle
 }
 
 func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, suppliedHealth *serviceHealth, apiService *managementapi.Service, paymentService *hostedpayment.Service) *http.ServeMux {
+	docRoot := ""
+	if gc, ok := geneletHandler.(*genelet.Controller); ok {
+		docRoot = gc.C.DocumentRoot
+	}
 	mux := http.NewServeMux()
 	health := newServiceHealth(sc)
 	health.accepting.Store(true)
@@ -356,8 +362,43 @@ func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, su
 		mux.Handle("POST /webhooks/stripe", paymentService.WebhookHandler())
 	}
 	mux.Handle("/webhooks/", http.NotFoundHandler())
-	mux.Handle("/", geneletHandler)
+	mux.Handle("/", frontPageWrapper(geneletHandler, docRoot))
 	return mux
+}
+
+func frontPageWrapper(next http.Handler, docRoot string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "GET" && (r.URL.Path == "/" || r.URL.Path == "/index.html") {
+			lang := negotiateLanguage(r)
+			filename := "index.html"
+			if lang == "en" {
+				filename = "index.en.html"
+			}
+			path := filepath.Join(docRoot, filename)
+			if _, err := os.Stat(path); err != nil {
+				filename = "index.html"
+				path = filepath.Join(docRoot, filename)
+			}
+			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+			http.ServeFile(w, r, path)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func negotiateLanguage(r *http.Request) string {
+	cookie, err := r.Cookie("w8m_lang")
+	if err == nil && cookie.Value != "" {
+		if cookie.Value == "en" || cookie.Value == "zh" {
+			return cookie.Value
+		}
+	}
+	acceptLang := r.Header.Get("Accept-Language")
+	if strings.Contains(acceptLang, "zh") {
+		return "zh"
+	}
+	return "en"
 }
 
 func pzCORS(next http.HandlerFunc) http.HandlerFunc {
