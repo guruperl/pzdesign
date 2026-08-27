@@ -1,22 +1,25 @@
 {{ template "header" .}}
-{{ template "advheader" .}}
+{{ template "advheader" }}
 
-<div class="row justify-content-center">
-	<div class="col-md-6">
-		<div class="card mx-4">
-			<div class="card-body p-4">
-            	<h1>Advertiser Password</h1>
-            	<p class="text-muted">Check Email!</p>
-				Please check your email to reset password, 
-				if you have valid advertiser registration.
-			</div>
-		</div>
-	</div>
+<div class="account-card account-card-compact theme-advertiser">
+  <aside class="account-context">
+    <div class="account-context-copy">
+      <span class="account-role-mark"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+      <p class="account-eyebrow">Advertiser Account</p>
+      <h2>Check Your Email</h2>
+      <p>A password reset link has been sent to your registered email.</p>
+    </div>
+    <div class="account-context-footer"><a href="/goto/adv/e/campaign?action=topics">Back to Log In</a></div>
+  </aside>
+  <section class="account-form-panel">
+    <div class="account-form-heading">
+      <span class="account-kicker">Password Reset</span>
+      <h1>Reset Email Sent</h1>
+      <p>Check your inbox for the reset link. The link is valid for 24 hours.</p>
+    </div>
+  </section>
 </div>
 
-{{ template "footer" .}}
-
-
+{{ template "footer" }}
 </body>
 </html>
-

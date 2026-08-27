@@ -2,7 +2,7 @@
 # Format: relative path to .g file or relative path to .g file followed by " form-fields" for form mismatches
 # This file shrinks as work is completed; additions require a stated reason
 
-# Missing .e twins (76 total, concentrated in admin/30, adv/8, pub/5, web/5, agent/7, analyst/3)
+# Missing .e twins (70 total, concentrated in admin/30, adv/8, pub/5, agent/7, analyst/3; web/0 complete)
 tmpls/admin/bidder.g
 tmpls/admin/bidder/approve.g
 tmpls/admin/bidder/edit.g
@@ -75,14 +75,8 @@ tmpls/pub/ledger/topicsMid24Hours.g
 tmpls/pub/security.g
 tmpls/pub/ac/inserts.g
 tmpls/pub/ac/startnew.g
-tmpls/web/adv.g
-tmpls/web/adv/footer.g
-tmpls/web/adv/header.g
-tmpls/web/pub.g
-tmpls/web/pub/footer.g
-tmpls/web/pub/header.g
 
-# Form field name mismatches in existing pairs (22 total)
+# Form field name mismatches in existing pairs (16 total; web/0 complete)
 tmpls/admin/apicredential/page.g form-fields
 tmpls/admin/hostedpayment/page.g form-fields
 tmpls/admin/pub/edit.g form-fields
@@ -99,9 +93,3 @@ tmpls/pub/site/edit.g form-fields
 tmpls/pub/site/startnew.g form-fields
 tmpls/pub/slot/edit.g form-fields
 tmpls/pub/slot/startnew.g form-fields
-tmpls/web/adv/startnew.g form-fields
-tmpls/web/adv/startreset.g form-fields
-tmpls/web/adv/startretrieve.g form-fields
-tmpls/web/pub/startnew.g form-fields
-tmpls/web/pub/startreset.g form-fields
-tmpls/web/pub/startretrieve.g form-fields

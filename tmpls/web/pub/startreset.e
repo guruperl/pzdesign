@@ -1,94 +1,65 @@
-{{ template "header" }}
-{{ template "pubheader" }}
+{{ template "header" .}}
+{{ template "pubheader" .}}
 
-<form class="form" id="pubReset" action=pub method=post>
-<input type=hidden name=action value="resetpass">
-<input type=hidden name=pub_id value="{{index .ARGS.pub_id 0}}">
-<input type=hidden name=email value="{{index .ARGS.email 0}}">
-<input type=hidden name=stamp value="{{index .ARGS.stamp 0}}">
-<input type=hidden name=firstname value="{{index .ARGS.firstname 0}}">
-<input type=hidden name=lastname value="{{index .ARGS.lastname 0}}">
-<input type=hidden name=md5 value="{{index .ARGS.md5 0}}">
-
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card mx-4">
-          <div class="card-body p-4">
-            <h1>Publisher Password</h1>
-            <p class="text-muted">Reset Publisher's Password</p>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-              <input type="password" name=passwd id="passwd" class="form-control" placeholder="Password (at least 12 characters)" minlength="12" required>
-            </div>
-
-            <div class="input-group mb-4">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="icon-lock"></i></span>
-              </div>
-              <input type="password" name=confirm id="confirm" class="form-control" placeholder="Repeat password" minlength="12" required>
-            </div>
-
-            <div class="input-group mb-4"><input type="text" name="recovery_code" id="recovery_code" class="form-control" placeholder="Recovery code (required when 2FA is enabled)" autocomplete="one-time-code"></div>
-
-            <div class="input-group mb-4">
-            <button type="submit" class="btn btn-block btn-primary">Continue</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
+<div class="account-card account-card-compact theme-publisher">
+  <aside class="account-context">
+    <div class="account-context-copy">
+      <span class="account-role-mark"><i class="fa fa-lock" aria-hidden="true"></i></span>
+      <p class="account-eyebrow">Publisher Account</p>
+      <h2>Set New Password</h2>
+      <p>Set a new password for your publisher account and verify both entries match.</p>
     </div>
-</form>
+    <div class="account-context-footer"><a href="/goto/pub/e/site?action=topics">Back to Publisher Log In</a></div>
+  </aside>
+  <section class="account-form-panel">
+    <div class="account-form-heading">
+      <span class="account-kicker">Password Reset</span>
+      <h1>Set New Password</h1>
+      <p>New password must be at least 12 characters.</p>
+    </div>
+    <form id="pubReset" action="pub" method="post">
+      <input type="hidden" name="action" value="resetpass">
+      <input type="hidden" name="pub_id" value="{{index .ARGS.pub_id 0}}">
+      <input type="hidden" name="email" value="{{index .ARGS.email 0}}">
+      <input type="hidden" name="stamp" value="{{index .ARGS.stamp 0}}">
+      <input type="hidden" name="firstname" value="{{index .ARGS.firstname 0}}">
+      <input type="hidden" name="lastname" value="{{index .ARGS.lastname 0}}">
+      <input type="hidden" name="md5" value="{{index .ARGS.md5 0}}">
+      <div class="account-field">
+        <label for="passwd">New Password</label>
+        <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="Enter new password" autocomplete="new-password" minlength="12" required></div>
+      </div>
+      <div class="account-field">
+        <label for="confirm">Confirm New Password</label>
+        <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="Re-enter new password" autocomplete="new-password" minlength="12" required></div>
+      </div>
+      <div class="account-field"><label for="recovery_code">Recovery Code (required if dual auth enabled)</label><div class="account-control"><i class="fa fa-shield" aria-hidden="true"></i><input type="text" name="recovery_code" id="recovery_code" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="one-time-code"></div></div>
+      <button type="submit" class="account-submit">Save New Password</button>
+    </form>
+  </section>
+</div>
 
-{{ template "footer" }}
-
-  <!-- Custom scripts required by form validation-->
-  <script>
-$(function (){
+{{ template "footer" .}}
+<script>
+$(function () {
   $('#pubReset').validate({
     rules: {
-      passwd: {
-        required: true,
-        minlength: 12
-      },
-      confirm: {
-        required: true,
-        minlength: 12,
-        equalTo: '#passwd'
-      }
+      passwd: { required: true, minlength: 12 },
+      confirm: { required: true, minlength: 12, equalTo: '#passwd' }
     },
     messages: {
-      passwd: {
-        required: 'Please provide a password',
-        minlength: 'Your password must be at least 12 characters long'
-      },
-      confirm: {
-        required: 'Please provide a password',
-        minlength: 'Your password must be at least 12 characters long',
-        equalTo: 'Please enter the same password as above'
-      }
+      passwd: { required: 'Please enter new password', minlength: 'Password must be at least 12 characters' },
+      confirm: { required: 'Please confirm new password', minlength: 'Password must be at least 12 characters', equalTo: 'Passwords do not match' }
     },
     errorElement: 'em',
-    errorPlacement: function ( error, element ) {
-      error.addClass( 'invalid-feedback' );
-      if ( element.prop( 'type' ) === 'checkbox' ) {
-        error.insertAfter( element.parent( 'label' ) );
-      } else {
-        error.insertAfter( element );
-      }
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      error.appendTo(element.closest('.account-field'));
     },
-    highlight: function ( element, errorClass, validClass ) {
-      $( element ).addClass( 'is-invalid' ).removeClass( 'is-valid' );
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $( element ).addClass( 'is-valid' ).removeClass( 'is-invalid' );
-    }
+    highlight: function (element) { $(element).addClass('is-invalid').removeClass('is-valid'); },
+    unhighlight: function (element) { $(element).addClass('is-valid').removeClass('is-invalid'); }
   });
 });
-  </script>
-
-  </body>
+</script>
+</body>
 </html>

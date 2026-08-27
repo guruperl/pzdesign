@@ -1,21 +1,25 @@
 {{ template "header" .}}
-{{ template "advheader" .}}
+{{ template "advheader" }}
 
-<div class="row justify-content-center">
-	<div class="col-md-6">
-		<div class="card mx-4">
-			<div class="card-body p-4">
-            	<h1>Password Reset</h1>
-            	<p class="text-muted">Advertiser Password Reset Complete!</p>
-Your reset is complete. Please <a href="/goto/adv/e/campaign?action=topics">login here.</a>
-			</div>
-		</div>
-	</div>
+<div class="account-card account-card-compact theme-advertiser">
+  <aside class="account-context">
+    <div class="account-context-copy">
+      <span class="account-role-mark"><i class="fa fa-check" aria-hidden="true"></i></span>
+      <p class="account-eyebrow">Advertiser Account</p>
+      <h2>Password Updated</h2>
+      <p>Your password has been successfully changed.</p>
+    </div>
+    <div class="account-context-footer"><a href="/goto/adv/e/campaign?action=topics">Go to Advertiser Dashboard</a></div>
+  </aside>
+  <section class="account-form-panel">
+    <div class="account-form-heading">
+      <span class="account-kicker">Confirmation</span>
+      <h1>Password Changed</h1>
+      <p>You can now log in with your new password.</p>
+    </div>
+  </section>
 </div>
 
-{{ template "footer" .}}
-
-
+{{ template "footer" }}
 </body>
 </html>
-
