@@ -18,6 +18,11 @@
 <table class="table table-striped table-sm">
     <tbody>
 <tr>
+<td>Domain:</td>
+<td><input type=text name=domain value="{{if $item.domain}}{{$item.domain}}{{end}}" size=10 />
+</td>
+</tr>
+<tr>
 <td>Firstname Lastname :</td>
 <td><input type=text name=firstname value="{{if $item.firstname}}{{$item.firstname}}{{end}}" size=10 />
 <input type=text name=lastname value="{{if $item.lastname}}{{$item.lastname}}{{end}}" size=10 /></td>

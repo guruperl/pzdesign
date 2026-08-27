@@ -6,14 +6,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"regexp"
 	"sort"
 	"strings"
-)
 
-var (
-	nameRegex   = regexp.MustCompile(`name="([^"]*)"`)
-	actionRegex = regexp.MustCompile(`name="action"\s+value="([^"]*)"`)
+	"golang.org/x/net/html"
 )
 
 func main() {
@@ -90,37 +86,58 @@ func check(root, exemptFile string) ([]string, error) {
 }
 
 func compareForms(gRel, eRel, gText, eText string, exempt map[string]bool) error {
-	gNames := extractNames(gText)
-	eNames := extractNames(eText)
+	gNames, gActions, err := extractFormContracts(gText)
+	if err != nil {
+		return fmt.Errorf("parse %s form contracts: %w", gRel, err)
+	}
+	eNames, eActions, err := extractFormContracts(eText)
+	if err != nil {
+		return fmt.Errorf("parse %s form contracts: %w", eRel, err)
+	}
 
 	if !setsEqual(gNames, eNames) {
 		exemptKey := gRel + " form-fields"
-		if !exempt[exemptKey] && !exempt[gRel+" form-fields"] {
+		if !exempt[exemptKey] {
 			return fmt.Errorf("%s form field names do not match %s", gRel, eRel)
 		}
+	}
+	if !setsEqual(gActions, eActions) && !exempt[gRel+" form-actions"] {
+		return fmt.Errorf("%s hidden action values do not match %s", gRel, eRel)
 	}
 
 	return nil
 }
 
-func extractNames(text string) map[string]bool {
+func extractFormContracts(text string) (map[string]bool, map[string]bool, error) {
 	names := make(map[string]bool)
-	for _, match := range nameRegex.FindAllStringSubmatch(text, -1) {
-		if len(match) > 1 && match[1] != "" && !strings.HasPrefix(match[1], "action") {
-			names[match[1]] = true
-		}
-	}
-	return names
-}
-
-func extractHiddenActions(text string) map[string]bool {
 	actions := make(map[string]bool)
-	for _, match := range actionRegex.FindAllStringSubmatch(text, -1) {
-		if len(match) > 1 && match[1] != "" {
-			actions[match[1]] = true
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
+		return nil, nil, err
+	}
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode {
+			switch node.Data {
+			case "input", "select", "textarea", "button":
+				attributes := make(map[string]string, len(node.Attr))
+				for _, attribute := range node.Attr {
+					attributes[strings.ToLower(attribute.Key)] = attribute.Val
+				}
+				name := attributes["name"]
+				if name == "action" && node.Data == "input" && strings.EqualFold(attributes["type"], "hidden") {
+					actions[attributes["value"]] = true
+				} else if name != "" {
+					names[name] = true
+				}
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
 		}
 	}
-	return actions
+	walk(document)
+	return names, actions, nil
 }
 
 func setsEqual(a, b map[string]bool) bool {

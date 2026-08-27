@@ -60,18 +60,27 @@ The public front page is static and therefore outside that mechanism. `cmd/unify
 owns exact `GET /` and `GET /index.html` handlers, registered ahead of the
 Genelet catch-all, which negotiate on `Accept-Language`, honor an explicit
 language cookie above the browser value, and fall back to the Chinese file when
-the English one is absent. Genelet's `staticPage` is unchanged.
+the English one is absent. Negotiated responses declare
+`Vary: Accept-Language, Cookie`, `Content-Language`, and private/no-cache policy.
+Exact `/goto/web/g/` and `/goto/web/e/` entry routes and the public
+`/language/{zh|en}` switch persist a `Secure`, `HttpOnly`, `SameSite=Lax`
+preference containing only `zh` or `en`. Redirect returns are limited to the
+selected `/goto/web/{g|e}/` subtree. Genelet's `staticPage` is unchanged.
 
-Language preference reaches only entry points: which front page is served and
-which `/goto/{role}/{g|e}/…` links are emitted. Authenticated requests are never
-redirected to a different chartag.
+Language preference reaches only public entry points. Authenticated requests
+are never redirected to a different chartag, and authenticated role headers do
+not expose a language toggle while 72 action templates still lack an English
+twin. The completed public `web` account flow retains its chartag-preserving
+toggle.
 
-Two guards keep the editions aligned. A structural parity check requires every
-`.g` action to have an `.e` twin with matching form targets, hidden action
-values, and input field names, carrying an explicit exemption file that shrinks
-as translation lands. `tools/check-public-copy` runs a shared walker with
-per-language rule sets, so English public files and `.e` templates are guarded
-the way Chinese ones already are.
+Two guards keep the editions aligned. A structural parity check parses real HTML
+form controls and requires every `.g` action to have an `.e` twin with matching
+input field names and hidden action values, carrying exact reviewed exceptions
+that shrink as authenticated translation lands. `tools/check-public-copy`
+walks both template editions, applies edition-specific copy rules, requires both
+public account matrices, rejects raw framework-error rendering, and parses real
+links so an opposite-edition route is allowed only in an exact language toggle
+or `hreflang` alternate element.
 
 ## Storage Adapters
 

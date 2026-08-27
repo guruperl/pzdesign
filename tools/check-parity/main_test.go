@@ -65,6 +65,50 @@ func TestFormFieldMismatch(t *testing.T) {
 	}
 }
 
+func TestHiddenActionMismatch(t *testing.T) {
+	tmpdir := t.TempDir()
+	testdir := filepath.Join(tmpdir, "tmpls", "role", "object")
+	if err := os.MkdirAll(testdir, 0755); err != nil {
+		t.Fatal(err)
+	}
+
+	gFile := filepath.Join(testdir, "example.g")
+	eFile := filepath.Join(testdir, "example.e")
+	if err := os.WriteFile(gFile, []byte(`<form><input value=insert type=hidden name=action><input name=company></form>`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(eFile, []byte(`<form><input name="action" type="hidden" value="update"><input name="company"></form>`), 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	exemptFile := filepath.Join(tmpdir, "exempt.txt")
+	if err := os.WriteFile(exemptFile, nil, 0644); err != nil {
+		t.Fatal(err)
+	}
+
+	failures, err := check(tmpdir, exemptFile)
+	if err != nil {
+		t.Fatalf("check failed: %v", err)
+	}
+	if len(failures) != 1 || !contains(failures[0], "hidden action values") {
+		t.Fatalf("hidden action mismatch failures = %v", failures)
+	}
+}
+
+func TestFormContractsIgnoreAttributeQuotingAndOrder(t *testing.T) {
+	gNames, gActions, err := extractFormContracts(`<input value=insert type=hidden name=action><input required name=company>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	eNames, eActions, err := extractFormContracts(`<input name="company" required><input name="action" type="hidden" value="insert">`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !setsEqual(gNames, eNames) || !setsEqual(gActions, eActions) {
+		t.Fatalf("equivalent form contracts differ: names=%v/%v actions=%v/%v", gNames, eNames, gActions, eActions)
+	}
+}
+
 func TestExemptionSkipsMismatch(t *testing.T) {
 	tmpdir := t.TempDir()
 	testdir := filepath.Join(tmpdir, "tmpls", "role", "object")

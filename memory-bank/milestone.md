@@ -21,18 +21,19 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
 |---|---|---|---|---|
-| L01 | English content standard and copy guard | [status-L01](status-L01.md) | — | L04, T01, T02, T03 |
-| L02 | `.g`/`.e` structural parity check | [status-L02](status-L02.md) | — | T01 |
-| L03 | Front-page negotiation and language cookie | [status-L03](status-L03.md) | — | L04, T02 |
-| T02 | English front page | [status-T02](status-T02.md) | L01, L03 | L04, T03 |
-| T01 | Public account surface in English | [status-T01](status-T01.md) | L01, L02 | L04 |
-| L04 | Language toggle and entry-point links | [status-L04](status-L04.md) | L01, L03, T01, T02 | — |
-| T03 | English manuals | [status-T03](status-T03.md) | L01, T02 | — |
+| L01 | English content standard and copy guard | [status-L01](status-L01.md) | — | L04, T01, T02, T03, L05 |
+| L02 | `.g`/`.e` structural parity check | [status-L02](status-L02.md) | — | T01, L05 |
+| L03 | Front-page negotiation and language cookie | [status-L03](status-L03.md) | — | L04, T02, L05 |
+| T02 | English front page | [status-T02](status-T02.md) | L01, L03 | L04, T03, L05 |
+| T01 | Public account surface in English | [status-T01](status-T01.md) | L01, L02 | L04, L05 |
+| L04 | Language toggle and entry-point links | [status-L04](status-L04.md) | L01, L03, T01, T02 | L05 |
+| T03 | English manuals | [status-T03](status-T03.md) | L01, T02 | L05 |
+| L05 | English surface review remediation | [status-L05](status-L05.md) | L01-L04, T01-T03 | — |
 
 ## Acceptance
 
@@ -52,9 +53,9 @@ browser pass, is recorded in each status file.
 
 ## Horizon boundary
 
-The horizon ends at T03. Translating the six role workspaces is approved scope,
-not deferred work, but it is 205 further files of mechanical translation that
-does not change what a visitor can verify. It is sequenced as the next horizon
+The remediation horizon ends at L05. Translating the authenticated role
+workspaces is not delivered here: it is 205 further files requiring
+role-by-role translation and contract review. It is the candidate next horizon
 and gets permanent IDs only when that breakdown is approved:
 
 - Advertiser workspace — 67 files (51 action templates, 16 role fragments)

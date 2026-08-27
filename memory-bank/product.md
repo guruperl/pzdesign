@@ -20,7 +20,7 @@ analyst, or a publisher sees and edits.
 | `agent` | Delegated administrator view over advertisers, campaigns, ad-groups, and creatives |
 | `analyst` | Read-only reporting, reachable only after an exact permission and resource grant; no product mutation |
 | `admin` | Full maintenance, approvals, routing configuration, cache publication triggers, and operational health views |
-| public `web` | Chinese landing page, manuals, registration, activation, password recovery, and reset for advertisers and publishers |
+| public `web` | Chinese and English landing pages, manuals, registration, activation, password recovery, and reset for advertisers and publishers |
 
 ## Domain Terminology
 
@@ -43,17 +43,19 @@ expressed as the Genelet **chartag**, the second segment of every route
 (`/goto/{role}/{chartag}/{object}`): `g` is Chinese and `e` is English. Both are
 configured as `text/html`.
 
-- **Chinese is the source of truth.** English is derived from it. The two must
-  not diverge structurally: for every Chinese action template there is an
-  English twin with the same form targets, hidden action values, and input field
-  names.
+- **Chinese is the source of truth.** English is derived from it. The completed
+  public/account surface has an English twin with the same form targets, hidden
+  action values, and input field names. Authenticated role workspaces remain
+  partial and are tracked by exact parity exceptions until a later translation
+  horizon closes them.
 - **The chartag in the URL is authoritative.** A shared or bookmarked link always
   renders the language it names. Nothing rewrites a language mid-session.
 - **The language preference is an entry-point decision.** A visitor's browser
-  languages choose the front page; an explicit toggle stores a preference that
-  outranks the browser on later visits. The preference selects which front page
-  is served and which `/goto/{role}/{g|e}/…` entry links are emitted — never
-  more than that.
+  languages choose the front page; an explicit public toggle stores a
+  non-identifying `w8m_lang` preference that outranks the browser on later
+  visits. Negotiated responses vary on `Accept-Language` and `Cookie` and are
+  private/no-cache. Authenticated role workspaces do not offer a global toggle
+  while their English action set is incomplete.
 - Account mail follows the chartag of the request that triggered it, so a
   registration started in English produces English mail.
 
@@ -92,10 +94,12 @@ without the Summer identity boundary: identity hardening with TOTP and named
 permissions, public account abuse protection, the advertiser management API and
 its credential lifecycle, traffic-quality review, and hosted funding and payout.
 
-In progress: the English edition. The chartag mechanism, both language
-configurations, and a partial English template set already exist; the English
-public front page, the English manuals, language negotiation, and the toggle do
-not yet.
+Shipping: the English public edition, including the static front page, manuals,
+advertiser/publisher account lifecycle, account mail, login/error guidance,
+language negotiation, and public toggle. The authenticated advertiser,
+publisher, administrator, agent, and analyst workspaces still have a partial
+English template set; their global language controls are deliberately absent so
+users cannot be routed into a missing action twin.
 
 Deliberately absent: any form collecting full card or bank credentials. The
 `payment`, `cc`, `cheque`, `alipay`, and `wechat` modules are retired,

@@ -75,10 +75,13 @@ build succeeds, all packages with tests report `ok`, the template parser reports
 171 active `.g` actions and 128 secondary `.e` actions with zero failures, the
 public-copy check reports zero failures, and the public-data guard passes.
 
-## Harnesses to be added
+## Language harnesses
 
-The `.g`/`.e` structural parity check and the English arm of the public-copy
-checker are active work; see `memory-bank/milestone.md`. Manual acceptance for
-language work is a browser pass with `zh-CN` and `en` `Accept-Language` against
-`/`, a toggle round-trip in both directions, and cookie persistence across a
-fresh visit.
+The `.g`/`.e` structural parity check and both language arms of the public-copy
+checker are active release gates. The parity guard compares parsed field names
+and hidden action values and records exact exceptions for the incomplete
+authenticated workspace. The copy guard walks `.g` and `.e`, requires both
+public account matrices, parses edition links, and rejects raw framework errors.
+Manual acceptance is a browser pass with `zh-CN` and `en` `Accept-Language`
+against `/`, a public toggle round-trip in both directions, and secure cookie
+persistence across a fresh visit.

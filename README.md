@@ -17,9 +17,9 @@ Aofei/Winter DSP checkout. It depends on the external Genelet framework module
 - `tmpls/<role>/*.g` contains shared role-level layout fragments such as
   headers, sidebars, and footers.
 - `*.g` templates are the Chinese-language UI templates.
-- `*.e` templates are English-language variants; both are first-class runtime
-  surfaces, Chinese is the source of truth, and English must be structurally
-  identical.
+- `*.e` templates are English-language variants. Chinese is the source of
+  truth; the public/account English surface is complete, while authenticated
+  role workspaces remain partial and are governed by exact parity exceptions.
 - `www/` is the static document root used by the UI templates.
 - `tools/check-templates.go` parses the templates with Go's `html/template`,
   rejects unsafe URL/resource/stored-markup source patterns, and prevents raw
@@ -39,7 +39,7 @@ Runtime asset groups under `www/`:
   advertiser entry pages use the landing page's coral role color and publisher
   entry pages use its teal role color. Keep authenticated dashboard styling
   separate from this public account surface.
-- `manuals/` contains the public Chinese advertiser/agency and
+- `manuals/` contains the public Chinese and English advertiser/agency and
   publisher/supply-side web manuals.
   Their operational content follows the sibling Aofei references
   `docs/advertiser-dsp-agent-manual.zh-CN.md` and
@@ -127,15 +127,6 @@ hidden while unavailable. Templates display only A01 statements, bounded
 states, and opaque provider identifiers; hosted URLs are one-time redirects
 and full card/bank data, raw webhooks, signatures, and secrets must never enter
 this repository or its page model. See
-`../aofei/docs/hosted-funding-payout.md`.
-
-When Aofei `hosted_payments.enabled` is explicitly enabled, `cmd/unify`
-constructs the provider service, mounts exact `POST /webhooks/stripe`, and
-registers `summer/hostedpayment` pages for administrator, advertiser, and
-publisher roles. The feature remains disabled by default. Templates display
-only A01 statements, bounded states, and opaque provider identifiers; hosted
-URLs are one-time redirects and full card/bank data, raw webhooks, signatures,
-and secrets must never enter this repository or its page model. See
 `../aofei/docs/hosted-funding-payout.md`.
 
 Public `/bid/{domain}` and `/pz` traffic is wrapped by Aofei's configured
@@ -249,15 +240,18 @@ GOWORK=off go run ./tools/check-public-copy
 gitleaks git --redact .
 ```
 
-The `.e` surface is secondary, but parsing and security-source policies are
-mandatory for both language variants. If an English variant has no runtime
-owner, keep it parse-clean and do not weaken the shared safety rules.
+Parsing and security-source policies are mandatory for both language variants.
+The public/account `.e` surface is supported. Authenticated `.e` workspaces are
+incomplete, expose no global language toggle, and must remain parse-clean and
+fail closed at every recorded parity exception until their translation horizon
+is completed.
 
-The public-copy check requires the complete Chinese advertiser/publisher
-account-action template matrix, preserves reset-form field contracts, and
-rejects retired account terms across public and authenticated Chinese
-templates. It also rejects slogan headings, raw framework errors, and
-Chinese-page links into the secondary `.e` surface.
+The public-copy check requires complete Chinese and English
+advertiser/publisher account-action matrices, applies edition-specific copy
+rules across `.g` and `.e`, rejects raw framework errors, and parses HTML links
+so opposite-edition routes appear only in exact language toggles or `hreflang`
+alternate elements. The parity check separately compares parsed field names and
+hidden action values.
 
 `.github/workflows/verify.yml` runs tests, vet, both template parsers, and
 staticcheck and the public-copy guard on pushes and pull requests. It checks out public Aofei beside this

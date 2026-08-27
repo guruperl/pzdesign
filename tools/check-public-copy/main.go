@@ -7,9 +7,16 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+
+	"golang.org/x/net/html"
 )
 
-var forbidden = []string{
+type publicFile struct {
+	path     string
+	language string
+}
+
+var deprecatedChineseCopy = []string{
 	"商家",
 	"商户",
 	"流量源公司",
@@ -37,6 +44,9 @@ var forbidden = []string{
 	"真实流量",
 	"从投放目标到可衡量的广告活动",
 	"从网站或 App 到可运营的广告位",
+}
+
+var untranslatedEnglishCopy = []string{
 	"Advertiser Workspace",
 	"Publisher Workspace",
 	"Continue",
@@ -89,6 +99,18 @@ var requiredSnippets = map[string][]string{
 	},
 	"www/manuals/advertiser.html": {"广告主与代理商使用手册", "外部 DSP / ADX 需求方接入与竞价"},
 	"www/manuals/publisher.html":  {"流量方（发布商）接入手册", "获取并部署网页广告码"},
+	"www/index.en.html": {
+		"W8M Advertising and Traffic Integration Platform",
+		"DSP, SSP, and ADX integrated workflow",
+		"Choose Your Account Type",
+		"Advertiser Workflow",
+		"Publisher Integration Workflow",
+		"Platform Capabilities Across DSP, SSP, and ADX",
+		"Account Entry Points",
+		"Contact Technical Support",
+	},
+	"www/manuals/advertiser.en.html": {"Advertiser and Agency Manual", "External DSP / ADX Demand-Side Integration and Bidding"},
+	"www/manuals/publisher.en.html":  {"Publisher Integration Manual", "Get and Deploy Web Ad Code"},
 	"www/css/w8m-home.css": {
 		`#capabilities .capability-card,`,
 		`.capability-modal[id^="capability-"] .capability-modal-icon`,
@@ -129,18 +151,24 @@ var requiredSnippets = map[string][]string{
 		`name="lastname"`,
 		`name="md5"`,
 	},
+	"tmpls/web/adv/retrieve.e":      {"Check Your Email", "The link is valid for 24 hours"},
+	"tmpls/web/pub/retrieve.e":      {"Check Your Email", "The link is valid for 24 hours"},
+	"tmpls/web/adv/insert.mail.e":   {"Activate Account", "W8M Advertising Platform"},
+	"tmpls/web/pub/insert.mail.e":   {"Activate Account", "W8M Advertising Platform"},
+	"tmpls/web/adv/retrieve.mail.e": {"Reset Password", "W8M Advertising Platform"},
+	"tmpls/web/pub/retrieve.mail.e": {"Reset Password", "W8M Advertising Platform"},
 }
 
 var accountActions = []string{
-	"activate.g",
-	"insert.g",
-	"insert.mail.g",
-	"resetpass.g",
-	"retrieve.g",
-	"retrieve.mail.g",
-	"startnew.g",
-	"startreset.g",
-	"startretrieve.g",
+	"activate",
+	"insert",
+	"insert.mail",
+	"resetpass",
+	"retrieve",
+	"retrieve.mail",
+	"startnew",
+	"startreset",
+	"startretrieve",
 }
 
 var capabilityModalIDs = []string{
@@ -198,46 +226,36 @@ func check(root string) ([]string, error) {
 	var failures []string
 	for _, role := range []string{"adv", "pub"} {
 		for _, action := range accountActions {
-			path := filepath.Join(root, "tmpls", "web", role, action)
-			if _, err := os.Stat(path); err != nil {
-				if os.IsNotExist(err) {
-					failures = append(failures, fmt.Sprintf("missing public template: %s", filepath.ToSlash(path)))
-					continue
+			for _, edition := range []string{"g", "e"} {
+				path := filepath.Join(root, "tmpls", "web", role, action+"."+edition)
+				if _, err := os.Stat(path); err != nil {
+					if os.IsNotExist(err) {
+						rel, _ := filepath.Rel(root, path)
+						failures = append(failures, fmt.Sprintf("missing public template: %s", filepath.ToSlash(rel)))
+						continue
+					}
+					return nil, err
 				}
-				return nil, err
 			}
 		}
 	}
 
-	for _, path := range files {
-		body, err := os.ReadFile(path)
+	for _, file := range files {
+		body, err := os.ReadFile(file.path)
 		if err != nil {
 			return nil, err
 		}
 		text := string(body)
-		rel, err := filepath.Rel(root, path)
+		rel, err := filepath.Rel(root, file.path)
 		if err != nil {
 			return nil, err
 		}
 		rel = filepath.ToSlash(rel)
-		for _, phrase := range forbidden {
-			if strings.Contains(text, phrase) {
-				failures = append(failures, fmt.Sprintf("%s contains disallowed public copy %q", rel, phrase))
-			}
+		copyFailures, err := checkCopy(rel, file.language, text)
+		if err != nil {
+			return nil, err
 		}
-		if strings.Contains(text, "{{.Errorstr}}") || strings.Contains(text, "{{ .Errorstr }}") {
-			failures = append(failures, fmt.Sprintf("%s renders a raw framework error", rel))
-		}
-		// Check that /goto/*/e/ links appear only in language toggle controls
-		for _, target := range []string{"/goto/adv/e/", "/goto/pub/e/", "/goto/agent/e/", "/goto/admin/e/"} {
-			if strings.Contains(text, target) {
-				// Language toggle links are permitted only in toggle controls
-				// Verify they appear within toggle-context markers
-				if !isLanguageToggleLink(text, target) {
-					failures = append(failures, fmt.Sprintf("%s contains edition-specific link %q outside toggle control", rel, target))
-				}
-			}
-		}
+		failures = append(failures, copyFailures...)
 	}
 
 	for rel, snippets := range requiredSnippets {
@@ -257,55 +275,37 @@ func check(root string) ([]string, error) {
 		}
 	}
 
-	indexBody, err := os.ReadFile(filepath.Join(root, "www", "index.html"))
-	if err != nil {
-		return nil, err
-	}
-	indexText := string(indexBody)
-	wantModalTriggers := len(capabilityModalIDs) + len(roleGuideModalIDs) + len(journeyModalIDs)
-	if got := strings.Count(indexText, `data-toggle="modal"`); got != wantModalTriggers {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d modal triggers, want %d", got, wantModalTriggers))
-	}
-	if got := strings.Count(indexText, `class="modal fade capability-modal" id="capability-`); got != len(capabilityModalIDs) {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d capability modals, want %d", got, len(capabilityModalIDs)))
-	}
-	if got := strings.Count(indexText, `capability-card-measurement`); got != len(capabilityModalIDs)*2 {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d measurement-themed capability elements, want %d", got, len(capabilityModalIDs)*2))
-	}
-	for _, modalID := range capabilityModalIDs {
-		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
-			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
+	for _, rel := range []string{"www/index.html", "www/index.en.html"} {
+		body, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(rel)))
+		if err != nil {
+			return nil, err
 		}
-		if strings.Count(indexText, `id="`+modalID+`"`) != 1 {
-			failures = append(failures, fmt.Sprintf("www/index.html must contain one modal with id %s", modalID))
+		failures = append(failures, checkIndexStructure(rel, string(body))...)
+	}
+
+	// Check hreflang bidirectionality for language pairs: index.html <-> index.en.html, etc.
+	// For each .en.html file, ensure both it and its .html counterpart have reciprocal hreflang tags
+	langPairs := [][2]string{
+		{"www/index.html", "www/index.en.html"},
+		{"www/manuals/advertiser.html", "www/manuals/advertiser.en.html"},
+		{"www/manuals/publisher.html", "www/manuals/publisher.en.html"},
+	}
+	for _, pair := range langPairs {
+		chinesePath := filepath.Join(root, pair[0])
+		englishPath := filepath.Join(root, pair[1])
+		chineseBody, err := os.ReadFile(chinesePath)
+		if err != nil {
+			return nil, err
 		}
-	}
-	if got := strings.Count(indexText, `class="modal fade capability-modal role-guide-modal`); got != len(roleGuideModalIDs) {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d role-guide modals, want %d", got, len(roleGuideModalIDs)))
-	}
-	for _, modalID := range roleGuideModalIDs {
-		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
-			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
+		englishBody, err := os.ReadFile(englishPath)
+		if err != nil {
+			return nil, err
 		}
-		if strings.Count(indexText, `id="`+modalID+`"`) != 1 {
-			failures = append(failures, fmt.Sprintf("www/index.html must contain one modal with id %s", modalID))
+		if !hasAlternateLink(string(chineseBody), filepath.Base(englishPath), "en") {
+			failures = append(failures, fmt.Sprintf("%s lacks an English alternate link to %s", pair[0], pair[1]))
 		}
-	}
-	if got := strings.Count(indexText, `class="modal fade capability-modal journey-modal`); got != len(journeyModalIDs) {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d journey modals, want %d", got, len(journeyModalIDs)))
-	}
-	if got := strings.Count(indexText, `class="journey-step journey-step-action`); got != len(journeyModalIDs) {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d clickable journey cards, want %d", got, len(journeyModalIDs)))
-	}
-	if got := strings.Count(indexText, `role="button" tabindex="0" data-toggle="modal" data-target="#journey-`); got != len(journeyModalIDs) {
-		failures = append(failures, fmt.Sprintf("www/index.html has %d keyboard-accessible journey cards, want %d", got, len(journeyModalIDs)))
-	}
-	for _, modalID := range journeyModalIDs {
-		if strings.Count(indexText, `data-target="#`+modalID+`"`) != 1 {
-			failures = append(failures, fmt.Sprintf("www/index.html must contain one trigger for #%s", modalID))
-		}
-		if strings.Count(indexText, `id="`+modalID+`"`) != 1 {
-			failures = append(failures, fmt.Sprintf("www/index.html must contain one modal with id %s", modalID))
+		if !hasAlternateLink(string(englishBody), filepath.Base(chinesePath), "zh-CN") {
+			failures = append(failures, fmt.Sprintf("%s lacks a Chinese alternate link to %s", pair[1], pair[0]))
 		}
 	}
 
@@ -313,78 +313,232 @@ func check(root string) ([]string, error) {
 	return failures, nil
 }
 
-func isLanguageToggleLink(text, target string) bool {
-	// Check if the target link appears within toggle-context markers
-	// Toggle controls are marked with class="lang-toggle" or similar toggle-related attributes
-	// or within aria-label/title that suggests language switching
-	parts := strings.Split(text, target)
-	if len(parts) < 2 {
+func checkIndexStructure(rel, text string) []string {
+	var failures []string
+	wantModalTriggers := len(capabilityModalIDs) + len(roleGuideModalIDs) + len(journeyModalIDs)
+	if got := strings.Count(text, `data-toggle="modal"`); got != wantModalTriggers {
+		failures = append(failures, fmt.Sprintf("%s has %d modal triggers, want %d", rel, got, wantModalTriggers))
+	}
+	if got := strings.Count(text, `class="modal fade capability-modal" id="capability-`); got != len(capabilityModalIDs) {
+		failures = append(failures, fmt.Sprintf("%s has %d capability modals, want %d", rel, got, len(capabilityModalIDs)))
+	}
+	if got := strings.Count(text, `capability-card-measurement`); got != len(capabilityModalIDs)*2 {
+		failures = append(failures, fmt.Sprintf("%s has %d measurement-themed capability elements, want %d", rel, got, len(capabilityModalIDs)*2))
+	}
+	for _, modalID := range capabilityModalIDs {
+		if strings.Count(text, `data-target="#`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("%s must contain one trigger for #%s", rel, modalID))
+		}
+		if strings.Count(text, `id="`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("%s must contain one modal with id %s", rel, modalID))
+		}
+	}
+	if got := strings.Count(text, `class="modal fade capability-modal role-guide-modal`); got != len(roleGuideModalIDs) {
+		failures = append(failures, fmt.Sprintf("%s has %d role-guide modals, want %d", rel, got, len(roleGuideModalIDs)))
+	}
+	for _, modalID := range roleGuideModalIDs {
+		if strings.Count(text, `data-target="#`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("%s must contain one trigger for #%s", rel, modalID))
+		}
+		if strings.Count(text, `id="`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("%s must contain one modal with id %s", rel, modalID))
+		}
+	}
+	if got := strings.Count(text, `class="modal fade capability-modal journey-modal`); got != len(journeyModalIDs) {
+		failures = append(failures, fmt.Sprintf("%s has %d journey modals, want %d", rel, got, len(journeyModalIDs)))
+	}
+	if got := strings.Count(text, `class="journey-step journey-step-action`); got != len(journeyModalIDs) {
+		failures = append(failures, fmt.Sprintf("%s has %d clickable journey cards, want %d", rel, got, len(journeyModalIDs)))
+	}
+	if got := strings.Count(text, `role="button" tabindex="0" data-toggle="modal" data-target="#journey-`); got != len(journeyModalIDs) {
+		failures = append(failures, fmt.Sprintf("%s has %d keyboard-accessible journey cards, want %d", rel, got, len(journeyModalIDs)))
+	}
+	for _, modalID := range journeyModalIDs {
+		if strings.Count(text, `data-target="#`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("%s must contain one trigger for #%s", rel, modalID))
+		}
+		if strings.Count(text, `id="`+modalID+`"`) != 1 {
+			failures = append(failures, fmt.Sprintf("%s must contain one modal with id %s", rel, modalID))
+		}
+	}
+	return failures
+}
+
+func hasAlternateLink(text, hrefSuffix, language string) bool {
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
 		return false
 	}
-	for i := 1; i < len(parts); i++ {
-		// Look back from this occurrence to find context
-		prefix := parts[i-1]
-		suffix := parts[i]
-
-		// Find the most recent opening tag before this link
-		lastTagStart := strings.LastIndex(prefix, "<")
-		if lastTagStart == -1 {
-			continue
+	var found bool
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if found {
+			return
 		}
-		lastTag := prefix[lastTagStart:]
+		if node.Type == html.ElementNode && node.Data == "link" {
+			rel, _ := attribute(node, "rel")
+			href, hasHref := attribute(node, "href")
+			hreflang, hasHreflang := attribute(node, "hreflang")
+			found = hasToken(rel, "alternate") && hasHref && hrefTargetsFile(href, hrefSuffix) && hasHreflang && strings.EqualFold(hreflang, language)
+		}
+		for child := node.FirstChild; child != nil && !found; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(document)
+	return found
+}
 
-		// Check if the tag or its context suggests a toggle
-		// Look for class attributes with "toggle", "lang", or go back to find parent toggle
-		if strings.Contains(lastTag, `class="`) || strings.Contains(lastTag, `class='`) {
-			// Extract class values
-			classStart := strings.LastIndex(lastTag, `class="`)
-			if classStart == -1 {
-				classStart = strings.LastIndex(lastTag, `class='`)
+func hrefTargetsFile(href, filename string) bool {
+	href = strings.SplitN(href, "#", 2)[0]
+	href = strings.SplitN(href, "?", 2)[0]
+	return href == filename || strings.HasSuffix(href, "/"+filename)
+}
+
+func rendersRawFrameworkError(text string) bool {
+	for remainder := text; ; {
+		start := strings.Index(remainder, "{{")
+		if start < 0 {
+			return false
+		}
+		remainder = remainder[start+2:]
+		end := strings.Index(remainder, "}}")
+		if end < 0 {
+			return false
+		}
+		action := strings.TrimSpace(remainder[:end])
+		for _, field := range []string{".Errorstr", ".Errstr"} {
+			if action == field || strings.HasPrefix(action, field+" ") || strings.HasPrefix(action, field+"|") {
+				return true
 			}
-			if classStart >= 0 {
-				classContent := lastTag[classStart+7:]
-				classEnd := strings.Index(classContent, `"`)
-				if classEnd == -1 {
-					classEnd = strings.Index(classContent, `'`)
-				}
-				if classEnd > 0 {
-					classes := classContent[:classEnd]
-					if strings.Contains(classes, "toggle") || strings.Contains(classes, "lang") {
-						return true
+		}
+		remainder = remainder[end+2:]
+	}
+}
+
+func checkCopy(rel, language, text string) ([]string, error) {
+	var failures []string
+	for _, phrase := range deprecatedChineseCopy {
+		if strings.Contains(text, phrase) {
+			failures = append(failures, fmt.Sprintf("%s contains disallowed public copy %q", rel, phrase))
+		}
+	}
+	if language == "zh" {
+		for _, phrase := range untranslatedEnglishCopy {
+			if strings.Contains(text, phrase) {
+				failures = append(failures, fmt.Sprintf("%s contains untranslated public copy %q", rel, phrase))
+			}
+		}
+	}
+	if rendersRawFrameworkError(text) {
+		failures = append(failures, fmt.Sprintf("%s renders a raw framework error", rel))
+	}
+	linkFailures, err := checkEditionLinks(rel, language, text)
+	if err != nil {
+		return nil, err
+	}
+	return append(failures, linkFailures...), nil
+}
+
+func checkEditionLinks(rel, language, text string) ([]string, error) {
+	opposite := "e"
+	if language == "en" {
+		opposite = "g"
+	}
+	targets := make([]string, 0, 5)
+	for _, role := range []string{"adv", "pub", "agent", "admin", "web"} {
+		targets = append(targets, "/goto/"+role+"/"+opposite+"/")
+	}
+
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
+		return nil, fmt.Errorf("parse %s links: %w", rel, err)
+	}
+	var failures []string
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode && (node.Data == "a" || node.Data == "link") {
+			href, ok := attribute(node, "href")
+			if ok {
+				for _, target := range targets {
+					if strings.Contains(href, target) && !isAllowedLanguageLink(node, opposite) {
+						failures = append(failures, fmt.Sprintf("%s contains opposite-edition link %q outside a language toggle or alternate link", rel, href))
+						break
 					}
 				}
 			}
 		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(document)
+	return failures, nil
+}
 
-		// Also check if this is a direct language toggle by looking for context words
-		// like "English", "中文", language names, or toggle-specific text nearby
-		contextWindow := prefix[len(prefix)-200:] + target + suffix[:200]
-		if strings.Contains(contextWindow, "English") || strings.Contains(contextWindow, "中文") ||
-			strings.Contains(contextWindow, "language") || strings.Contains(contextWindow, "语言") {
+func isAllowedLanguageLink(node *html.Node, opposite string) bool {
+	if node.Data == "link" {
+		rel, _ := attribute(node, "rel")
+		_, hasHreflang := attribute(node, "hreflang")
+		return hasToken(rel, "alternate") && hasHreflang
+	}
+	classes, _ := attribute(node, "class")
+	if hasToken(classes, "lang-toggle") {
+		return true
+	}
+	dataToggle, hasDataToggle := attribute(node, "data-lang-toggle")
+	want := "en"
+	if opposite == "g" {
+		want = "zh"
+	}
+	return hasDataToggle && dataToggle == want
+}
+
+func attribute(node *html.Node, key string) (string, bool) {
+	for _, item := range node.Attr {
+		if strings.EqualFold(item.Key, key) {
+			return item.Val, true
+		}
+	}
+	return "", false
+}
+
+func hasToken(value, token string) bool {
+	for _, item := range strings.Fields(value) {
+		if strings.EqualFold(item, token) {
 			return true
 		}
 	}
-	return true // If we can't find context, assume it's OK (default allow for toggle controls)
+	return false
 }
 
-func publicFiles(root string) ([]string, error) {
-	files := []string{
-		filepath.Join(root, "www", "index.html"),
-		filepath.Join(root, "www", "manuals", "advertiser.html"),
-		filepath.Join(root, "www", "manuals", "publisher.html"),
+func publicFiles(root string) ([]publicFile, error) {
+	files := []publicFile{
+		{path: filepath.Join(root, "www", "index.html"), language: "zh"},
+		{path: filepath.Join(root, "www", "index.en.html"), language: "en"},
+		{path: filepath.Join(root, "www", "manuals", "advertiser.html"), language: "zh"},
+		{path: filepath.Join(root, "www", "manuals", "advertiser.en.html"), language: "en"},
+		{path: filepath.Join(root, "www", "manuals", "publisher.html"), language: "zh"},
+		{path: filepath.Join(root, "www", "manuals", "publisher.en.html"), language: "en"},
 	}
 	templateRoot := filepath.Join(root, "tmpls")
 	if err := filepath.WalkDir(templateRoot, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if !entry.IsDir() && filepath.Ext(path) == ".g" {
-			files = append(files, path)
+		if entry.IsDir() {
+			return nil
+		}
+		switch filepath.Ext(path) {
+		case ".g":
+			files = append(files, publicFile{path: path, language: "zh"})
+		case ".e":
+			files = append(files, publicFile{path: path, language: "en"})
 		}
 		return nil
 	}); err != nil {
 		return nil, err
 	}
-	sort.Strings(files)
+	sort.Slice(files, func(i, j int) bool { return files[i].path < files[j].path })
 	return files, nil
 }

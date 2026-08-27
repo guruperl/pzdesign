@@ -40,8 +40,14 @@
 	<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
                             <fieldset>
 								<div class="alert alert-success">
-                                {{ .Errorstr }}
-                            	</div>
+								{{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your registered email and password.
+								{{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
+								{{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
+								{{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The email or password is incorrect.
+								{{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in.
+								{{else if .Errorstr}}We could not sign you in. Check your information and try again.
+								{{end}}
+								</div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="{{.Login}}" type="email" autofocus>
                                 </div>

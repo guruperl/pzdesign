@@ -46,9 +46,9 @@
 
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
-				<li class="text-info">
-					{{index .ARGS.a_company 0}}（{{index .ARGS.a_email 0}}）
-				</li>
+                <li class="text-info">
+                    {{index .ARGS.a_company 0}}（{{index .ARGS.a_email 0}}）
+                </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -74,12 +74,12 @@
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-dashboard fa-fw"></i> 业绩概况</a>
-							{{if .Other.ActionReportingEnabled}}<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> 转化与归因</a>{{end}}
-							{{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> 投放分析</a>{{end}}
+                            {{if .Other.ActionReportingEnabled}}<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> 转化与归因</a>{{end}}
+                            {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> 投放分析</a>{{end}}
                         </li>
                         <li>
                             <a href="campaign?action=topics"><i class="fa fa-bar-chart-o fa-fw"></i> 广告活动</a>
-						</li>
+                        </li>
                         <li>
                             <a href="bidder?action=topics"><i class="fa fa-exchange fa-fw"></i> 竞价端点</a>
                         </li>
@@ -92,22 +92,22 @@
                         <li>
                             <a href="ledger?action=topicsMid24Hours"><i class="fa fa-line-chart fa-fw"></i> 竞价报告</a>
                         </li>
-{{ if and (or (or (or (or (or (or (eq .Other.Component `ac`)) (eq .Other.Component `campaign`)) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) .ARGS.campaign_md5}}
-						<li>
+                        {{ if and (or (or (or (or (or (or (eq .Other.Component `ac`)) (eq .Other.Component `campaign`)) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) .ARGS.campaign_md5}}
+                        <li>
                             <ul class="nav nav-second-level nav-compact-sm">
-								<li>
-								<span class="nav-link">{{index .ARGS.campaign_name 0}}</span>
+                                <li>
+                                    <span class="nav-link">{{index .ARGS.campaign_name 0}}</span>
                                 </li>
                                 <li>
                                     <a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">广告组</a>
                                 </li>
                                 <!-- li>
-                                   	<a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">人群定向</a>
+                                    <a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">人群定向</a>
                                 </li -->
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						{{end}}
+                        {{end}}
                         <li>
                             <a href="ac?action=topics&entitytype_id=4"><i class="fa fa-table fa-fw"></i> 网站黑白名单</a>
                         </li>
@@ -115,7 +115,7 @@
                             <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> 标签管理</a>
                         </li>
                         <li>
-							<a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> 财务报告</a>
+                            <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> 财务报告</a>
                         </li>
 
                     </ul>

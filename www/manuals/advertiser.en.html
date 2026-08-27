@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="W8M Advertiser and Agency English User Manual">
+    <link rel="shortcut icon" href="../logo.png">
+    <title>Advertiser and Agency Manual | W8M</title>
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/w8m-manual.css?v=20260801-2" rel="stylesheet">
+    <link rel="alternate" hreflang="zh-CN" href="advertiser.html">
+    <link rel="alternate" hreflang="en" href="advertiser.en.html">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand manual-nav">
+      <div class="container">
+        <a class="navbar-brand" href="../">W8M <small>User Center</small></a>
+        <div class="navbar-nav flex-row ml-auto">
+          <a class="nav-link mr-3" href="publisher.en.html">Publisher Integration Manual</a>
+          <a class="nav-link" href="/goto/adv/e/campaign?action=topics">Log In</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="manual-hero">
+      <div class="container">
+        <p class="eyebrow">Ad Delivery</p>
+        <h1>Advertiser and Agency Manual</h1>
+        <p>For advertisers launching ads on W8M and agencies authorized to view or review advertiser accounts, campaigns, and ad groups.</p>
+      </div>
+    </header>
+
+    <main class="manual-layout">
+      <div class="container">
+        <div class="row">
+          <aside class="col-lg-3">
+            <nav class="toc" aria-label="Manual Contents">
+              <strong>Contents</strong>
+              <a href="#account">1. Account and Responsibilities</a>
+              <a href="#structure">2. Campaign Object Hierarchy</a>
+              <a href="#workflow">3. Recommended Delivery Workflow</a>
+              <a href="#measurement">4. Reporting and Measurement Basis</a>
+              <a href="#middleman">5. External DSP / ADX Demand-Side Integration and Bidding</a>
+              <a href="#faq">6. FAQ</a>
+              <a href="#checklist">7. Pre-Launch Checklist</a>
+              <a class="toc-action" href="/goto/web/e/adv?action=startnew">Create Account →</a>
+            </nav>
+          </aside>
+
+          <article class="col-lg-9">
+            <div class="manual-content">
+              <section class="manual-section" id="account">
+                <h2>1. Account and Responsibilities</h2>
+                <p>Platform address, account activation, business rules, and production credentials are provided by the platform operator. Advertiser pages are located at <code>/goto/adv/e/...</code>, agency pages at <code>/goto/agent/e/...</code>.</p>
+                <div class="table-scroll">
+                  <table class="role-table">
+                    <thead><tr><th>Role</th><th>Primary Responsibilities</th></tr></thead>
+                    <tbody>
+                      <tr><td>Advertiser (<code>adv</code>)</td><td>Maintain account, campaigns, ad groups, creatives, targeting, budgets, delivery reports, and bid endpoints.</td></tr>
+                      <tr><td>Agency (<code>agent</code>)</td><td>Authorized to view advertisers, campaigns, and ad groups; execute delegated review processes.</td></tr>
+                      <tr><td>Platform Operator (<code>admin</code>)</td><td>Manage account status, bid endpoint credentials and activation, external demand-side routing, traffic allocation, and settlement views.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="notice"><strong>Note:</strong> An agency account is not another advertiser account and does not automatically inherit all advertiser edit permissions. Approvals, credentials, routing, or production activation require platform operator action.</div>
+                <p>If you cannot log in with your existing password, use the "Forgot Password" link on the login page, or contact the platform operator to confirm your account status.</p>
+                <div class="notice"><strong>Registration and Password Recovery:</strong> You may need to complete Cloudflare verification to prevent bulk registration and spam. If verification expires, refresh the page. If you see "Too many requests," wait and try again—do not repeatedly click. For persistent issues, contact <code>support@w8m.com</code>.</div>
+              </section>
+
+              <section class="manual-section" id="structure">
+                <h2>2. Campaign Object Hierarchy</h2>
+                <div class="hierarchy">Advertiser Account<br>└── Campaign<br>&nbsp;&nbsp;&nbsp;&nbsp;└── Ad Group <span>(Item in system)</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Creative</div>
+                <ul>
+                  <li><strong>Campaign</strong> defines name, flight dates, traffic scope, campaign-level budget, and enable status.</li>
+                  <li><strong>Ad Group</strong> defines price, billing method, landing page, frequency control, ad group budget, and targeting conditions.</li>
+                  <li><strong>Creative</strong> defines dimensions, media type, content, weight, and enable status.</li>
+                </ul>
+                <p>A request can participate in bidding only when the account, campaign, ad group, creative, dates, budgets, dimensions, targeting, and supply-side rules all permit. Enabling only the creative does not bypass parent status or rules.</p>
+              </section>
+
+              <section class="manual-section" id="workflow">
+                <h2>3. Recommended Delivery Workflow</h2>
+                <div class="steps">
+                  <div class="step"><span class="step-number">1</span><div><h3>Review Account Information</h3><p>Verify account name, contact, address, and password. Billing, manual adjustments, and account production status are per the platform operator's records; "Saved" on the dashboard does not mean production-ready. The platform does not collect full card numbers or bank account details.</p></div></div>
+                  <div class="step"><span class="step-number">2</span><div><h3>Create Campaign</h3><p>Enter campaign name, start/end dates, traffic scope, total budget, daily budget, and status. Save as disabled initially; enable after ad groups, creatives, and targeting are validated.</p></div></div>
+                  <div class="step"><span class="step-number">3</span><div><h3>Create Ad Groups</h3><p>Set billing method, price, landing page, start/end dates, budget, impression/click frequency, and targeting rules (language, device, geo, publisher, industry, etc.).</p></div></div>
+                  <div class="step"><span class="step-number">4</span><div><h3>Add and Test Creatives</h3><p>Enter creative name, dimensions, media type, content, weight, and status. Creative dimensions must exactly match target ad slots; test impression and click-through in a test environment.</p></div></div>
+                  <div class="step"><span class="step-number">5</span><div><h3>Gradually Configure Targeting</h3><p>Start with broad rules to validate small traffic, then tighten. When seeing no bids, check in order: status and dates → budget → dimensions → supply traffic scope → audience targeting.</p></div></div>
+                </div>
+
+                <h3>Price, Currency, and Frequency</h3>
+                <ul>
+                  <li>Real-time bidding price uses USD CPM (cost per thousand impressions). The system does not perform currency conversion. The accounting amount per valid impression is <code>CPM / 1000</code>; for example, a CPM of <code>2.5</code> counts as USD <code>0.0025</code>.</li>
+                  <li>Frequency control uses buyer user ID, user ID, or IFA/device ID only when privacy policy permits personalization; identifiers are converted to domain-isolated pseudonyms before storage.</li>
+                  <li>The platform does not concatenate IP and User-Agent as a fallback identity. When no compliant identity exists, context-only delivery is still possible, but cross-request frequency control and uploaded audiences do not work.</li>
+                </ul>
+
+                <h3>Creative Tracking Rules</h3>
+                <ul>
+                  <li>Native and native video creatives include DSP impression tracking; DSP click-through URL is the primary link.</li>
+                  <li>Banner iframes include an impression pixel; to use DSP click measurement, the content URL or template must explicitly use <code>{CLICK_URL}</code>.</li>
+                  <li><code>{LANDING_URL}</code> refers to the direct advertiser landing page; the system does not rewrite arbitrary third-party iframe or internal HTML links.</li>
+                  <li>Do not modify platform-generated <code>/imp</code>, <code>/clk</code>, <code>sig</code>, or <code>sig_ts</code> parameters.</li>
+                </ul>
+
+                <h3>Supported Targeting Types</h3>
+                <ul>
+                  <li>Geography: country, state/province, city, DMA, ISP, postal code, coordinates, and connection type.</li>
+                  <li>Audience: gender, age/birth year range, and language.</li>
+                  <li>Device: operating system, version, browser/platform, and device type.</li>
+                  <li>Time: date, hour, day of week, and timezone.</li>
+                  <li>Supply and Content: publisher, website/app, ad slot, category, and traffic scope.</li>
+                  <li>Uploaded Audience: advertiser-uploaded set of user or device identifiers.</li>
+                </ul>
+                <div class="notice"><strong>Uploaded Audience:</strong> When configuring multiple uploaded identifier types, a request must contain and match each type. Uploaded audiences have priority levels; configure carefully to avoid accidentally excluding other candidates.</div>
+              </section>
+
+              <section class="manual-section" id="measurement">
+                <h2>4. Reporting and Measurement Basis</h2>
+                <p>Advertiser dashboard and reports show last-24-hour data, top ad groups, and top ad slots. Data is generated by log aggregation and accounting batch jobs, not real-time request-level data.</p>
+                <div class="table-scroll">
+                  <table class="manual-table">
+                    <thead><tr><th>Metric</th><th>Current Basis</th></tr></thead>
+                    <tbody>
+                      <tr><td>Impressions</td><td>Counted after valid <code>/imp</code> tracking arrives.</td></tr>
+                      <tr><td>Clicks</td><td>Counted after valid <code>/clk</code> tracking arrives.</td></tr>
+                      <tr><td>Spend</td><td>Calculated from valid impression tracking records as USD CPM ÷ 1000.</td></tr>
+                      <tr><td>Win/Loss</td><td>Used for analysis; not a direct accounting spend basis.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p>The system attempts to suppress duplicate valid impressions and clicks. If shared state services are temporarily unavailable, the platform still prioritizes receiving signature-valid measurement events, so brief duplication may occur.</p>
+                <h3>Invoicing and Manual Settlement</h3>
+                <p>The platform operator can generate invoices from completed daily accounting summaries, by UTC day, week, or month. Invoices go through draft, hold, confirm, settlement entry, or correction workflows. Adjustments require reasons; corrections to confirmed records preserve the original invoice and do not modify display facts or reduce the spending hard cap.</p>
+                <p>For invoices or CSV exports, provide account ID and period to the operator. Do not send full card numbers, bank account numbers, or routing numbers through the dashboard, email, or support forms.</p>
+              </section>
+
+              <section class="manual-section" id="middleman">
+                <h2>5. External DSP / ADX Demand-Side Integration and Bidding</h2>
+                <p>Advertisers operating external DSPs can maintain bid endpoint configuration—name, HTTP/HTTPS URL, OpenRTB version, seat, and timeout—at:</p>
+                <pre><code>/goto/adv/e/bidder?action=topics</code></pre>
+                <p>Endpoint credentials, approval, activation, traffic scope, routing, bidding adjustments, and reporting attribution are managed by the platform operator. Provide secrets through agreed-upon secure channels; do not include keys in endpoint names, URLs, or standard form fields.</p>
+                <h3>Possible Triggering Modes</h3>
+                <ul>
+                  <li><strong>Fallback:</strong> Request external endpoint only when local ads cannot fill.</li>
+                  <li><strong>Always:</strong> External bidding competes with local ads only when both the platform master switch and independent Always switch are enabled.</li>
+                </ul>
+                <h3>External DSP Considerations</h3>
+                <ul>
+                  <li>Late, invalid, sub-floor, or non-USD responses are dropped.</li>
+                  <li>Platform retains downstream ad code but proxies win, loss, and bill callbacks through platform-signed <code>/mid/*</code> addresses.</li>
+                  <li><code>burl</code> is preferred as the billable event; when absent, win is the fallback.</li>
+                  <li>Endpoint integration does not grant unconditional access to all traffic; traffic must still match operator-configured publisher, traffic source, and ad slot scope.</li>
+                </ul>
+                <div class="notice">After adding or updating endpoints, wait for the operator to complete approval, credentials, and traffic routing configuration before testing.</div>
+              </section>
+
+              <section class="manual-section" id="faq">
+                <h2>6. FAQ</h2>
+                <h3>Creative Present but No Bids</h3>
+                <p>Check whether parent objects are enabled, dates and budgets are valid, dimensions match, bid floor currency is USD, and targeting, category, and supply traffic scope are not too narrow.</p>
+                <h3>Win Received but No Impressions or Spend in Reports</h3>
+                <p>Current accounting is based on impression tracking. Check whether the impression pixel in the creative loads on the client, and confirm report processing has covered the test time window.</p>
+                <h3>Banner Shows Impressions but No Clicks</h3>
+                <p>Verify the creative explicitly uses <code>{CLICK_URL}</code>. The system does not auto-wrap links inside iframes.</p>
+                <h3>Bid Endpoint Saved but Receiving No Traffic</h3>
+                <p>Saving endpoint config does not enable it. Ask the operator to check endpoint approval, credentials, traffic scope, routing status, and platform feature flags.</p>
+              </section>
+
+              <section class="manual-section" id="checklist">
+                <h2>7. Pre-Launch Checklist</h2>
+                <ul class="checklist">
+                  <li>Advertiser, campaign, ad group, and at least one creative are all active.</li>
+                  <li>Current time falls within campaign and ad group flight dates.</li>
+                  <li>Total and daily budgets are not exhausted.</li>
+                  <li>Creative dimensions match target ad slots.</li>
+                  <li>Landing page and third-party tracking URLs are publicly accessible.</li>
+                  <li>Banners requiring click measurement already use <code>{CLICK_URL}</code>.</li>
+                  <li>Price and floor use compatible currency; targeting and supply scope do not conflict.</li>
+                  <li>Operator has confirmed changes are in runtime cache.</li>
+                </ul>
+                <div class="manual-actions">
+                  <a class="btn btn-advertiser" href="/goto/adv/e/campaign?action=topics">Log In to Advertiser Dashboard</a>
+                  <a class="btn btn-soft" href="/goto/web/e/adv?action=startnew">Create Account</a>
+                  <a class="btn btn-soft" href="publisher.en.html">View Publisher Integration Manual</a>
+                </div>
+              </section>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <footer class="manual-footer"><div class="container d-flex justify-content-between"><p>&copy; 2026 W8M Network Inc.</p><a href="../">Back to Home</a></div></footer>
+  </body>
+</html>

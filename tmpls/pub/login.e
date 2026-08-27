@@ -31,7 +31,15 @@
           <div class="card p-4">
             <div class="card-body">
               <h1>Login</h1>
-              <p class="text-muted">{{.Errorstr}}</p>
+              {{if .Errorstr}}<p class="text-muted">
+                {{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your registered email and password.
+                {{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
+                {{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
+                {{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The email or password is incorrect.
+                {{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in.
+                {{else}}We could not sign you in. Check your information and try again.
+                {{end}}
+              </p>{{end}}
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="icon-user"></i></span>

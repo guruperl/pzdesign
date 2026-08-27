@@ -1,0 +1,8 @@
+# Synthetic P03 token fixture used to prove redaction behavior.
+eddfed5c32067e6fbcca483bb4e4a416efc12564:summer/slot/filter_test.go:generic-api-key:357
+
+# Historical vendored public JavaScript false positives. Each exception is
+# pinned to the exact commit, path, rule, and line instead of a path allowlist.
+9cc339edf51b3643fe3d0133fac350acce5f9849:www/1.0.8/vendors/js/quill.min.js:generic-api-key:7
+1681bd2dd6f9c64de3b0e5766bedd8b83ba7f636:www/admin/assets/js/src/application.js:generic-api-key:107
+1681bd2dd6f9c64de3b0e5766bedd8b83ba7f636:www/admin/assets/js/docs.min.js:generic-api-key:28

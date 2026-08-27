@@ -1,8 +1,9 @@
 # Structural parity exemptions for .g/.e template pairs
-# Format: relative path to .g file or relative path to .g file followed by " form-fields" for form mismatches
+# Format: relative path to .g file, optionally followed by " form-fields" or
+# " form-actions" for an exact, reviewed form-contract mismatch.
 # This file shrinks as work is completed; additions require a stated reason
 
-# Missing .e twins (70 total, concentrated in admin/30, adv/8, pub/5, agent/7, analyst/3; web/0 complete)
+# Missing .e twins (72 total: admin/44, adv/13, pub/12, agent/1, analyst/2; web/0 complete)
 tmpls/admin/bidder.g
 tmpls/admin/bidder/approve.g
 tmpls/admin/bidder/edit.g
@@ -93,3 +94,12 @@ tmpls/pub/site/edit.g form-fields
 tmpls/pub/site/startnew.g form-fields
 tmpls/pub/slot/edit.g form-fields
 tmpls/pub/slot/startnew.g form-fields
+
+# Intentionally deferred authenticated-workspace forms. These English views do
+# not expose the Chinese-only mutation until their complete role workspace is
+# translated and reviewed; authenticated language toggles remain disabled.
+tmpls/admin/hostedpayment/page.g form-actions
+tmpls/admin/pub/edit.g form-actions
+tmpls/admin/pub/topics.g form-fields
+tmpls/admin/pub/topics.g form-actions
+tmpls/adv/attrname/topics.g form-actions

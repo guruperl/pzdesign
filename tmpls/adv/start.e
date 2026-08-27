@@ -83,36 +83,36 @@
                         <li>
                             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Campaigns<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-								<li>
+                                <li>
                                     <a href="campaign?action=topics">List Campaigns</a>
                                 </li>
-								{{ if or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`) }}{{if .ARGS.campaign_md5}}<li>
-									<a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">{{index .ARGS.campaign_name 0}}</a>
-								</li>
-								<li>
-									<a href="#">CLICK TO MANAGE <span class="fa arrow"></span></a>
-									<ul class="nav nav-third-level">
-                                    	<li>
-                                    		<a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Items</a>
-                                		</li>
-                                    	<li>
-                                    		<a href="item?action=startnew&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Create Item</a>
-                                		</li>
-                                		<li>
-                                    		<a href="balance?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Budgeting</a>
-                                		</li>
-                                		<li>
-                                    		<a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Targeting</a>
-                                		</li>
-                                		<li>
-                                    		<a href="chac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Channels</a>
-										</li>
-                                		<!-- li>
-                                    		<a href="ac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Access Control</a>
-                                		</li -->
-									</ul>
-								</li>
-								{{end}}{{end}}
+                                {{ if or (or (or (or (or (eq .Other.Component `campaign`) (eq .Other.Component `item`)) (eq .Other.Component `balance`)) (eq .Other.Component `targetname`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`) }}{{if .ARGS.campaign_md5}}<li>
+                                    <a href="campaign?action=edit&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">{{index .ARGS.campaign_name 0}}</a>
+                                </li>
+                                <li>
+                                    <a href="#">CLICK TO MANAGE <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="item?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Items</a>
+                                        </li>
+                                        <li>
+                                            <a href="item?action=startnew&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Create Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="balance?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Budgeting</a>
+                                        </li>
+                                        <li>
+                                            <a href="targetname?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}">Targeting</a>
+                                        </li>
+                                        <li>
+                                            <a href="chac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Channels</a>
+                                        </li>
+                                        <!-- li>
+                                            <a href="ac?action=topics&campaign_id={{index .ARGS.campaign_id 0}}&campaign_md5={{index .ARGS.campaign_md5 0}}&campaign_name={{index .ARGS.campaign_name 0 | urlquery }}&entitytype_id=41">Access Control</a>
+                                        </li -->
+                                    </ul>
+                                </li>
+                                {{end}}{{end}}
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -123,9 +123,9 @@
                             <a href="attrname?action=topics"><i class="fa fa-edit fa-fw"></i> Custom Tags</a>
                         </li>
                         <li>
-			    <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
-			    {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> Marketplace analytics</a>{{end}}
-			    {{if .Other.ActionReportingEnabled}}<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> Actions &amp; Attribution</a>{{end}}
+                <a href="ledger?action=topicsAdv24Hours"><i class="fa fa-edit fa-fw"></i> Financial Reports</a>
+                {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace"><i class="fa fa-area-chart fa-fw"></i> Marketplace analytics</a>{{end}}
+                {{if .Other.ActionReportingEnabled}}<a href="ledger?action=topicsAdvActions"><i class="fa fa-check-square-o fa-fw"></i> Actions &amp; Attribution</a>{{end}}
                         </li>
                     </ul>
                 </div>

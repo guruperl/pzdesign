@@ -22,9 +22,15 @@
 	<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
 <div class="container-fluid">
 	<h2>Login</h2>
-	<div class="row">
+		<div class="row">
 		<div class="col alert alert-success">
-			{{ .Errorstr }}
+			{{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your username and password.
+			{{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
+			{{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
+			{{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The username or password is incorrect.
+			{{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in.
+			{{else if .Errorstr}}We could not sign you in. Check your information and try again.
+			{{end}}
 		</div>
 	</div>
 	<div class="row">
