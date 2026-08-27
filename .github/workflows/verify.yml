@@ -58,6 +58,8 @@ jobs:
         run: GOWORK=off go run ./tools/check-templates.go -ext=.g
       - name: Parse English templates
         run: GOWORK=off go run ./tools/check-templates.go -ext=.e
+      - name: Check template parity
+        run: GOWORK=off go run ./tools/check-parity
       - name: Check public Chinese copy
         run: GOWORK=off go run ./tools/check-public-copy
       - name: Public data

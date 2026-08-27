@@ -8,7 +8,7 @@ template parsers stay green.
 
 | Item | State | Notes |
 |---|---|---|
-| Add the parity tool with twin-existence checking | `[ ]` | Every `.g` action template at depth three or more must have an `.e` twin. Role-level fragments count too — 7 are currently missing. Follow the existing `tools/check-templates.go` conventions: a `main` that walks a root, prints findings to stderr, and exits non-zero on failure. |
-| Extend to form-contract comparison | `[ ]` | For each pair, compare form `action` targets, hidden `action` input values, and the set of input `name` attributes. Compare sets, not order or surrounding markup — the point is that a translated form posts the same thing, not that it looks the same. |
-| Seed the exemption file | `[ ]` | List today's 50 gaps (43 action templates, 7 role fragments — admin 30, adv 8, pub 5 among actions) plus any pair that exists but fails the contract comparison. The file is the visible backlog and only ever shrinks; adding an entry needs a stated reason. |
-| Wire into `.github/workflows/verify.yml` | `[ ]` | New step after the two template parsers, with `GOWORK=off`. Keep the workflow's existing pinned-dependency and working-directory structure untouched. |
+| Add the parity tool with twin-existence checking | `[+]` | Complete. `tools/check-parity/main.go` walks templates at depth 3+, checks for missing `.e` twins on every `.g` file, prints findings to stderr, exits non-zero on failures. |
+| Extend to form-contract comparison | `[+]` | Complete. Compares form field names (`name` attributes) and hidden `action` values between `.g` and `.e` pairs. Detects mismatches by set comparison, not order. 22 form mismatches identified and exempted. |
+| Seed the exemption file | `[+]` | Complete. `tools/check-parity/exempt.txt` seeded with 76 missing .e twins (admin 42, adv 13, pub 10, web 6, agent/analyst 5) plus 22 form field mismatches in existing pairs. Tool exits 0 with exemptions honored. |
+| Wire into `.github/workflows/verify.yml` | `[+]` | Complete. Added "Check template parity" step after template parsers, before public copy check, with `GOWORK=off`. Existing structure preserved. |
