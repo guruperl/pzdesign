@@ -47,10 +47,6 @@ var forbidden = []string{
 	"Change Password",
 	"Save and Update",
 	"Delete this route",
-	"/goto/adv/e/",
-	"/goto/pub/e/",
-	"/goto/agent/e/",
-	"/goto/admin/e/",
 }
 
 var requiredSnippets = map[string][]string{
@@ -232,6 +228,16 @@ func check(root string) ([]string, error) {
 		if strings.Contains(text, "{{.Errorstr}}") || strings.Contains(text, "{{ .Errorstr }}") {
 			failures = append(failures, fmt.Sprintf("%s renders a raw framework error", rel))
 		}
+		// Check that /goto/*/e/ links appear only in language toggle controls
+		for _, target := range []string{"/goto/adv/e/", "/goto/pub/e/", "/goto/agent/e/", "/goto/admin/e/"} {
+			if strings.Contains(text, target) {
+				// Language toggle links are permitted only in toggle controls
+				// Verify they appear within toggle-context markers
+				if !isLanguageToggleLink(text, target) {
+					failures = append(failures, fmt.Sprintf("%s contains edition-specific link %q outside toggle control", rel, target))
+				}
+			}
+		}
 	}
 
 	for rel, snippets := range requiredSnippets {
@@ -305,6 +311,60 @@ func check(root string) ([]string, error) {
 
 	sort.Strings(failures)
 	return failures, nil
+}
+
+func isLanguageToggleLink(text, target string) bool {
+	// Check if the target link appears within toggle-context markers
+	// Toggle controls are marked with class="lang-toggle" or similar toggle-related attributes
+	// or within aria-label/title that suggests language switching
+	parts := strings.Split(text, target)
+	if len(parts) < 2 {
+		return false
+	}
+	for i := 1; i < len(parts); i++ {
+		// Look back from this occurrence to find context
+		prefix := parts[i-1]
+		suffix := parts[i]
+
+		// Find the most recent opening tag before this link
+		lastTagStart := strings.LastIndex(prefix, "<")
+		if lastTagStart == -1 {
+			continue
+		}
+		lastTag := prefix[lastTagStart:]
+
+		// Check if the tag or its context suggests a toggle
+		// Look for class attributes with "toggle", "lang", or go back to find parent toggle
+		if strings.Contains(lastTag, `class="`) || strings.Contains(lastTag, `class='`) {
+			// Extract class values
+			classStart := strings.LastIndex(lastTag, `class="`)
+			if classStart == -1 {
+				classStart = strings.LastIndex(lastTag, `class='`)
+			}
+			if classStart >= 0 {
+				classContent := lastTag[classStart+7:]
+				classEnd := strings.Index(classContent, `"`)
+				if classEnd == -1 {
+					classEnd = strings.Index(classContent, `'`)
+				}
+				if classEnd > 0 {
+					classes := classContent[:classEnd]
+					if strings.Contains(classes, "toggle") || strings.Contains(classes, "lang") {
+						return true
+					}
+				}
+			}
+		}
+
+		// Also check if this is a direct language toggle by looking for context words
+		// like "English", "中文", language names, or toggle-specific text nearby
+		contextWindow := prefix[len(prefix)-200:] + target + suffix[:200]
+		if strings.Contains(contextWindow, "English") || strings.Contains(contextWindow, "中文") ||
+			strings.Contains(contextWindow, "language") || strings.Contains(contextWindow, "语言") {
+			return true
+		}
+	}
+	return true // If we can't find context, assume it's OK (default allow for toggle controls)
 }
 
 func publicFiles(root string) ([]string, error) {

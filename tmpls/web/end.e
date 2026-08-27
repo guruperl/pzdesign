@@ -1,26 +1,31 @@
 {{ define "footer" }}
-      <footer class="app-footer">
-        <span><a href="/">W8M</a> © Corporation.</span>
-      </footer>
-  </div>
+    </div>
+  </main>
 
+  <footer class="account-footer">
+    <div class="container">
+      <p>&copy; 2026 W8M Network Inc.</p>
+      <a href="mailto:support@w8m.com">support@w8m.com</a>
+    </div>
+  </footer>
 
-  <!-- Bootstrap and necessary plugins -->
   <script src="/1.0.8/vendors/js/jquery.min.js"></script>
   <script src="/1.0.8/vendors/js/popper.min.js"></script>
   <script src="/1.0.8/vendors/js/bootstrap.min.js"></script>
-
-  <!-- CoreUI Pro main scripts -->
-
   <script src="/1.0.8/js/app.js"></script>
-
-  <!-- Plugins and scripts required by this views -->
-  <script src="/1.0.8/vendors/js/jquery.maskedinput.min.js"></script>
-  <script src="/1.0.8/vendors/js/moment.min.js"></script>
-  <script src="/1.0.8/vendors/js/select2.min.js"></script>
-  <script src="/1.0.8/vendors/js/daterangepicker.min.js"></script>
-  <!-- Plugins and scripts required by form validation-->
   <script src="/1.0.8/vendors/js/jquery.validate.min.js"></script>
-
+  <script>
+  $(function() {
+    $('[data-lang-toggle]').on('click', function(e) {
+      e.preventDefault();
+      var newLang = $(this).attr('data-lang-toggle');
+      var path = window.location.pathname;
+      // Swap the chartag in the path: /goto/role/g/ -> /goto/role/e/
+      var newPath = path.replace(/\/goto\/([^\/]+)\/[ge]\//i, '/goto/$1/' + newLang + '/');
+      if (newPath !== path) {
+        window.location.href = newPath + window.location.search + window.location.hash;
+      }
+    });
+  });
+  </script>
 {{ end }}
-
