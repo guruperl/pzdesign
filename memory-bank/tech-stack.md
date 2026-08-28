@@ -82,7 +82,9 @@ checker are active release gates. The parity guard compares parsed field names
 and hidden action values and records exact exceptions for the incomplete
 authenticated workspace. The copy guard walks `.g` and `.e`, requires both
 public account matrices, parses edition links, and rejects raw framework errors.
-Manual acceptance is a browser pass with `zh-CN` and `en` `Accept-Language`
-against `/`, literal `/index.html` ↔ `/index.en.html` front-page links that
-ignore the opposite preference, and secure cookie persistence for explicit
-account-flow choices across a fresh `/` visit.
+Manual acceptance opens `/` with primary browser languages `zh-CN` and `en`,
+confirms Chinese moves to `/index.zh.html` while non-Chinese stays on the
+English `/`, and confirms literal `/index.html` ↔ `/index.zh.html` links remain
+on the selected file. Public account-flow toggles navigate directly to the
+opposite chartag; no language cookie, header negotiation, or location-based CDN
+rule is involved.

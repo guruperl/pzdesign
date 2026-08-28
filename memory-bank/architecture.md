@@ -56,25 +56,24 @@ the role glob `<Template>/<role>/*.<chartag>`. `g` is Chinese and `e` is
 English; both are configured `text/html`. No framework change is needed to
 switch language, and account mail already follows the request's chartag.
 
-The public front page is static and therefore outside that mechanism. `cmd/unify`
-owns `GET /`, registered ahead of the Genelet catch-all, which negotiates on
-`Accept-Language`, honors an explicit language cookie above the browser value,
-and falls back to the Chinese file when the English one is absent. Exact
-`GET /index.html` and `GET /index.en.html` select the literal Chinese and English
-files respectively, ignore preference inputs, and never write a cookie. Their
-front-page language links point directly to one another. Negotiated responses
-declare `Vary: Accept-Language, Cookie`, `Content-Language`, and private/no-cache
-policy.
-Exact `/goto/web/g/` and `/goto/web/e/` entry routes and the public
-`/language/{zh|en}` switch persist a `Secure`, `HttpOnly`, `SameSite=Lax`
-preference containing only `zh` or `en`. Redirect returns are limited to the
-selected `/goto/web/{g|e}/` subtree. Genelet's `staticPage` is unchanged.
+The public front page is static and therefore outside that mechanism. The
+ordinary document-root directory index serves `index.html` for `/`. An early
+script in that file reads the browser's primary language only while the visible
+path is `/`: Chinese replaces the English default with `/index.zh.html`, and
+every other language keeps the loaded page. Direct `/index.html` and
+`/index.zh.html` requests therefore always render the named English and Chinese
+files, and their language links point directly to one another. Neither
+`cmd/unify`, Apache, nor a CDN
+negotiates language, redirects by location, or stores a language cookie.
 
-Language preference reaches only public entry points. Authenticated requests
-are never redirected to a different chartag, and authenticated role headers do
-not expose a language toggle while 72 action templates still lack an English
-twin. The completed public `web` account flow retains its chartag-preserving
-toggle.
+Public account-flow toggles replace the `g` or `e` chartag in the current URL
+and navigate there directly. Genelet's `staticPage` and chartag routing are
+unchanged.
+
+Language switching reaches only public entry points. Authenticated requests are
+never redirected to a different chartag, and authenticated role headers do not
+expose a language toggle while 72 action templates still lack an English twin.
+The completed public `web` account flow retains its chartag-preserving toggle.
 
 Two guards keep the editions aligned. A structural parity check parses real HTML
 form controls and requires every `.g` action to have an `.e` twin with matching
@@ -110,8 +109,9 @@ Chinese 503 while its service is absent.
 staticcheck with three legacy style exclusions, both template parsers, the
 public-copy guard, the public-data guard, a pinned Gitleaks history scan, and a
 committed whitespace check. The `.g`/`.e` parity check joins that list as part
-of the active work. Every step sets `GOWORK=off`. The same checks run
-locally, and `git diff --check` covers uncommitted whitespace.
+of the active work. The public-copy guard also pins the root-only browser
+selector and literal named-page links. Every step sets `GOWORK=off`. The same
+checks run locally, and `git diff --check` covers uncommitted whitespace.
 
 ## Archive baselines
 

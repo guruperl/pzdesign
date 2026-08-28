@@ -24,7 +24,7 @@
       var newPath = path.replace(/\/goto\/([^\/]+)\/[ge]\//i, '/goto/$1/' + newLang + '/');
       if (newPath !== path) {
         var destination = newPath + window.location.search + window.location.hash;
-        window.location.href = '/language/' + newLang + '?return=' + encodeURIComponent(destination);
+        window.location.href = destination;
       }
     });
   });

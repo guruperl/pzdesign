@@ -2,17 +2,17 @@
 
 ## Delivery outcome
 
-A visitor reaching W8M is served the front page in their browser's language, can
-open the literal sibling language page with one click, and finds a complete
-English edition behind that link. The active horizon delivers that end to end
-for the public surface: land in English, register in English, read English
-manuals, and move directly between the two static front pages.
+A visitor reaching W8M has the static front page selected by a small browser
+script, can open the literal sibling language page with one click, and finds a
+complete English edition behind that link. The active horizon delivers that end
+to end for the public surface: land in English, register in English, read
+English manuals, and move directly between the two static front pages.
 
 ## Lanes
 
 | Lane | Meaning |
 |---|---|
-| `L` | Language platform — negotiation, cookie, toggle, chartag entry links, guards, and policy documents. Reviewed as code. |
+| `L` | Language platform — static entry selection, direct toggle, chartag entry links, guards, and policy documents. Reviewed as code. |
 | `T` | Translation — producing the English editions of templates, the landing page, and the manuals. Reviewed as copy, and long-lived through parity maintenance. |
 
 Lane letters `A`, `D`, `I`, `P`, `R`, and `S` are reserved: this repository's

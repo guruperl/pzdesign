@@ -1,40 +1,52 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="W8M 为广告主提供广告投放与效果管理，为流量方（发布商）提供网站、App 和广告位接入服务。">
+    <meta name="description" content="W8M provides advertisers with campaign, ad group, creative, targeting, and reporting tools. Publishers can integrate websites, apps, and ad slots.">
     <meta name="author" content="W8M">
     <meta name="theme-color" content="#102a43">
     <link rel="shortcut icon" href="logo.png">
+    <script id="front-language-selection">
+      (function () {
+        if (window.location.pathname !== '/') {
+          return;
+        }
+        var languages = window.navigator.languages;
+        var language = languages && languages.length > 0 ? languages[0] : window.navigator.language;
+        if (/^zh(?:[-_]|$)/i.test(language || '')) {
+          window.location.replace('/index.zh.html');
+        }
+      }());
+    </script>
 
-    <title>W8M 广告投放与流量接入平台</title>
+    <title>W8M Advertising and Traffic Integration Platform</title>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/w8m-home.css?v=20260802-11" rel="stylesheet">
-    <link rel="alternate" hreflang="zh-CN" href="/index.html">
-    <link rel="alternate" hreflang="en" href="/index.en.html">
+    <link rel="alternate" hreflang="zh-CN" href="/index.zh.html">
+    <link rel="alternate" hreflang="en" href="/index.html">
   </head>
 
   <body id="page-top">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" aria-label="主导航">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" aria-label="Main navigation">
       <div class="container">
-        <a class="navbar-brand" href="#page-top" aria-label="W8M 首页">
+        <a class="navbar-brand" href="#page-top" aria-label="W8M Home">
           <span class="brand-mark">W8M</span>
-          <span class="brand-copy">广告平台</span>
+          <span class="brand-copy">Advertising Platform</span>
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="展开导航">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto align-items-lg-center">
-            <li class="nav-item"><a class="nav-link" href="#role-guide">使用指南</a></li>
-            <li class="nav-item"><a class="nav-link" href="#capabilities">平台能力</a></li>
-            <li class="nav-item"><a class="nav-link" href="#help">常见问题</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contact">联系我们</a></li>
-            <li class="nav-item ml-lg-2"><a class="nav-link lang-toggle" href="/index.en.html" title="English">English</a></li>
-            <li class="nav-item"><a class="btn btn-sm btn-outline-light nav-login" href="#entry">登录平台</a></li>
+            <li class="nav-item"><a class="nav-link" href="#role-guide">Guide</a></li>
+            <li class="nav-item"><a class="nav-link" href="#capabilities">Capabilities</a></li>
+            <li class="nav-item"><a class="nav-link" href="#help">FAQ</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            <li class="nav-item ml-lg-2"><a class="nav-link lang-toggle" href="/index.zh.html" title="中文">中文</a></li>
+            <li class="nav-item"><a class="btn btn-sm btn-outline-light nav-login" href="#entry">Log In</a></li>
           </ul>
         </div>
       </div>
@@ -44,24 +56,24 @@
       <div class="container hero-content">
         <div class="row align-items-center">
           <div class="col-lg-8">
-            <p class="eyebrow">平台服务</p>
-            <h1>W8M 广告投放与流量接入平台</h1>
-            <p class="hero-lead">W8M 为广告主提供从广告活动、广告组、广告素材、定向到报表的完整投放流程，也为流量方（发布商）提供网站、App、网页广告码与 API 接入能力。</p>
+            <p class="eyebrow">Platform Services</p>
+            <h1>W8M Advertising and Traffic Integration Platform</h1>
+            <p class="hero-lead">W8M provides advertisers with a complete workflow from campaigns, ad groups, creatives, and targeting to reporting. Publishers can integrate websites, apps, web ad codes, and API endpoints.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary btn-lg" href="#advertiser-guide" data-role-tab="advertiser">我要投放广告</a>
-              <a class="btn btn-light btn-lg" href="#publisher-guide" data-role-tab="publisher">我要接入流量</a>
+              <a class="btn btn-primary btn-lg" href="#advertiser-guide" data-role-tab="advertiser">Launch Ads</a>
+              <a class="btn btn-light btn-lg" href="#publisher-guide" data-role-tab="publisher">Monetize Traffic</a>
             </div>
           </div>
           <div class="col-lg-4 d-none d-lg-block">
             <div class="hero-panel">
-              <span class="hero-panel-label">账户类型</span>
+              <span class="hero-panel-label">Account Types</span>
               <div class="hero-panel-row">
                 <i class="fa fa-bullseye" aria-hidden="true"></i>
-                <div><strong>广告主</strong><small>创建广告活动和广告组、配置定向、管理素材</small></div>
+                <div><strong>Advertiser</strong><small>Create campaigns and ad groups, configure targeting, manage creatives</small></div>
               </div>
               <div class="hero-panel-row">
                 <i class="fa fa-code" aria-hidden="true"></i>
-                <div><strong>流量方</strong><small>管理流量源和广告位、部署广告码、查看报表</small></div>
+                <div><strong>Publisher</strong><small>Manage traffic sources and ad slots, deploy ad code, view reports</small></div>
               </div>
             </div>
           </div>
@@ -69,12 +81,12 @@
       </div>
     </header>
 
-    <section class="signal-strip" aria-label="平台特性">
+    <section class="signal-strip" aria-label="Platform Features">
       <div class="container">
         <div class="row text-center">
-          <div class="col-md-4 signal-item"><i class="fa fa-exchange" aria-hidden="true"></i><span>DSP、SSP 与 ADX 一体化工作流</span></div>
-          <div class="col-md-4 signal-item"><i class="fa fa-code" aria-hidden="true"></i><span>OpenRTB 2.5 受控兼容与开放 API</span></div>
-          <div class="col-md-4 signal-item"><i class="fa fa-shield" aria-hidden="true"></i><span>隐私信号、流量质量与运行观测</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-exchange" aria-hidden="true"></i><span>DSP, SSP, and ADX integrated workflow</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-code" aria-hidden="true"></i><span>OpenRTB 2.5 controlled compatibility and open API</span></div>
+          <div class="col-md-4 signal-item"><i class="fa fa-shield" aria-hidden="true"></i><span>Privacy signals, traffic quality, and operational observability</span></div>
         </div>
       </div>
     </section>
@@ -83,20 +95,20 @@
       <section id="role-guide" class="section role-guide">
         <div class="container">
           <div class="section-intro text-center">
-            <p class="eyebrow eyebrow-dark">账户类型</p>
-            <h2>选择账户类型</h2>
-            <p>广告主用于管理广告投放，流量方（发布商）用于管理网站、App 和广告位接入。</p>
+            <p class="eyebrow eyebrow-dark">Account Types</p>
+            <h2>Choose Your Account Type</h2>
+            <p>Advertisers manage ad campaigns. Publishers manage website, app, and ad slot integration.</p>
           </div>
 
           <ul class="nav nav-pills role-tabs justify-content-center" id="roleTabs" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="advertiser-tab" data-toggle="pill" href="#advertiser-guide" role="tab" aria-controls="advertiser-guide" aria-selected="true">
-                <i class="fa fa-bullseye" aria-hidden="true"></i> 广告主 / 代理商
+                <i class="fa fa-bullseye" aria-hidden="true"></i> Advertiser / Agency
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="publisher-tab" data-toggle="pill" href="#publisher-guide" role="tab" aria-controls="publisher-guide" aria-selected="false">
-                <i class="fa fa-globe" aria-hidden="true"></i> 流量方（发布商）
+                <i class="fa fa-globe" aria-hidden="true"></i> Publisher
               </a>
             </li>
           </ul>
@@ -105,34 +117,34 @@
             <div class="tab-pane fade show active" id="advertiser-guide" role="tabpanel" aria-labelledby="advertiser-tab">
               <div class="role-heading">
                 <div>
-                  <span class="role-kicker">广告主</span>
-                  <h3>广告主使用流程</h3>
-                  <p>先完善广告活动和广告组，再逐步收紧预算、定向与供应侧规则。保存不等于已经上线，启用前请完成全链路检查。</p>
+                  <span class="role-kicker">Advertiser</span>
+                  <h3>Advertiser Workflow</h3>
+                  <p>Set up campaigns and ad groups first, then gradually tighten budgets, targeting, and supply-side rules. Saving is not the same as launching; complete end-to-end validation before enabling.</p>
                 </div>
                 <span class="role-badge">ADV</span>
               </div>
 
               <div class="journey-grid">
-                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-campaign" aria-haspopup="dialog"><span>01</span><i class="fa fa-folder-open-o" aria-hidden="true"></i><h4>创建广告活动</h4><p>设置投放周期、总预算、每日预算和流量范围。</p><small class="journey-more">查看配置说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
-                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-ad-group" aria-haspopup="dialog"><span>02</span><i class="fa fa-sliders" aria-hidden="true"></i><h4>配置广告组</h4><p>确定价格、落地页、频次、设备、地域和人群定向。</p><small class="journey-more">查看配置说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
-                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-creative" aria-haspopup="dialog"><span>03</span><i class="fa fa-picture-o" aria-hidden="true"></i><h4>添加并测试广告素材</h4><p>核对尺寸、媒体类型、展示像素与点击跳转。</p><small class="journey-more">查看素材说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
-                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-reporting" aria-haspopup="dialog"><span>04</span><i class="fa fa-line-chart" aria-hidden="true"></i><h4>上线并查看报表</h4><p>确认状态与缓存生效，再观察展示、点击和花费。</p><small class="journey-more">查看上线说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-campaign" aria-haspopup="dialog"><span>01</span><i class="fa fa-folder-open-o" aria-hidden="true"></i><h4>Create Campaign</h4><p>Set flight dates, total budget, daily budget, and traffic scope.</p><small class="journey-more">View setup instructions <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-ad-group" aria-haspopup="dialog"><span>02</span><i class="fa fa-sliders" aria-hidden="true"></i><h4>Configure Ad Group</h4><p>Set CPM price, landing page, frequency, devices, geo, and audience targeting.</p><small class="journey-more">View setup instructions <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-creative" aria-haspopup="dialog"><span>03</span><i class="fa fa-picture-o" aria-hidden="true"></i><h4>Add and Test Creatives</h4><p>Verify dimensions, media type, impression pixel, and click-through tracking.</p><small class="journey-more">View creative guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action" role="button" tabindex="0" data-toggle="modal" data-target="#journey-advertiser-reporting" aria-haspopup="dialog"><span>04</span><i class="fa fa-line-chart" aria-hidden="true"></i><h4>Launch and View Reports</h4><p>Confirm status and cache propagation, then observe impressions, clicks, and spend.</p><small class="journey-more">View launch guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
               </div>
 
               <div class="role-footer row align-items-center">
                 <div class="col-lg-7">
-                  <h4>上线前重点检查</h4>
+                  <h4>Pre-launch Checklist</h4>
                   <ul class="check-list">
-                    <li>账户、广告活动、广告组和至少一个广告素材均可投放</li>
-                    <li>预算、时间、素材尺寸与目标广告位一致</li>
-                    <li>Banner 需要点击测量时正确使用 <code>{CLICK_URL}</code></li>
+                    <li>Account, campaign, ad group, and at least one creative are all active</li>
+                    <li>Budget, dates, creative dimensions match target ad slots</li>
+                    <li>Banners requiring click tracking must use <code>{CLICK_URL}</code></li>
                   </ul>
                 </div>
                 <div class="col-lg-5 role-actions">
-                  <button type="button" class="btn btn-role-detail" data-toggle="modal" data-target="#role-guide-advertiser" aria-haspopup="dialog">查看详细投放指南</button>
-                  <a class="btn btn-primary" href="/goto/web/g/adv?action=startnew">注册广告主</a>
-                  <a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">广告主登录</a>
-                  <a class="manual-link" href="manuals/advertiser.html">阅读完整中文手册 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                  <button type="button" class="btn btn-role-detail" data-toggle="modal" data-target="#role-guide-advertiser" aria-haspopup="dialog">View Detailed Guide</button>
+                  <a class="btn btn-primary" href="/goto/web/e/adv?action=startnew">Create Advertiser Account</a>
+                  <a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Advertiser Log In</a>
+                  <a class="manual-link" href="manuals/advertiser.en.html">Read Full Manual <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </div>
               </div>
             </div>
@@ -140,34 +152,34 @@
             <div class="tab-pane fade" id="publisher-guide" role="tabpanel" aria-labelledby="publisher-tab">
               <div class="role-heading publisher-heading">
                 <div>
-                  <span class="role-kicker">流量方（发布商）</span>
-                  <h3>流量方接入流程</h3>
-                  <p>网站、App 和广告位属于流量方账户。请使用系统生成的流量源与广告位令牌接入，不要自行修改令牌或用请求宽高覆盖平台配置。</p>
+                  <span class="role-kicker">Publisher</span>
+                  <h3>Publisher Integration Workflow</h3>
+                  <p>Websites, apps, and ad slots belong to publisher accounts. Use platform-generated traffic source and ad slot tokens to integrate. Do not modify tokens or override configuration with request dimensions.</p>
                 </div>
                 <span class="role-badge publisher-badge">PUB</span>
               </div>
 
               <div class="journey-grid">
-                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-source" aria-haspopup="dialog"><span>01</span><i class="fa fa-sitemap" aria-hidden="true"></i><h4>创建流量源</h4><p>登记网站域名或 App Bundle，并确认来源主机。</p><small class="journey-more">查看资源说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
-                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-slot" aria-haspopup="dialog"><span>02</span><i class="fa fa-object-group" aria-hidden="true"></i><h4>配置广告位</h4><p>设置尺寸、媒体类型、设备与内容质量规则。</p><small class="journey-more">查看配置说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
-                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-integration" aria-haspopup="dialog"><span>03</span><i class="fa fa-code" aria-hidden="true"></i><h4>部署接入代码</h4><p>复制网页广告码，或使用 SDK/API 样例接入 <code>/pz</code>。</p><small class="journey-more">查看接入说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
-                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-validation" aria-haspopup="dialog"><span>04</span><i class="fa fa-bar-chart" aria-hidden="true"></i><h4>验证接入与查看报表</h4><p>测试填充和无填充，并按报表查看广告位表现。</p><small class="journey-more">查看验收说明 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-source" aria-haspopup="dialog"><span>01</span><i class="fa fa-sitemap" aria-hidden="true"></i><h4>Create Traffic Source</h4><p>Register domain or app bundle, confirm source host.</p><small class="journey-more">View resource guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-slot" aria-haspopup="dialog"><span>02</span><i class="fa fa-object-group" aria-hidden="true"></i><h4>Configure Ad Slot</h4><p>Set dimensions, media type, devices, and content quality rules.</p><small class="journey-more">View setup instructions <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-integration" aria-haspopup="dialog"><span>03</span><i class="fa fa-code" aria-hidden="true"></i><h4>Deploy Integration Code</h4><p>Copy web ad code or use SDK/API samples to integrate <code>/pz</code>.</p><small class="journey-more">View integration guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
+                <article class="journey-step journey-step-action publisher-step" role="button" tabindex="0" data-toggle="modal" data-target="#journey-publisher-validation" aria-haspopup="dialog"><span>04</span><i class="fa fa-bar-chart" aria-hidden="true"></i><h4>Validate Integration and View Reports</h4><p>Test with and without fill, verify report performance.</p><small class="journey-more">View acceptance guide <i class="fa fa-long-arrow-right" aria-hidden="true"></i></small></article>
               </div>
 
               <div class="role-footer row align-items-center">
                 <div class="col-lg-7">
-                  <h4>接入前重点检查</h4>
+                  <h4>Pre-integration Checklist</h4>
                   <ul class="check-list publisher-checks">
-                    <li>实际页面主机与平台登记的站点主机完全一致</li>
-                    <li>使用广告位页面最新生成的 <code>site</code> 与 <code>slot</code> 令牌</li>
-                    <li><code>200</code> 空结果表示正常无填充，不应快速重复请求</li>
+                    <li>Actual page host exactly matches platform-registered site host</li>
+                    <li>Use latest-generated <code>site</code> and <code>slot</code> tokens from ad slot page</li>
+                    <li><code>200</code> with empty content is normal no-fill, do not retry quickly</li>
                   </ul>
                 </div>
                 <div class="col-lg-5 role-actions">
-                  <button type="button" class="btn btn-role-detail btn-role-detail-publisher" data-toggle="modal" data-target="#role-guide-publisher" aria-haspopup="dialog">查看详细接入指南</button>
-                  <a class="btn btn-publisher" href="/goto/web/g/pub?action=startnew">注册流量方</a>
-                  <a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">流量方登录</a>
-                  <a class="manual-link publisher-link" href="manuals/publisher.html">阅读完整中文手册 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                  <button type="button" class="btn btn-role-detail btn-role-detail-publisher" data-toggle="modal" data-target="#role-guide-publisher" aria-haspopup="dialog">View Detailed Guide</button>
+                  <a class="btn btn-publisher" href="/goto/web/e/pub?action=startnew">Create Publisher Account</a>
+                  <a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Publisher Log In</a>
+                  <a class="manual-link publisher-link" href="manuals/publisher.en.html">Read Full Manual <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                 </div>
               </div>
             </div>
@@ -179,36 +191,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-folder-open-o" aria-hidden="true"></i></span><div><span>广告主使用流程 · 第 1 步</span><h2 class="modal-title" id="journey-advertiser-campaign-title">创建和检查广告活动</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-folder-open-o" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 1</span><h2 class="modal-title" id="journey-advertiser-campaign-title">Create and Check Campaign</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">广告活动（Campaign）是广告组和广告素材的上层投放边界，用于统一控制活动周期、流量范围、活动级预算和状态。建议先保存为未启用，完成下层配置和测试后再上线。</p>
+              <p class="capability-modal-lead">A campaign is the top-level boundary for ad groups and creatives, controlling flight dates, traffic scope, budget, and status. Save as disabled first, then enable after configuring and testing lower levels.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>需要确认的活动字段</h3>
+                  <h3>Campaign Fields to Verify</h3>
                   <ul class="capability-list">
-                    <li><strong>名称：</strong>使用便于团队识别和报表检索的活动名称，避免把密钥或个人信息写入名称</li>
-                    <li><strong>投放周期：</strong>填写明确的开始与结束时间，并确认当前时间位于有效区间</li>
-                    <li><strong>流量范围：</strong>选择与投放目标相符的供应范围；过窄或互相排斥的范围可能没有合格流量</li>
-                    <li><strong>总预算与每日预算：</strong>为活动设置明确上限，并确认两项预算都未耗尽</li>
-                    <li><strong>状态：</strong>准备阶段保持未启用，完成广告组、素材、定向和小流量测试后再启用</li>
+                    <li><strong>Name:</strong> Use a name for team recognition and report search. Avoid keys or personal information.</li>
+                    <li><strong>Flight Dates:</strong> Set specific start and end dates, verify current time is within the valid range</li>
+                    <li><strong>Traffic Scope:</strong> Choose supply scope that matches targeting goals; too narrow or conflicting ranges may lack qualified traffic</li>
+                    <li><strong>Total and Daily Budget:</strong> Set clear limits for the campaign and verify both are not exhausted</li>
+                    <li><strong>Status:</strong> Keep disabled during setup. Enable after ad groups, creatives, targeting, and small-traffic testing complete.</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>保存后的配置顺序</h3>
+                  <h3>Configuration Order After Saving</h3>
                   <ul class="capability-list">
-                    <li>在活动下创建广告组，设置 USD CPM 价格、落地页、广告组预算、时间和频次</li>
-                    <li>添加至少一个尺寸、媒体类型和目标广告位相符的广告素材</li>
-                    <li>先用较宽的地域、设备、人群和供应定向完成小流量验证，再逐项收紧</li>
-                    <li>确认账户、活动、广告组和素材状态一致，并等待修改进入运行缓存</li>
-                    <li>上线后观察有效展示、点击和花费报表；报表由后台任务汇总，并非请求级实时</li>
+                    <li>Create ad groups under the campaign; set USD CPM price, landing page, ad group budget, dates, and frequency</li>
+                    <li>Add at least one creative matching dimensions, media type, and target ad slots</li>
+                    <li>Start with broad geo, device, audience, and supply targeting for small-traffic validation, then tighten gradually</li>
+                    <li>Verify account, campaign, ad group, and creative statuses are consistent; wait for changes to enter runtime cache</li>
+                    <li>After launch, check impressions, clicks, and spend reports. Reports are generated by backend jobs, not real-time.</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>没有竞价时：</strong>依次检查账户与活动状态、活动时间、总预算和每日预算、广告组状态、素材尺寸、USD 底价、流量范围和定向条件。只启用活动本身不会绕过下层规则。</div>
+              <div class="capability-status"><strong>No bids:</strong> Check account and campaign status, flight dates, total and daily budget, ad group status, creative dimensions, USD floor, traffic scope, and targeting. Enabling the campaign alone does not bypass lower-level rules.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.html#workflow">阅读完整投放流程</a><a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">管理广告活动</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#workflow">Read Full Workflow</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Manage Campaigns</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -217,36 +229,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-sliders" aria-hidden="true"></i></span><div><span>广告主使用流程 · 第 2 步</span><h2 class="modal-title" id="journey-advertiser-ad-group-title">配置和检查广告组</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-sliders" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 2</span><h2 class="modal-title" id="journey-advertiser-ad-group-title">Configure and Check Ad Group</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">广告组（Ad Group）位于广告活动之下，用于确定实际竞价价格、落地页、广告组预算、频次和定向条件。同一活动可以建立多个广告组，分别服务不同受众或供应范围。</p>
+              <p class="capability-modal-lead">An ad group sits under the campaign and sets the actual bid price, landing page, budget, frequency, and targeting. A single campaign can have multiple ad groups serving different audiences or supply.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>价格、时间与频次</h3>
+                  <h3>Price, Duration, and Frequency</h3>
                   <ul class="capability-list">
-                    <li><strong>竞价价格：</strong>商业投放使用正值 USD CPM，并确保价格能够满足目标广告位的服务端最低竞价</li>
-                    <li><strong>落地页：</strong>填写可从公网访问的 HTTPS 地址，并分别验证直接访问和最终跳转</li>
-                    <li><strong>时间与预算：</strong>广告组日期应位于活动周期内，并设置适当的总预算和每日预算</li>
-                    <li><strong>频次：</strong>按业务需要设置展示/点击上限和最小展示间隔，避免测试条件过严</li>
-                    <li><strong>状态：</strong>准备阶段保持未启用，至少添加并测试一个素材后再与上层活动一起启用</li>
+                    <li><strong>Bid Price:</strong> Use positive USD CPM for production. Price must meet target ad slot server-side floor.</li>
+                    <li><strong>Landing Page:</strong> Use HTTPS URL publicly accessible. Test direct access and final redirect separately.</li>
+                    <li><strong>Duration and Budget:</strong> Ad group dates must fall within campaign dates. Set appropriate total and daily budgets.</li>
+                    <li><strong>Frequency:</strong> Set impression/click caps and minimum display intervals per your needs. Avoid overly strict test conditions.</li>
+                    <li><strong>Status:</strong> Keep disabled during setup. Enable together with the parent campaign after adding and testing at least one creative.</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>定向配置与验证</h3>
+                  <h3>Targeting Configuration and Validation</h3>
                   <ul class="capability-list">
-                    <li>可按国家、省/州、城市、语言、设备类型、操作系统、浏览器、日期、小时和星期配置定向</li>
-                    <li>供应侧条件可限制流量方、网站/App、广告位、行业、频道和活动允许的流量范围</li>
-                    <li>上传人群按配置的标识类型匹配；多个标识条件可能要求请求同时命中</li>
-                    <li>建议先用较宽的单一条件完成小流量测试，再逐项加入其他条件并观察候选变化</li>
-                    <li>启用前核对活动和广告组的时间、预算、状态没有冲突，并等待运行缓存刷新</li>
+                    <li>Target by country, state/province, city, language, device type, OS, browser, date, hour, and day of week</li>
+                    <li>Supply-side conditions can limit publishers, websites/apps, ad slots, category, channel, and activity</li>
+                    <li>Uploaded audiences match by configured ID types; multiple ID conditions may require matching all at once</li>
+                    <li>Start with broad single conditions for small-traffic testing, then add other conditions and observe changes</li>
+                    <li>Before enabling, verify campaign and ad group dates, budgets, and statuses have no conflicts; wait for cache refresh</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>价格边界：</strong>当前商业投放以 USD CPM 参与竞价。历史 CPC、CPA 或 ROI 字段不会自动转换为可投放价格；没有候选时应同时检查底价、定向和供应范围。</div>
+              <div class="capability-status"><strong>Price Boundary:</strong> Production bids use USD CPM. Historical CPC, CPA, or ROI values do not auto-convert to payable prices; when bids are missing, check floor, targeting, and supply scope together.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.html#workflow">查看广告组配置说明</a><a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">选择广告活动</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#workflow">View Ad Group Setup</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Select Campaign</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -255,36 +267,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-picture-o" aria-hidden="true"></i></span><div><span>广告主使用流程 · 第 3 步</span><h2 class="modal-title" id="journey-advertiser-creative-title">添加和测试广告素材</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-picture-o" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 3</span><h2 class="modal-title" id="journey-advertiser-creative-title">Add and Test Creatives</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">广告素材（Creative）定义最终展示内容。只有启用状态、尺寸、媒体类型和请求条件均匹配的素材，才会进入已获胜广告组内部的权重轮播。</p>
+              <p class="capability-modal-lead">Creatives define the actual displayed content. Only creatives with active status, matching dimensions, media type, and request conditions enter the weight rotation inside winning ad groups.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>素材字段与匹配条件</h3>
+                  <h3>Creative Fields and Matching</h3>
                   <ul class="capability-list">
-                    <li>填写清晰的素材名称、宽高、媒体类型、素材内容、权重和启用状态</li>
-                    <li>Banner、Video 与 Native 应使用各自支持的内容结构；尺寸必须与目标广告位完全一致</li>
-                    <li>素材权重只影响同一获胜广告组内的素材选择，不会提高广告组对其他广告组的竞价优先级</li>
-                    <li>素材 URL、回调地址和引用资源应使用可访问的 HTTPS 地址，并符合相应媒体格式</li>
-                    <li>先使用单一素材完成展示和点击测试，再增加其他尺寸、版本或权重组合</li>
+                    <li>Provide clear creative name, dimensions, media type, content, weight, and active status</li>
+                    <li>Banner, video, and native creatives must use appropriate structures; dimensions must exactly match target ad slots</li>
+                    <li>Creative weight only affects rotation within a winning ad group, not cross-ad-group bid priority</li>
+                    <li>URLs, callback addresses, native assets, and VAST resources must be HTTPS and match media formats</li>
+                    <li>Start with a single creative to test impressions and clicks, then add other sizes, versions, or weight combinations</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>展示与点击测试</h3>
+                  <h3>Impression and Click Testing</h3>
                   <ul class="capability-list">
-                    <li>Banner 需要平台点击测量时，在内容 URL 或模板中显式使用 <code>{CLICK_URL}</code></li>
-                    <li><code>{LANDING_URL}</code> 表示直接落地页；平台不会自动重写任意第三方 iframe 或 HTML 内部链接</li>
-                    <li>不要修改平台生成的 <code>/imp</code>、<code>/clk</code>、<code>sig</code> 或 <code>sig_ts</code> 参数</li>
-                    <li>测试时确认素材实际加载、展示跟踪到达、点击跳转正确，并检查浏览器控制台和网络请求</li>
-                    <li>Video 检查 VAST 资源和 MIME，Native 检查必需资产，避免只验证预览而未验证真实广告位</li>
+                    <li>Banners requiring platform click measurement must explicitly use <code>{CLICK_URL}</code></li>
+                    <li><code>{LANDING_URL}</code> is the direct landing page; platform does not auto-rewrite third-party iframes or links in HTML</li>
+                    <li>Do not modify platform-generated <code>/imp</code>, <code>/clk</code>, <code>sig</code>, or <code>sig_ts</code> parameters</li>
+                    <li>During testing, verify creatives load, impression tracking fires, click-through works, and check browser console and network</li>
+                    <li>For video, check VAST resources and MIME. For native, check required assets. Test actual ad slots, not just preview.</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>匹配边界：</strong>只启用素材不能绕过账户、广告活动或广告组状态，也不能绕过时间、预算、尺寸、底价、定向和供应侧规则。</div>
+              <div class="capability-status"><strong>Matching Boundary:</strong> Enabling a creative alone does not bypass account, campaign, or ad group status, nor does it bypass time, budget, dimensions, floor, targeting, or supply-side rules.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.html#workflow">查看素材与跟踪说明</a><a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">选择广告活动</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#workflow">View Creative and Tracking Guide</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Select Campaign</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -293,36 +305,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-line-chart" aria-hidden="true"></i></span><div><span>广告主使用流程 · 第 4 步</span><h2 class="modal-title" id="journey-advertiser-reporting-title">上线投放并查看报表</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-line-chart" aria-hidden="true"></i></span><div><span>Advertiser Workflow · Step 4</span><h2 class="modal-title" id="journey-advertiser-reporting-title">Launch and View Reports</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">上线前先完成对象状态、预算、时间、尺寸、落地页、跟踪和运行缓存检查；上线后使用统一的展示、点击和花费口径观察投放，而不是仅凭保存状态判断是否已经生效。</p>
+              <p class="capability-modal-lead">Before launch, complete checks on object status, budget, dates, dimensions, landing pages, tracking, and cache. After launch, use unified impression, click, and spend metrics to observe performance, not just save status.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>上线前检查</h3>
+                  <h3>Pre-launch Checklist</h3>
                   <ul class="capability-list">
-                    <li>广告主账户、广告活动、广告组和至少一个广告素材均处于可投放状态</li>
-                    <li>当前时间位于活动和广告组的有效周期，总预算与每日预算均未耗尽</li>
-                    <li>素材尺寸和媒体类型与目标广告位一致，落地页及第三方测量地址可以访问</li>
-                    <li>需要点击测量的 Banner 已使用 <code>{CLICK_URL}</code>，测试展示和点击链路均成功</li>
-                    <li>价格与广告位底价使用兼容的 USD CPM，定向与流量范围没有互相排斥，修改已进入运行缓存</li>
+                    <li>Advertiser account, campaign, ad group, and at least one creative are all active</li>
+                    <li>Current time falls within active campaign and ad group dates; total and daily budgets are not exhausted</li>
+                    <li>Creative dimensions and media type match target ad slots; landing page and third-party tracking URLs are accessible</li>
+                    <li>Banners needing click tracking use <code>{CLICK_URL}</code>; impression and click paths have been tested</li>
+                    <li>Price and ad slot floor use compatible USD CPM; targeting and supply scope do not conflict; changes are in runtime cache</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>报表与计量口径</h3>
+                  <h3>Report and Measurement Basis</h3>
                   <ul class="capability-list">
-                    <li><strong>展示：</strong>有效、签名正确的 <code>/imp</code> 跟踪到达后计入</li>
-                    <li><strong>点击：</strong>有效、签名正确的 <code>/clk</code> 跟踪到达后计入</li>
-                    <li><strong>花费：</strong>按有效展示记录中的 USD CPM 除以 1000 计算</li>
-                    <li><strong>Win/Loss：</strong>用于竞价分析，但不单独作为当前账务花费依据</li>
-                    <li>仪表盘可查看近 24 小时和主要对象；持续缺失时提供测试时间、活动、广告组和广告位信息</li>
+                    <li><strong>Impressions:</strong> Counted after valid, correctly-signed <code>/imp</code> tracking arrives</li>
+                    <li><strong>Clicks:</strong> Counted after valid, correctly-signed <code>/clk</code> tracking arrives</li>
+                    <li><strong>Spend:</strong> Calculated as USD CPM from valid impression records divided by 1000</li>
+                    <li><strong>Win/Loss:</strong> Used for bid analysis but not as current accounting spend basis</li>
+                    <li>Dashboard shows last 24 hours and main objects; when data is missing, provide test time and object info</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>数据时效：</strong>报表由日志聚合与账务任务定时生成，不是请求级实时数据。上线初期应保留测试时间和对象信息，并为后台处理预留合理时间。</div>
+              <div class="capability-status"><strong>Data Timing:</strong> Reports are generated by log aggregation and accounting tasks on a schedule, not real-time. After launch, keep test time and object info; allow time for backend processing.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.html#measurement">查看报表与计量口径</a><a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">打开广告主工作台</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html#measurement">View Report and Measurement Basis</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Open Advertiser Dashboard</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -331,36 +343,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-sitemap" aria-hidden="true"></i></span><div><span>流量方接入流程 · 第 1 步</span><h2 class="modal-title" id="journey-publisher-source-title">创建和审核流量源</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-sitemap" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 1</span><h2 class="modal-title" id="journey-publisher-source-title">Create and Review Traffic Source</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">流量源代表流量方账户名下的网站或 App，是广告位、来源验证和供应透明度的上层边界。先确定 Web/App 类型和真实身份，再选择与该类型一致的接入方式。</p>
+              <p class="capability-modal-lead">A traffic source represents a website or app under a publisher account and is the top boundary for ad slots and source verification. Confirm web/app type and real identity first, then choose matching integration approach.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>流量源身份与接入类型</h3>
+                  <h3>Traffic Source Identity and Type</h3>
                   <ul class="capability-list">
-                    <li><strong>类型：</strong>网站选择 Web；移动应用选择 App，保存后接入代码会按类型区分</li>
-                    <li><strong>Bundle/Domain：</strong>网站填写正式域名，Android 填写包名，iOS 填写商店数字 ID</li>
-                    <li><strong>审核标识：</strong>填写对应的审核域名、包名或应用标识，并提供无需账号密码的公开审核地址</li>
-                    <li><strong>接入方式：</strong>选择 ADX、网页广告码、SDK 或服务端 API，并确保与 Web/App 类型一致</li>
-                    <li><strong>范围与状态：</strong>配置允许或拒绝的流量范围，并在资料和广告位准备完成后再启用</li>
+                    <li><strong>Type:</strong> Select web for websites; select app for mobile apps (integration code differs by type)</li>
+                    <li><strong>Bundle/Domain:</strong> Use formal domain for websites; package name for Android; store ID for iOS</li>
+                    <li><strong>Review ID:</strong> Use review domain, package name, or app ID. Provide public review address without account login.</li>
+                    <li><strong>Integration Method:</strong> Choose ADX, web ad code, SDK, or server API. Must match web/app type.</li>
+                    <li><strong>Scope and Status:</strong> Configure allowed or blocked traffic scope; enable after resources and ad slots are ready</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>审核、透明度与缓存</h3>
+                  <h3>Review, Transparency, and Cache</h3>
                   <ul class="capability-list">
-                    <li>浏览器生产页面的 <code>Origin</code> 或 <code>Referer</code> 主机必须与缓存中的站点主机完全一致</li>
-                    <li>不同子域名不会自动视为同一站点；正式上线前应逐个确认实际请求来源</li>
-                    <li>卖方 ID、类型、广告系统域名、公开名称和域名等透明度资料需经平台运营方复核</li>
-                    <li>已授权卖方资料发生变化时会恢复为待审核，不应继续按旧资料对外披露</li>
-                    <li>修改流量源后如接入仍使用旧数据，应联系运营方刷新运行缓存并确认生成时间</li>
+                    <li>Browser page <code>Origin</code> or <code>Referer</code> host must exactly match the registered site host in cache</li>
+                    <li>Different subdomains are not auto-treated as the same site; confirm each request source before production</li>
+                    <li>Seller ID, type, ad system domain, public name, and domain transparency require platform operator review</li>
+                    <li>When authorized seller information changes, it reverts to review-pending; do not use old info for external disclosure</li>
+                    <li>After modifying traffic source, if integration uses old data, contact platform to refresh runtime cache and confirm timestamp</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-publisher"><strong>来源边界：</strong>Web 请求缺少来源或主机不完全匹配时会被拒绝。不要用测试域名、其他子域名或请求参数替代平台登记的正式站点身份。</div>
+              <div class="capability-status capability-status-publisher"><strong>Source Boundary:</strong> Web requests without source or mismatched host are rejected. Do not use test domain, other subdomains, or request params as substitute for formal registered site identity.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.html#site">查看流量源配置说明</a><a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">管理流量源</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#site">View Traffic Source Setup</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Manage Traffic Sources</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -369,36 +381,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-object-group" aria-hidden="true"></i></span><div><span>流量方接入流程 · 第 2 步</span><h2 class="modal-title" id="journey-publisher-slot-title">配置和检查广告位</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-object-group" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 2</span><h2 class="modal-title" id="journey-publisher-slot-title">Configure and Check Ad Slot</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">广告位定义实际可售展示位置的可信尺寸、服务端底价、媒体形式和质量要求。客户端请求可以提供更多上下文，但不能降低或覆盖平台保存的核心配置。</p>
+              <p class="capability-modal-lead">An ad slot defines trusted dimensions, server-side floor, media types, and quality requirements for a sellable position. Client requests can provide context but cannot lower or override platform-saved config.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>广告位核心配置</h3>
+                  <h3>Ad Slot Core Config</h3>
                   <ul class="capability-list">
-                    <li>填写便于运营和报表识别的广告位名称，并设置准确的宽度和高度</li>
-                    <li>最低竞价使用正值 USD CPM；服务端采用平台底价与请求底价中的较高值</li>
-                    <li>选择 Banner、Video 或 Native 等可接受媒体类型，并设置设备、语言和页面位置</li>
-                    <li>按业务需要配置素材特点、质量条件、行业规则、流量审核状态和管理责任方</li>
-                    <li>刷新方式可为不刷新、定时刷新或事件触发；定时刷新间隔须为 15 至 3600 秒</li>
+                    <li>Provide a name for operations and reporting; set accurate width and height</li>
+                    <li>Floor uses positive USD CPM; server takes the higher of platform floor and request floor</li>
+                    <li>Select Banner, Video, or Native media types; set device, language, and page position</li>
+                    <li>Configure creative spec, quality conditions, category rules, traffic audit status, and responsibility owner</li>
+                    <li>Refresh mode can be none, periodic, or event-triggered; periodic intervals must be 15 to 3600 seconds</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>运行时可信边界</h3>
+                  <h3>Runtime Trusted Boundary</h3>
                   <ul class="capability-list">
-                    <li>广告位保存的尺寸是运行时可信尺寸，浏览器或 SDK 自报宽高不能覆盖</li>
-                    <li>请求令牌中的尺寸与缓存配置不一致时，服务会返回 <code>400</code></li>
-                    <li>请求可以提高底价但不能降低平台底价，避免客户端绕过商业规则</li>
-                    <li>修改尺寸、流量源身份或关键配置后，应重新取得接入样例和最新 <code>slot</code> 令牌</li>
-                    <li>启用前确认所属流量源已审核、广告位状态正确，并等待配置进入运行缓存</li>
+                    <li>Ad slot dimensions are runtime-trusted; browser or SDK self-reported dimensions cannot override</li>
+                    <li>When request token dimensions differ from cache config, server returns <code>400</code></li>
+                    <li>Requests can raise floor but cannot lower platform floor, preventing client bypass of business rules</li>
+                    <li>After changing dimensions, source, or key config, get new integration sample and latest <code>slot</code> token</li>
+                    <li>Before enabling, verify traffic source is reviewed and ad slot status is correct; wait for config to enter runtime cache</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-publisher"><strong>令牌边界：</strong>不要手工修改、交换或复用旧广告位令牌。尺寸或关键配置变化后，必须从广告位页面重新获取最新接入代码。</div>
+              <div class="capability-status capability-status-publisher"><strong>Token Boundary:</strong> Do not manually edit, swap, or reuse old ad slot tokens. After dimension or key config change, you must get new integration code from the ad slot page.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.html#slot">查看广告位配置说明</a><a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">选择流量源</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#slot">View Ad Slot Setup</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Select Traffic Source</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -407,36 +419,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-code" aria-hidden="true"></i></span><div><span>流量方接入流程 · 第 3 步</span><h2 class="modal-title" id="journey-publisher-integration-title">部署网页广告码或 App/API</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-code" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 3</span><h2 class="modal-title" id="journey-publisher-integration-title">Deploy Web Ad Code or App/API</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">Web 流量使用页面生成的网页广告码，App 或服务端接入使用对应的 API 样例。两种方式都请求 <code>POST /pz</code>，并使用平台生成的 <code>site</code> 与 <code>slot</code> 令牌标识资源。</p>
+              <p class="capability-modal-lead">Web traffic uses page-generated ad code. App or backend integration uses corresponding API samples. Both request <code>POST /pz</code> with platform-generated <code>site</code> and <code>slot</code> tokens.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>网页广告码</h3>
+                  <h3>Web Ad Code</h3>
                   <ul class="capability-list">
-                    <li>Web 流量源只使用广告位页面生成的网页广告码，并在页面中创建匹配的 DOM 容器</li>
-                    <li><code>adUnits[].code</code> 是容器 ID 和响应顺序标识；同一请求中的非空值必须唯一</li>
-                    <li><code>site</code> 标识流量方与流量源，<code>slot</code> 标识广告位与尺寸，二者不能交换或手工改写</li>
-                    <li><code>ads.js</code> 默认推导同源 <code>/pz</code> 地址；静态资源和广告服务分离时才显式指定 endpoint</li>
-                    <li>网页样例把素材放入无同源权限的沙箱 iframe；不要移除沙箱或直接写入宿主页 <code>innerHTML</code></li>
+                    <li>Web traffic sources must use the web ad code from the ad slot page and create matching DOM containers</li>
+                    <li><code>adUnits[].code</code> is the container ID and response sequence flag; non-empty values must be unique in one request</li>
+                    <li><code>site</code> identifies publisher and traffic source; <code>slot</code> identifies ad slot and dimensions; cannot swap or modify</li>
+                    <li><code>ads.js</code> defaults to same-origin <code>/pz</code>; only specify endpoint explicitly when static resources and ad service are separate</li>
+                    <li>Web sample puts creatives in an unprivileged sandbox iframe; do not remove sandbox or write to host page <code>innerHTML</code></li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>App 与服务端 API</h3>
+                  <h3>App and Backend API</h3>
                   <ul class="capability-list">
-                    <li>App/API 使用 JSON 请求，可按场景选择 HTML、结构化 JSON 或 OpenRTB <code>BidResponse</code></li>
-                    <li>如提供 <code>app.id</code>、<code>app.bundle</code> 或 <code>app.domain</code>，必须与平台验证的流量源身份一致</li>
-                    <li>传递真实、适用的 TCF、GPP、COPPA、GPC/DNT/LMT 等隐私信号，不得伪造同意授权</li>
-                    <li>SDK 请求不读取或依赖浏览器 Cookie；只有隐私决策允许时才传递合规的设备或用户标识</li>
-                    <li>结构化响应由接入方按媒体类型安全渲染，并按协议触发展示和点击测量</li>
+                    <li>App/API use JSON requests; choose HTML, structured JSON, or OpenRTB <code>BidResponse</code> per scenario</li>
+                    <li>If providing <code>app.id</code>, <code>app.bundle</code>, or <code>app.domain</code>, it must match platform-verified traffic source identity</li>
+                    <li>Send real, applicable TCF, GPP, COPPA, GPC/DNT/LMT privacy signals; do not fabricate consent</li>
+                    <li>SDK requests do not use browser cookies; only send compliant device or user identifiers when privacy policy allows</li>
+                    <li>Structured responses must be safely rendered by the integrator per media type and measurement triggered per protocol</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-publisher"><strong>移动接入说明：</strong>当前提供 <code>/pz</code> 协议、JSON/OpenRTB 返回和 SDK/API 样例；维护型 Android/iOS 原生 SDK 需在具体集成需求确认后提供。</div>
+              <div class="capability-status capability-status-publisher"><strong>Mobile Integration:</strong> Currently provides <code>/pz</code> protocol, JSON/OpenRTB responses, and SDK/API samples. Native Android/iOS SDKs will be provided after specific integration needs are confirmed.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.html#browser">查看完整接入示例</a><a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">获取接入代码</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#browser">View Full Integration Examples</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Get Integration Code</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -445,36 +457,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-bar-chart" aria-hidden="true"></i></span><div><span>流量方接入流程 · 第 4 步</span><h2 class="modal-title" id="journey-publisher-validation-title">验证接入并查看报表</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-bar-chart" aria-hidden="true"></i></span><div><span>Publisher Integration · Step 4</span><h2 class="modal-title" id="journey-publisher-validation-title">Validate Integration and View Reports</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">上线验收同时覆盖资源身份、请求格式、填充与无填充、安全渲染、测量和报表。请保留测试时间、流量源、广告位、来源页面和响应结果，便于定位缓存或匹配问题。</p>
+              <p class="capability-modal-lead">Launch validation covers resource identity, request format, fill and no-fill, safe rendering, measurement, and reporting. Keep test time, traffic source, ad slot, source page, and response for troubleshooting cache or match issues.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>请求与响应验收</h3>
+                  <h3>Request and Response Validation</h3>
                   <ul class="capability-list">
-                    <li>确认流量源类型、Bundle/Domain、广告位尺寸、服务端底价、媒体类型和状态正确</li>
-                    <li>Web 请求核对 <code>Origin</code>/<code>Referer</code>，App 请求核对应用身份、隐私信号和平台类型</li>
-                    <li>至少验证一次有填充响应，并确认 DOM 容器、沙箱渲染、展示和点击测量正常</li>
-                    <li>同时验证一次无填充；合法请求返回 <code>200</code> 空结果属于正常情况，不应快速重试</li>
-                    <li><code>400</code> 通常表示字段、令牌或尺寸问题；<code>403</code> 表示来源问题；<code>413</code> 表示请求体过大</li>
+                    <li>Verify traffic source type, bundle/domain, ad slot dimensions, server floor, media type, and status are correct</li>
+                    <li>For web, check <code>Origin</code>/<code>Referer</code>; for app, check app identity, privacy signals, and platform</li>
+                    <li>Validate at least one fill response; verify DOM container, sandbox rendering, impression tracking, and click work</li>
+                    <li>Also validate one no-fill; <code>200</code> empty result is normal no-fill, not a network error; do not retry quickly</li>
+                    <li><code>400</code> usually means field, token, or dimension issues; <code>403</code> means source issues; <code>413</code> means request body too large</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>测量、报表与结算</h3>
+                  <h3>Measurement, Reports, and Settlement</h3>
                   <ul class="capability-list">
-                    <li>有效展示和点击分别在签名跟踪到达后计入，账务展示金额按 USD CPM ÷ 1000 计算</li>
-                    <li>仪表盘和报表可按主要广告位、主要广告活动及近 24 小时数据观察表现</li>
-                    <li>报表由日志聚合和账务任务定时生成，不是请求级实时数据</li>
-                    <li>修改后仍是旧行为时，先确认运行缓存生成时间；持续缺失时提供完整测试上下文</li>
-                    <li>需要结算单或 CSV 时向运营方提供账户 ID 和账期，不要通过普通表单或邮件发送完整银行资料</li>
+                    <li>Valid impressions and clicks count after signed tracking arrives; spend is calculated as USD CPM ÷ 1000</li>
+                    <li>Dashboard and reports show main ad slots, campaigns, and last 24 hours of data</li>
+                    <li>Reports are generated by log aggregation and accounting tasks on a schedule, not real-time</li>
+                    <li>When behavior remains old after change, first check runtime cache timestamp; if still missing, provide full test context</li>
+                    <li>For settlement reports or CSV, provide account ID and period to platform; do not send complete bank details via form or email</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-publisher"><strong>无填充语义：</strong><code>200</code> 且内容为空表示请求合法但当前没有匹配广告。客户端应隐藏或回收空容器，并按正常流量节奏继续请求。</div>
+              <div class="capability-status capability-status-publisher"><strong>No-Fill Semantics:</strong> <code>200</code> with empty content means the request is valid but no matching ads exist right now. Clients should hide/recycle the container and continue requesting at normal traffic pace.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.html#errors">查看验收与错误排查</a><a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">打开流量方工作台</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html#errors">View Validation and Troubleshooting</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Open Publisher Dashboard</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -483,39 +495,39 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-bullseye" aria-hidden="true"></i></span><div><span>广告主 / 代理商</span><h2 class="modal-title" id="role-guide-advertiser-title">广告投放详细使用指南</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-advertiser"><i class="fa fa-bullseye" aria-hidden="true"></i></span><div><span>Advertiser / Agency</span><h2 class="modal-title" id="role-guide-advertiser-title">Detailed Advertiser Guide</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">广告主负责自己的投放对象与报表；代理商仅在授权范围内查看或审核。建议按账户、广告活动、广告组、广告素材和定向的顺序配置，再进行小流量验证。</p>
-              <div class="role-modal-path" aria-label="广告投放配置顺序">
-                <span><b>1</b>账户资料</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>2</b>广告活动</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>3</b>广告组</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>4</b>广告素材</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>5</b>验证上线</span>
+              <p class="capability-modal-lead">Advertisers own their targeting and reporting; agencies can only view or review within authorization. Follow the order: account, campaign, ad group, creative, then launch validation.</p>
+              <div class="role-modal-path" aria-label="Advertiser Setup Order">
+                <span><b>1</b>Account</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>2</b>Campaign</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>3</b>Ad Group</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>4</b>Creative</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>5</b>Launch</span>
               </div>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>账户、层级与投放配置</h3>
+                  <h3>Account, Hierarchy, and Campaign Config</h3>
                   <ul class="capability-list">
-                    <li><strong>广告活动：</strong>设置名称、起止时间、流量范围、总预算、每日预算和启用状态</li>
-                    <li><strong>广告组：</strong>设置 USD CPM 价格、落地页、预算、展示/点击频次以及地域、设备、人群和供应定向</li>
-                    <li><strong>广告素材：</strong>核对 Banner、Video 或 Native 的尺寸、媒体类型、内容、权重和启用状态</li>
-                    <li>建议先使用较宽规则完成小流量验证，再逐项收紧定向，避免多个条件互相排斥</li>
-                    <li>经营外部 DSP 时可维护竞价端点；身份凭据、审批、流量范围和路由仍由平台运营方配置</li>
+                    <li><strong>Campaign:</strong> Set name, dates, traffic scope, total budget, daily budget, and enable status</li>
+                    <li><strong>Ad Group:</strong> Set USD CPM price, landing page, budget, impression/click frequency, geo, device, audience, and supply targeting</li>
+                    <li><strong>Creative:</strong> Check banner, video, or native dimensions, media type, content, weight, and enable status</li>
+                    <li>Start with broad rules to validate small traffic, then tighten targeting gradually. Avoid multiple mutually-exclusive conditions.</li>
+                    <li>When running external DSP, maintain the bid endpoint; platform manages credentials, review, traffic scope, and routing</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>上线、测量与问题排查</h3>
+                  <h3>Launch, Measurement, and Troubleshooting</h3>
                   <ul class="capability-list">
-                    <li>账户、广告活动、广告组和至少一个广告素材必须同时处于可投放状态，时间、预算和尺寸也须匹配</li>
-                    <li>Banner 需要平台点击测量时显式使用 <code>{CLICK_URL}</code>，不要修改签名展示或点击参数</li>
-                    <li>展示和点击分别在有效跟踪到达后计入；花费按有效展示对应的 USD CPM ÷ 1000 计算</li>
-                    <li>报表由日志和账务任务定时汇总，不是请求级实时数据；排查时记录测试时间与对象信息</li>
-                    <li>无竞价时依次检查状态与时间、预算、尺寸、供应范围、底价币种和定向条件</li>
+                    <li>Account, campaign, ad group, and at least one creative must all be active at the same time; dates, budget, and dimensions must also match</li>
+                    <li>Banners needing platform click tracking must explicitly use <code>{CLICK_URL}</code>; do not modify signed impression or click params</li>
+                    <li>Impressions and clicks count after valid tracking arrives; spend is calculated from USD CPM of valid impressions ÷ 1000</li>
+                    <li>Reports aggregate from logs and accounting tasks on a schedule, not real-time; save test time and object info for troubleshooting</li>
+                    <li>When bids are missing, check account and campaign status, dates, budget, creative dimensions, USD floor, supply scope, and targeting in order</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>上线边界：</strong>页面显示“已保存”不代表已经进入生产投放。请确认上层对象状态、运行缓存和需要运营方审批的配置均已生效。</div>
+              <div class="capability-status"><strong>Launch Boundary:</strong> Saving does not mean launched into production. Verify all parent object status, runtime cache, and config requiring operator approval are active.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.html">阅读广告主与代理商完整手册</a><a class="btn btn-outline-primary" href="/goto/adv/g/campaign?action=topics">登录工作台</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html">Read Full Advertiser and Agency Manual</a><a class="btn btn-outline-primary" href="/goto/adv/e/campaign?action=topics">Log In</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -524,39 +536,39 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-globe" aria-hidden="true"></i></span><div><span>流量方（发布商）</span><h2 class="modal-title" id="role-guide-publisher-title">流量接入详细使用指南</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-publisher"><i class="fa fa-globe" aria-hidden="true"></i></span><div><span>Publisher</span><h2 class="modal-title" id="role-guide-publisher-title">Detailed Publisher Integration Guide</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">流量方账户按“流量源 → 广告位”管理网站与 App。完成资源审核和广告位配置后，使用页面生成的最新令牌接入，并分别验证有填充与正常无填充。</p>
-              <div class="role-modal-path role-modal-path-publisher" aria-label="流量接入配置顺序">
-                <span><b>1</b>流量源</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>2</b>广告位</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>3</b>接入代码</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>4</b>请求验证</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>5</b>报表验收</span>
+              <p class="capability-modal-lead">Publisher accounts organize traffic sources (websites/apps) and their ad slots. After resource review and slot config, use page-generated latest tokens to integrate and validate fill and no-fill separately.</p>
+              <div class="role-modal-path role-modal-path-publisher" aria-label="Publisher Setup Order">
+                <span><b>1</b>Traffic Source</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>2</b>Ad Slot</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>3</b>Integration</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>4</b>Request Validation</span><i class="fa fa-angle-right" aria-hidden="true"></i><span><b>5</b>Report Acceptance</span>
               </div>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>资源、广告位与接入配置</h3>
+                  <h3>Resource, Ad Slot, and Integration Config</h3>
                   <ul class="capability-list">
-                    <li><strong>流量源：</strong>选择 Web 或 App，填写网站域名、Android 包名或 iOS 商店 ID，并选择与类型一致的接入方式</li>
-                    <li><strong>广告位：</strong>设置可信尺寸、USD CPM 最低竞价、媒体类型、设备、位置、刷新和内容质量规则</li>
-                    <li>服务端采用平台底价与请求底价中的较高值；请求宽高不能覆盖广告位配置</li>
-                    <li>始终使用广告位页面最新生成的 <code>site</code> 与 <code>slot</code> 令牌，不要猜测、截断、交换或手工改写</li>
-                    <li>浏览器实际 <code>Origin</code>/<code>Referer</code> 主机必须与平台登记的站点主机完全一致</li>
+                    <li><strong>Traffic Source:</strong> Choose web or app, domain/package name, and integration method (web ad code, SDK, or API)</li>
+                    <li><strong>Ad Slot:</strong> Set trusted dimensions, USD CPM floor, media types, devices, position, refresh, and quality rules</li>
+                    <li>Server takes the higher of platform floor and request floor; request dimensions cannot override platform config</li>
+                    <li>Always use latest-generated <code>site</code> and <code>slot</code> tokens from the ad slot page; do not guess, truncate, swap, or edit manually</li>
+                    <li>Browser actual <code>Origin</code>/<code>Referer</code> host must exactly match the platform-registered site host</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>请求、隐私与上线验收</h3>
+                  <h3>Requests, Privacy, and Launch Validation</h3>
                   <ul class="capability-list">
-                    <li>网页广告码和 App/服务端样例统一请求 <code>POST /pz</code>，可按场景使用 HTML、JSON 或 OpenRTB 返回</li>
-                    <li>支持 Banner、Video 与 Native；结构化响应由接入方按媒体类型安全渲染，网页样例使用沙箱 iframe</li>
-                    <li><code>200</code> 空结果是正常无填充，不应当作网络故障快速重试</li>
-                    <li>传递真实、适用的 TCF、GPP、COPPA、GPC/DNT/LMT 等隐私信号；SDK 接入不得依赖浏览器 Cookie</li>
-                    <li>上线至少验证一次填充、一次无填充、缓存生效和报表处理，并保留测试时间与广告位信息</li>
+                    <li>Web ad code and app/backend samples both request <code>POST /pz</code>; choose HTML, JSON, or OpenRTB response per need</li>
+                    <li>Banner, video, and native are supported; structured responses must be safely rendered per media type; web samples use sandbox iframe</li>
+                    <li><code>200</code> empty is normal no-fill, not a network error; do not retry quickly</li>
+                    <li>Send real applicable TCF, GPP, COPPA, GPC/DNT/LMT privacy signals; SDK integration must not rely on browser cookies</li>
+                    <li>Launch validation must test at least one fill, one no-fill, cache propagation, and report processing; save test time and slot info</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-publisher"><strong>App 接入说明：</strong>当前提供 <code>/pz</code> 协议、JSON/OpenRTB 返回和 SDK/API 样例；维护型 Android/iOS 原生 SDK 需在具体集成需求确认后提供。</div>
+              <div class="capability-status capability-status-publisher"><strong>App Integration Note:</strong> Currently provides <code>/pz</code> protocol, JSON/OpenRTB responses, and SDK/API samples. Native Android/iOS SDKs will be provided after specific integration needs are confirmed.</div>
             </div>
-            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.html">阅读流量方完整接入手册</a><a class="btn btn-outline-publisher" href="/goto/pub/g/site?action=topics">登录工作台</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer role-modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html">Read Full Publisher Manual</a><a class="btn btn-outline-publisher" href="/goto/pub/e/site?action=topics">Log In</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -564,81 +576,81 @@
       <section id="capabilities" class="section capabilities">
         <div class="container">
           <div class="section-intro text-center">
-            <p class="eyebrow eyebrow-dark">技术与产品能力</p>
-            <h2>覆盖 DSP、SSP 与 ADX 的平台能力</h2>
-            <p>从广告投放、流量变现和 OpenRTB 互通，到测量、隐私、流量质量、账务与生产运行，八个能力模块覆盖标准广告技术工作流。点击卡片查看详细说明。</p>
+            <p class="eyebrow eyebrow-dark">Technology and Product Capabilities</p>
+            <h2>Platform Capabilities Across DSP, SSP, and ADX</h2>
+            <p>Eight capability modules span ad delivery, traffic monetization, and OpenRTB interchange, plus measurement, privacy, traffic quality, accounting, and operations. Click a card for details.</p>
           </div>
           <div class="row capability-grid">
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-dsp" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-crosshairs" aria-hidden="true"></i></span>
-                <span class="capability-kicker">广告主投放 · DSP</span>
-                <h3>DSP 投放与竞价</h3>
-                <p>覆盖 CPM 竞价、预算与时段控制、多维定向、频次和多形态素材。</p>
-                <span class="capability-more">查看投放能力 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Advertiser Delivery · DSP</span>
+                <h3>DSP Delivery and Bidding</h3>
+                <p>CPM bidding, budget and time controls, multi-dimensional targeting, frequency, and multi-format creatives.</p>
+                <span class="capability-more">View delivery capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-ssp" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-globe" aria-hidden="true"></i></span>
-                <span class="capability-kicker">流量接入 · SSP</span>
-                <h3>SSP 直连流量变现</h3>
-                <p>面向 Web 与 App 流量，提供服务端底价、广告位接入和供应透明度。</p>
-                <span class="capability-more">查看流量能力 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Traffic Integration · SSP</span>
+                <h3>SSP Direct Traffic Monetization</h3>
+                <p>Web and app traffic with server-side floors, ad slot integration, and supply transparency.</p>
+                <span class="capability-more">View traffic capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-openrtb" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-exchange" aria-hidden="true"></i></span>
-                <span class="capability-kicker">交易互通 · ADX / OpenRTB</span>
-                <h3>ADX 与 OpenRTB 互通</h3>
-                <p>采用 OpenRTB 2.5 受控兼容规范，支持多展示位、压缩和逐竞价方隔离。</p>
-                <span class="capability-more">查看互通规范 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Trade Interchange · ADX / OpenRTB</span>
+                <h3>ADX and OpenRTB Interchange</h3>
+                <p>OpenRTB 2.5 controlled-compatible spec with multi-placement, compression, and per-bidder isolation.</p>
+                <span class="capability-more">View interchange spec <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-measurement" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-                <span class="capability-kicker">测量与分析</span>
-                <h3>测量、归因与分析</h3>
-                <p>统一展示、点击、转化、归因、账户报表与受控实验的数据口径。</p>
-                <span class="capability-more">查看测量能力 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Measurement and Analysis</span>
+                <h3>Measurement, Attribution, and Analysis</h3>
+                <p>Unified impression, click, conversion, attribution, account reports, and controlled experiments.</p>
+                <span class="capability-more">View measurement capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-security" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-shield" aria-hidden="true"></i></span>
-                <span class="capability-kicker">隐私与访问控制</span>
-                <h3>隐私、身份与渲染安全</h3>
-                <p>默认上下文处理，并提供信号判定、数据最小化、双重验证与安全渲染。</p>
-                <span class="capability-more">查看安全边界 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Privacy and Access Control</span>
+                <h3>Privacy, Identity, and Render Safety</h3>
+                <p>Context by default plus signal assessment, data minimization, dual auth, and safe rendering.</p>
+                <span class="capability-more">View security boundary <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-quality" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
-                <span class="capability-kicker">流量质量</span>
-                <h3>流量质量与风险控制</h3>
-                <p>通过可解释规则、观察与灰度、人工复核和申诉处理异常流量。</p>
-                <span class="capability-more">查看质量控制 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Traffic Quality</span>
+                <h3>Traffic Quality and Risk Control</h3>
+                <p>Explainable, gradable, and human-reviewable rule-based flow to reduce anomalies and settlement errors.</p>
+                <span class="capability-more">View quality control <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-accounting" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-calculator" aria-hidden="true"></i></span>
-                <span class="capability-kicker">账务与结算</span>
-                <h3>账务、结算与托管支付</h3>
-                <p>以统一 USD CPM 口径生成可追溯账单，并支持可选的托管付款与收款。</p>
-                <span class="capability-more">查看账务能力 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Accounting and Settlement</span>
+                <h3>Accounting, Settlement, and Managed Payments</h3>
+                <p>Auditable invoices in unified USD CPM basis with optional managed payment and collection.</p>
+                <span class="capability-more">View accounting capability <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
             <div class="col-md-6 col-xl-3 mb-4">
               <button type="button" class="capability-card capability-card-measurement" data-toggle="modal" data-target="#capability-operations" aria-haspopup="dialog">
                 <span class="capability-icon"><i class="fa fa-cogs" aria-hidden="true"></i></span>
-                <span class="capability-kicker">管理接口与运维</span>
-                <h3>开放 API 与生产运行</h3>
-                <p>提供版本化管理 API、流量保护、运行指标、健康检查和单区域恢复机制。</p>
-                <span class="capability-more">查看平台工程 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                <span class="capability-kicker">Admin Interface and Operations</span>
+                <h3>Open API and Production Operations</h3>
+                <p>Versioned management API, traffic protection, operational metrics, health checks, and single-region recovery.</p>
+                <span class="capability-more">View platform engineering <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
               </button>
             </div>
           </div>
@@ -649,36 +661,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-crosshairs" aria-hidden="true"></i></span><div><span>广告主投放 · DSP</span><h2 class="modal-title" id="capability-dsp-title">DSP 投放与竞价</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-crosshairs" aria-hidden="true"></i></span><div><span>Advertiser Delivery · DSP</span><h2 class="modal-title" id="capability-dsp-title">DSP Delivery and Bidding</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">以可预测的 CPM 竞价、强制投放边界和严格素材校验组成广告主投放主链路。</p>
+              <p class="capability-modal-lead">Predictable CPM bidding, enforced delivery boundaries, and strict creative validation make up the main advertiser delivery path.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>投放控制</h3>
+                  <h3>Delivery Control</h3>
                   <ul class="capability-list">
-                    <li>广告主、广告活动、广告组和广告素材的完整管理层级</li>
-                    <li>总量与每日花费、展示、点击上限，以及起止日期和每周投放时段</li>
-                    <li>快速与均匀两种确定性投放节奏，不以自动模型改写预算</li>
-                    <li>地域、设备、语言、媒体、行业、频道和上传人群等多维定向</li>
-                    <li>用户级展示/点击频次与最小展示间隔控制</li>
+                    <li>Full hierarchy: advertiser, campaign, ad group, creative</li>
+                    <li>Total and daily spend caps, impression/click caps, flight dates, and weekly time windows</li>
+                    <li>Fast or even pacing; deterministic pacing, not auto-model-adjusted</li>
+                    <li>Geo, device, language, media, category, channel, and uploaded audience targeting</li>
+                    <li>Per-user impression/click frequency and minimum impression interval</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>竞价与素材</h3>
+                  <h3>Bidding and Creatives</h3>
                   <ul class="capability-list">
-                    <li>商业投放采用正值 USD CPM；最高合格广告组价格优先</li>
-                    <li>素材权重仅在获胜广告组内部轮播，不改变跨广告组竞价顺序</li>
-                    <li>Banner、Video 与结构化 Native 素材按尺寸、媒体类型和 MIME 匹配</li>
-                    <li>HTTPS、回调地址、Native 资产和 VAST 资源在进入竞价前校验</li>
-                    <li>共享 Redis 原子预算预留，失败与回调按明确规则释放或确认</li>
+                    <li>Production bidding uses positive USD CPM; highest qualified ad group wins</li>
+                    <li>Creative weight only rotates within a winning ad group, not across ad group priority</li>
+                    <li>Banner, video, and structured native creatives match by dimensions, media type, and MIME</li>
+                    <li>HTTPS, callback URLs, native assets, and VAST resources validated before bid entry</li>
+                    <li>Shared Redis atomic budget reserve; failure and callback follow explicit rules for release or confirm</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>计价边界：</strong>当前商业竞价为 USD CPM；历史 CPC、CPA、ROI 数据不会被静默转换为可投放价格。</div>
+              <div class="capability-status"><strong>Pricing Boundary:</strong> Production bidding is USD CPM only; historical CPC, CPA, ROI values do not auto-convert to payable prices.</div>
             </div>
-            <div class="modal-footer"><a class="capability-manual-link" href="manuals/advertiser.html">广告主与代理商使用手册</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><a class="capability-manual-link" href="manuals/advertiser.en.html">Advertiser and Agency Manual</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -687,36 +699,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-globe" aria-hidden="true"></i></span><div><span>流量接入 · SSP</span><h2 class="modal-title" id="capability-ssp-title">SSP 直连流量变现</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-globe" aria-hidden="true"></i></span><div><span>Traffic Integration · SSP</span><h2 class="modal-title" id="capability-ssp-title">SSP Direct Traffic Monetization</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">以流量方账户、流量源和广告位为所有权边界，为网站与 App 提供统一的直连接入和商业审核流程。</p>
+              <p class="capability-modal-lead">Publisher account, traffic source, and ad slot ownership boundaries provide unified direct integration and business review for websites and apps.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>接入与返回</h3>
+                  <h3>Integration and Response</h3>
                   <ul class="capability-list">
-                    <li>网页广告码和 <code>POST /pz</code> 接口使用平台生成的站点/广告位令牌</li>
-                    <li>Web 校验来源主机，App 校验 Bundle 或应用标识与接入类型</li>
-                    <li>支持有序 HTML、JSON 和 OpenRTB 返回，以及明确的正常无填充语义</li>
-                    <li>服务端使用平台底价与请求底价中的较高值，客户端不能降低广告位底价</li>
-                    <li>网页素材在无同源权限的沙箱 iframe 中加载，隔离宿主页 DOM</li>
+                    <li>Web ad code and <code>POST /pz</code> use platform-generated site/slot tokens</li>
+                    <li>Web validates source host; app validates bundle/ID and integration type</li>
+                    <li>Support ordered HTML, JSON, and OpenRTB response with clear no-fill semantics</li>
+                    <li>Server uses the higher of platform floor and request floor; client cannot lower slot floor</li>
+                    <li>Web creatives load in unprivileged sandbox iframe, isolating from host page DOM</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>供应管理与透明度</h3>
+                  <h3>Supply Management and Transparency</h3>
                   <ul class="capability-list">
-                    <li>网站、App、广告位、尺寸、媒体形态、位置、刷新和质量分类</li>
-                    <li>流量方提出卖方资料，平台审核后才可用于外部披露</li>
-                    <li>按已批准资料生成标准 <code>source.schain</code>，不信任客户端卖方声明</li>
-                    <li>流量来源、卖方类型与供应分类进入隐私安全的报表维度</li>
-                    <li>上线前提供流量资源校验、缓存发布、灰度、停用和回滚流程</li>
+                    <li>Website, app, slot, dimensions, media type, position, refresh, quality classification</li>
+                    <li>Publisher-submitted seller info, platform-reviewed for external disclosure</li>
+                    <li>Generate standard <code>source.schain</code> from approved info; do not trust client seller claims</li>
+                    <li>Traffic source, seller type, supply classification in privacy-safe report dimensions</li>
+                    <li>Pre-launch validation, cache publish, gradual rollout, pause, and rollback process</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-publisher"><strong>移动接入说明：</strong>当前提供 App 的 <code>/pz</code> 协议、JSON/OpenRTB 返回和 SDK/API 样例；维护型 Android/iOS 原生 SDK 将在具体集成需求确认后提供。</div>
+              <div class="capability-status capability-status-publisher"><strong>Mobile Integration Note:</strong> Currently provides app <code>/pz</code> protocol, JSON/OpenRTB responses, and SDK/API samples. Native Android/iOS SDKs will be provided after specific integration needs are confirmed.</div>
             </div>
-            <div class="modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.html">流量方接入手册</a><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><a class="capability-manual-link capability-manual-link-publisher" href="manuals/publisher.en.html">Publisher Manual</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -725,36 +737,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-exchange" aria-hidden="true"></i></span><div><span>交易互通 · ADX / OpenRTB</span><h2 class="modal-title" id="capability-openrtb-title">ADX 与 OpenRTB 互通</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-exchange" aria-hidden="true"></i></span><div><span>Trade Interchange · ADX / OpenRTB</span><h2 class="modal-title" id="capability-openrtb-title">ADX and OpenRTB Interchange</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">面向广告交易平台和外部 DSP 的 OpenRTB 2.5 受控兼容规范，强调可互通、可诊断和逐竞价方隔离。</p>
+              <p class="capability-modal-lead">OpenRTB 2.5 controlled-compatible spec for ad exchanges and external DSPs emphasizing compatibility, auditability, and per-bidder isolation.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>协议兼容</h3>
+                  <h3>Protocol Compatibility</h3>
                   <ul class="capability-list">
-                    <li>OpenRTB 2.5 请求与响应，支持独立处理多展示位</li>
-                    <li>Banner、Video、Native 和 USD CPM/底价的明确兼容规则</li>
-                    <li>协商式 gzip 请求/响应，并分别限制压缩前后正文大小</li>
-                    <li>严格校验请求 ID、展示位 ID、Seat、媒体、尺寸、价格、币种和时限</li>
-                    <li>回调、素材与落地地址执行 HTTPS、协议和安全目标检查</li>
+                    <li>OpenRTB 2.5 request and response with multi-placement support</li>
+                    <li>Explicit compatibility rules for banner, video, native, USD CPM/floor</li>
+                    <li>Negotiated gzip for request/response with separate pre/post-compression size limits</li>
+                    <li>Strict validation of request ID, placement ID, seat, media, dimensions, price, currency, timeout</li>
+                    <li>Callback, creative, and landing URL execution with HTTPS and security checks</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>外部需求方竞价</h3>
+                  <h3>External Demand-Side Bidding</h3>
                   <ul class="capability-list">
-                    <li>广告主名下的竞价端点，平台负责凭据引用、审核、路由和流量范围</li>
-                    <li>Fallback 用于本地无填充；可选 Always 模式参与有效 CPM 竞争</li>
-                    <li>每个竞价方只接收分配给自己的展示位和独立清理后的上下文请求</li>
-                    <li>无效、迟到或低于底价的外部响应不能替换合格的本地结果</li>
-                    <li>代理 win/loss/展示/点击回调，重试可恢复失败并生成 charge/pay/margin 事实</li>
+                    <li>Advertiser-owned bid endpoints; platform manages credentials, review, routing, and supply scope</li>
+                    <li>Fallback for no local fill; optional always-mode for qualified CPM competition</li>
+                    <li>Each bidder receives only assigned placements and cleaned-up context requests</li>
+                    <li>Invalid, late, or sub-floor external responses cannot replace qualified local results</li>
+                    <li>Proxy win/loss/impression/click callbacks; retry enables charge/pay/margin facts</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-gated"><strong>启用边界：</strong>OpenRTB 支持的是经过验证的兼容子集，不无条件透传所有可选扩展。外部需求方流量需完成端点、凭据、路由、隐私披露和灰度验收后单独启用。</div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> OpenRTB support is a verified compatible subset, not unconditional pass-through of all optional extensions. External demand flow requires endpoint, credentials, routing, privacy disclosure, and gradual rollout acceptance before enabling per DSP.</div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -763,36 +775,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-bar-chart" aria-hidden="true"></i></span><div><span>测量与分析</span><h2 class="modal-title" id="capability-measurement-title">测量、归因与分析</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-bar-chart" aria-hidden="true"></i></span><div><span>Measurement and Analysis</span><h2 class="modal-title" id="capability-measurement-title">Measurement, Attribution, and Analysis</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">从竞价回调到转化和商业报表，使用签名、幂等和固定口径保持数据可解释、可核对。</p>
+              <p class="capability-modal-lead">Signatures, idempotency, and fixed basis keep data interpretable and auditable from bid callback through conversion and business reports.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>测量与归因</h3>
+                  <h3>Measurement and Attribution</h3>
                   <ul class="capability-list">
-                    <li>win、loss、展示和点击回调使用 HMAC 签名与明确有效期</li>
-                    <li>展示/点击支持重复抑制；共享状态故障不阻止合法测量事件发布</li>
-                    <li>服务端行为接口支持转化、购买、下载、视频完成和命名自定义行为</li>
-                    <li>广告主事件 ID 幂等，同一投放链路按最近点击优先、浏览其次归因</li>
-                    <li>行为数据是分析事实，不会反向修改 CPM 账务或预算预留</li>
+                    <li>Win, loss, impression, click callbacks use HMAC signature and explicit validity window</li>
+                    <li>Impression/click de-duplication; shared state failure does not block valid measurement events</li>
+                    <li>Backend behavior API supports conversion, purchase, download, video complete, named custom actions</li>
+                    <li>Advertiser event ID is idempotent; same delivery chain uses last-click-first, then view-through attribution</li>
+                    <li>Behavior data is analysis fact, not reverse-modify CPM accounting or budget reserve</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>报表与实验</h3>
+                  <h3>Reports and Experiments</h3>
                   <ul class="capability-list">
-                    <li>广告主、流量方和平台运营人员按登录账户查看各自范围</li>
-                    <li>展示、点击、CTR、行为、CVR、花费、收入、成本、毛利、ROI 与 ROAS</li>
-                    <li>统一 UTC、USD、数据来源、公式、刷新时间和部分数据说明</li>
-                    <li>确定性分组、追加式曝光与幂等结果支持受控对照实验</li>
-                    <li>实验只提供观察和分析，不自动修改竞价、预算或投放规则</li>
+                    <li>Advertisers, publishers, and platform ops see reports scoped to their account login</li>
+                    <li>Impressions, clicks, CTR, actions, CVR, spend, revenue, cost, margin, ROI, ROAS</li>
+                    <li>Unified UTC, USD, data source, formulas, refresh timing, and partial data notes</li>
+                    <li>Deterministic grouping, additive exposure, and idempotent results support controlled experiments</li>
+                    <li>Experiments provide observation and analysis only, not auto-adjust bidding, budget, or rules</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status"><strong>数据口径：</strong>报表明确区分无数据、部分数据与零值；账务以已接受的展示事实为准，裸 win/loss 仅用于分析。</div>
+              <div class="capability-status"><strong>Data Basis:</strong> Reports distinguish no data, partial data, and zero values; accounting is based on accepted impression facts, raw win/loss for analysis only.</div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -801,36 +813,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-shield" aria-hidden="true"></i></span><div><span>隐私与访问控制</span><h2 class="modal-title" id="capability-security-title">隐私、身份与渲染安全</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-shield" aria-hidden="true"></i></span><div><span>Privacy and Access Control</span><h2 class="modal-title" id="capability-security-title">Privacy, Identity, and Render Safety</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">把隐私判定放在匹配与外部披露之前，并把账户权限、审计和素材执行限制在明确边界内。</p>
+              <p class="capability-modal-lead">Place privacy decision before matching and external disclosure; restrict account permissions, audit, and creative execution to clear boundaries.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>隐私与数据治理</h3>
+                  <h3>Privacy and Data Governance</h3>
                   <ul class="capability-list">
-                    <li>识别适用的 GDPR/TCF v2.3、US Privacy、GPP、COPPA、GPC、DNT/LMT 信号</li>
-                    <li>缺失、拒绝、冲突或暂不支持的信号采用上下文投放；COPPA 使用受限模式</li>
-                    <li>所有模式移除精确坐标；上下文模式同时移除可识别用户和详细设备数据</li>
-                    <li>频控和测量标识使用分域 HMAC 假名，审计与外部请求分别清理</li>
-                    <li>日志、上传人群、行为和实验事实均有配置化保留与删除流程</li>
+                    <li>Recognize applicable GDPR/TCF v2.3, US Privacy, GPP, COPPA, GPC, DNT/LMT signals</li>
+                    <li>Missing, refused, conflicting, or unsupported signals use context delivery; COPPA uses restricted mode</li>
+                    <li>All modes drop exact coordinates; context mode also drops user-identifying and detailed device data</li>
+                    <li>Frequency control and measurement IDs use domain-split HMAC pseudonyms; audit and external requests cleaned separately</li>
+                    <li>Logs, audiences, actions, and experiment facts all have configurable retention and deletion</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>账户与内容安全</h3>
+                  <h3>Account and Content Safety</h3>
                   <ul class="capability-list">
-                    <li>可选数据库会话、TOTP 双重验证、一次性恢复代码和会话撤销</li>
-                    <li>按角色、动作、账户和资源授权，敏感操作要求近期再次验证</li>
-                    <li>安全事件采用固定字段与不可变审计，敏感凭据不进入审计正文</li>
-                    <li>公共与工作台页面使用上下文转义，素材审核仅显示转义后的源内容</li>
-                    <li>可执行素材只在广告交付沙箱内加载，不作为管理页面的可信 HTML</li>
+                    <li>Optional database session, TOTP dual auth, single-use recovery codes, and session revocation</li>
+                    <li>Role/action/account/resource authz; sensitive actions require recent re-auth</li>
+                    <li>Security events use fixed fields and immutable audit; sensitive credentials not in audit body</li>
+                    <li>Public and dashboard pages use context escaping; creative review shows escaped source only</li>
+                    <li>Executable creatives load only in ad delivery sandbox, not trusted HTML on admin pages</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-gated"><strong>启用边界：</strong>隐私最小化与渲染安全属于基础边界；强化会话、双重验证和细粒度权限由部署方完成密钥、邮件、迁移和权限验收后启用。</div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Privacy minimization and render safety are baseline; enhanced session, dual auth, and fine-grained permissions enable after deployment completes key, email, migration, and permission acceptance.</div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -839,36 +851,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-search" aria-hidden="true"></i></span><div><span>流量质量</span><h2 class="modal-title" id="capability-quality-title">流量质量与风险控制</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-search" aria-hidden="true"></i></span><div><span>Traffic Quality</span><h2 class="modal-title" id="capability-quality-title">Traffic Quality and Risk Control</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">采用可解释、可灰度、可复核的规则流程降低异常流量和错误结算风险，不以不透明模型自动定性。</p>
+              <p class="capability-modal-lead">Explainable, gradable, human-reviewable rule flow to reduce anomalies and settlement errors, not opaque auto-classification.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>信号与规则</h3>
+                  <h3>Signals and Rules</h3>
                   <ul class="capability-list">
-                    <li>重放、事件顺序异常、来源/App 不一致和标识格式异常</li>
-                    <li>异常速率、异常 CTR、自动化证据和合作方策略信号</li>
-                    <li>规则版本依次经过草稿、观察、灰度、启用或停用</li>
-                    <li>支持观察、标记、限速、拒绝和隔离等分级动作</li>
-                    <li>证据缺失或不完整时自动降低处置强度，基础设施故障不作为异常流量证据</li>
+                    <li>Replay, event sequence anomalies, source/app mismatches, ID format anomalies</li>
+                    <li>Anomalous rates, anomalous CTR, automation evidence, partner policy signals</li>
+                    <li>Rule versions progress through draft, observe, gradual-rollout, enable, or disable</li>
+                    <li>Support observe, flag, rate-limit, reject, and isolate graduated actions</li>
+                    <li>When evidence missing or incomplete, auto-reduce enforcement strength; infrastructure failures not anomaly evidence</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>复核与账务边界</h3>
+                  <h3>Review and Accounting Boundary</h3>
                   <ul class="capability-list">
-                    <li>广告主、流量方和合作方只能查看获授权的案件与受控证据</li>
-                    <li>案件历史、人工复核、申诉、独立处理和规则回滚均可审计</li>
-                    <li>无效流量只生成排除、暂缓或冲正建议，账务变更仍需单独审批</li>
-                    <li>内部事件与合作方标识使用 HMAC 摘要，证据和聚合记录有保留期限</li>
-                    <li>投放节点读取有界不可变快照；快照过期后不以旧规则继续阻断流量</li>
+                    <li>Advertisers, publishers, partners see authorized cases and controlled evidence only</li>
+                    <li>Case history, manual review, appeals, independent action, rule rollback all auditable</li>
+                    <li>Invalid traffic generates exclusion, hold, or chargeback suggestions; accounting changes still need separate approval</li>
+                    <li>Internal events and partner IDs use HMAC digest; evidence and aggregate records have retention periods</li>
+                    <li>Delivery reads immutable snapshot; after snapshot expires, old rules do not block continued traffic</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-gated"><strong>启用边界：</strong>流量质量模块默认关闭，需完成权限、规则、证据来源、观察期、误判率、申诉和回滚验收后分阶段启用。</div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Traffic quality off by default; requires permissions, rules, evidence sources, observation period, false-positive rate, appeals, and rollback acceptance before phased enable.</div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -877,36 +889,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-calculator" aria-hidden="true"></i></span><div><span>账务与结算</span><h2 class="modal-title" id="capability-accounting-title">账务、结算与托管支付</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-calculator" aria-hidden="true"></i></span><div><span>Accounting and Settlement</span><h2 class="modal-title" id="capability-accounting-title">Accounting, Settlement, and Managed Payments</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">统一广告主计费、流量方收益和外部需求方成本口径，并把账单、审批、付款状态和异常核对保留为可审计记录。</p>
+              <p class="capability-modal-lead">Unified advertiser charge, publisher revenue, and external demand cost basis with auditable invoices, approvals, payment status, and exception reconciliation.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>账务与人工结算</h3>
+                  <h3>Accounting and Manual Settlement</h3>
                   <ul class="capability-list">
-                    <li><code>usd-cpm-impression-v2</code> 统一以 USD CPM 记录竞价并按 CPM/1000 结算展示</li>
-                    <li>分别记录广告主费用、流量方收益及外部需求方 charge/pay/margin</li>
-                    <li>按日、周或月生成不可变来源快照和稳定 CSV 导出</li>
-                    <li>调整、确认、结算和更正使用追加记录，不静默修改原始投放事实</li>
-                    <li>创建、复核和结算由不同操作人员完成，并保留外部凭证引用</li>
+                    <li><code>usd-cpm-impression-v2</code> unifies USD CPM bid recording and settles impressions by CPM÷1000</li>
+                    <li>Separate advertiser cost, publisher revenue, and external demand charge/pay/margin records</li>
+                    <li>Daily, weekly, or monthly immutable source snapshot and stable CSV export</li>
+                    <li>Adjustments, confirmations, settlement, corrections use append records, not silent modification of original facts</li>
+                    <li>Create, review, settlement by different operators; retain external credential references</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>可选托管付款与收款</h3>
+                  <h3>Optional Managed Payment and Collection</h3>
                   <ul class="capability-list">
-                    <li>广告主可通过 Stripe Checkout 托管页面完成资金支付</li>
-                    <li>流量方可通过 Stripe Connect Express 完成收款账户资料提交</li>
-                    <li>平台只保存不透明的服务商对象标识，不接收或存储完整卡号、银行账号和身份材料</li>
-                    <li>签名回调、幂等提交和绑定冻结防止重复入账或错误更换收款目标</li>
-                    <li>手续费、退款、争议、转账冲正和打款失败进入独立对账异常流程</li>
+                    <li>Advertisers can fund via Stripe Checkout hosted page</li>
+                    <li>Publishers can submit collection account via Stripe Connect Express</li>
+                    <li>Platform holds only opaque processor object IDs, never full card/bank account or identity docs</li>
+                    <li>Signed callbacks, idempotent submit, and binding freeze prevent duplicate deposit or target swap</li>
+                    <li>Fees, refunds, disputes, reversal, transfer failure enter separate reconciliation exception flow</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-gated"><strong>启用边界：</strong>人工账单是持续有效的财务依据和故障后备。托管支付默认关闭，测试或正式模式均需另行完成法务、财务、税务、风控、隐私和客服审批。</div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Manual invoices are ongoing valid financial basis and failure fallback. Managed payment off by default; test or production both need separate legal, finance, tax, risk, privacy, and support approval.</div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -915,36 +927,36 @@
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-cogs" aria-hidden="true"></i></span><div><span>管理接口与运维</span><h2 class="modal-title" id="capability-operations-title">开放 API 与生产运行</h2></div></div>
-              <button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+              <div class="capability-modal-heading"><span class="capability-modal-icon capability-card-measurement"><i class="fa fa-cogs" aria-hidden="true"></i></span><div><span>Admin Interface and Operations</span><h2 class="modal-title" id="capability-operations-title">Open API and Production Operations</h2></div></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <p class="capability-modal-lead">把外部管理接口、流量准入、缓存发布、运行指标和恢复流程作为同一套可版本化的平台工程能力。</p>
+              <p class="capability-modal-lead">External management interface, traffic admission, cache publish, operational metrics, and recovery process as a unified versioned platform engineering capability.</p>
               <div class="row capability-detail">
                 <div class="col-md-6">
-                  <h3>广告主管理 API</h3>
+                  <h3>Advertiser Management API</h3>
                   <ul class="capability-list">
-                    <li>独立版本化的 <code>/api/v1</code>，以 OpenAPI 3.1 描述公开契约</li>
-                    <li>管理广告主资料、广告活动、广告组、素材、定向、发布操作和投放报表</li>
-                    <li>一次显示的服务凭证绑定单一广告主、固定权限、有效期、轮换和撤销</li>
-                    <li>写入使用 Idempotency-Key，修改使用 ETag，缓存生效通过操作状态确认</li>
-                    <li>Redis 分别限制凭证和广告主配额，跨账户访问在资源边界拒绝</li>
+                    <li>Independent versioned <code>/api/v1</code> described as OpenAPI 3.1 public contract</li>
+                    <li>Manage advertiser profile, campaigns, ad groups, creatives, targeting, publish actions, reports</li>
+                    <li>One-time credentials bind single advertiser, fixed permission, expiry, rotation, revocation</li>
+                    <li>Writes use Idempotency-Key; changes use ETag; cache validity confirmed by operation status</li>
+                    <li>Redis separately limits credential and advertiser quota; cross-account access rejected at resource boundary</li>
                   </ul>
                 </div>
                 <div class="col-md-6">
-                  <h3>流量与可用性工程</h3>
+                  <h3>Traffic and Availability Engineering</h3>
                   <ul class="capability-list">
-                    <li>按合作方控制 QPS、并发、正文、解压大小和请求时限</li>
-                    <li>受保护指标覆盖拒绝原因、延迟、依赖、缓存新鲜度、队列和回调</li>
-                    <li><code>/healthz</code> 与 <code>/readyz</code> 分离进程存活和接流条件</li>
-                    <li>多节点单区域部署支持优雅摘流、15 秒在途请求排空和单例任务租约</li>
-                    <li>MySQL 作为事实来源，Redis 提供共享状态/缓存，NATS 传输尽力而为审计；缓存以完整世代原子发布</li>
+                    <li>Per-partner QPS, concurrency, body size, decompressed size, request time controls</li>
+                    <li>Protected metrics span rejection reason, latency, dependencies, cache freshness, queue, callbacks</li>
+                    <li><code>/healthz</code> and <code>/readyz</code> separate process alive and traffic-accept conditions</li>
+                    <li>Multi-node single-region supports graceful drain, 15-sec in-flight request flush, singleton task lease</li>
+                    <li>MySQL source-of-truth, Redis provides shared state/cache, NATS best-effort audit; cache atomic by-generation publish</li>
                   </ul>
                 </div>
               </div>
-              <div class="capability-status capability-status-gated"><strong>启用边界：</strong>管理 API 默认关闭。单区域运行已定义备份、恢复和 SLO 证据要求，但平台不会在缺少连续生产测量和服务商恢复记录时宣称已经达到 99.9%。</div>
+              <div class="capability-status capability-status-gated"><strong>Enable Boundary:</strong> Management API off by default. Single-region has defined backup, recovery, and SLO evidence requirements, but platform does not claim 99.9% without continuous production measurement and recovery records.</div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
           </div>
         </div>
       </div>
@@ -952,25 +964,25 @@
       <section id="entry" class="section entry-section">
         <div class="container">
           <div class="section-intro text-center text-white">
-            <p class="eyebrow">登录与注册</p>
-            <h2>账户入口</h2>
-            <p>请选择正确的账户入口。注册后的账户状态、余额与生产启用由平台运营规则决定。</p>
+            <p class="eyebrow">Log In and Sign Up</p>
+            <h2>Account Entry Points</h2>
+            <p>Choose the correct account entry. Account status, balance, and production enable are determined by platform operations policy.</p>
           </div>
           <div class="row justify-content-center">
             <div class="col-lg-5 mb-4">
               <article class="entry-card advertiser-entry">
                 <i class="fa fa-bullseye" aria-hidden="true"></i>
-                <h3>广告主 / 代理商</h3>
-                <p>管理广告活动、广告组、广告素材、定向、竞价端点与投放报表。</p>
-                <div class="entry-links"><a href="/goto/adv/g/campaign?action=topics">登录广告主工作台</a><a href="/goto/agent/g/adv?action=topics">登录代理商后台</a><a href="manuals/advertiser.html">查看使用手册</a></div>
+                <h3>Advertiser / Agency</h3>
+                <p>Manage campaigns, ad groups, creatives, targeting, bid endpoints, and delivery reports.</p>
+                <div class="entry-links"><a href="/goto/adv/e/campaign?action=topics">Log In to Advertiser Dashboard</a><a href="/goto/agent/e/adv?action=topics">Log In to Agency Console</a><a href="manuals/advertiser.en.html">View Manual</a></div>
               </article>
             </div>
             <div class="col-lg-5 mb-4">
               <article class="entry-card publisher-entry">
                 <i class="fa fa-globe" aria-hidden="true"></i>
-                <h3>流量方（发布商）</h3>
-                <p>管理网站、App、广告位、接入代码与近 24 小时报表。</p>
-                <div class="entry-links"><a href="/goto/pub/g/site?action=topics">登录流量方工作台</a><a href="manuals/publisher.html">查看使用手册</a></div>
+                <h3>Publisher</h3>
+                <p>Manage websites, apps, ad slots, integration code, and last-24h reports.</p>
+                <div class="entry-links"><a href="/goto/pub/e/site?action=topics">Log In to Publisher Dashboard</a><a href="manuals/publisher.en.html">View Manual</a></div>
               </article>
             </div>
           </div>
@@ -980,14 +992,14 @@
       <section id="help" class="section help-section">
         <div class="container">
           <div class="section-intro text-center">
-            <p class="eyebrow eyebrow-dark">帮助</p>
-            <h2>使用说明与常见问题</h2>
+            <p class="eyebrow eyebrow-dark">Help</p>
+            <h2>Guide and FAQ</h2>
           </div>
           <div class="faq-list">
-            <details><summary>页面显示“已保存”，为什么投放或广告位行为还没有变化？</summary><p>运行请求读取缓存而不是直接查询数据库。请先确认对象状态正确，再联系运营方检查缓存是否已经刷新到运行节点。</p></details>
-            <details><summary>广告主已经有广告素材，为什么仍然没有竞价？</summary><p>依次检查账户与上层对象状态、投放时间、预算、素材尺寸、USD 竞价底价、供应侧流量范围和人群定向。只启用广告素材不足以绕过上层规则。</p></details>
-            <details><summary>流量方请求返回 200，但广告内容为空，是否表示故障？</summary><p>不一定。合法请求在没有合适广告时也会返回 200，空字符串或未填充对象属于正常 no-fill，客户端应隐藏或回收对应容器。</p></details>
-            <details><summary>报表为什么不是即时更新？</summary><p>展示、点击和账务数据由日志聚合与定时任务生成，因此会有处理延迟。上线验收时请同时记录测试时间、账户、活动或广告位信息。</p></details>
+            <details><summary>Why does the page show "saved" but the campaign or ad slot behavior hasn't changed?</summary><p>Delivery requests read runtime cache, not the database. Verify object status first, then contact platform to check if cache has refreshed to the running nodes.</p></details>
+            <details><summary>Why is there no bid even though the advertiser already has a creative?</summary><p>Check account and parent object status, flight dates, budget, creative dimensions, USD floor, supply traffic scope, and audience targeting in order. Enabling the creative alone is not enough to bypass parent rules.</p></details>
+            <details><summary>The publisher request returns 200, but ad content is empty. Is this a failure?</summary><p>Not necessarily. Valid requests also return 200 when no matching ads exist; empty string or unfilled object is normal no-fill. Clients should hide or recycle the container.</p></details>
+            <details><summary>Why are reports not instant-updated?</summary><p>Impression, click, and accounting data are generated from log aggregation and scheduled tasks, so there is processing delay. During validation, save test time, account, campaign or slot info.</p></details>
           </div>
         </div>
       </section>
@@ -995,7 +1007,7 @@
       <section id="contact" class="contact-section">
         <div class="container">
           <div class="row align-items-center">
-            <div class="col-lg-8"><p class="eyebrow eyebrow-dark">技术支持</p><h2>联系技术支持</h2><p>联系时请提供发生时间、账户类型、广告活动或广告位、请求结果，以及最近修改过的配置。</p></div>
+            <div class="col-lg-8"><p class="eyebrow eyebrow-dark">Technical Support</p><h2>Contact Technical Support</h2><p>When contacting, provide occurrence time, account type, campaign or ad slot, request result, and recently modified config.</p></div>
             <div class="col-lg-4 text-lg-right"><a class="btn btn-primary btn-lg" href="mailto:support@w8m.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> support@w8m.com</a></div>
           </div>
         </div>
@@ -1004,8 +1016,8 @@
 
     <footer class="site-footer">
       <div class="container d-md-flex justify-content-between align-items-center">
-        <p>&copy; 2026 W8M 网络有限公司</p>
-        <nav aria-label="页脚导航"><a href="manuals/advertiser.html">广告主与代理商手册</a><a href="manuals/publisher.html">流量方接入手册</a><a href="#page-top">返回顶部</a></nav>
+        <p>&copy; 2026 W8M Network Inc.</p>
+        <nav aria-label="Footer navigation"><a href="manuals/advertiser.en.html">Advertiser and Agency Manual</a><a href="manuals/publisher.en.html">Publisher Integration Manual</a><a href="#page-top">Back to Top</a></nav>
       </div>
     </footer>
 

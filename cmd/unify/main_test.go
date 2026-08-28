@@ -74,6 +74,29 @@ func TestServeMuxExposesOnlyAuthenticatedHostedPaymentWebhookWhenEnabled(t *test
 	}
 }
 
+func TestServeMuxDoesNotSpecialCaseFrontLanguagePaths(t *testing.T) {
+	controller := &dsp.Controller{C: &dsp.Config{}}
+	downstream := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Downstream-Path", r.URL.Path)
+		w.WriteHeader(http.StatusNoContent)
+	})
+	mux := newServeMux(controller, downstream)
+
+	for _, path := range []string{"/", "/index.html", "/index.zh.html", "/language/en"} {
+		t.Run(path, func(t *testing.T) {
+			request := httptest.NewRequest(http.MethodGet, path, nil)
+			response := httptest.NewRecorder()
+			mux.ServeHTTP(response, request)
+			if response.Code != http.StatusNoContent {
+				t.Fatalf("status = %d, want %d", response.Code, http.StatusNoContent)
+			}
+			if got := response.Header().Get("X-Downstream-Path"); got != path {
+				t.Fatalf("downstream path = %q, want %q", got, path)
+			}
+		})
+	}
+}
+
 func (s *observingHTTPServer) Shutdown(ctx context.Context) error {
 	close(s.shutdownCalled)
 	return s.Server.Shutdown(ctx)

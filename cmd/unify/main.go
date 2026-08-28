@@ -11,12 +11,8 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"net/url"
 	"os"
 	"os/signal"
-	"path/filepath"
-	"strconv"
-	"strings"
 	"sync/atomic"
 	"syscall"
 	"time"
@@ -43,11 +39,6 @@ var gConf, sConf string
 var isLocal bool
 
 const shutdownTimeout = 15 * time.Second
-
-const (
-	languageCookieName   = "w8m_lang"
-	languageCookieMaxAge = 365 * 24 * 60 * 60
-)
 
 func init() {
 	flag.Usage = usage
@@ -328,10 +319,6 @@ func newServeMuxWithManagementAPI(sc *dsp.Controller, geneletHandler http.Handle
 }
 
 func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, suppliedHealth *serviceHealth, apiService *managementapi.Service, paymentService *hostedpayment.Service) *http.ServeMux {
-	docRoot := ""
-	if gc, ok := geneletHandler.(*genelet.Controller); ok {
-		docRoot = gc.C.DocumentRoot
-	}
 	mux := http.NewServeMux()
 	health := newServiceHealth(sc)
 	health.accepting.Store(true)
@@ -369,185 +356,8 @@ func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, su
 		mux.Handle("POST /webhooks/stripe", paymentService.WebhookHandler())
 	}
 	mux.Handle("/webhooks/", http.NotFoundHandler())
-	mux.Handle("/", frontPageWrapper(geneletHandler, docRoot))
+	mux.Handle("/", geneletHandler)
 	return mux
-}
-
-func frontPageWrapper(next http.Handler, docRoot string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" && r.URL.Path == "/" {
-			serveFrontPage(w, r, docRoot, negotiateLanguage(r), true)
-			return
-		}
-		if r.Method == "GET" && (r.URL.Path == "/index.html" || r.URL.Path == "/index.en.html") {
-			lang := "zh"
-			if r.URL.Path == "/index.en.html" {
-				lang = "en"
-			}
-			serveFrontPage(w, r, docRoot, lang, false)
-			return
-		}
-		if r.Method == "GET" && (r.URL.Path == "/goto/web/g/" || r.URL.Path == "/goto/web/e/") {
-			lang := "zh"
-			if r.URL.Path == "/goto/web/e/" {
-				lang = "en"
-			}
-			setLanguagePreference(w, lang)
-			serveFrontPage(w, r, docRoot, lang, false)
-			return
-		}
-		if r.Method == "GET" && (r.URL.Path == "/language/zh" || r.URL.Path == "/language/en") {
-			lang := strings.TrimPrefix(r.URL.Path, "/language/")
-			setLanguagePreference(w, lang)
-			w.Header().Set("Cache-Control", "private, no-store")
-			http.Redirect(w, r, languageReturnTarget(r.URL.Query().Get("return"), lang), http.StatusSeeOther)
-			return
-		}
-		next.ServeHTTP(w, r)
-	})
-}
-
-func serveFrontPage(w http.ResponseWriter, r *http.Request, docRoot, lang string, negotiated bool) {
-	filename := "index.html"
-	actualLanguage := "zh"
-	if lang == "en" {
-		filename = "index.en.html"
-		actualLanguage = "en"
-	}
-	filePath := filepath.Join(docRoot, filename)
-	if _, err := os.Stat(filePath); err != nil && lang == "en" {
-		filename = "index.html"
-		actualLanguage = "zh"
-		filePath = filepath.Join(docRoot, filename)
-	}
-	if negotiated {
-		w.Header().Set("Vary", "Accept-Language, Cookie")
-	}
-	w.Header().Set("Cache-Control", "private, no-cache")
-	w.Header().Set("Content-Language", actualLanguage)
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	file, err := os.Open(filePath)
-	if err != nil {
-		http.NotFound(w, r)
-		return
-	}
-	defer file.Close()
-	info, err := file.Stat()
-	if err != nil {
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-		return
-	}
-	http.ServeContent(w, r, filename, info.ModTime(), file)
-}
-
-func setLanguagePreference(w http.ResponseWriter, lang string) {
-	http.SetCookie(w, &http.Cookie{
-		Name:     languageCookieName,
-		Value:    lang,
-		Path:     "/",
-		MaxAge:   languageCookieMaxAge,
-		Expires:  time.Now().Add(languageCookieMaxAge * time.Second).UTC(),
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteLaxMode,
-	})
-}
-
-func languageReturnTarget(raw, lang string) string {
-	chartag := "g"
-	if lang == "en" {
-		chartag = "e"
-	}
-	fallback := "/goto/web/" + chartag + "/"
-	parsed, err := url.Parse(raw)
-	if err != nil || parsed.IsAbs() || parsed.Host != "" || parsed.User != nil || parsed.Opaque != "" {
-		return fallback
-	}
-	if !strings.HasPrefix(parsed.Path, fallback) {
-		return fallback
-	}
-	for _, segment := range strings.Split(parsed.Path, "/") {
-		if segment == "." || segment == ".." {
-			return fallback
-		}
-	}
-	return parsed.String()
-}
-
-func negotiateLanguage(r *http.Request) string {
-	cookie, err := r.Cookie(languageCookieName)
-	if err == nil && cookie.Value != "" {
-		if cookie.Value == "en" || cookie.Value == "zh" {
-			return cookie.Value
-		}
-	}
-	acceptLang := r.Header.Get("Accept-Language")
-	if len(acceptLang) > 0 {
-		// Parse Accept-Language header with q-values (weighted tags).
-		// Format: en-US,en;q=0.9,zh;q=0.8 — split by comma, parse each tag and q-value.
-		// When weights tie, prefer whichever tag appeared first in the header.
-		type langPref struct {
-			weight float64
-			order  int
-		}
-		enPref := langPref{order: -1}
-		zhPref := langPref{order: -1}
-		order := 0
-		for _, tag := range strings.Split(acceptLang, ",") {
-			tag = strings.TrimSpace(tag)
-			if len(tag) == 0 {
-				continue
-			}
-			q := 1.0
-			valid := true
-			if parts := strings.Split(tag, ";"); len(parts) > 1 {
-				tag = parts[0]
-				for _, param := range parts[1:] {
-					key, value, found := strings.Cut(strings.TrimSpace(param), "=")
-					if !found || !strings.EqualFold(strings.TrimSpace(key), "q") {
-						continue
-					}
-					parsed, err := strconv.ParseFloat(strings.TrimSpace(value), 64)
-					if err != nil || parsed < 0 || parsed > 1 {
-						valid = false
-						break
-					}
-					q = parsed
-				}
-				if !valid || q == 0 {
-					order++
-					continue
-				}
-			}
-			tag = strings.ToLower(strings.TrimSpace(tag))
-			// Match primary language tag (before hyphen)
-			primary := tag
-			if idx := strings.Index(tag, "-"); idx > 0 {
-				primary = tag[:idx]
-			}
-			if primary == "en" && (q > enPref.weight || (q == enPref.weight && enPref.order == -1)) {
-				enPref = langPref{weight: q, order: order}
-			} else if primary == "zh" && (q > zhPref.weight || (q == zhPref.weight && zhPref.order == -1)) {
-				zhPref = langPref{weight: q, order: order}
-			}
-			order++
-		}
-		// Compare: higher weight wins; if tied, earlier order wins
-		if enPref.weight > zhPref.weight {
-			return "en"
-		}
-		if zhPref.weight > enPref.weight {
-			return "zh"
-		}
-		// Weights are equal; prefer whichever appeared first
-		if enPref.order >= 0 && (zhPref.order == -1 || enPref.order < zhPref.order) {
-			return "en"
-		}
-		if zhPref.order >= 0 {
-			return "zh"
-		}
-	}
-	return "en"
 }
 
 func pzCORS(next http.HandlerFunc) http.HandlerFunc {

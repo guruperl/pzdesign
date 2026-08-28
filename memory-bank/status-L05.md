@@ -10,6 +10,14 @@ target the literal sibling files `/index.html` and `/index.en.html`. Only `/`
 negotiates; an opposite cookie or browser language cannot rewrite either named
 file. Handler and public-copy regressions preserve that distinction.
 
+Post-close owner simplification on 2026-08-28 supersedes the remaining server
+negotiation and the earlier filenames: English `/index.html` is the normal
+static directory index, a root-only browser script selects `/index.zh.html` for
+a Chinese primary language, and named files remain literal. Account toggles
+navigate directly between chartags. The backend cookie, front handlers, and
+`/language/*` redirect are removed; Apache and the CDN make no language or
+location decision.
+
 ## Review disposition
 
 | Finding | Local severity | Disposition |

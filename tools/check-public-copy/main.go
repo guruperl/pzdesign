@@ -60,7 +60,7 @@ var untranslatedEnglishCopy = []string{
 }
 
 var requiredSnippets = map[string][]string{
-	"www/index.html": {
+	"www/index.zh.html": {
 		"W8M 广告投放与流量接入平台",
 		"DSP、SSP 与 ADX 一体化工作流",
 		"OpenRTB 2.5 受控兼容与开放 API",
@@ -99,7 +99,7 @@ var requiredSnippets = map[string][]string{
 	},
 	"www/manuals/advertiser.html": {"广告主与代理商使用手册", "外部 DSP / ADX 需求方接入与竞价"},
 	"www/manuals/publisher.html":  {"流量方（发布商）接入手册", "获取并部署网页广告码"},
-	"www/index.en.html": {
+	"www/index.html": {
 		"W8M Advertising and Traffic Integration Platform",
 		"DSP, SSP, and ADX integrated workflow",
 		"Choose Your Account Type",
@@ -131,6 +131,8 @@ var requiredSnippets = map[string][]string{
 	"tmpls/web/pub/insert.mail.g":   {"您好，", "/goto/web/g/pub?action=activate", "W8M 广告平台"},
 	"tmpls/web/adv/retrieve.mail.g": {"您好，", "/goto/web/g/adv?action=startreset", "W8M 广告平台"},
 	"tmpls/web/pub/retrieve.mail.g": {"您好，", "/goto/web/g/pub?action=startreset", "W8M 广告平台"},
+	"tmpls/web/end.g":               {"window.location.href = destination;"},
+	"tmpls/web/end.e":               {"window.location.href = destination;"},
 	"summer/adv/filter.go":          {"W8M 广告主账户邮箱验证", "W8M 广告主账户密码重置"},
 	"summer/pub/filter.go":          {"W8M 流量方账户邮箱验证", "W8M 流量方账户密码重置"},
 	"tmpls/web/adv/startreset.g": {
@@ -273,9 +275,12 @@ func check(root string) ([]string, error) {
 				failures = append(failures, fmt.Sprintf("%s is missing required copy or contract %q", rel, snippet))
 			}
 		}
+		if (rel == "tmpls/web/end.g" || rel == "tmpls/web/end.e") && strings.Contains(string(body), "/language/") {
+			failures = append(failures, fmt.Sprintf("%s routes its language toggle through the removed backend endpoint", rel))
+		}
 	}
 
-	for _, rel := range []string{"www/index.html", "www/index.en.html"} {
+	for _, rel := range []string{"www/index.html", "www/index.zh.html"} {
 		body, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(rel)))
 		if err != nil {
 			return nil, err
@@ -283,10 +288,10 @@ func check(root string) ([]string, error) {
 		failures = append(failures, checkIndexStructure(rel, string(body))...)
 	}
 
-	// Check hreflang bidirectionality for language pairs: index.html <-> index.en.html, etc.
+	// Check hreflang bidirectionality for language pairs: index.html <-> index.zh.html, etc.
 	// For each .en.html file, ensure both it and its .html counterpart have reciprocal hreflang tags
 	langPairs := [][2]string{
-		{"www/index.html", "www/index.en.html"},
+		{"www/index.zh.html", "www/index.html"},
 		{"www/manuals/advertiser.html", "www/manuals/advertiser.en.html"},
 		{"www/manuals/publisher.html", "www/manuals/publisher.en.html"},
 	}
@@ -315,6 +320,7 @@ func check(root string) ([]string, error) {
 
 func checkIndexStructure(rel, text string) []string {
 	failures := checkFrontPageLanguageLink(rel, text)
+	failures = append(failures, checkFrontPageBrowserSelection(rel, text)...)
 	wantModalTriggers := len(capabilityModalIDs) + len(roleGuideModalIDs) + len(journeyModalIDs)
 	if got := strings.Count(text, `data-toggle="modal"`); got != wantModalTriggers {
 		failures = append(failures, fmt.Sprintf("%s has %d modal triggers, want %d", rel, got, wantModalTriggers))
@@ -364,10 +370,63 @@ func checkIndexStructure(rel, text string) []string {
 	return failures
 }
 
+func checkFrontPageBrowserSelection(rel, text string) []string {
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
+		return []string{fmt.Sprintf("%s browser-language selection is not parseable: %v", rel, err)}
+	}
+	var scripts []string
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode && node.Data == "script" {
+			id, _ := attribute(node, "id")
+			if id == "front-language-selection" {
+				var source strings.Builder
+				for child := node.FirstChild; child != nil; child = child.NextSibling {
+					if child.Type == html.TextNode {
+						source.WriteString(child.Data)
+					}
+				}
+				scripts = append(scripts, source.String())
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(document)
+
+	if rel == "www/index.zh.html" {
+		if len(scripts) != 0 {
+			return []string{fmt.Sprintf("%s must not select another edition", rel)}
+		}
+		return nil
+	}
+	if rel != "www/index.html" {
+		return []string{fmt.Sprintf("unsupported front-page path %s", rel)}
+	}
+	if len(scripts) != 1 {
+		return []string{fmt.Sprintf("%s has %d browser-language selectors, want 1", rel, len(scripts))}
+	}
+	var failures []string
+	for _, snippet := range []string{
+		"window.location.pathname !== '/'",
+		"window.navigator.languages",
+		"window.navigator.language",
+		"if (/^zh(?:[-_]|$)/i.test(language || ''))",
+		"window.location.replace('/index.zh.html')",
+	} {
+		if !strings.Contains(scripts[0], snippet) {
+			failures = append(failures, fmt.Sprintf("%s browser-language selector is missing %q", rel, snippet))
+		}
+	}
+	return failures
+}
+
 func checkFrontPageLanguageLink(rel, text string) []string {
 	want, ok := map[string]string{
-		"www/index.html":    "/index.en.html",
-		"www/index.en.html": "/index.html",
+		"www/index.html":    "/index.zh.html",
+		"www/index.zh.html": "/index.html",
 	}[rel]
 	if !ok {
 		return []string{fmt.Sprintf("unsupported front-page path %s", rel)}
@@ -547,8 +606,8 @@ func hasToken(value, token string) bool {
 
 func publicFiles(root string) ([]publicFile, error) {
 	files := []publicFile{
-		{path: filepath.Join(root, "www", "index.html"), language: "zh"},
-		{path: filepath.Join(root, "www", "index.en.html"), language: "en"},
+		{path: filepath.Join(root, "www", "index.zh.html"), language: "zh"},
+		{path: filepath.Join(root, "www", "index.html"), language: "en"},
 		{path: filepath.Join(root, "www", "manuals", "advertiser.html"), language: "zh"},
 		{path: filepath.Join(root, "www", "manuals", "advertiser.en.html"), language: "en"},
 		{path: filepath.Join(root, "www", "manuals", "publisher.html"), language: "zh"},

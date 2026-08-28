@@ -50,13 +50,13 @@ configured as `text/html`.
   horizon closes them.
 - **The chartag in the URL is authoritative.** A shared or bookmarked link always
   renders the language it names. Nothing rewrites a language mid-session.
-- **The language preference is an entry-point decision.** A visitor's browser
-  languages choose `/`; the front-page language links target the literal
-  sibling files `/index.html` and `/index.en.html`, which are authoritative and
-  do not negotiate or write a cookie. Explicit account-flow choices may store a
-  non-identifying `w8m_lang` preference that outranks the browser on later `/`
-  visits. Negotiated responses vary on `Accept-Language` and `Cookie` and are
-  private/no-cache. Authenticated role workspaces do not offer a global toggle
+- **The browser makes the front-page entry decision.** The static `/` response
+  is the English `index.html`; an early script replaces it with
+  `/index.zh.html` for a primary Chinese browser language. The script runs only
+  when the visible path is `/`, so `/index.html` and `/index.zh.html` are
+  authoritative literal choices. No server negotiation or language cookie is
+  involved. Public account-flow choices switch directly between the `g` and
+  `e` chartag URLs. Authenticated role workspaces do not offer a global toggle
   while their English action set is incomplete.
 - Account mail follows the chartag of the request that triggered it, so a
   registration started in English produces English mail.
@@ -98,7 +98,7 @@ its credential lifecycle, traffic-quality review, and hosted funding and payout.
 
 Shipping: the English public edition, including the static front page, manuals,
 advertiser/publisher account lifecycle, account mail, login/error guidance,
-language negotiation, and public toggle. The authenticated advertiser,
+browser-side front-page selection, and public toggle. The authenticated advertiser,
 publisher, administrator, agent, and analyst workspaces still have a partial
 English template set; their global language controls are deliberately absent so
 users cannot be routed into a missing action twin.

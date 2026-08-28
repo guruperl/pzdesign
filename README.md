@@ -39,6 +39,9 @@ Runtime asset groups under `www/`:
   advertiser entry pages use the landing page's coral role color and publisher
   entry pages use its teal role color. Keep authenticated dashboard styling
   separate from this public account surface.
+- `www/index.html` is the English static directory index. Its early script
+  selects `/index.zh.html` for a Chinese primary browser language only when the
+  visible path is `/`; direct requests for either named index file stay literal.
 - `manuals/` contains the public Chinese and English advertiser/agency and
   publisher/supply-side web manuals.
   Their operational content follows the sibling Aofei references
