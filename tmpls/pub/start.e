@@ -1,15 +1,13 @@
 {{define "header"}}
-{{$c := .Other.Component}}
-{{$a := .Other.Action}}
-<!DOCTYPE html>
+<!DOCTYPE html> {{$c := .Other.Component}} {{$a := .Other.Action}}
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Publisher - W8M">
-  <meta name="keyword" content="publisher, W8M">
-  <title>W8M Publisher - Optimizing Income</title>
+  <meta name="description" content="W8M Publisher Workspace">
+  <meta name="keyword" content="traffic integration,publisher,traffic source,ad slot">
+  <title>W8M Publisher Workspace</title>
 
   <!-- Icons -->
   <link href="/1.0.8/vendors/css/flag-icon.min.css" rel="stylesheet">
@@ -24,7 +22,6 @@
   <link href="/1.0.8/vendors/css/gauge.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/toastr.min.css" rel="stylesheet">
   <link href="/css/w8m-workspace.css?v=20260802-1" rel="stylesheet">
-
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden w8m-workspace theme-publisher">
@@ -35,7 +32,7 @@
     <span class="navbar-brand">W8M <small>Publisher Workspace</small></span>
     <ul class="nav navbar-nav d-md-down-none mr-auto">
       <li class="nav-item px-3">
-		W8M Publisher: <em>{{index .ARGS.p_email 0}}</em>
+        W8M Publisher Account: <em>{{index .ARGS.p_email 0}}</em>
       </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
@@ -50,10 +47,10 @@
           <div class="dropdown-header text-center">
             <strong>Account</strong>
           </div>
-          <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> Profile</a>
-          <a class="dropdown-item" href="pub?action=editpass"><i class="fa fa-wrench"></i> Password</a>
-          <a class="dropdown-item" href="security?action=dashboard"><i class="fa fa-shield"></i> Account security</a>
-          <form method="post" action="logout"><button class="dropdown-item" type="submit"><i class="fa fa-lock"></i> Logout</button></form>
+          <a class="dropdown-item" href="pub?action=edit"><i class="fa fa-user"></i> Basic Settings</a>
+          <a class="dropdown-item" href="pub?action=editpass"><i class="fa fa-wrench"></i> Reset Password</a>
+          <a class="dropdown-item" href="security?action=dashboard"><i class="fa fa-shield"></i> Account Security</a>
+          <form method="post" action="logout"><button class="dropdown-item" type="submit"><i class="fa fa-lock"></i> Sign Out</button></form>
         </div>
       </li>
     </ul>
@@ -63,46 +60,36 @@
       <nav class="sidebar-nav">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `pub`) (eq $a `dashboard`) }}active{{end}}" href="pub?action=dashboard"><i class="icon-speedometer"></i> Dashboard </a>
+            <a class="nav-link {{if and (eq $c `pub`) (eq $a `dashboard`) }}active{{end}}" href="pub?action=dashboard"><i class="icon-speedometer"></i> Account Overview</a>
           </li>
 
           <li class="nav-title">
-            Publisher
+            Traffic Integration
           </li>
           <li class="nav-item">
-            <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> Apps and Sites</a>
-          </li>
-          <li class="nav-item">
-            <a href="site?action=startnew" class="nav-link {{if and (eq $c `site`) (eq $a `startnew`) }}active{{end}}"><i class="icon-pencil"></i> Create App or Site</a>
+            <a href="site?action=topics" class="nav-link {{if and (eq $c `site`) (eq $a `topics`) }}active{{end}}"><i class="icon-screen-smartphone"></i> Websites and Apps</a>
           </li>
           {{if .Other.PublisherAuthEnabled}}<li class="nav-item">
-            <a href="publishercredential?action=topics" class="nav-link {{if eq $c `publishercredential`}}active{{end}}"><i class="icon-key"></i> Request credentials</a>
+            <a href="publishercredential?action=topics" class="nav-link {{if eq $c `publishercredential`}}active{{end}}"><i class="icon-key"></i> Request Credentials</a>
           </li>{{end}}
           <li class="nav-item">
-            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> Access Control</a>
-          </li>
-          <li class="nav-item">
-            {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics" class="nav-link {{if eq $c `hostedpayment`}}active{{end}}"><i class="icon-wallet"></i> Payout account</a>{{end}}
+            <a href="ac?action=topics&entitytype_id=3" class="nav-link {{if .ARGS.entitytype_id}}{{if and (and (eq $c `ac`) (eq $a `topics`)) (eq (index .ARGS.entitytype_id 0) `3`) }}active{{end}}{{end}}"><i class="icon-shield"></i> Ad Review</a>
           </li>
 
+
           {{ if and ( or (or (or (eq .Other.Component `site`) (eq .Other.Component `slot`)) (eq .Other.Component `chac`)) (eq .Other.Component `ac`)) .ARGS.site_md5 }}<li class="nav-title">
-            {{index .ARGS.site_name 0}}
+            {{index .ARGS.site_name 0}} <i class="icon-arrow-down mt-4"></i>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `site`) (eq $a `edit`) }}active{{end}}" href="site?action=edit&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-magic-wand"></i> Edit</a>
+            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-grid"></i> All Ad Slots</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `topics`) }}active{{end}}" href="slot?action=topics&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-grid"></i> Slots</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {{if and (eq $c `slot`) (eq $a `startnew`) }}active{{end}}" href="slot?action=startnew&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"><i class="icon-pencil"></i> Create Slot</a>
-          </li>
+
           {{ if and .ARGS.slot_name .ARGS.slot_md5 }}<li class="nav-title">
             {{index .ARGS.slot_name 0}}
           </li>
           <li class="nav-item">
             <a class="nav-link {{if and (eq $c `slot`) (eq $a `edit`) }}active{{end}}" href="slot?action=edit&slot_id={{index .ARGS.slot_id 0}}&slot_md5={{index .ARGS.slot_md5 0}}&slot_name={{index .ARGS.slot_name 0 | urlquery}}&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}"> <i class="icon-arrow-right"></i> Edit</a>
-          </li>{{end}} 
+          </li>{{end}}
           {{end}}
 
 
@@ -110,10 +97,13 @@
             Reports
           </li>
           <li class="nav-item">
-             <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> Incomes</a>
+             <a href="ledger?action=topicsPub24Hours" class="nav-link"><i class="icon-chart"></i> Revenue Reports</a>
           </li>
           <li class="nav-item">
-             {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> Marketplace analytics</a>{{end}}
+             {{if .Other.MarketplaceReportingEnabled}}<a href="ledger?action=topicsMarketplace" class="nav-link"><i class="icon-graph"></i> Traffic Revenue Analysis</a>{{end}}
+          </li>
+          <li class="nav-item">
+             {{if .Other.HostedPaymentEnabled}}<a href="hostedpayment?action=topics" class="nav-link {{if eq $c `hostedpayment`}}active{{end}}"><i class="icon-wallet"></i> Revenue Settlement Account</a>{{end}}
           </li>
         </ul>
       </nav>

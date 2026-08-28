@@ -18,8 +18,8 @@ Aofei/Winter DSP checkout. It depends on the external Genelet framework module
   headers, sidebars, and footers.
 - `*.g` templates are the Chinese-language UI templates.
 - `*.e` templates are English-language variants. Chinese is the source of
-  truth; the public/account English surface is complete, while authenticated
-  role workspaces remain partial and are governed by exact parity exceptions.
+  truth; every public and authenticated `.g` template has a structurally
+  equivalent, fully translated `.e` twin with no parity exceptions.
 - `www/` is the static document root used by the UI templates.
 - `tools/check-templates.go` parses the templates with Go's `html/template`,
   rejects unsafe URL/resource/stored-markup source patterns, and prevents raw
@@ -244,17 +244,19 @@ gitleaks git --redact .
 ```
 
 Parsing and security-source policies are mandatory for both language variants.
-The public/account `.e` surface is supported. Authenticated `.e` workspaces are
-incomplete, expose no global language toggle, and must remain parse-clean and
-fail closed at every recorded parity exception until their translation horizon
-is completed.
+The public/account and authenticated `.e` surfaces are supported. Authenticated
+role headers do not expose a global language toggle; an explicit `e` chartag in
+the route selects the complete English workspace without rewriting language
+mid-session.
 
 The public-copy check requires complete Chinese and English
 advertiser/publisher account-action matrices, applies edition-specific copy
 rules across `.g` and `.e`, rejects raw framework errors, and parses HTML links
 so opposite-edition routes appear only in exact language toggles or `hreflang`
 alternate elements. The parity check separately compares parsed field names and
-hidden action values.
+hidden action values, requires every Chinese action to have an English twin,
+rejects untranslated Chinese copy outside the intentional language toggle, and
+rejects stale exemptions.
 
 `.github/workflows/verify.yml` runs tests, vet, both template parsers, and
 staticcheck and the public-copy guard on pushes and pull requests. It checks out public Aofei beside this

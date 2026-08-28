@@ -44,10 +44,9 @@ expressed as the Genelet **chartag**, the second segment of every route
 configured as `text/html`.
 
 - **Chinese is the source of truth.** English is derived from it. The completed
-  public/account surface has an English twin with the same form targets, hidden
-  action values, and input field names. Authenticated role workspaces remain
-  partial and are tracked by exact parity exceptions until a later translation
-  horizon closes them.
+  public/account and authenticated surfaces have English twins with the same
+  structure, form targets, hidden action values, and input field names. All 228
+  Chinese templates have English twins and the parity exemption ledger is empty.
 - **The chartag in the URL is authoritative.** A shared or bookmarked link always
   renders the language it names. Nothing rewrites a language mid-session.
 - **The browser makes the front-page entry decision.** The static `/` response
@@ -56,8 +55,8 @@ configured as `text/html`.
   when the visible path is `/`, so `/index.html` and `/index.zh.html` are
   authoritative literal choices. No server negotiation or language cookie is
   involved. Public account-flow choices switch directly between the `g` and
-  `e` chartag URLs. Authenticated role workspaces do not offer a global toggle
-  while their English action set is incomplete.
+  `e` chartag URLs. Authenticated role workspaces remain on the explicit chartag
+  selected by the route and do not offer a global mid-session toggle.
 - Account mail follows the chartag of the request that triggered it, so a
   registration started in English produces English mail.
 
@@ -98,10 +97,9 @@ its credential lifecycle, traffic-quality review, and hosted funding and payout.
 
 Shipping: the English public edition, including the static front page, manuals,
 advertiser/publisher account lifecycle, account mail, login/error guidance,
-browser-side front-page selection, and public toggle. The authenticated advertiser,
-publisher, administrator, agent, and analyst workspaces still have a partial
-English template set; their global language controls are deliberately absent so
-users cannot be routed into a missing action twin.
+browser-side front-page selection, and public toggle. The authenticated
+advertiser, publisher, administrator, agent, and analyst workspaces also ship
+complete English template sets derived from their Chinese source templates.
 
 Deliberately absent: any form collecting full card or bank credentials. The
 `payment`, `cc`, `cheque`, `alipay`, and `wechat` modules are retired,

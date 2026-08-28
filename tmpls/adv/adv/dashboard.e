@@ -1,20 +1,20 @@
 {{ template "header" .}}
-{{ template "ledgerheader" .}}
+{{ template "advheader" .}}
 {{ $item := index .Lists 0}}
 
-			<div class="row">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Information
+                            Overview
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-Comapny: {{index .ARGS.a_company 0}}
+Company: {{index .ARGS.a_company 0}}
 Email: {{index .ARGS.a_email 0}}
 
-Name: {{$item.firstname}}  {{$item.lastname}}
-						</div>
+Contact: {{$item.firstname}}  {{$item.lastname}}
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -23,16 +23,16 @@ Name: {{$item.firstname}}  {{$item.lastname}}
             </div>
             <!-- /.row -->
 
-			<div class="row">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Last 24 Hours
+                            Report: Last 24 Hours
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 {{template "canvas1" .}}
-						</div>
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -45,7 +45,7 @@ Name: {{$item.firstname}}  {{$item.lastname}}
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Performance by Top Items
+                            Ad Group Ranking
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -53,7 +53,7 @@ Name: {{$item.firstname}}  {{$item.lastname}}
                                 <table class="table table-hover">
 <thead><tr>
 <th>Name</th>
-<th>Spendings</th>
+<th>Spend</th>
 <th>Impressions</th>
 <th>Clicks</th>
 <th>CPM</th>
@@ -80,24 +80,25 @@ Name: {{$item.firstname}}  {{$item.lastname}}
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->
-	
-				<div class="col-lg-6">
+
+                <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Performance by Top Slots
+                            Ad Slot Ranking
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-hover">
 <thead><tr>
-<th>Name</th>
-<th>Spendings</th>
+<th>Ad Slot</th>
+<th>Spend</th>
 <th>Impressions</th>
 <th>Clicks</th>
 <th>CPM</th>
 <th>CPC</th>
 <th>CTR</th>
+<th> </th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsAdvTopSlots}}{{range .}}
 <tr>
@@ -108,6 +109,7 @@ Name: {{$item.firstname}}  {{$item.lastname}}
 <td>{{.cpm | printf "%.2f"}}</td>
 <td>{{.cpc | printf "%.4f"}}</td>
 <td>{{.ctr}}</td>
+<td><a class="btn btn-sm btn-circle btn-danger" href="ac?action=insert&entitytype_id=4&othertype_id=31&other_id={{.site_id}}">Block</a></td>
 </tr>{{end}}{{end}}
 </tbody>
 </table>
@@ -121,5 +123,4 @@ Name: {{$item.firstname}}  {{$item.lastname}}
                 <!-- /.col-lg-6 -->
             </div>
             <!-- /.row -->
-  </div>
 {{ template "footer" }}

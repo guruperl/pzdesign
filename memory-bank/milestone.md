@@ -4,9 +4,9 @@
 
 A visitor reaching W8M has the static front page selected by a small browser
 script, can open the literal sibling language page with one click, and finds a
-complete English edition behind that link. The active horizon delivers that end
-to end for the public surface: land in English, register in English, read
-English manuals, and move directly between the two static front pages.
+complete English edition behind that link. The active horizon now delivers that
+end to end for both public and authenticated surfaces: land in English, register
+in English, read English manuals, and operate every role workspace in English.
 
 ## Lanes
 
@@ -22,7 +22,7 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
@@ -34,7 +34,8 @@ L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05
 | T01 | Public account surface in English | [status-T01](status-T01.md) | L01, L02 | L04, L05 |
 | L04 | Language toggle and entry-point links | [status-L04](status-L04.md) | L01, L03, T01, T02 | L05 |
 | T03 | English manuals | [status-T03](status-T03.md) | L01, T02 | L05 |
-| L05 | English surface review remediation | [status-L05](status-L05.md) | L01-L04, T01-T03 | — |
+| L05 | English surface review remediation | [status-L05](status-L05.md) | L01-L04, T01-T03 | T04 |
+| T04 | Authenticated workspace English completion | [status-T04](status-T04.md) | L05 | — |
 
 ## Acceptance
 
@@ -44,6 +45,7 @@ Every milestone must leave the repository-wide pipeline green:
 GOWORK=off go test ./...
 GOWORK=off go vet ./...
 GOWORK=off go run ./tools/check-templates.go -ext=.g,.e
+GOWORK=off go run ./tools/check-parity
 GOWORK=off go run ./tools/check-public-copy
 ./tools/check-public-data.sh
 git diff --check
@@ -54,16 +56,18 @@ browser pass, is recorded in each status file.
 
 ## Horizon boundary
 
-The remediation horizon ends at L05. Translating the authenticated role
-workspaces is not delivered here: it is 205 further files requiring
-role-by-role translation and contract review. It is the candidate next horizon
-and gets permanent IDs only when that breakdown is approved:
+T04 closes the authenticated-workspace translation horizon approved by the
+owner. It covers 205 role templates, in addition to the 23 complete public
+templates:
 
 - Advertiser workspace — 67 files (51 action templates, 16 role fragments)
 - Publisher workspace — 43 files (32 action, 11 fragments)
 - Admin workspace — 74 files (60 action, 14 fragments)
 - Agent workspace — 14 files (7 action, 7 fragments)
 - Analyst workspace — 7 files (3 action, 4 fragments)
+
+This horizon does not add an authenticated language-toggle control, change
+authorization, run a live account flow, publish a release, or deploy a service.
 
 ## Candidate Directions
 

@@ -9,8 +9,8 @@
 
   </div>
   <footer class="app-footer">
-    <span><a href="/goto/pub/e/pub?action=startnew">Publisher Membership</a> ©  W8M.</span>
-    <span class="ml-auto">Powered by <a href="/">W8M Corporation</a></span>
+    <span><a href="/goto/pub/e/site?action=topics">Publisher Workspace</a></span>
+    <span class="ml-auto">Powered by <a href="/">W8M Technology Co., Ltd.</a></span>
   </footer>
 
   <!-- Bootstrap and necessary plugins -->
@@ -28,4 +28,5 @@
 
   <!-- Custom scripts required by this view -->
   <script src="/js/counter.js"></script>
+
 {{end}}

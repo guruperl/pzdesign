@@ -3,32 +3,34 @@
 
           <div class="card">
             <div class="card-header">
-              Current List of <em>{{index .ARGS.site_name 0}}</em>
+              Ad Slots Under Traffic Source “<em>{{index .ARGS.site_name 0}}</em>”
             </div>
             <div class="card-body">
-{{with (index .ARGS "direct_token_version")}}			  <p class="text-muted">Integration locators: {{index . 0}}.{{with (index $.ARGS "request_authentication")}} App request authentication: {{index . 0}}.{{end}}</p>{{end}}
+{{with (index .ARGS "direct_token_version")}}              <p class="text-muted">Integration locator token version: {{index . 0}}. {{with (index $.ARGS "request_authentication")}}App request authentication mode: {{index . 0}}.{{end}}</p>{{end}}
 
 <div class="table-responsive">
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Platform</th>
-                  <th>Minimum bid (USD CPM)</th>
+                  <th>Ad Slot Name</th>
+                  <th>Device Platform</th>
+                  <th>Media / Placement</th>
+                  <th>Minimum Bid (USD CPM)</th>
                   <th>Active</th>
-                  <th>Since</th>
-                  <th colspan=3 class="text-right"><a class="btn btn-info" href="slot?action=startnew&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}&site_type={{index .ARGS.site_type 0 | urlquery}}">Create New</a> </th>
+                  <th>Created</th>
+                  <th colspan=3 class="text-right"><a class="btn btn-primary" href="#" data-title="Add Ad Slot" data-href="slot?action=startnew&site_id={{index .ARGS.site_id 0}}&site_md5={{index .ARGS.site_md5 0}}&site_name={{index .ARGS.site_name 0 | urlquery}}&site_type={{index .ARGS.site_type 0 | urlquery}}" id="startnewPopup">Add Ad Slot</a></th>
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
-<tr><td><a href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}">{{.slot_name}}</a></td>
+<tr><td><a href="#" data-title="Update Ad Slot: {{.slot_name}}" data-href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}" id="editPopup">{{.slot_name}}</a></td>
 <td>{{.qa_device}}</td>
+<td>{{.media_intent}} / {{.placement}}</td>
 <td>{{.bidfloor}}</td>
-<td>{{.active}}</td>
+<td>{{if eq "Yes" .active}}&check; {{else if eq "No" .active}}&#10007;{{else}}&check;{{end}}</td>
 <td>{{.created}}</td>
-<td>{{if .browser_code}}<button class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Web ad tag</button>{{end}}</td>
-<td>{{if .api_code}}<button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">App SDK / API</button>{{end}}</td>
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your slot {{.slot_name}}?')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}">Del</a></td>
+<td>{{if .browser_code}}<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Browser Ad Tag</button>{{end}}</td>
+<td>{{if .api_code}}<button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">App SDK / API Integration Code</button>{{end}}</td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Delete ad slot “{{.slot_name}}”? This action cannot be undone.')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}">Delete</a></td>
 {{end}}</tobdy>
 
 </table>
@@ -39,7 +41,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">Your HTML Page</h4>
+                <h4 class="modal-title">Browser Ad Tag</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
@@ -56,14 +58,14 @@
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->{{end}}
+</div>
+<!-- /.modal -->{{end}}
 
 {{if $item.api_code}}<div class="modal fade" id="modalAPI{{$item.slot_id}}" tabindex="-1" role="dialog" aria-labelledby="modalAPI{{$item.slot_id}}Label" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title">API Request</h4>
+                <h4 class="modal-title">SDK / API Integration Code</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
@@ -79,16 +81,46 @@
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->{{end}}
+</div>
+<!-- /.modal -->{{end}}
+
 {{end}}
 
             </div>
           </div>
 
-{{ template "footer" }}
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="d-title" class="modal-title">Ad Slot</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div id="d-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- Modal content-->
+  </div>
+</div>
+<!-- /Modal -->
 
+{{ template "footer" }}
 <script>
+  $(document).ready(function(){
+    $('#startnewPopup,#editPopup').on('click',function(){
+      var dataTITLE = $(this).attr('data-title');
+      var dataURL = $(this).attr('data-href');
+      $('#d-title').text(dataTITLE);
+      $('#d-body').load(dataURL,function(){
+        $('#myModal').modal({show:true});
+      });
+    });
+  });
+
   function pzCopyCode(id) {
     var field = document.getElementById(id);
     if (!field) {
@@ -118,6 +150,7 @@
     URL.revokeObjectURL(link.href);
   }
 </script>
+
 
 </body>
 </html>

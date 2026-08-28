@@ -17,14 +17,14 @@
 <input type=hidden name=action value="update" />
 
 <div class="table-responsive">
-<table class="table table-striped table-condensed">
+<table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Belong</th>
-                  <th>Logic<br />
-<input type=radio name=channel_order value="Black" {{if eq "Black" (index .ARGS.channel_order 0)}}checked{{end}} />Black
-<input type=radio name=channel_order value="White" {{if eq "White" (index .ARGS.channel_order 0)}}checked{{end}} />White
+                  <th>Industry</th>
+                  <th>Campaign Industry</th>
+                  <th>Allowlist/Blocklist Setting<br />
+<input type=radio name=channel_order value="Black" {{if eq "Black" (index .ARGS.channel_order 0)}}checked{{end}} />Blocklist
+<input type=radio name=channel_order value="White" {{if eq "White" (index .ARGS.channel_order 0)}}checked{{end}} />Allowlist
 </th>
                 </tr>
               </thead>
@@ -36,11 +36,12 @@
 </tobdy>
 </table>
 </div>
-<input class="btn btn-primary" type=submit value=" Update Channels " />
+<input class="btn btn-primary" type=submit value=" Save and Update " />
 </form>
 
 </div>
 </div>
 </div>
 </div>
+
 {{ template "footer" }}

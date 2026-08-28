@@ -1,25 +1,31 @@
 {{ template "header" .}}
-{{ template "pubheader" }}
+{{ template "pubheader" .}}
 
 <div class="account-card account-card-compact theme-publisher">
   <aside class="account-context">
     <div class="account-context-copy">
-      <span class="account-role-mark"><i class="fa fa-check" aria-hidden="true"></i></span>
+      <span class="account-role-mark"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
       <p class="account-eyebrow">Publisher Account</p>
-      <h2>Registration Submitted</h2>
-      <p>Check your email to complete account activation.</p>
+      <h2>Email Verification</h2>
+      <p>Verify your registration email before signing in to W8M with your publisher account.</p>
     </div>
-    <div class="account-context-footer"><a href="/goto/pub/e/site?action=topics">Back to Log In</a></div>
+    <div class="account-context-footer"><a href="/manuals/publisher.html">View the Publisher Integration Guide</a></div>
   </aside>
   <section class="account-form-panel">
+    <span class="account-status-icon"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></span>
     <div class="account-form-heading">
-      <span class="account-kicker">Next Step</span>
-      <h1>Verify Your Email</h1>
-      <p>A verification email has been sent to your registered address. Please check your inbox and click the activation link within 24 hours.</p>
+      <span class="account-kicker">Account Registration</span>
+      <h1>Verification Email Sent</h1>
+      <p>Open the email and use its verification link to complete account registration.</p>
+    </div>
+    <div class="account-message">A verification email was sent to <strong>{{index .ARGS.email 0}}</strong>. If you do not see it yet, check your spam folder.</div>
+    <div class="account-actions">
+      <a class="account-action" href="/goto/pub/e/site?action=topics">Go to Publisher Sign In</a>
+      <a class="account-action-secondary" href="/">Back to Home</a>
     </div>
   </section>
 </div>
 
-{{ template "footer" }}
+{{ template "footer" .}}
 </body>
 </html>

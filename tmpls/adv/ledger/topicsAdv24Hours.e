@@ -1,16 +1,16 @@
 {{ template "header" .}}
 {{ template "ledgerheader" .}}
 
-			<div class="row">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Last 24 Hours
+                            Report: Last 24 Hours
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 {{template "canvas1" .}}
-						</div>
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -23,7 +23,7 @@
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Performance by Top Items
+                            Ad Group Ranking
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -31,7 +31,7 @@
                                 <table class="table table-hover">
 <thead><tr>
 <th>Name</th>
-<th>Spendings</th>
+<th>Spend</th>
 <th>Impressions</th>
 <th>Clicks</th>
 <th>CPM</th>
@@ -58,24 +58,25 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6 -->
-	
-				<div class="col-lg-6">
+
+                <div class="col-lg-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Performance by Top Slots
+                            Ad Slot Ranking
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-hover">
 <thead><tr>
-<th>Name</th>
-<th>Spendings</th>
+<th>Ad Slot</th>
+<th>Spend</th>
 <th>Impressions</th>
 <th>Clicks</th>
 <th>CPM</th>
 <th>CPC</th>
 <th>CTR</th>
+<th> </th>
 </tr></thead>
 <tbody>{{with .Other.ledger_topicsAdvTopSlots}}{{range .}}
 <tr>
@@ -86,6 +87,7 @@
 <td>{{.cpm | printf "%.2f"}}</td>
 <td>{{.cpc | printf "%.4f"}}</td>
 <td>{{.ctr}}</td>
+<td><a class="btn btn-sm btn-circle btn-danger" href="ac?action=insert&entitytype_id=4&othertype_id=31&other_id={{.site_id}}">Block</a></td>
 </tr>{{end}}{{end}}
 </tbody>
 </table>
@@ -99,5 +101,4 @@
                 <!-- /.col-lg-6 -->
             </div>
             <!-- /.row -->
-  </div>
 {{ template "footer" }}

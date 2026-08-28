@@ -127,6 +127,7 @@ WHERE item_id = ?`, ARGS.Get("item_id")).Scan(&channelOrder)
 				aclChinese[siteID] = []any{item["other_id"], item["site_type"], item["domain"], item["foreign_id"]}
 			}
 			other["aclChinese"] = aclChinese
+			other["acl"] = aclChinese
 			delete(other, "targetname_topicsACL")
 		}
 
@@ -230,6 +231,10 @@ WHERE item_id = ?`, ARGS.Get("item_id")).Scan(&channelOrder)
 			uploadAud.DBFillUploadAudience(attrname, valueID)
 		}
 
+		other["dt"] = dhAud.Tmpls()
+		other["pzua"] = uaAud.Tmpls()
+		other["demo"] = demAud.Tmpls()
+		other["upload"] = uploadAud.Tmpls()
 		other["dtChinese"] = summer.Translate(dhAud.Tmpls())
 		other["pzuaChinese"] = summer.Translate(uaAud.Tmpls())
 		other["demoChinese"] = summer.Translate(demAud.Tmpls())

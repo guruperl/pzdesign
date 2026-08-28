@@ -3,7 +3,7 @@
 
           <div class="card">
             <div class="card-header">
-              Current List
+              Traffic Sources
             </div>
             <div class="card-body">
 
@@ -11,24 +11,25 @@
 <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Traffic Source Name</th>
                   <th>URL</th>
-                  <th>Since</th>
+                  <th>Traffic Environment</th>
+                  <th>Integration Mode</th>
+                  <th>Created</th>
                   <th>Active</th>
-                  <th colspan=2 class="text-right"><a class="btn btn-info" href="site?action=startnew">Create New</a> </th>
+<th colspan=2 class="text-right"><a class="btn btn-primary" href="#" data-title="Add Traffic Source" data-href="site?action=startnew" id="startnewPopup">Add Website or App</a> </th>
                 </tr>
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-<td><a href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}">{{.site_name}}</a></td>
+<td><a href="#" data-title="Update Traffic Source: {{.site_name}}" data-href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}" id="editPopup">{{.site_name}}</a></td>
 <td>{{.site_url}}</td>
+<td>{{.inventory_environment}}</td>
+<td>{{.integration_mode}}</td>
 <td>{{.created}}</td>
 <td>{{.active}}</td>
-<td><a class="btn btn-sm btn-primary" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&site_type={{.site_type | urlquery}}">Slots</a></td>
-<!--
-td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&entitytype_id=31">Channels</a></td>
--->
-<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Do you want to remove your site {{.site_name}}?')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">Del</a></td>
+<td><a class="btn btn-sm btn-info" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&site_type={{.site_type | urlquery}}">All Ad Slots</a></td>
+<td><a class="btn btn-sm btn-danger" onClick="return (confirm('Delete traffic source “{{.site_name}}”? This action cannot be undone.')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">Delete</a></td>
 </tr>
 {{end}}{{end}}</tobdy>
 </table>
@@ -40,7 +41,39 @@ td><a href="chac?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_
           <!-- /.card -->
 
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="d-title" class="modal-title">Traffic Source</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div id="d-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- Modal content-->
+  </div>
+</div>
+<!-- /Modal -->
+
 {{ template "footer" }}
+<script>
+  $(document).ready(function(){
+    $('#startnewPopup,#editPopup').on('click',function(){
+      var dataTITLE = $(this).attr('data-title');
+      var dataURL = $(this).attr('data-href');
+      $('#d-title').text(dataTITLE);
+      $('#d-body').load(dataURL,function(){
+        $('#myModal').modal({show:true});
+      });
+    });
+  });
+</script>
+
 
 </body>
 </html>

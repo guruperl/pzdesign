@@ -1,110 +1,67 @@
-{{ template "header" .}}
-{{ template "siteheader" .}}
 
-          <div class="card">
-            <div class="card-header">
-              Create New App or Site
-            </div>
-            <div class="card-body">
 
-<form class="form" action="site" method=post>
+<form class=form class="form" action="site" method=post>
 <input type=hidden name="action" value="insert">
 
 <div class="form-group row">
-	<label for="inputSiteName" class="col-sm-2 col-form-label">App/Site Name:</label>
-	<div class="col-sm-4">
-		<input type=text class="form-control" name=site_name placeholder="Site Name" />
-	</div>
-	<label for="inputSiteURL" class="col-sm-2 col-form-label">Site URL:</label>
-	<div class="col-sm-4">
-		<input type=text class="form-control" name=site_url placeholder="Site URL" />
-	</div>
+    <label for="inputSiteName" class="col-sm-2 col-form-label text-right">Website or App Name:</label>
+    <div class="col-sm-4">
+        <input type=text class="form-control" name=site_name placeholder="Name" />
+    </div>
+    <label for="inputSiteType" class="col-sm-2 col-form-label text-right">Type:</label>
+    <div class="col-sm-1">
+        <input type=radio class="form-control" name=site_type value="App" />
+    </div>
+    <label for="inputSiteTypeApp" class="col-sm-1 col-form-label text-right">App</label>
+    <div class="col-sm-1">
+        <input type=radio class="form-control" name=site_type value="Web" />
+    </div>
+    <label for="inputSiteTypeWeb" class="col-sm-1 col-form-label text-right">Web</label>
 </div>
 
+<p>Bundle/Domain: for an Android app, enter its package name (for example, <code>com.foo.mygame</code>); for an iOS app, enter its numeric App Store ID; for a website, enter its domain.</p>
 <div class="form-group row">
-    <label for="selectSiteQuality" class="col-sm-2 col-form-label">Quality:</label>
-    <div class="col-sm-10">
-        <div class="card">
-            <div class="card-body">{{$s_attrs := .Other.siteAttrs}}
-<table>{{range $key, $val := .Other.sites }}
-<tr><td>{{index $s_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
-<option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
-</table>
-            </div>
-        </div>
+    <label for="inputForeignID" class="col-sm-2 col-form-label text-right">Bundle/Domain：</label>
+    <div class="col-sm-4">
+        <input type=text class="form-control" name=foreign_id placeholder="com.foo.mygame" />
+    </div>
+    <label for="inputSiteURL" class="col-sm-2 col-form-label text-right">Information URL:</label>
+    <div class="col-sm-4">
+        <input type=text class="form-control" name=site_url placeholder="Website URL" />
     </div>
 </div>
 
+<div class="card mt-3">
+<div class="card-header">Traffic Classification</div>
+<div class="card-body">
 <div class="form-group row">
-    <label for="selectCampaignQuality" class="col-sm-2 col-form-label">Accept Campaign:</label>
-    <div class="col-sm-10">
-        <div class="card">
-            <div class="card-body">{{$c_attrs := .Other.campaignAttrs}}
-<table>{{range $key, $val := .Other.campaigns }}
-<tr><td>{{index $c_attrs $key}}:</td><td><select size=1 name={{$key}}>{{range $k, $v := $val}}
-<option value="{{$k}}">{{$v}}</option>{{end}}</td></tr>{{end}}
-</table>
-            </div>
-        </div>
-    </div>
+  <label class="col-sm-2 col-form-label text-right">Traffic Environment:</label>
+  <div class="col-sm-4"><select class="form-control" name="inventory_environment">
+    <option value="Unknown">Pending Classification</option><option value="Web">Website</option><option value="App">Mobile App</option>
+    <option value="CTV">Connected TV (CTV)</option><option value="DOOH">Digital Out-of-Home (DOOH)</option><option value="Other">Other</option>
+  </select></div>
+  <label class="col-sm-2 col-form-label text-right">Integration Mode:</label>
+  <div class="col-sm-4"><select class="form-control" name="integration_mode">
+    <option value="Unknown">Pending Classification</option><option value="ADX">ADX / OpenRTB</option><option value="BrowserTag">Browser Ad Tag</option>
+    <option value="SDK">App SDK / API</option><option value="ServerAPI">Server API</option>
+  </select></div>
 </div>
-
-
 <div class="form-group row">
-    <label for="checkChannels" class="col-sm-2 col-form-label">Channels:</label>
-    <div class="col-sm-10">
-        <div class="card">
-            <div class="card-body">
-<table class="table table-sm table-condensed table-bordered">
-<tr>
-<th>Name</th>
-<th>Belong&nbsp; </th>
-<th>&nbsp;
-<input type=radio name=channel_order value="Black" />Black
-<input type=radio name=channel_order value="White" />White
-</th>
-</tr>
-<tbody>{{ with .Other.channel_topics }}{{ range . }}
-<tr><td>{{.channel_name}}</td>
-<td class="text-center"><input name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
-<td class="text-center"><input name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
-</tr>{{end}}{{end}}
-</tobdy>
-</table>
-            </div>
-        </div>
-    </div>
+  <label class="col-sm-2 col-form-label text-right">Canonical Identifier:</label>
+  <div class="col-sm-4"><input class="form-control" name="canonical_identity" maxlength="255" placeholder="Website domain or app bundle" /></div>
+  <label class="col-sm-2 col-form-label text-right">Public Review URL:</label>
+  <div class="col-sm-4"><input class="form-control" name="store_url" maxlength="1024" placeholder="https://..." /></div>
+</div>
+<p class="mb-0 text-muted">The canonical identifier supports server-side validation and transparency disclosures; when blank, Bundle/Domain is used. The integration mode describes only the traffic source and grants no additional permissions.</p>
+</div>
 </div>
 
 <div class="form-group row">
     <div class="col-sm-2">
-	</div>
+    </div>
     <div class="col-sm-10">
-<button type="submit" class="btn btn-primary">Create Now !</button>
+<button type="submit" class="btn btn-primary">Add Traffic Source</button>
     </div>
 </div>
 
 </form>
-
-
-        </div>
-      </div>
-{{ template "footer" .}}
-
-<script>
-$(document).ready(function(){
-    $("#ao_inherit").click(function(){
-        $("#myP").addClass('invisible');
-    });
-    $("#ao_black").click(function(){
-        $("#myP").removeClass('invisible');
-    });
-    $("#ao_white").click(function(){
-        $("#myP").removeClass('invisible');
-    });
-});
-</script>
-
-</body>
-</html>
-

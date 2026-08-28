@@ -72,17 +72,19 @@ unchanged.
 
 Language switching reaches only public entry points. Authenticated requests are
 never redirected to a different chartag, and authenticated role headers do not
-expose a language toggle while 72 action templates still lack an English twin.
-The completed public `web` account flow retains its chartag-preserving toggle.
+expose a global language toggle. Every authenticated Chinese action has a
+complete English twin, so an explicit `e` route remains English throughout the
+workspace. The public `web` account flow retains its chartag-preserving toggle.
 
 Two guards keep the editions aligned. A structural parity check parses real HTML
 form controls and requires every `.g` action to have an `.e` twin with matching
-input field names and hidden action values, carrying exact reviewed exceptions
-that shrink as authenticated translation lands. `tools/check-public-copy`
-walks both template editions, applies edition-specific copy rules, requires both
-public account matrices, rejects raw framework-error rendering, and parses real
-links so an opposite-edition route is allowed only in an exact language toggle
-or `hreflang` alternate element.
+element trees, functional attributes, input field names, hidden action values,
+and template actions. It also rejects untranslated Chinese copy outside the
+intentional `中文` language toggle and rejects stale exceptions; the exemption
+ledger is empty. `tools/check-public-copy` walks both template editions, applies
+edition-specific copy rules, requires both public account matrices, rejects raw
+framework-error rendering, and parses real links so an opposite-edition route is
+allowed only in an exact language toggle or `hreflang` alternate element.
 
 ## Storage Adapters
 

@@ -4,7 +4,7 @@
 
           <div class="card">
             <div class="card-header">
-              个人资料
+              Profile
             </div>
             <div class="card-body">
 Company: {{index .ARGS.p_company 0}}
@@ -21,7 +21,7 @@ Name: {{$item.firstname}}  {{$item.lastname}}
             <div class="card-body">
 
 <div style= 'font-size: 17px;'>
-	<canvas class="my-4" id="advChart" width="900" height="380"></canvas>
+    <canvas class="my-4" id="advChart" width="900" height="380"></canvas>
 
     <!-- Graphs -->
     <script src="/1.0.8/vendors/js/Chart.min.js"></script>
@@ -32,14 +32,14 @@ Name: {{$item.firstname}}  {{$item.lastname}}
         data: {
           labels: [{{range $index, $item := .Lists}}{{if $index}},{{end}}"{{$item.hours}}"{{end}}],
           datasets: [{
-			yAxisID: 'y1',
-			label: "Impressions",
+            yAxisID: 'y1',
+            label: "Impressions",
             data: [{{range $index, $item := .Lists}}{{if $index}},{{end}}{{$item.imps}}{{end}}],
             backgroundColor: '#007bff',
             borderColor: '#007bff',
-			fill: false
+            fill: false
           },{
-			yAxisID: 'y2',
+            yAxisID: 'y2',
             label: "Clicks",
             data: [{{range $index, $item := .Lists}}{{if $index}},{{end}}{{$item.clis}}{{end}}],
             backgroundColor: '#ff7b00',
@@ -55,27 +55,27 @@ Name: {{$item.firstname}}  {{$item.lastname}}
           }]
         },
         options: {
-			responsive: true,
+            responsive: true,
             scales: { yAxes: [{
-						ticks: { beginAtZero: false },
-						position: 'left',
-						id: 'y1' },{
-						gridLines: { drawOnChartArea: false },
-						ticks: { beginAtZero: false },
-						position: 'right',
-						id: 'y2' }]
-					},
+                        ticks: { beginAtZero: false },
+                        position: 'left',
+                        id: 'y1' },{
+                        gridLines: { drawOnChartArea: false },
+                        ticks: { beginAtZero: false },
+                        position: 'right',
+                        id: 'y2' }]
+                    },
             legend: { display: true }
         }
       });
     </script>
-						</div>
+                        </div>
                 </div>
             </div>
 
           <div class="card">
             <div class="card-header">
-              Performance by Top Slots 
+              Performance by Top Slots
             </div>
             <div class="card-body">
 
@@ -106,7 +106,7 @@ Name: {{$item.firstname}}  {{$item.lastname}}
                             <!-- /.table-responsive -->
                         </div>
                     </div>
-	
+
           <div class="card">
             <div class="card-header">
               Performance by Top Campaigns

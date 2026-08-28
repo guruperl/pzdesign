@@ -5,11 +5,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            New Creatived Added
+                           Creative Added
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            {{index .ARGS.creative_name 0}} added.
+                            Creative “<b>{{index .ARGS.creative_name 0}}</b>” has been added.
                         </div>
                         <!-- /.panel-body -->
                     </div>

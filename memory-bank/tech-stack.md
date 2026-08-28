@@ -79,9 +79,11 @@ public-copy check reports zero failures, and the public-data guard passes.
 
 The `.g`/`.e` structural parity check and both language arms of the public-copy
 checker are active release gates. The parity guard compares parsed field names
-and hidden action values and records exact exceptions for the incomplete
-authenticated workspace. The copy guard walks `.g` and `.e`, requires both
-public account matrices, parses edition links, and rejects raw framework errors.
+and hidden action values, the full element/action structure, twin completeness,
+and the absence of untranslated Chinese copy in English templates. It rejects
+stale exemptions, and the authenticated workspace now needs none. The copy guard
+walks `.g` and `.e`, requires both public account matrices, parses edition links,
+and rejects raw framework errors.
 Manual acceptance opens `/` with primary browser languages `zh-CN` and `en`,
 confirms Chinese moves to `/index.zh.html` while non-Chinese stays on the
 English `/`, and confirms literal `/index.html` ↔ `/index.zh.html` links remain

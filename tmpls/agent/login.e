@@ -1,70 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/admin/favicon.ico">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="W8M agency workspace sign-in">
+  <meta name="theme-color" content="#0b1f33">
+  <title>Agency Workspace Sign-in | W8M</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/w8m-account.css?v=20260801-3" rel="stylesheet">
+</head>
 
-    <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/admin/dashboard.css" rel="stylesheet">
-  </head>
-
-  <body>
-
-	<form role="form" METHOD="POST" ACTION="/goto/agent/e/{{ .LoginName }}">
-	<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
-<div class="container-fluid">
-	<h2>Login</h2>
-		<div class="row">
-		<div class="col alert alert-success">
-			{{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your username and password.
-			{{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
-			{{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
-			{{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The username or password is incorrect.
-			{{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in.
-			{{else if .Errorstr}}We could not sign you in. Check your information and try again.
-			{{end}}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-2 form-group">
-			<label>Login:</lable>
-		</div>
-		<div class="col-10 form-group">
-			<input class="form-control" placeholder="Login Name" name="{{.Login}}" autofocus>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-2 form-group">
-			<label>Password:</lable>
-		</div>
-		<div class="col-10 form-group">
-			<input class="form-control" placeholder="Password" name="{{ .Password }}" type="password" value="">
-		</div>
-
-	</div>
-	<div class="row"><div class="col-2 form-group"><label for="agent-totp">Authenticator:</label></div><div class="col-10 form-group"><input id="agent-totp" class="form-control" name="{{.TOTP}}" placeholder="Code or recovery code (if enabled)" autocomplete="one-time-code"></div></div>
-	<div class="row">
-		<div class="col alert alert-success">
-			<button type="submit" class="btn btn-lg btn-success btn-block">Login In</button>
-		</div>
+<body class="w8m-public-account theme-internal">
+  <header class="account-topbar">
+    <div class="container">
+      <a class="account-brand" href="/">W8M <small>Agency Workspace</small></a>
+      <nav class="account-topnav" aria-label="Agency sign-in navigation">
+        <a href="mailto:support@w8m.com">Technical Support</a>
+        <a href="/">Back to Home</a>
+      </nav>
     </div>
-</div>
-	</form>
+  </header>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/admin/assets/js/vendor/jquery-slim.min.js"></script>
-    <script src="/admin/assets/js/vendor/popper.min.js"></script>
-    <script src="/admin/dist/js/bootstrap.min.js"></script>
+  <main class="account-stage">
+    <div class="container">
+      <div class="account-card account-card-compact theme-internal">
+        <aside class="account-context">
+          <div class="account-context-copy">
+            <span class="account-role-mark"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+            <p class="account-eyebrow">Authorized Account</p>
+            <h2>Agency Review and Oversight</h2>
+            <p>Review delegated advertisers, campaigns, and ad groups, and complete authorized review work.</p>
+          </div>
+        </aside>
 
-  </body>
+        <section class="account-form-panel">
+          <div class="account-form-heading">
+            <span class="account-kicker">Account Sign-in</span>
+            <h1>Agency Workspace Sign-in</h1>
+            <p>Enter your agency account username and password.</p>
+          </div>
+          {{if .Errorstr}}<div class="account-alert"><i class="fa fa-info-circle" aria-hidden="true"></i>
+            {{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your username and password.
+            {{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
+            {{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
+            {{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The username or password is incorrect. Try again.
+            {{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in. Check your browser settings.
+            {{else}}We could not sign you in. Check your information and try again.
+            {{end}}
+          </div>{{end}}
+          <form method="post" action="/goto/agent/e/{{ .LoginName }}">
+            <input type="hidden" name="{{ .GoURIName }}" value="{{ .GoURI }}">
+            <div class="account-field">
+              <label for="agent-login-name">Agency Username</label>
+              <div class="account-control"><i class="fa fa-user-o" aria-hidden="true"></i><input id="agent-login-name" class="form-control" name="{{.Login}}" type="text" placeholder="Enter your agency username" autocomplete="username" autofocus required></div>
+            </div>
+            <div class="account-field">
+              <label for="agent-login-password">Password</label>
+              <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input id="agent-login-password" class="form-control" name="{{.Password}}" type="password" placeholder="Enter your password" autocomplete="current-password" required></div>
+            </div>
+            <div class="account-field"><label for="agent-login-totp">Authenticator or Recovery Code</label><div class="account-control"><i class="fa fa-shield" aria-hidden="true"></i><input id="agent-login-totp" class="form-control" name="{{.TOTP}}" type="text" placeholder="Enter only when two-factor authentication is enabled" autocomplete="one-time-code"></div></div>
+            <button type="submit" class="account-submit">Sign in to the Agency Workspace</button>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="account-footer"><div class="container"><p>&copy; 2026 W8M Network Inc.</p><a href="mailto:support@w8m.com">support@w8m.com</a></div></footer>
+</body>
 </html>

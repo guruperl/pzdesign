@@ -1,14 +1,14 @@
-{{ template "header" .}}
-{{ template "itemheader" .}}
+{{$cAttrs := .Other.itemAttrs }}
+{{$sAttrs := .Other.slotAttrs }}
+{{$cDefault := .Other.itemsDefault }}
+{{$sDefault := .Other.slotsDefault }}
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Create New Ad Item
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Add Ad Group
+                    </div>
+                    <div class="panel-body">
+
 
 <form class="form" method=post action=item>
 <input type=hidden name="action" value="insert" />
@@ -18,60 +18,96 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-2 col-form-label text-right">Item Name:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="item_name" placeholder="Name of Item" />
+    <label for="inputCampaigName" class="col-sm-1 col-form-label text-right">Ad Group Name</label>
+    <div class="col-sm-3">
+        <input type=text class="form-control" name="item_name" placeholder="Enter an ad group name" />
     </div>
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">After Click:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="item_click" placeholder="https://advertiser.example/landing.html" />
+    <label for="costType" class="col-sm-2 col-form-label text-right">Pricing Model:</label>
+    <div class="col-sm-3">
+        <input type=hidden name=cost_type value=CPM>
+        <span class="form-control-plaintext">CPM (USD per thousand impressions)</span>
     </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputStartx" class="col-sm-2 col-form-label text-right">Start:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="startx" placeholder="yyyy-mm-dd hh:mm:ss" />
-    </div>
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">End:</label>
-    <div class="col-sm-4">
-        <input type=text class="form-control" name="endx" placeholder="yyyy-mm-dd hh:mm:ss" />
-    </div>
-</div>
-
-{{template "deliveryschedule" .}}
-
-<div class="form-group row">
-    <label for="inputSizeID" class="col-sm-2 col-form-label text-right">Size:</label>
+    <label for="inputEndx" class="col-sm-1 col-form-label text-right">CPM Bid</label>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="w" placeholder="width">
-    </div>
-    <div class="col-sm-2">
-        <input type=text class="form-control" name="h" placeholder="height">
-    </div>
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">Mime:</label>
-    <div class="col-sm-4">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-	<label for="inputCost" class="col-sm-2 col-form-label text-right">Cost Type:</label>
-	<div class="col-sm-4">
-	<input type=hidden name=cost_type value=CPM>
-	<span class="form-control-plaintext">CPM (USD per 1,000 impressions)</span>
-	</div>
-	<label for="inputEndx" class="col-sm-2 col-form-label text-right">CPM Bid:</label>
-    <div class="col-sm-4">
         <input type=text class="form-control" name="cost" placeholder="1.23" />
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="tableBudget" class="col-sm-2 col-form-label text-right">Budget:</label>
-    <div class="col-sm-6">
-<table class="table table-condensed">
-<tr><th> </th><th>Budget</th><th>Impressions</th><th>Clicks</th></tr>
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">Landing Page:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="item_click" placeholder="https://advertiser.example/landing (macros may be used in query parameters)"></textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">Impression Tracking URLs:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="imp_url" placeholder="Optional; separate multiple HTTPS/HTTP URLs with commas"></textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputLanding" class="col-sm-2 col-form-label text-right">Click Tracking URLs:</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" rows=2 name="click_url" placeholder="Optional; separate multiple HTTPS/HTTP URLs with commas"></textarea>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="inputStartx" class="col-sm-2 col-form-label text-right">Start Time:</label>
+    <div class="col-sm-4">
+        <input type=text class="form-control" name="startx" value="">
+    </div>
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">End Time:</label>
+    <div class="col-sm-4">
+        <input type=text class="form-control" name="endx" value="">
+    </div>
+</div>
+
+{{template "deliveryschedule" .}}
+
+
+<div class="form-group row">
+    <label for="inputEndx" class="col-sm-2 col-form-label text-right">Creative Rendering Mode:</label>
+    <div class="col-sm-10">Choose XHTML Banner for mobile; choose Iframe for other devices.</div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label text-right"> </label>
+    <div class="col-sm-10">{{ range $item := .Other.qa_mime }}
+<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if eq $item.which "4"}}checked{{end}} />{{$item.label}}{{end}}
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="tableFrequencyCap" class="col-sm-2 col-form-label">Controls:</label>
+    <div class="col-sm-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Per-User Frequency Cap</div>
+            <div class="panel-body">
+<div class="table-responsive">
+<table class="table-sm table-bordered table-condensed">
+<tr><th>Type</th><th>Count</th><th>Period</th><th>Interval</th></tr>
+<tr><td>Impressions: </td>
+<td><input type=text name=cpm_fc size=3></td>
+<td><input type=text name=cpm_length size=6>minutes</td>
+<td><input type=text name=cpm_throttle size=6>minutes</td></tr>
+<tr><td>Clicks: </td>
+<td><input type=text name=cpc_fc size=3></td>
+<td><input type=text name=cpc_length size=6>minutes</td>
+<td></td></tr>
+</table>
+</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Ad Group Budget</div>
+            <div class="panel-body">
+<div class="table-responsive">
+<table class="table-sm table-bordered table-condensed">
+<tr><th> </th><th>Spend Cap</th><th>Impression Cap</th><th>Click Cap</th></tr>
 <tr><td>Total: </td><td><input type=text name=limit_spend size=8 /></td>
 <td><input type=text name=limit_imp size=8 /></td>
 <td><input type=text name=limit_cli size=8 /></td></tr>
@@ -79,67 +115,22 @@
 <td><input type=text name=daily_imp size=8 /></td>
 <td><input type=text name=daily_cli size=8 /></td></tr>
 </table>
+</div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="form-group row">
-    <div class="col-sm-1">
-<input type=hidden name="fl_language" value="Chinese" />
-    </div>
-    <label for="inputCost" class="col-sm-11 col-form-label">Should Appear In The Following Slots</label>
-</div>
-
-<div class="panel panel-primary">
-	<div class="panel-body">
-
-<div class="form-group row">
-    <label for="inputPlatform" class="col-sm-2 col-form-label text-right">Platform:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_device }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_device value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputPageLevel" class="col-sm-2 col-form-label text-right">Page Level:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_position }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_position value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputClock" class="col-sm-2 col-form-label text-right">Clock:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_content }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_content value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="inputYaxis" class="col-sm-2 col-form-label text-right">Yaxis:</label>
-    <div class="col-sm-10">{{ range $item := .Other.fl_creative }}
-<input class="form-check-input" id="fl_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.default}}checked{{end}} />{{$item.label}}{{end}}
-    </div>
-</div>
-
-
-	</div>
-</div>
 
 <div class="form-group row">
     <div class="col-sm-1">
     </div>
     <div class="col-sm-11">
-<button type="submit" class="btn btn-primary">Create Now Item!</button>
+<button type="submit" class="btn btn-primary">Create Ad Group</button>
     </div>
 </div>
 
 </form>
 
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-{{template "footer"}}
+    </div>
+</div>

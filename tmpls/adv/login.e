@@ -1,87 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Advertiser Logs In</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="/sb2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/sb2/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/sb2/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/sb2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="W8M advertiser workspace sign-in">
+  <meta name="theme-color" content="#0b1f33">
+  <title>Advertiser Sign-in | W8M</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/w8m-account.css?v=20260801-3" rel="stylesheet">
 </head>
 
-<body>
-
+<body class="w8m-public-account theme-advertiser">
+  <header class="account-topbar">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
-                    </div>
-                    <div class="panel-body">
-         <form role="form" METHOD="POST" ACTION="/goto/adv/e/{{ .LoginName }}">
-	<INPUT TYPE="HIDDEN" NAME="{{ .GoURIName }}" VALUE="{{ .GoURI }}">
-                            <fieldset>
-								<div class="alert alert-success">
-								{{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your registered email and password.
-								{{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
-								{{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
-								{{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The email or password is incorrect.
-								{{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in.
-								{{else if .Errorstr}}We could not sign you in. Check your information and try again.
-								{{end}}
-								</div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="{{.Login}}" type="email" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="{{ .Password }}" type="password" value="">
-                                </div>
-                                <div class="form-group"><input class="form-control" placeholder="Authenticator or recovery code (if enabled)" name="{{.TOTP}}" type="text" autocomplete="one-time-code"></div>
-                                <!-- div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
-                                    </label>
-                                </div -->
-                                <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <a class="account-brand" href="/">W8M <small>Advertising Platform</small></a>
+      <nav class="account-topnav" aria-label="Account page navigation">
+        <a href="/manuals/advertiser.en.html">Advertiser Manual</a>
+        <a href="/goto/web/e/adv?action=startnew">Create Account</a>
+        <a href="/">Back to Home</a>
+      </nav>
     </div>
+  </header>
 
-    <!-- jQuery -->
-    <script src="/sb2/vendor/jquery/jquery.min.js"></script>
+  <main class="account-stage">
+    <div class="container">
+      <div class="account-card theme-advertiser">
+        <aside class="account-context">
+          <div class="account-context-copy">
+            <span class="account-role-mark"><i class="fa fa-bullseye" aria-hidden="true"></i></span>
+            <p class="account-eyebrow">Advertiser Workspace</p>
+            <h2>Campaign Management</h2>
+            <p>Manage campaigns, ad groups, creatives, targeting, and performance reports.</p>
+            <ul class="account-benefits">
+              <li>Review budgets, status, and delivery schedules</li>
+              <li>Configure creatives, frequency, and multidimensional targeting</li>
+              <li>View impressions, clicks, and spend</li>
+            </ul>
+          </div>
+          <div class="account-context-footer"><a href="/manuals/advertiser.en.html">Open the Advertiser Manual</a></div>
+        </aside>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/sb2/vendor/bootstrap/js/bootstrap.min.js"></script>
+        <section class="account-form-panel">
+          <div class="account-form-heading">
+            <span class="account-kicker">Account Sign-in</span>
+            <h1>Advertiser Account Sign-in</h1>
+            <p>Use your registered email and password to enter the advertiser workspace.</p>
+          </div>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/sb2/vendor/metisMenu/metisMenu.min.js"></script>
+          {{if .Errorstr}}<div class="account-alert"><i class="fa fa-info-circle" aria-hidden="true"></i>
+            {{if or (eq .Errorstr "Sign In to your account") (eq .Errorstr "Login required.")}}Enter your registered email and password.
+            {{else if eq .Errorstr "Login is expired."}}Your session has expired. Sign in again.
+            {{else if eq .Errorstr "Too many failed logins."}}Too many sign-in attempts. Try again later.
+            {{else if or (eq .Errorstr "Login incorrect. Please try again.") (eq .Errorstr "Login failed. Please try again.")}}The email or password is incorrect. Try again.
+            {{else if eq .Errorstr "Please make sure your browser supports cookie."}}Cookies must be enabled to sign in. Check your browser settings.
+            {{else}}We could not sign you in. Check your information and try again.
+            {{end}}
+          </div>{{end}}
 
-    <!-- Custom Theme JavaScript -->
-    <script src="/sb2/dist/js/sb-admin-2.js"></script>
+          <form method="post" action="/goto/adv/e/{{ .LoginName }}">
+            <input type="hidden" name="{{ .GoURIName }}" value="{{ .GoURI }}">
+            <div class="account-field">
+              <label for="adv-login-email">Email</label>
+              <div class="account-control"><i class="fa fa-envelope-o" aria-hidden="true"></i><input id="adv-login-email" class="form-control" name="{{.Login}}" type="email" placeholder="name@example.com" autocomplete="username" autofocus required></div>
+            </div>
+            <div class="account-field">
+              <label for="adv-login-password">Password</label>
+              <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input id="adv-login-password" class="form-control" name="{{.Password}}" type="password" placeholder="Enter your password" autocomplete="current-password" required></div>
+            </div>
+            <div class="account-field"><label for="adv-login-totp">Authenticator or Recovery Code</label><div class="account-control"><i class="fa fa-shield" aria-hidden="true"></i><input id="adv-login-totp" class="form-control" name="{{.TOTP}}" type="text" placeholder="Enter only when two-factor authentication is enabled" autocomplete="one-time-code"></div></div>
+            <button type="submit" class="account-submit">Sign in to the Advertiser Workspace</button>
+            <div class="account-form-links">
+              <a href="/goto/web/e/adv?action=startretrieve">Forgot password?</a>
+              <a href="/goto/web/e/adv?action=startnew">Create an advertiser account</a>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
 
+  <footer class="account-footer"><div class="container"><p>&copy; 2026 W8M Network Inc.</p><a href="mailto:support@w8m.com">support@w8m.com</a></div></footer>
 </body>
-
 </html>

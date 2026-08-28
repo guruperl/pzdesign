@@ -1,14 +1,9 @@
-{{ template "header" .}}
-{{ template "balanceheader" .}}
-
-        <div class="row">
-            <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-						Total Budget
+                        Budget
                     </div>
                     <div class="panel-body">
-						<p class="text-muted">Spend, impression, and click limits are hard delivery limits. Zero or blank means unlimited. Lowering a limit to the consumed value stops later auctions within the documented cache propagation window.</p>
+                        <p class="text-muted">Spend, impression, and click caps are hard delivery limits. Zero or blank means no limit for that field. If a cap is reduced to no more than the amount already consumed, subsequent bidding stops within the cache-propagation window.</p>
 
 <form name=total class="form" method=post action="balance">
 {{if .ARGS.total_balance_id}}<input type=hidden name=action value="update" />
@@ -24,16 +19,16 @@
 
 {{if .ARGS.total_balance_id}}
 <div class="table-responsive">{{ with .Lists }}{{ range . }}{{if eq "total_balance_id" .which}}
-<table class="table table-striped table-condensed">
-<thead> <tr> <th> </th> <th>Budget</th> <th>Impressions</th> <th>Clicks</th> <th> </th> </tr> </thead>
+<table class="table table-sm">
+<thead> <tr> <th>Total Budget</th> <th>Spend Cap</th> <th>Impression Cap</th> <th>Click Cap</th> <th> </th> </tr> </thead>
 <tbody> <tr>
-<td>Limit: </td>
-<td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}" /></td>
-<td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}" /></td>
-<td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}" /></td>
-<td><input type=hidden name=balance_id value={{.balance_id}} /><input class="btn btn-sm" type=submit value="Update" /></td>
+<td>Delivery Cap: </td>
+<td><input type=text size=8 name=limit_spend value="{{if .limit_spend}}{{ .limit_spend}}{{end}}" /></td>
+<td><input type=text size=8 name=limit_imp value="{{if .limit_imp}}{{ .limit_imp}}{{end}}" /></td>
+<td><input type=text size=8 name=limit_cli value="{{if .limit_cli}}{{ .limit_cli}}{{end}}" /></td>
+<td><input type=hidden name=balance_id value={{.balance_id}} /><input class="btn btn-sm btn-primary" type=submit value="Save" /></td>
 </tr> <tr>
-<td>Consumed: </td>
+<td>Consumed to Date: </td>
 <td>{{ .current_spend}}</td>
 <td>{{ .current_imp}}</td>
 <td>{{ .current_cli}}</td>
@@ -45,31 +40,20 @@
 {{else}}
 
 <div class="table-responsive">
-<table class="table table-striped table-condensed">
-<thead> <tr> <th>Budget</th> <th>Impressions</th> <th>Clicks</th> <th> </th> </tr> </thead>
+<table class="table table-sm">
+<thead> <tr> <th>Total Budget</th> <th>Spend Cap</th> <th>Impression Cap</th> <th>Click Cap</th> <th> </th> </tr> </thead>
 <tbody> <tr>
+<td> </td>
 <td><input type=text size=8 name=limit_spend /></td>
 <td><input type=text size=8 name=limit_imp /></td>
 <td><input type=text size=8 name=limit_cli /></td>
-<td><button type=submit class="btn btn-primary btn-sm">Add New</button></td>
+<td><button type=submit class="btn btn-primary btn-sm">Add</button></td>
 </tr> </tobdy>
 </table>
 </div>
 {{end}}
 
 </form>
-			</div>
-		</div>
-	</div>
-</div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-						Daily Budget
-                    </div>
-                    <div class="panel-body">
 
 <form name=daily class="form" method=post action="balance">
 {{if .ARGS.daily_balance_id}}<input type=hidden name=action value="update" />
@@ -87,15 +71,15 @@
 
 <div class="table-responsive">{{ with .Lists }}{{ range . }}{{if eq "daily_balance_id" .which}}
 <table class="table table-striped table-sm">
-<thead> <tr><th> </th> <th>Budget</th> <th>Impressions</th> <th>Clicks</th><th> </th> </tr> </thead>
+<thead> <tr><th>Daily Budget</th> <th>Spend Cap</th> <th>Impression Cap</th> <th>Click Cap</th><th> </th> </tr> </thead>
 <tbody> <tr>
-<td>Daily limit</td>
-<td><input type=text size=8 name=limit_spend value="{{ .limit_spend}}"></td>
-<td><input type=text size=8 name=limit_imp value="{{ .limit_imp}}"></td>
-<td><input type=text size=8 name=limit_cli value="{{ .limit_cli}}"></td>
-<td><input type=hidden name=balance_id value={{.balance_id}}><input class="btn btn-sm" type=submit value="Update"></td>
+<td>Daily Cap</td>
+<td><input type=text size=8 name=limit_spend value="{{if .limit_spend}}{{ .limit_spend}}{{end}}"></td>
+<td><input type=text size=8 name=limit_imp value="{{if .limit_imp}}{{ .limit_imp}}{{end}}"></td>
+<td><input type=text size=8 name=limit_cli value="{{if .limit_cli}}{{ .limit_cli}}{{end}}"></td>
+<td><input type=hidden name=balance_id value={{.balance_id}}><input class="btn btn-sm btn-primary" type=submit value="Save"></td>
 </tr> <tr>
-<td>Daily consumed{{if .current_day}} (UTC {{.current_day}}){{end}}:</td>
+<td>Consumed Today{{if .current_day}} (UTC {{.current_day}}){{end}}:</td>
 <td>{{ .current_spend}}</td>
 <td>{{ .current_imp}}</td>
 <td>{{ .current_cli}}</td>
@@ -108,12 +92,13 @@
 
 <div class="table-responsive">
 <table class="table table-striped table-sm">
-<thead> <tr> <th>Budget</th> <th>Impressions</th> <th>Clicks</th> <th> </th> </tr> </thead>
+<thead> <tr> <th>Daily Budget</th> <th>Spend Cap</th> <th>Impression Cap</th> <th>Click Cap</th> <th> </th> </tr> </thead>
 <tbody> <tr>
+<td> </td>
 <td><input type=text size=8 name=limit_spend></td>
 <td><input type=text size=8 name=limit_imp></td>
 <td><input type=text size=8 name=limit_cli></td>
-<td><button type=submit class="btn btn-primary btn-sm">Add New</button></td>
+<td><button type=submit class="btn btn-primary btn-sm">Add</button></td>
 </tr> </tobdy>
 </table>
 </div>
@@ -121,9 +106,5 @@
 {{end}}
 
 </form>
-			</div>
-		</div>
-	</div>
-</div>
-
-{{ template "footer" }}
+            </div>
+        </div>

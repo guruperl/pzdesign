@@ -153,12 +153,12 @@ var requiredSnippets = map[string][]string{
 		`name="lastname"`,
 		`name="md5"`,
 	},
-	"tmpls/web/adv/retrieve.e":      {"Check Your Email", "The link is valid for 24 hours"},
-	"tmpls/web/pub/retrieve.e":      {"Check Your Email", "The link is valid for 24 hours"},
-	"tmpls/web/adv/insert.mail.e":   {"Activate Account", "W8M Advertising Platform"},
-	"tmpls/web/pub/insert.mail.e":   {"Activate Account", "W8M Advertising Platform"},
-	"tmpls/web/adv/retrieve.mail.e": {"Reset Password", "W8M Advertising Platform"},
-	"tmpls/web/pub/retrieve.mail.e": {"Reset Password", "W8M Advertising Platform"},
+	"tmpls/web/adv/retrieve.e":      {"Password Reset Email Sent", "If this email address is registered"},
+	"tmpls/web/pub/retrieve.e":      {"Password Reset Email Sent", "If this email address is registered"},
+	"tmpls/web/adv/insert.mail.e":   {"Hello,", "/goto/web/e/adv?action=activate", "W8M Advertising Platform"},
+	"tmpls/web/pub/insert.mail.e":   {"Hello,", "/goto/web/e/pub?action=activate", "W8M Advertising Platform"},
+	"tmpls/web/adv/retrieve.mail.e": {"Hello,", "/goto/web/e/adv?action=startreset", "W8M Advertising Platform"},
+	"tmpls/web/pub/retrieve.mail.e": {"Hello,", "/goto/web/e/pub?action=startreset", "W8M Advertising Platform"},
 }
 
 var accountActions = []string{
