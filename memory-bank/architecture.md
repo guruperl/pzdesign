@@ -57,11 +57,14 @@ English; both are configured `text/html`. No framework change is needed to
 switch language, and account mail already follows the request's chartag.
 
 The public front page is static and therefore outside that mechanism. `cmd/unify`
-owns exact `GET /` and `GET /index.html` handlers, registered ahead of the
-Genelet catch-all, which negotiate on `Accept-Language`, honor an explicit
-language cookie above the browser value, and fall back to the Chinese file when
-the English one is absent. Negotiated responses declare
-`Vary: Accept-Language, Cookie`, `Content-Language`, and private/no-cache policy.
+owns `GET /`, registered ahead of the Genelet catch-all, which negotiates on
+`Accept-Language`, honors an explicit language cookie above the browser value,
+and falls back to the Chinese file when the English one is absent. Exact
+`GET /index.html` and `GET /index.en.html` select the literal Chinese and English
+files respectively, ignore preference inputs, and never write a cookie. Their
+front-page language links point directly to one another. Negotiated responses
+declare `Vary: Accept-Language, Cookie`, `Content-Language`, and private/no-cache
+policy.
 Exact `/goto/web/g/` and `/goto/web/e/` entry routes and the public
 `/language/{zh|en}` switch persist a `Secure`, `HttpOnly`, `SameSite=Lax`
 preference containing only `zh` or `en`. Redirect returns are limited to the

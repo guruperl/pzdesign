@@ -51,8 +51,10 @@ configured as `text/html`.
 - **The chartag in the URL is authoritative.** A shared or bookmarked link always
   renders the language it names. Nothing rewrites a language mid-session.
 - **The language preference is an entry-point decision.** A visitor's browser
-  languages choose the front page; an explicit public toggle stores a
-  non-identifying `w8m_lang` preference that outranks the browser on later
+  languages choose `/`; the front-page language links target the literal
+  sibling files `/index.html` and `/index.en.html`, which are authoritative and
+  do not negotiate or write a cookie. Explicit account-flow choices may store a
+  non-identifying `w8m_lang` preference that outranks the browser on later `/`
   visits. Negotiated responses vary on `Accept-Language` and `Cookie` and are
   private/no-cache. Authenticated role workspaces do not offer a global toggle
   while their English action set is incomplete.

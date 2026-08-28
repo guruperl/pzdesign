@@ -5,6 +5,11 @@ commit after review. This remediation was approved after a review of the
 completed L01-L04/T01-T03 horizon. It does not reopen completed history; it owns
 the newly confirmed defects.
 
+Post-close owner correction on 2026-08-27: the two front-page language links
+target the literal sibling files `/index.html` and `/index.en.html`. Only `/`
+negotiates; an opposite cookie or browser language cannot rewrite either named
+file. Handler and public-copy regressions preserve that distinction.
+
 ## Review disposition
 
 | Finding | Local severity | Disposition |

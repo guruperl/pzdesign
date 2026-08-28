@@ -3,9 +3,10 @@
 ## Delivery outcome
 
 A visitor reaching W8M is served the front page in their browser's language, can
-switch language with one click, and finds a complete English edition behind that
-switch. The active horizon delivers that end to end for the public surface:
-land in English, register in English, read English manuals, toggle both ways.
+open the literal sibling language page with one click, and finds a complete
+English edition behind that link. The active horizon delivers that end to end
+for the public surface: land in English, register in English, read English
+manuals, and move directly between the two static front pages.
 
 ## Lanes
 

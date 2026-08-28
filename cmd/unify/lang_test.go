@@ -149,7 +149,7 @@ func TestFrontPageWrapperNegotiatesAndVaries(t *testing.T) {
 func TestFrontPageWrapperCookieOverrideAndFallback(t *testing.T) {
 	t.Run("cookie overrides header", func(t *testing.T) {
 		handler := frontPageWrapper(http.NotFoundHandler(), frontPageFixture(t, true))
-		req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
 		req.Header.Set("Accept-Language", "en")
 		req.AddCookie(&http.Cookie{Name: languageCookieName, Value: "zh"})
 		response := httptest.NewRecorder()
@@ -178,6 +178,44 @@ func TestFrontPageWrapperCookieOverrideAndFallback(t *testing.T) {
 			t.Fatalf("fallback Content-Language = %q, want zh", got)
 		}
 	})
+}
+
+func TestFrontPageWrapperLiteralEditionsIgnorePreference(t *testing.T) {
+	handler := frontPageWrapper(http.NotFoundHandler(), frontPageFixture(t, true))
+	for _, test := range []struct {
+		name     string
+		path     string
+		header   string
+		cookie   string
+		body     string
+		language string
+	}{
+		{name: "Chinese file", path: "/index.html", header: "en", cookie: "en", body: "chinese", language: "zh"},
+		{name: "English file", path: "/index.en.html", header: "zh", cookie: "zh", body: "english", language: "en"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodGet, test.path, nil)
+			req.Header.Set("Accept-Language", test.header)
+			req.AddCookie(&http.Cookie{Name: languageCookieName, Value: test.cookie})
+			response := httptest.NewRecorder()
+			handler.ServeHTTP(response, req)
+			if response.Code != http.StatusOK || response.Body.String() != test.body {
+				t.Fatalf("literal response = (%d, %q), want (200, %s)", response.Code, response.Body.String(), test.body)
+			}
+			if got := response.Header().Get("Content-Language"); got != test.language {
+				t.Fatalf("Content-Language = %q, want %q", got, test.language)
+			}
+			if got := response.Header().Get("Cache-Control"); got != "private, no-cache" {
+				t.Fatalf("Cache-Control = %q, want private, no-cache", got)
+			}
+			if got := response.Header().Get("Vary"); got != "" {
+				t.Fatalf("literal edition must not negotiate, got Vary %q", got)
+			}
+			if got := response.Header().Get("Set-Cookie"); got != "" {
+				t.Fatalf("literal edition must not persist a preference, got Set-Cookie %q", got)
+			}
+		})
+	}
 }
 
 func TestFrontPageWrapperExplicitChoicePersists(t *testing.T) {

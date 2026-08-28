@@ -19,7 +19,7 @@ func TestCheckEditionLinks(t *testing.T) {
 		{name: "English own edition", language: "en", html: `<a href='/goto/pub/e/site?action=topics'>login</a>`},
 		{name: "Chinese bare English link", language: "zh", html: `<a href='/goto/web/e/adv?action=startnew'>register</a>`, wantFail: true},
 		{name: "English bare Chinese link", language: "en", html: `<a href="/goto/pub/g/site?action=topics">login</a>`, wantFail: true},
-		{name: "Exact toggle class", language: "en", html: `<a class="nav-link lang-toggle" href="/goto/web/g/">中文</a>`},
+		{name: "Exact static toggle class", language: "en", html: `<a class="nav-link lang-toggle" href="/index.html">中文</a>`},
 		{name: "Toggle data attribute", language: "zh", html: `<a href="/goto/web/e/" data-lang-toggle="en">English</a>`},
 		{name: "Wrong toggle data attribute", language: "zh", html: `<a href="/goto/web/e/" data-lang-toggle="zh">English</a>`, wantFail: true},
 		{name: "Substring class is not toggle", language: "zh", html: `<a class="not-lang-toggle-link" href="/goto/web/e/">English</a>`, wantFail: true},
@@ -120,5 +120,29 @@ func TestHasAlternateLinkRequiresExactMetadata(t *testing.T) {
 		if hasAlternateLink(text, "index.en.html", "en") {
 			t.Fatalf("invalid alternate link was accepted: %s", text)
 		}
+	}
+}
+
+func TestCheckFrontPageLanguageLinkRequiresLiteralSibling(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		name     string
+		rel      string
+		html     string
+		wantFail bool
+	}{
+		{name: "Chinese to English", rel: "www/index.html", html: `<a class="nav-link lang-toggle" href="/index.en.html">English</a>`},
+		{name: "English to Chinese", rel: "www/index.en.html", html: `<a class="nav-link lang-toggle" href="/index.html">中文</a>`},
+		{name: "Dynamic Chinese target", rel: "www/index.en.html", html: `<a class="nav-link lang-toggle" href="/goto/web/g/">中文</a>`, wantFail: true},
+		{name: "Dynamic English target", rel: "www/index.html", html: `<a class="nav-link lang-toggle" href="/goto/web/e/">English</a>`, wantFail: true},
+		{name: "Duplicate toggles", rel: "www/index.html", html: `<a class="lang-toggle" href="/index.en.html">English</a><a class="lang-toggle" href="/index.en.html">English</a>`, wantFail: true},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			failures := checkFrontPageLanguageLink(test.rel, test.html)
+			if got := len(failures) > 0; got != test.wantFail {
+				t.Fatalf("failures = %v, want failure %t", failures, test.wantFail)
+			}
+		})
 	}
 }

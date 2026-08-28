@@ -375,8 +375,16 @@ func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, su
 
 func frontPageWrapper(next http.Handler, docRoot string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "GET" && (r.URL.Path == "/" || r.URL.Path == "/index.html") {
+		if r.Method == "GET" && r.URL.Path == "/" {
 			serveFrontPage(w, r, docRoot, negotiateLanguage(r), true)
+			return
+		}
+		if r.Method == "GET" && (r.URL.Path == "/index.html" || r.URL.Path == "/index.en.html") {
+			lang := "zh"
+			if r.URL.Path == "/index.en.html" {
+				lang = "en"
+			}
+			serveFrontPage(w, r, docRoot, lang, false)
 			return
 		}
 		if r.Method == "GET" && (r.URL.Path == "/goto/web/g/" || r.URL.Path == "/goto/web/e/") {

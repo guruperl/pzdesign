@@ -314,7 +314,7 @@ func check(root string) ([]string, error) {
 }
 
 func checkIndexStructure(rel, text string) []string {
-	var failures []string
+	failures := checkFrontPageLanguageLink(rel, text)
 	wantModalTriggers := len(capabilityModalIDs) + len(roleGuideModalIDs) + len(journeyModalIDs)
 	if got := strings.Count(text, `data-toggle="modal"`); got != wantModalTriggers {
 		failures = append(failures, fmt.Sprintf("%s has %d modal triggers, want %d", rel, got, wantModalTriggers))
@@ -362,6 +362,39 @@ func checkIndexStructure(rel, text string) []string {
 		}
 	}
 	return failures
+}
+
+func checkFrontPageLanguageLink(rel, text string) []string {
+	want, ok := map[string]string{
+		"www/index.html":    "/index.en.html",
+		"www/index.en.html": "/index.html",
+	}[rel]
+	if !ok {
+		return []string{fmt.Sprintf("unsupported front-page path %s", rel)}
+	}
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
+		return []string{fmt.Sprintf("%s language link is not parseable: %v", rel, err)}
+	}
+	var targets []string
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode && node.Data == "a" {
+			classes, _ := attribute(node, "class")
+			if hasToken(classes, "lang-toggle") {
+				href, _ := attribute(node, "href")
+				targets = append(targets, href)
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(document)
+	if len(targets) != 1 || targets[0] != want {
+		return []string{fmt.Sprintf("%s language link targets %v, want exactly [%s]", rel, targets, want)}
+	}
+	return nil
 }
 
 func hasAlternateLink(text, hrefSuffix, language string) bool {
