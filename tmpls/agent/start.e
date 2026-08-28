@@ -14,7 +14,7 @@
     <link href="/admin/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/admin/dashboard.css" rel="stylesheet">
+    <link href="/admin/dashboard.css?v=20260828-1" rel="stylesheet">
 <style>
 html, body {
   font-family: "SimSun";

@@ -448,7 +448,7 @@ func TestAdvertiserWorkspaceShell(t *testing.T) {
 		nil,
 	)
 	for _, want := range []string{
-		`href="/css/w8m-workspace.css?v=20260802-1"`,
+		`href="/css/w8m-workspace.css?v=20260828-1"`,
 		`<body class="w8m-workspace theme-advertiser">`,
 		`<span class="navbar-brand">W8M 广告主工作台</span>`,
 	} {
@@ -490,7 +490,7 @@ func TestPublisherWorkspaceShell(t *testing.T) {
 		args,
 	)
 	for _, want := range []string{
-		`href="/css/w8m-workspace.css?v=20260802-1"`,
+		`href="/css/w8m-workspace.css?v=20260828-1"`,
 		`w8m-workspace theme-publisher`,
 		`<span class="navbar-brand">W8M <small>流量方工作台</small></span>`,
 		`class="navbar-toggler mobile-sidebar-toggler d-lg-none"`,
@@ -663,7 +663,7 @@ func TestRegistrationRoleThemes(t *testing.T) {
 				url.Values{},
 			)
 			for _, want := range []string{
-				`href="/css/w8m-account.css?v=20260822-1"`,
+				`href="/css/w8m-account.css?v=20260828-1"`,
 				`<body class="w8m-public-account ` + test.theme + `">`,
 				`<div class="account-card ` + test.theme + `">`,
 			} {
@@ -746,7 +746,7 @@ func TestLoginRoleThemes(t *testing.T) {
 			}
 			rendered := output.String()
 			for _, want := range []string{
-				`href="/css/w8m-account.css?v=20260801-3"`,
+				`href="/css/w8m-account.css?v=20260828-1"`,
 				`<body class="w8m-public-account ` + test.theme + `">`,
 			} {
 				if !strings.Contains(rendered, want) {

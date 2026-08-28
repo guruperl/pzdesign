@@ -13,7 +13,7 @@
   <link href="/1.0.8/vendors/css/font-awesome.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/simple-line-icons.min.css" rel="stylesheet">
   <link href="/1.0.8/css/style.css" rel="stylesheet">
-  <link href="/css/w8m-account.css?v=20260822-1" rel="stylesheet">
+  <link href="/css/w8m-account.css?v=20260828-1" rel="stylesheet">
 </head>
 
 <body class="w8m-public-account {{if eq .Other.Component `pub`}}theme-publisher{{else}}theme-advertiser{{end}}">

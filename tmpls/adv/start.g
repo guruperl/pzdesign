@@ -20,7 +20,7 @@
 
     <!-- Custom CSS -->
     <link href="/sb2/dist/css/sb-admin-2.css" rel="stylesheet">
-    <link href="/css/w8m-workspace.css?v=20260802-1" rel="stylesheet">
+    <link href="/css/w8m-workspace.css?v=20260828-1" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <!-- Custom Fonts -->

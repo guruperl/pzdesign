@@ -11,6 +11,7 @@
   --night: #0b1f33;
   --font-ui: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
   --font-reading: "DengXian", "PingFang SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
+  --font-latin: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 html {
@@ -22,6 +23,12 @@ body {
   background: var(--paper);
   font-family: var(--font-ui);
   line-height: 1.75;
+}
+
+html[lang="en"] body {
+  font-family: var(--font-latin);
+  font-size: 15px;
+  line-height: 1.65;
 }
 
 .hero-lead,
@@ -37,6 +44,21 @@ body {
 .entry-card p,
 .faq-list p {
   font-family: var(--font-reading);
+}
+
+html[lang="en"] .hero-lead,
+html[lang="en"] .section-intro > p:last-child,
+html[lang="en"] .contact-section p,
+html[lang="en"] .role-heading p,
+html[lang="en"] .journey-step p,
+html[lang="en"] .check-list,
+html[lang="en"] .capability-card p,
+html[lang="en"] .capability-modal-lead,
+html[lang="en"] .capability-list,
+html[lang="en"] .capability-status,
+html[lang="en"] .entry-card p,
+html[lang="en"] .faq-list p {
+  font-family: var(--font-latin);
 }
 
 a {
@@ -175,6 +197,20 @@ code {
   font-weight: 700;
   letter-spacing: -.025em;
   line-height: 1.2;
+}
+
+html[lang="en"] .hero h1 {
+  font-size: clamp(2rem, 3.5vw, 2.45rem);
+}
+
+html[lang="en"] .section-intro h2,
+html[lang="en"] .contact-section h2 {
+  font-size: clamp(1.65rem, 2.6vw, 1.875rem);
+}
+
+html[lang="en"] .section-intro > p:last-child,
+html[lang="en"] .contact-section p {
+  font-size: 1rem;
 }
 
 .hero-lead {
@@ -358,6 +394,10 @@ code {
   margin: .35rem 0 .7rem;
   font-size: 1.75rem;
   font-weight: 700;
+}
+
+html[lang="en"] .role-heading h3 {
+  font-size: 1.625rem;
 }
 
 .role-heading p {

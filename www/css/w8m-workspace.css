@@ -28,6 +28,12 @@ body.w8m-workspace {
   line-height: 1.65;
 }
 
+html[lang="en"] body.w8m-workspace {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 body.w8m-workspace.theme-publisher {
   --workspace-role: #0f9d8a;
   --workspace-role-dark: #087f70;
@@ -609,6 +615,50 @@ body.w8m-workspace.theme-publisher {
 .w8m-workspace.theme-publisher .app-footer a:hover,
 .w8m-workspace.theme-publisher .app-footer a:focus {
   color: #fff;
+}
+
+html[lang="en"] .w8m-workspace .navbar-brand,
+html[lang="en"] .w8m-workspace.theme-publisher .app-header.navbar .navbar-brand {
+  font-size: 16px;
+  letter-spacing: .01em;
+}
+
+html[lang="en"] .w8m-workspace .sidebar ul li a,
+html[lang="en"] .w8m-workspace.theme-publisher .sidebar .nav-link {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+html[lang="en"] .w8m-workspace .page-header {
+  font-size: 23px;
+}
+
+html[lang="en"] .w8m-workspace .panel-primary > .panel-heading,
+html[lang="en"] .w8m-workspace.theme-publisher .card-header {
+  font-size: 15px;
+}
+
+html[lang="en"] .w8m-workspace .table > tbody > tr > td,
+html[lang="en"] .w8m-workspace .table > tbody > tr > th,
+html[lang="en"] .w8m-workspace .table > tfoot > tr > td,
+html[lang="en"] .w8m-workspace .table > tfoot > tr > th,
+html[lang="en"] .w8m-workspace .form-control,
+html[lang="en"] .w8m-workspace input,
+html[lang="en"] .w8m-workspace select,
+html[lang="en"] .w8m-workspace textarea,
+html[lang="en"] .w8m-workspace .btn {
+  font-size: 13px;
+}
+
+html[lang="en"] .w8m-workspace .table > tbody > tr > td,
+html[lang="en"] .w8m-workspace .table > tbody > tr > th,
+html[lang="en"] .w8m-workspace .table > tfoot > tr > td,
+html[lang="en"] .w8m-workspace .table > tfoot > tr > th {
+  line-height: 1.45;
+}
+
+html[lang="en"] .w8m-workspace.theme-publisher .main h3 {
+  font-size: 22px;
 }
 
 @media (min-width: 768px) {

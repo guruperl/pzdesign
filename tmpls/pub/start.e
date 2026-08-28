@@ -21,7 +21,7 @@
   <link href="/1.0.8/vendors/css/daterangepicker.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/gauge.min.css" rel="stylesheet">
   <link href="/1.0.8/vendors/css/toastr.min.css" rel="stylesheet">
-  <link href="/css/w8m-workspace.css?v=20260802-1" rel="stylesheet">
+  <link href="/css/w8m-workspace.css?v=20260828-1" rel="stylesheet">
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden w8m-workspace theme-publisher">

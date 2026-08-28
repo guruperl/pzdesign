@@ -105,6 +105,30 @@ func TestPublicFilesIncludesBothTemplateEditions(t *testing.T) {
 	}
 }
 
+func TestCheckStylesheetRevisions(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		name     string
+		text     string
+		wantFail bool
+	}{
+		{name: "current revision", text: `<link href="/css/w8m-account.css?v=20260828-1" rel="stylesheet">`},
+		{name: "stale revision", text: `<link href="/css/w8m-account.css?v=20260801-3" rel="stylesheet">`, wantFail: true},
+		{name: "missing revision", text: `<link href="/admin/dashboard.css" rel="stylesheet">`, wantFail: true},
+		{name: "mixed revisions", text: `<link href="/admin/dashboard.css?v=20260828-1"><link href="/admin/dashboard.css?v=old">`, wantFail: true},
+		{name: "unrelated stylesheet", text: `<link href="/vendor/bootstrap.css" rel="stylesheet">`},
+	} {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			failures := checkStylesheetRevisions("fixture.html", test.text)
+			if got := len(failures) > 0; got != test.wantFail {
+				t.Fatalf("failures = %v, want failure %t", failures, test.wantFail)
+			}
+		})
+	}
+}
+
 func TestHasAlternateLinkRequiresExactMetadata(t *testing.T) {
 	t.Parallel()
 	if !hasAlternateLink(`<link href="/index.zh.html" hreflang="zh-CN" rel="alternate">`, "index.zh.html", "zh-CN") {

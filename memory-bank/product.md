@@ -59,6 +59,10 @@ configured as `text/html`.
   selected by the route and do not offer a global mid-session toggle.
 - Account mail follows the chartag of the request that triggered it, so a
   registration started in English produces English mail.
+- English documents select a native Latin system sans-serif stack and a tighter
+  reading scale through `html[lang="en"]` CSS rules. Chinese documents retain
+  the established CJK fonts and spacing. Typography can differ by edition, but
+  element structure, controls, routes, and product meaning cannot.
 
 ## Business Invariants
 

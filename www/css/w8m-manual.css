@@ -20,6 +20,12 @@ body {
   line-height: 1.8;
 }
 
+html[lang="en"] body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
 a { color: var(--advertiser-dark); }
 a:hover { color: var(--advertiser); text-decoration: none; }
 .publisher-manual a { color: var(--publisher-dark); }
@@ -57,6 +63,9 @@ a:hover { color: var(--advertiser); text-decoration: none; }
 .manual-hero h1 { max-width: 850px; margin-bottom: 1rem; font-size: clamp(2rem, 4vw, 2.625rem); font-weight: 700; letter-spacing: -.025em; line-height: 1.25; }
 .manual-hero p { max-width: 820px; margin: 0; color: rgba(255,255,255,.72); font-size: 1.08rem; }
 
+html[lang="en"] .manual-hero h1 { font-size: clamp(1.85rem, 3.5vw, 2.35rem); line-height: 1.2; }
+html[lang="en"] .manual-hero p { font-size: 1rem; line-height: 1.6; }
+
 .manual-layout { padding: 3.5rem 0 6rem; }
 
 .toc {
@@ -88,6 +97,10 @@ a:hover { color: var(--advertiser); text-decoration: none; }
 .manual-section h2 { margin-bottom: 1.25rem; font-size: 1.6rem; font-weight: 700; letter-spacing: -.015em; }
 .manual-section h3 { margin: 1.8rem 0 .8rem; font-size: 1.15rem; font-weight: 700; }
 .manual-section h4 { margin: 1.25rem 0 .5rem; font-size: 1rem; font-weight: 700; }
+
+html[lang="en"] .manual-section h2 { font-size: 1.45rem; }
+html[lang="en"] .manual-section h3 { font-size: 1.08rem; }
+html[lang="en"] .manual-section h4 { font-size: .96rem; }
 .manual-section p,
 .manual-section li { color: var(--ink-soft); }
 .manual-section ul,
@@ -104,6 +117,11 @@ a:hover { color: var(--advertiser); text-decoration: none; }
 .manual-table th { background: #f0f4f8; color: var(--ink); font-size: .9rem; }
 .role-table td,
 .manual-table td { color: var(--ink-soft); font-size: .92rem; }
+
+html[lang="en"] .role-table th,
+html[lang="en"] .manual-table th { font-size: .85rem; }
+html[lang="en"] .role-table td,
+html[lang="en"] .manual-table td { font-size: .88rem; line-height: 1.55; }
 
 .hierarchy {
   margin: 1.25rem 0;

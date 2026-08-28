@@ -119,6 +119,33 @@ var requiredSnippets = map[string][]string{
 		`--font-reading: "DengXian"`,
 		`.journey-step p {`,
 		`font-size: .875rem`,
+		`--font-latin: -apple-system`,
+		`html[lang="en"] body {`,
+		`font-size: 15px`,
+	},
+	"www/css/w8m-account.css": {
+		`html[lang="en"] body.w8m-public-account {`,
+		`font-family: -apple-system`,
+		`font-size: 15px`,
+		`line-height: 1.55`,
+	},
+	"www/css/w8m-workspace.css": {
+		`html[lang="en"] body.w8m-workspace {`,
+		`font-family: -apple-system`,
+		`font-size: 13px`,
+		`line-height: 1.5`,
+	},
+	"www/css/w8m-manual.css": {
+		`html[lang="en"] body {`,
+		`font-family: -apple-system`,
+		`font-size: 15px`,
+		`line-height: 1.65`,
+	},
+	"www/admin/dashboard.css": {
+		`html[lang="en"] body,`,
+		`font-family: -apple-system`,
+		`font-size: .8125rem`,
+		`font-size: .8rem`,
 	},
 	"tmpls/adv/login.g":             {"广告投放管理", "广告主账户登录"},
 	"tmpls/pub/login.g":             {"流量接入管理", "流量方账户登录"},
@@ -159,6 +186,14 @@ var requiredSnippets = map[string][]string{
 	"tmpls/web/pub/insert.mail.e":   {"Hello,", "/goto/web/e/pub?action=activate", "W8M Advertising Platform"},
 	"tmpls/web/adv/retrieve.mail.e": {"Hello,", "/goto/web/e/adv?action=startreset", "W8M Advertising Platform"},
 	"tmpls/web/pub/retrieve.mail.e": {"Hello,", "/goto/web/e/pub?action=startreset", "W8M Advertising Platform"},
+}
+
+var stylesheetRevisionContracts = map[string]string{
+	"admin/dashboard.css":   "admin/dashboard.css?v=20260828-1",
+	"css/w8m-account.css":   "css/w8m-account.css?v=20260828-1",
+	"css/w8m-home.css":      "css/w8m-home.css?v=20260828-1",
+	"css/w8m-manual.css":    "css/w8m-manual.css?v=20260828-1",
+	"css/w8m-workspace.css": "css/w8m-workspace.css?v=20260828-1",
 }
 
 var accountActions = []string{
@@ -258,6 +293,7 @@ func check(root string) ([]string, error) {
 			return nil, err
 		}
 		failures = append(failures, copyFailures...)
+		failures = append(failures, checkStylesheetRevisions(rel, text)...)
 	}
 
 	for rel, snippets := range requiredSnippets {
@@ -316,6 +352,18 @@ func check(root string) ([]string, error) {
 
 	sort.Strings(failures)
 	return failures, nil
+}
+
+func checkStylesheetRevisions(rel, text string) []string {
+	var failures []string
+	for asset, revisedAsset := range stylesheetRevisionContracts {
+		remaining := strings.ReplaceAll(text, revisedAsset, "")
+		if strings.Contains(remaining, asset) {
+			failures = append(failures, fmt.Sprintf("%s does not use stylesheet revision %s", rel, revisedAsset))
+		}
+	}
+	sort.Strings(failures)
+	return failures
 }
 
 func checkIndexStructure(rel, text string) []string {

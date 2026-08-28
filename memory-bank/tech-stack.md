@@ -83,7 +83,11 @@ and hidden action values, the full element/action structure, twin completeness,
 and the absence of untranslated Chinese copy in English templates. It rejects
 stale exemptions, and the authenticated workspace now needs none. The copy guard
 walks `.g` and `.e`, requires both public account matrices, parses edition links,
-and rejects raw framework errors.
+and rejects raw framework errors. English typography is implemented without a
+font download or new dependency: the five shared CSS surfaces select the host
+platform's UI sans-serif stack under `html[lang="en"]`. The copy checker pins
+those selectors and the principal English size and line-height values while the
+parity checker continues to protect the shared HTML structure.
 Manual acceptance opens `/` with primary browser languages `zh-CN` and `en`,
 confirms Chinese moves to `/index.zh.html` while non-Chinese stays on the
 English `/`, and confirms literal `/index.html` ↔ `/index.zh.html` links remain

@@ -7,6 +7,8 @@ script, can open the literal sibling language page with one click, and finds a
 complete English edition behind that link. The active horizon now delivers that
 end to end for both public and authenticated surfaces: land in English, register
 in English, read English manuals, and operate every role workspace in English.
+English pages use a restrained Latin system type scale while Chinese pages keep
+their established CJK typography.
 
 ## Lanes
 
@@ -22,7 +24,7 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
@@ -35,7 +37,8 @@ L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04
 | L04 | Language toggle and entry-point links | [status-L04](status-L04.md) | L01, L03, T01, T02 | L05 |
 | T03 | English manuals | [status-T03](status-T03.md) | L01, T02 | L05 |
 | L05 | English surface review remediation | [status-L05](status-L05.md) | L01-L04, T01-T03 | T04 |
-| T04 | Authenticated workspace English completion | [status-T04](status-T04.md) | L05 | — |
+| T04 | Authenticated workspace English completion | [status-T04](status-T04.md) | L05 | T05 |
+| T05 | English typography polish | [status-T05](status-T05.md) | T04 | — |
 
 ## Acceptance
 
@@ -56,9 +59,10 @@ browser pass, is recorded in each status file.
 
 ## Horizon boundary
 
-T04 closes the authenticated-workspace translation horizon approved by the
-owner. It covers 205 role templates, in addition to the 23 complete public
-templates:
+T05 closes the English presentation horizon approved by the owner. T04 supplied
+205 authenticated role templates in addition to the 23 complete public
+templates; T05 polishes their shared English typography without changing those
+template structures:
 
 - Advertiser workspace — 67 files (51 action templates, 16 role fragments)
 - Publisher workspace — 43 files (32 action, 11 fragments)

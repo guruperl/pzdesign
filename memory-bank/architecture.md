@@ -76,6 +76,13 @@ expose a global language toggle. Every authenticated Chinese action has a
 complete English twin, so an explicit `e` route remains English throughout the
 workspace. The public `web` account flow retains its chartag-preserving toggle.
 
+Shared first-party stylesheets own edition-specific typography. Selectors rooted
+at `html[lang="en"]` apply a Latin system UI stack, tighter line height, and a
+restrained display scale to English landing, manual, account, workspace, and
+dashboard surfaces. The unqualified rules remain the Chinese presentation
+baseline. This keeps typography out of translated action templates and leaves
+the `.g`/`.e` element and form contracts identical.
+
 Two guards keep the editions aligned. A structural parity check parses real HTML
 form controls and requires every `.g` action to have an `.e` twin with matching
 element trees, functional attributes, input field names, hidden action values,
@@ -84,7 +91,9 @@ intentional `中文` language toggle and rejects stale exceptions; the exemption
 ledger is empty. `tools/check-public-copy` walks both template editions, applies
 edition-specific copy rules, requires both public account matrices, rejects raw
 framework-error rendering, and parses real links so an opposite-edition route is
-allowed only in an exact language toggle or `hreflang` alternate element.
+allowed only in an exact language toggle or `hreflang` alternate element. The
+copy guard also pins the English typography selectors and key size/line-height
+contracts in all five shared stylesheet surfaces.
 
 ## Storage Adapters
 

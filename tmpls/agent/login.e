@@ -8,7 +8,7 @@
   <title>Agency Workspace Sign-in | W8M</title>
   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="/css/w8m-account.css?v=20260801-3" rel="stylesheet">
+  <link href="/css/w8m-account.css?v=20260828-1" rel="stylesheet">
 </head>
 
 <body class="w8m-public-account theme-internal">
