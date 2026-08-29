@@ -126,8 +126,8 @@ func TestHiddenActionMismatch(t *testing.T) {
 }
 
 func TestStructureAllowsTranslatedCopyAndEditionRoutes(t *testing.T) {
-	g := `<html lang="zh"><head><meta name="keyword" content="广告"></head><body><a href="/goto/adv/g/campaign" aria-label="广告活动"><span class="name">广告活动</span></a><a data-lang-toggle="en">English</a>{{if .Error}}错误{{end}}</body></html>`
-	e := `<html lang="en"><head><meta content="advertising" name="keyword"></head><body><a aria-label="Campaign" href="/goto/adv/e/campaign"><span class="name">Campaign</span></a><a data-lang-toggle="zh">中文</a>{{ if .Error }}Error{{ end }}</body></html>`
+	g := `<html lang="zh"><head><meta name="keyword" content="广告"></head><body><a href="/goto/adv/g/campaign" aria-label="广告活动"><span class="name">广告活动</span></a><a class="lang-toggle" data-chartag-toggle="e">English</a>{{if .Error}}错误{{end}}</body></html>`
+	e := `<html lang="en"><head><meta content="advertising" name="keyword"></head><body><a aria-label="Campaign" href="/goto/adv/e/campaign"><span class="name">Campaign</span></a><a class="lang-toggle" data-chartag-toggle="g">中文</a>{{ if .Error }}Error{{ end }}</body></html>`
 	gStructure, err := extractStructure(g)
 	if err != nil {
 		t.Fatal(err)
@@ -236,7 +236,8 @@ func TestEnglishCopyRejectsHanOutsideLanguageToggle(t *testing.T) {
 		{name: "English copy", text: `<p>Account</p>`},
 		{name: "Chinese remnant", text: `<p>账户</p>`, want: true},
 		{name: "Chinese attribute remnant", text: `<input placeholder="账户">`, want: true},
-		{name: "Chinese language toggle", text: `<a data-lang-toggle="zh" title="中文">中文</a>`},
+		{name: "Chinese language toggle", text: `<a class="lang-toggle" data-chartag-toggle="g" title="中文">中文</a>`},
+		{name: "Unmarked Chinese chartag link", text: `<a data-chartag-toggle="g" title="中文">中文</a>`, want: true},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			got, err := containsUnexpectedHan(test.text)

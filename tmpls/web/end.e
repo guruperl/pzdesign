@@ -16,12 +16,15 @@
   <script src="/1.0.8/vendors/js/jquery.validate.min.js"></script>
   <script>
   $(function() {
-    $('[data-lang-toggle]').on('click', function(e) {
+    $('[data-chartag-toggle]').on('click', function(e) {
       e.preventDefault();
-      var newLang = $(this).attr('data-lang-toggle');
+      var newChartag = $(this).attr('data-chartag-toggle');
+      if (newChartag !== 'g' && newChartag !== 'e') {
+        return;
+      }
       var path = window.location.pathname;
-      // Swap the chartag in the path: /goto/role/g/ -> /goto/role/e/
-      var newPath = path.replace(/\/goto\/([^\/]+)\/[ge]\//i, '/goto/$1/' + newLang + '/');
+      // Swap only the public web chartag: /goto/web/g/ -> /goto/web/e/.
+      var newPath = path.replace(/^\/goto\/web\/[ge]\//i, '/goto/web/' + newChartag + '/');
       if (newPath !== path) {
         var destination = newPath + window.location.search + window.location.hash;
         window.location.href = destination;

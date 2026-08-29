@@ -23,7 +23,7 @@
       <nav class="account-topnav" aria-label="账户页导航">
         <a href="/manuals/advertiser.html">广告主手册</a>
         <a href="/manuals/publisher.html">流量方接入手册</a>
-        <a class="lang-toggle" href="#" data-lang-toggle="en" title="English">English</a>
+        <a class="lang-toggle" href="/goto/web/e/{{.Other.Component}}?action={{.Other.Action}}" data-chartag-toggle="e" title="English">English</a>
         <a href="/">返回首页</a>
       </nav>
     </div>

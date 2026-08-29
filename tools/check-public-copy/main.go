@@ -158,8 +158,10 @@ var requiredSnippets = map[string][]string{
 	"tmpls/web/pub/insert.mail.g":   {"您好，", "/goto/web/g/pub?action=activate", "W8M 广告平台"},
 	"tmpls/web/adv/retrieve.mail.g": {"您好，", "/goto/web/g/adv?action=startreset", "W8M 广告平台"},
 	"tmpls/web/pub/retrieve.mail.g": {"您好，", "/goto/web/g/pub?action=startreset", "W8M 广告平台"},
-	"tmpls/web/end.g":               {"window.location.href = destination;"},
-	"tmpls/web/end.e":               {"window.location.href = destination;"},
+	"tmpls/web/start.g":             {`href="/goto/web/e/{{.Other.Component}}?action={{.Other.Action}}"`, `data-chartag-toggle="e"`},
+	"tmpls/web/start.e":             {`href="/goto/web/g/{{.Other.Component}}?action={{.Other.Action}}"`, `data-chartag-toggle="g"`},
+	"tmpls/web/end.g":               {`[data-chartag-toggle]`, `newChartag !== 'g' && newChartag !== 'e'`, "window.location.href = destination;"},
+	"tmpls/web/end.e":               {`[data-chartag-toggle]`, `newChartag !== 'g' && newChartag !== 'e'`, "window.location.href = destination;"},
 	"summer/adv/filter.go":          {"W8M 广告主账户邮箱验证", "W8M 广告主账户密码重置"},
 	"summer/pub/filter.go":          {"W8M 流量方账户邮箱验证", "W8M 流量方账户密码重置"},
 	"tmpls/web/adv/startreset.g": {
@@ -293,6 +295,7 @@ func check(root string) ([]string, error) {
 			return nil, err
 		}
 		failures = append(failures, copyFailures...)
+		failures = append(failures, checkPublicChartagToggle(rel, file.language, text)...)
 		failures = append(failures, checkStylesheetRevisions(rel, text)...)
 	}
 
@@ -580,6 +583,76 @@ func checkCopy(rel, language, text string) ([]string, error) {
 	return append(failures, linkFailures...), nil
 }
 
+func checkPublicChartagToggle(rel, language, text string) []string {
+	if !strings.HasPrefix(rel, "tmpls/web/") {
+		return nil
+	}
+
+	var failures []string
+	for _, invalid := range []string{"/goto/web/en", "/goto/web/zh", "/goto/web/zw"} {
+		if strings.Contains(text, invalid) {
+			failures = append(failures, fmt.Sprintf("%s contains invalid public route chartag %q", rel, invalid))
+		}
+	}
+
+	switch rel {
+	case "tmpls/web/start.g", "tmpls/web/start.e":
+		if strings.Contains(text, "data-lang-toggle") {
+			failures = append(failures, fmt.Sprintf("%s uses a language tag where a route chartag is required", rel))
+		}
+		wantChartag := "e"
+		if language == "en" {
+			wantChartag = "g"
+		}
+		wantHref := "/goto/web/" + wantChartag + "/{{.Other.Component}}?action={{.Other.Action}}"
+		document, err := html.Parse(strings.NewReader(text))
+		if err != nil {
+			return append(failures, fmt.Sprintf("%s chartag toggle is not parseable: %v", rel, err))
+		}
+		var toggles []*html.Node
+		var walk func(*html.Node)
+		walk = func(node *html.Node) {
+			if node.Type == html.ElementNode && node.Data == "a" {
+				classes, _ := attribute(node, "class")
+				if hasToken(classes, "lang-toggle") {
+					toggles = append(toggles, node)
+				}
+			}
+			for child := node.FirstChild; child != nil; child = child.NextSibling {
+				walk(child)
+			}
+		}
+		walk(document)
+		if len(toggles) != 1 {
+			return append(failures, fmt.Sprintf("%s has %d public language toggles, want 1", rel, len(toggles)))
+		}
+		chartag, _ := attribute(toggles[0], "data-chartag-toggle")
+		href, _ := attribute(toggles[0], "href")
+		if chartag != wantChartag {
+			failures = append(failures, fmt.Sprintf("%s language toggle chartag is %q, want %q", rel, chartag, wantChartag))
+		}
+		if href != wantHref {
+			failures = append(failures, fmt.Sprintf("%s language toggle href is %q, want %q", rel, href, wantHref))
+		}
+	case "tmpls/web/end.g", "tmpls/web/end.e":
+		if strings.Contains(text, "data-lang-toggle") || strings.Contains(text, "newLang") {
+			failures = append(failures, fmt.Sprintf("%s uses language-tag toggle semantics instead of route chartags", rel))
+		}
+		for _, snippet := range []string{
+			`$('[data-chartag-toggle]').on('click'`,
+			`var newChartag = $(this).attr('data-chartag-toggle');`,
+			`newChartag !== 'g' && newChartag !== 'e'`,
+			`path.replace(/^\/goto\/web\/[ge]\//i, '/goto/web/' + newChartag + '/')`,
+			`newPath + window.location.search + window.location.hash`,
+		} {
+			if !strings.Contains(text, snippet) {
+				failures = append(failures, fmt.Sprintf("%s chartag toggle is missing %q", rel, snippet))
+			}
+		}
+	}
+	return failures
+}
+
 func checkEditionLinks(rel, language, text string) ([]string, error) {
 	opposite := "e"
 	if language == "en" {
@@ -622,16 +695,8 @@ func isAllowedLanguageLink(node *html.Node, opposite string) bool {
 		_, hasHreflang := attribute(node, "hreflang")
 		return hasToken(rel, "alternate") && hasHreflang
 	}
-	classes, _ := attribute(node, "class")
-	if hasToken(classes, "lang-toggle") {
-		return true
-	}
-	dataToggle, hasDataToggle := attribute(node, "data-lang-toggle")
-	want := "en"
-	if opposite == "g" {
-		want = "zh"
-	}
-	return hasDataToggle && dataToggle == want
+	dataToggle, hasDataToggle := attribute(node, "data-chartag-toggle")
+	return hasDataToggle && dataToggle == opposite
 }
 
 func attribute(node *html.Node, key string) (string, bool) {

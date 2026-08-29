@@ -23,7 +23,7 @@
       <nav class="account-topnav" aria-label="Account Page Navigation">
         <a href="/manuals/advertiser.en.html">Advertiser Manual</a>
         <a href="/manuals/publisher.en.html">Publisher Integration Manual</a>
-        <a class="lang-toggle" href="#" data-lang-toggle="zh" title="中文">中文</a>
+        <a class="lang-toggle" href="/goto/web/g/{{.Other.Component}}?action={{.Other.Action}}" data-chartag-toggle="g" title="中文">中文</a>
         <a href="/">Back to Home</a>
       </nav>
     </div>

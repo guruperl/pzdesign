@@ -24,7 +24,7 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
@@ -38,7 +38,8 @@ L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05
 | T03 | English manuals | [status-T03](status-T03.md) | L01, T02 | L05 |
 | L05 | English surface review remediation | [status-L05](status-L05.md) | L01-L04, T01-T03 | T04 |
 | T04 | Authenticated workspace English completion | [status-T04](status-T04.md) | L05 | T05 |
-| T05 | English typography polish | [status-T05](status-T05.md) | T04 | — |
+| T05 | English typography polish | [status-T05](status-T05.md) | T04 | L06 |
+| L06 | Public chartag toggle remediation | [status-L06](status-L06.md) | T05 | — |
 
 ## Acceptance
 
@@ -59,7 +60,10 @@ browser pass, is recorded in each status file.
 
 ## Horizon boundary
 
-T05 closes the English presentation horizon approved by the owner. T04 supplied
+L06 closes the English presentation horizon approved by the owner by correcting
+the post-deployment public account-flow toggle defect: display language tags
+remain `en` and `zh-CN`, while Genelet route chartags are exclusively `e` and
+`g`. T04 supplied
 205 authenticated role templates in addition to the 23 complete public
 templates; T05 polishes their shared English typography without changing those
 template structures:

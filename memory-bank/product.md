@@ -49,6 +49,9 @@ configured as `text/html`.
   Chinese templates have English twins and the parity exemption ledger is empty.
 - **The chartag in the URL is authoritative.** A shared or bookmarked link always
   renders the language it names. Nothing rewrites a language mid-session.
+  Human-readable and standards metadata use language tags such as `en` and
+  `zh-CN`; public Genelet routes use only the chartags `e` and `g`. A language
+  tag must never be inserted into a route chartag segment.
 - **The browser makes the front-page entry decision.** The static `/` response
   is the English `index.html`; an early script replaces it with
   `/index.zh.html` for a primary Chinese browser language. The script runs only

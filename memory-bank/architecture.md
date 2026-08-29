@@ -66,9 +66,13 @@ files, and their language links point directly to one another. Neither
 `cmd/unify`, Apache, nor a CDN
 negotiates language, redirects by location, or stores a language cookie.
 
-Public account-flow toggles replace the `g` or `e` chartag in the current URL
-and navigate there directly. Genelet's `staticPage` and chartag routing are
-unchanged.
+Public account-flow toggles carry an explicit destination chartag (`e` from a
+Chinese page, `g` from an English page), replace only the `/goto/web/{g,e}/`
+prefix, retain the current query and fragment, and navigate there directly. The
+literal link fallback retains the current component and action. Display labels
+and `hreflang` metadata may use `en` and `zh-CN`; those language tags, including
+the legacy `zw` spelling, are rejected in the route chartag segment. Genelet's
+`staticPage` and chartag routing are unchanged.
 
 Language switching reaches only public entry points. Authenticated requests are
 never redirected to a different chartag, and authenticated role headers do not
@@ -94,6 +98,9 @@ framework-error rendering, and parses real links so an opposite-edition route is
 allowed only in an exact language toggle or `hreflang` alternate element. The
 copy guard also pins the English typography selectors and key size/line-height
 contracts in all five shared stylesheet surfaces.
+It also renders both advertiser and publisher public account headers and rejects
+any toggle that substitutes `en`, `zh`, or `zw` for the closed `e`/`g` route
+chartag contract.
 
 ## Storage Adapters
 

@@ -675,6 +675,43 @@ func TestRegistrationRoleThemes(t *testing.T) {
 	}
 }
 
+func TestPublicAccountLanguageToggleUsesRouteChartags(t *testing.T) {
+	for _, role := range []string{"adv", "pub"} {
+		for _, edition := range []struct {
+			ext         string
+			wantChartag string
+		}{
+			{ext: "g", wantChartag: "e"},
+			{ext: "e", wantChartag: "g"},
+		} {
+			t.Run(role+"_"+edition.ext, func(t *testing.T) {
+				rendered := renderRoleTemplate(
+					t,
+					filepath.Join("..", "tmpls", "web", role, "startnew."+edition.ext),
+					role,
+					nil,
+					url.Values{},
+				)
+				for _, want := range []string{
+					`href="/goto/web/` + edition.wantChartag + `/` + role + `?action=startnew"`,
+					`data-chartag-toggle="` + edition.wantChartag + `"`,
+					`$('[data-chartag-toggle]').on('click'`,
+					`newPath + window.location.search + window.location.hash`,
+				} {
+					if !strings.Contains(rendered, want) {
+						t.Errorf("rendered %s %s account page does not contain %q", role, edition.ext, want)
+					}
+				}
+				for _, invalid := range []string{"data-lang-toggle", "/goto/web/en", "/goto/web/zh", "/goto/web/zw"} {
+					if strings.Contains(rendered, invalid) {
+						t.Errorf("rendered %s %s account page contains invalid route language marker %q", role, edition.ext, invalid)
+					}
+				}
+			})
+		}
+	}
+}
+
 func TestPublicAccountFormsRenderScopedTurnstileWidgets(t *testing.T) {
 	tests := []struct {
 		role   string

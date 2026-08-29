@@ -145,11 +145,10 @@ func containsUnexpectedHan(text string) (bool, error) {
 			return
 		}
 		if node.Type == html.ElementNode {
-			for _, attribute := range node.Attr {
-				if strings.EqualFold(attribute.Key, "data-lang-toggle") && strings.EqualFold(attribute.Val, "zh") {
-					allowHan = true
-					break
-				}
+			chartag := parityAttribute(node, "data-chartag-toggle")
+			classes := parityAttribute(node, "class")
+			if node.Data == "a" && strings.EqualFold(chartag, "g") && hasClassToken(classes, "lang-toggle") {
+				allowHan = true
 			}
 			if !allowHan {
 				for _, attribute := range node.Attr {
@@ -170,6 +169,24 @@ func containsUnexpectedHan(text string) (bool, error) {
 	}
 	walk(document, false)
 	return found, nil
+}
+
+func parityAttribute(node *html.Node, key string) string {
+	for _, attribute := range node.Attr {
+		if strings.EqualFold(attribute.Key, key) {
+			return attribute.Val
+		}
+	}
+	return ""
+}
+
+func hasClassToken(classes, token string) bool {
+	for _, class := range strings.Fields(classes) {
+		if strings.EqualFold(class, token) {
+			return true
+		}
+	}
+	return false
 }
 
 func firstStructuralDifference(gStructure, eStructure []string) string {
@@ -241,7 +258,7 @@ func extractStructure(text string) ([]string, error) {
 
 func structuralAttribute(tag, key string, attributes map[string]string) bool {
 	switch key {
-	case "lang", "title", "placeholder", "aria-label", "alt", "data-language", "data-lang-toggle", "data-title":
+	case "lang", "title", "placeholder", "aria-label", "alt", "data-language", "data-chartag-toggle", "data-title":
 		return false
 	case "content":
 		return tag != "meta" || (attributes["name"] != "description" && attributes["name"] != "keyword" && attributes["name"] != "keywords")

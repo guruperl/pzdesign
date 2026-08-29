@@ -20,8 +20,9 @@ func TestCheckEditionLinks(t *testing.T) {
 		{name: "Chinese bare English link", language: "zh", html: `<a href='/goto/web/e/adv?action=startnew'>register</a>`, wantFail: true},
 		{name: "English bare Chinese link", language: "en", html: `<a href="/goto/pub/g/site?action=topics">login</a>`, wantFail: true},
 		{name: "Exact static toggle class", language: "en", html: `<a class="nav-link lang-toggle" href="/index.zh.html">中文</a>`},
-		{name: "Toggle data attribute", language: "zh", html: `<a href="/goto/web/e/" data-lang-toggle="en">English</a>`},
-		{name: "Wrong toggle data attribute", language: "zh", html: `<a href="/goto/web/e/" data-lang-toggle="zh">English</a>`, wantFail: true},
+		{name: "Toggle chartag attribute", language: "zh", html: `<a href="/goto/web/e/" data-chartag-toggle="e">English</a>`},
+		{name: "Wrong toggle chartag attribute", language: "zh", html: `<a href="/goto/web/e/" data-chartag-toggle="g">English</a>`, wantFail: true},
+		{name: "Language tag is not a chartag", language: "zh", html: `<a href="/goto/web/e/" data-lang-toggle="en">English</a>`, wantFail: true},
 		{name: "Substring class is not toggle", language: "zh", html: `<a class="not-lang-toggle-link" href="/goto/web/e/">English</a>`, wantFail: true},
 		{name: "Alternate link", language: "zh", html: `<link href="/goto/web/e/" hreflang="en" rel="stylesheet alternate">`},
 		{name: "Stylesheet is not alternate", language: "zh", html: `<link href="/goto/web/e/" rel="stylesheet">`, wantFail: true},
@@ -34,6 +35,44 @@ func TestCheckEditionLinks(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			if got := len(failures) > 0; got != test.wantFail {
+				t.Fatalf("failures = %v, want failure %t", failures, test.wantFail)
+			}
+		})
+	}
+}
+
+func TestCheckPublicChartagToggle(t *testing.T) {
+	t.Parallel()
+	validStart := `<a class="lang-toggle" href="/goto/web/e/{{.Other.Component}}?action={{.Other.Action}}" data-chartag-toggle="e">English</a>`
+	validEnd := `<script>
+$('[data-chartag-toggle]').on('click', function(e) {
+var newChartag = $(this).attr('data-chartag-toggle');
+if (newChartag !== 'g' && newChartag !== 'e') { return; }
+var newPath = path.replace(/^\/goto\/web\/[ge]\//i, '/goto/web/' + newChartag + '/');
+var destination = newPath + window.location.search + window.location.hash;
+});
+</script>`
+	for _, test := range []struct {
+		name     string
+		rel      string
+		language string
+		text     string
+		wantFail bool
+	}{
+		{name: "Chinese header targets English chartag", rel: "tmpls/web/start.g", language: "zh", text: validStart},
+		{name: "English header targets Chinese chartag", rel: "tmpls/web/start.e", language: "en", text: strings.ReplaceAll(strings.ReplaceAll(validStart, "/e/", "/g/"), `="e"`, `="g"`)},
+		{name: "BCP 47 English tag is rejected", rel: "tmpls/web/start.g", language: "zh", text: strings.ReplaceAll(validStart, `data-chartag-toggle="e"`, `data-lang-toggle="en"`), wantFail: true},
+		{name: "BCP 47 Chinese tag is rejected", rel: "tmpls/web/start.e", language: "en", text: `<a class="lang-toggle" href="/goto/web/zh/{{.Other.Component}}?action={{.Other.Action}}" data-lang-toggle="zh">中文</a>`, wantFail: true},
+		{name: "Legacy zw chartag is rejected", rel: "tmpls/web/start.e", language: "en", text: `<a class="lang-toggle" href="/goto/web/zw/{{.Other.Component}}?action={{.Other.Action}}" data-chartag-toggle="zw">中文</a>`, wantFail: true},
+		{name: "Chartag script preserves query and hash", rel: "tmpls/web/end.g", language: "zh", text: validEnd},
+		{name: "Generic role replacement is rejected", rel: "tmpls/web/end.g", language: "zh", text: strings.Replace(validEnd, `^\/goto\/web\/`, `\/goto\/([^\/]+)\/`, 1), wantFail: true},
+		{name: "Legacy variable is rejected", rel: "tmpls/web/end.e", language: "en", text: strings.ReplaceAll(validEnd, "newChartag", "newLang"), wantFail: true},
+	} {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			failures := checkPublicChartagToggle(test.rel, test.language, test.text)
 			if got := len(failures) > 0; got != test.wantFail {
 				t.Fatalf("failures = %v, want failure %t", failures, test.wantFail)
 			}
