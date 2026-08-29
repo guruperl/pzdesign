@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: guruperl/aofei
-          ref: d591ffff6491f21eb1f14afb0fb074b7dfbaf59b
+          ref: 2d2379699a14f4c2ca9326ae3ffcd1ba6d4c4853
           path: aofei
       - name: Check out Genelet dependency
         uses: actions/checkout@v4
