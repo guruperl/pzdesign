@@ -22,7 +22,7 @@ dependency branches cannot change verification unexpectedly.
 | `summer/registry/` | The single declaration of every component-backed module |
 | `summer/<module>/` | One domain module: `component.json`, `model.go`, `filter.go` |
 | `tmpls/<role>/<object>/<action>.<tag>` | Action templates, composed with the role-level `*.<tag>` glob |
-| `www/` | Static document root: first-party CSS and JS, the public landing page, Chinese manuals, and four vendored asset groups |
+| `www/` | Static document root: first-party CSS and JS, bilingual landing, manual, Privacy Policy, and Terms pages, plus four vendored asset groups |
 | `tools/` | Template parser and source-policy checker, public Chinese copy checker, public-data guard |
 | `docs/` | Four maintenance contracts kept current alongside code |
 
@@ -71,6 +71,13 @@ files, and their language links point directly to one another. Neither
 `cmd/unify`, Apache, nor a CDN
 negotiates language, redirects by location, or stores a language cookie.
 
+The Privacy Policy and Terms are also static and outside Genelet routing.
+English uses the stable `/privacy.html` and `/terms.html` URLs; Chinese uses
+`/privacy.zh.html` and `/terms.zh.html`. Each pair has reciprocal `hreflang`
+metadata and identical ordered section IDs. Registration opens the documents in
+a separate tab while preserving the form, and each account/footer surface links
+the edition matching the current page.
+
 Public account-flow toggles carry an explicit destination chartag (`e` from a
 Chinese page, `g` from an English page), replace only the `/goto/web/{g,e}/`
 prefix, retain the current query and fragment, and navigate there directly. The
@@ -105,7 +112,9 @@ copy guard also pins the English typography selectors and key size/line-height
 contracts in all five shared stylesheet surfaces.
 It also renders both advertiser and publisher public account headers and rejects
 any toggle that substitutes `en`, `zh`, or `zw` for the closed `e`/`g` route
-chartag contract.
+chartag contract. The same guard requires all four legal files, their stable
+URLs, reciprocal language metadata, ordered section parity, footer discovery,
+and registration links with safe new-tab attributes.
 
 ## Storage Adapters
 

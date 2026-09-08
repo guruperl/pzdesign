@@ -5,7 +5,7 @@
   <footer class="account-footer">
     <div class="container">
       <p>&copy; 2026 W8M 网络有限公司</p>
-      <a href="mailto:support@w8m.com">support@w8m.com</a>
+      <nav aria-label="账户页脚导航"><a href="/privacy.zh.html">隐私政策</a> · <a href="/terms.zh.html">服务条款</a> · <a href="mailto:support@w8m.com">联系支持</a></nav>
     </div>
   </footer>
 

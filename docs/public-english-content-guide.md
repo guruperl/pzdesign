@@ -61,6 +61,27 @@ These guidelines apply to W8M English-language pages and account mail, including
 - Mail subject lines list brand and account type first, then task: e.g. "W8M advertiser account email verification".
 - Mail uses "Hello [name]:" opening, explains link purpose, and signs "W8M advertising platform"; when no expiration is configured, omit a specific time limit.
 
+## Privacy Policy and Terms of Service
+
+- Stable public URLs are `/privacy.html` and `/terms.html`; the Chinese editions
+  are `/privacy.zh.html` and `/terms.zh.html`. The home page, manuals, account
+  footers, and registration forms link to the current-language edition.
+- English and Chinese legal pages retain the same ordered section IDs and
+  reciprocal `hreflang` metadata. Registration explicitly links both documents
+  instead of referring to an unavailable generic platform agreement.
+- Privacy disclosures follow current Aofei behavior, including contextual-by-
+  default processing, privacy signals, identifier use, retention, providers,
+  and user rights. Never add a promise merely to pass a provider review when
+  the code and operating environment do not support it.
+- The Google user-data section states that W8M requests only `gmail.send` to
+  send platform account mail. It also states that W8M does not read Gmail,
+  contacts, Drive, or profile data and does not use Google API data for ad
+  targeting, sale, transfer, or general-purpose AI training.
+- Legal pages are operator-maintained contractual and notice text. A change to
+  the entity, processing purposes, providers, retention, applicable law, or
+  commercial terms updates both editions, the effective date, and checker
+  contracts, and receives appropriate legal review before production release.
+
 ## Maintenance Checklist
 
 After editing English pages, run:

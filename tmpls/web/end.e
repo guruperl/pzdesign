@@ -5,7 +5,7 @@
   <footer class="account-footer">
     <div class="container">
       <p>&copy; 2026 W8M Network Inc.</p>
-      <a href="mailto:support@w8m.com">support@w8m.com</a>
+      <nav aria-label="Account footer navigation"><a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a> · <a href="mailto:support@w8m.com">Contact Support</a></nav>
     </div>
   </footer>
 

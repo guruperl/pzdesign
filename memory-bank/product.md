@@ -20,7 +20,7 @@ analyst, or a publisher sees and edits.
 | `agent` | Delegated administrator view over advertisers, campaigns, ad-groups, and creatives |
 | `analyst` | Read-only reporting, reachable only after an exact permission and resource grant; no product mutation |
 | `admin` | Full maintenance, approvals, routing configuration, cache publication triggers, and operational health views |
-| public `web` | Chinese and English landing pages, manuals, registration, activation, password recovery, and reset for advertisers and publishers |
+| public `web` | Chinese and English landing pages, manuals, Privacy Policy, Terms of Service, registration, activation, password recovery, and reset for advertisers and publishers |
 
 ## Domain Terminology
 
@@ -62,6 +62,10 @@ configured as `text/html`.
   selected by the route and do not offer a global mid-session toggle.
 - Account mail follows the chartag of the request that triggered it, so a
   registration started in English produces English mail.
+- Static legal documents use stable literal URLs: `/privacy.html` and
+  `/terms.html` in English, with `/privacy.zh.html` and `/terms.zh.html` as
+  Chinese siblings. They link directly between editions rather than entering a
+  Genelet chartag route.
 - English documents select a native Latin system sans-serif stack and a tighter
   reading scale through `html[lang="en"]` CSS rules. Chinese documents retain
   the established CJK fonts and spacing. Typography can differ by edition, but
@@ -87,6 +91,10 @@ configured as `text/html`.
   source and never fetched or executed by a control-plane page.
 - A template or a hidden navigation item is never an authorization boundary;
   every gate is server-side.
+- Public registration requires acknowledgment of the linked Terms and presents
+  the matching Privacy Policy. The operator owns legal approval and keeps both
+  editions aligned with current Aofei data behavior; source publication alone
+  is not evidence of counsel review or production deployment.
 - The repository is public and carries no live account details, runtime logs,
   uploaded media, production paths, or secrets.
 
@@ -126,6 +134,12 @@ advertiser/publisher account lifecycle, account mail, login/error guidance,
 browser-side front-page selection, and public toggle. The authenticated
 advertiser, publisher, administrator, agent, and analyst workspaces also ship
 complete English template sets derived from their Chinese source templates.
+
+Shipping in source: bilingual Privacy Policy and Terms of Service pages with
+stable public URLs, reciprocal language metadata, footer discovery throughout
+the public/account surfaces, and explicit advertiser/publisher registration
+links. The Privacy Policy documents the Gmail API `gmail.send`-only use and the
+current Aofei privacy, identifier, provider, and retention boundaries.
 
 Deliberately absent: any form collecting full card or bank credentials. The
 `payment`, `cc`, `cheque`, `alipay`, and `wechat` modules are retired,

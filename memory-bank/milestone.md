@@ -14,6 +14,11 @@ The active remediation horizon also restores the default-off account projection
 contract and preserves the historical administrator landing URL used by old
 bookmarks and login continuations.
 
+The current public-policy horizon adds discoverable Chinese and English Privacy
+Policy and Terms of Service pages, ties both registration flows to those exact
+documents, and guards their language, structure, Google user-data disclosure,
+and stable public URLs.
+
 ## Lanes
 
 | Lane | Meaning |
@@ -29,7 +34,7 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01 -> L07
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
@@ -44,8 +49,9 @@ L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01
 | L05 | English surface review remediation | [status-L05](status-L05.md) | L01-L04, T01-T03 | T04 |
 | T04 | Authenticated workspace English completion | [status-T04](status-T04.md) | L05 | T05 |
 | T05 | English typography polish | [status-T05](status-T05.md) | T04 | L06 |
-| L06 | Public chartag toggle remediation | [status-L06](status-L06.md) | T05 | — |
-| C01 | Administrator landing and default-off projection repair | [status-C01](status-C01.md) | L06 | — |
+| L06 | Public chartag toggle remediation | [status-L06](status-L06.md) | T05 | C01 |
+| C01 | Administrator landing and default-off projection repair | [status-C01](status-C01.md) | L06 | L07 |
+| L07 | Bilingual public Privacy Policy and Terms | [status-L07](status-L07.md) | C01 | — |
 
 ## Acceptance
 
@@ -89,6 +95,15 @@ administrator landing URLs redirect into the existing authorized workspace,
 and a disabled optional account protector remains absent even when represented
 as a typed-nil Go pointer. Source completion is distinct from the private W8M
 release and deployment record.
+
+L07 adds the public legal-document surface requested on 2026-09-08. Its stable
+English URLs are `/privacy.html` and `/terms.html`, with Chinese `.zh.html`
+siblings. Both advertiser and publisher registration forms link both documents;
+home, manual, login, error, and shared account footers make them discoverable.
+The privacy copy follows the current Aofei privacy/data-governance contract and
+includes the Gmail API `gmail.send`-only disclosure needed for an OAuth consent
+surface. The milestone publishes operator-authored source text, not legal
+advice, counsel approval, a Google verification result, or a live W8M release.
 
 ## Candidate Directions
 

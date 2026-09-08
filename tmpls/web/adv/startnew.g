@@ -54,7 +54,7 @@
           <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="再次输入密码" autocomplete="new-password" minlength="12" required></div>
         </div>
         <div class="account-field account-field-wide">
-          <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>我已阅读并接受平台用户协议及账户使用规则。</span></label>
+          <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>我已阅读并同意<a href="/terms.zh.html" target="_blank" rel="noopener">服务条款</a>，并确认已了解<a href="/privacy.zh.html" target="_blank" rel="noopener">隐私政策</a>。</span></label>
         </div>
         {{ if .Other.TurnstileSiteKey }}
         <div class="account-field account-field-wide account-human-check">
@@ -90,7 +90,7 @@ $(function () {
       passwd: { required: '请输入密码', minlength: '密码至少需要 12 个字符' },
       confirm: { required: '请再次输入密码', minlength: '密码至少需要 12 个字符', equalTo: '两次输入的密码不一致' },
       email: '请输入有效的电子邮箱',
-      agree: '请先接受平台用户协议及账户使用规则'
+      agree: '请先阅读并同意服务条款'
     },
     errorElement: 'em',
     errorPlacement: function (error, element) {

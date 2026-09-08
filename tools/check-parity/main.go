@@ -278,6 +278,12 @@ func structuralAttribute(tag, key string, attributes map[string]string) bool {
 
 func normalizeStructuralValue(value string) string {
 	value = editionRoutePattern.ReplaceAllString(value, `${1}{edition}${2}`)
+	switch value {
+	case "/privacy.zh.html":
+		value = "/privacy.html"
+	case "/terms.zh.html":
+		value = "/terms.html"
+	}
 	value = strings.ReplaceAll(value, ".en.html", ".html")
 	value = strings.ReplaceAll(value, ".label_chinese", ".label")
 	value = strings.ReplaceAll(value, ".channel_name_g", ".channel_name")

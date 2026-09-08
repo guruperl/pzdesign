@@ -118,3 +118,10 @@ English `/`, and confirms literal `/index.html` ↔ `/index.zh.html` links remai
 on the selected file. Public account-flow toggles navigate directly to the
 opposite chartag; no language cookie, header negotiation, or location-based CDN
 rule is involved.
+
+The public-copy checker also treats the four static legal documents as release
+inputs. It pins their effective-date and core Google/user-data disclosures,
+requires reciprocal `hreflang`, compares the ordered legal section IDs, and
+requires language-correct Privacy and Terms links on public footers and both
+advertiser/publisher registration forms. This is a structural and copy
+regression gate, not legal approval or evidence that the URLs are deployed.

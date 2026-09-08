@@ -186,7 +186,9 @@ pre code,
 .btn-soft { border: 1px solid var(--line); color: var(--ink); background: #fff; }
 
 .manual-footer { padding: 1.5rem 0; color: rgba(255,255,255,.58); background: #071827; font-size: .85rem; }
+.manual-footer .container { gap: .75rem 1.25rem; }
 .manual-footer p { margin: 0; }
+.manual-footer nav { text-align: right; }
 .manual-footer a { color: rgba(255,255,255,.76); }
 
 @media (max-width: 991.98px) {
@@ -201,6 +203,8 @@ pre code,
   .role-table,
   .manual-table { min-width: 620px; }
   .manual-nav .navbar-brand small { display: none; }
+  .manual-footer .container { flex-direction: column; }
+  .manual-footer nav { text-align: left; }
 }
 
 @media print {

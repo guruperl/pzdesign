@@ -54,7 +54,7 @@
           <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="confirm" id="confirm" class="form-control" placeholder="Re-enter password" autocomplete="new-password" minlength="12" required></div>
         </div>
         <div class="account-field account-field-wide">
-          <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>I have read and accept the platform's user agreement and account terms.</span></label>
+          <label class="account-check" for="agree"><input type="checkbox" id="agree" name="agree" value="agree" required><span>I have read and agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and acknowledge the <a href="/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</span></label>
         </div>
         {{ if .Other.TurnstileSiteKey }}
         <div class="account-field account-field-wide account-human-check">
@@ -90,7 +90,7 @@ $(function () {
       passwd: { required: 'Please enter password', minlength: 'Password must be at least 12 characters' },
       confirm: { required: 'Please confirm password', minlength: 'Password must be at least 12 characters', equalTo: 'Passwords do not match' },
       email: 'Please enter a valid email address',
-      agree: 'Please accept the platform terms and account rules'
+      agree: 'Please read and agree to the Terms of Service'
     },
     errorElement: 'em',
     errorPlacement: function (error, element) {

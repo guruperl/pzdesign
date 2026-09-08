@@ -239,3 +239,54 @@ if (/^zh(?:[-_]|$)/i.test(language || '')) { window.location.replace('/index.zh.
 		})
 	}
 }
+
+func TestCheckLegalLinks(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		name     string
+		rel      string
+		language string
+		html     string
+		wantFail bool
+	}{
+		{name: "English footer", rel: "www/index.html", language: "en", html: `<footer class="layout site-footer compact"><a href='/privacy.html'>Privacy</a><a href="/terms.html">Terms</a></footer>`},
+		{name: "Chinese footer", rel: "www/index.zh.html", language: "zh", html: `<footer class="site-footer"><a href="/privacy.zh.html">隐私</a><a href="/terms.zh.html">条款</a></footer>`},
+		{name: "English registration", rel: "tmpls/web/adv/startnew.e", language: "en", html: `<a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a>`},
+		{name: "Missing terms", rel: "tmpls/web/pub/startnew.g", language: "zh", html: `<a href="/privacy.zh.html">隐私</a>`, wantFail: true},
+		{name: "Wrong edition", rel: "tmpls/web/end.e", language: "en", html: `<footer class="account-footer"><a href="/privacy.zh.html">Privacy</a><a href="/terms.zh.html">Terms</a></footer>`, wantFail: true},
+		{name: "Unrelated template", rel: "tmpls/web/adv/activate.e", language: "en", html: `<section>Activated</section>`},
+	} {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			failures := checkLegalLinks(test.rel, test.language, test.html)
+			if got := len(failures) > 0; got != test.wantFail {
+				t.Fatalf("failures = %v, want failure %t", failures, test.wantFail)
+			}
+		})
+	}
+}
+
+func TestCheckOrderedSectionIDs(t *testing.T) {
+	t.Parallel()
+	want := []string{"scope", "collection", "contact"}
+	for _, test := range []struct {
+		name     string
+		html     string
+		wantFail bool
+	}{
+		{name: "ordered sections", html: `<section id="scope"></section><section id="collection"></section><section id="contact"></section>`},
+		{name: "missing section", html: `<section id="scope"></section><section id="contact"></section>`, wantFail: true},
+		{name: "reordered section", html: `<section id="collection"></section><section id="scope"></section><section id="contact"></section>`, wantFail: true},
+		{name: "duplicate section", html: `<section id="scope"></section><section id="collection"></section><section id="collection"></section><section id="contact"></section>`, wantFail: true},
+	} {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			failures := checkOrderedSectionIDs("fixture.html", test.html, want)
+			if got := len(failures) > 0; got != test.wantFail {
+				t.Fatalf("failures = %v, want failure %t", failures, test.wantFail)
+			}
+		})
+	}
+}

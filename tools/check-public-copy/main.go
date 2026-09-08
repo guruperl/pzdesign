@@ -96,9 +96,31 @@ var requiredSnippets = map[string][]string{
 		"账户入口",
 		"使用说明与常见问题",
 		"联系技术支持",
+		`href="/privacy.zh.html"`,
+		`href="/terms.zh.html"`,
 	},
-	"www/manuals/advertiser.html": {"广告主与代理商使用手册", "外部 DSP / ADX 需求方接入与竞价"},
-	"www/manuals/publisher.html":  {"流量方（发布商）接入手册", "获取并部署网页广告码"},
+	"www/manuals/advertiser.html": {"广告主与代理商使用手册", "外部 DSP / ADX 需求方接入与竞价", `href="/privacy.zh.html"`, `href="/terms.zh.html"`},
+	"www/manuals/publisher.html":  {"流量方（发布商）接入手册", "获取并部署网页广告码", `href="/privacy.zh.html"`, `href="/terms.zh.html"`},
+	"www/privacy.zh.html": {
+		"W8M 隐私政策",
+		"生效日期：2026 年 9 月 8 日",
+		"W8M 的广告请求默认使用上下文模式",
+		"gmail.send",
+		"不读取 Gmail 邮箱内容、联系人、云端硬盘文件或 Google 个人资料",
+		"Google API Services User Data Policy",
+		"通常保存 168 小时",
+		"默认保存 30 天",
+		"90 天未活动后到期",
+		`href="/terms.zh.html"`,
+	},
+	"www/terms.zh.html": {
+		"W8M 服务条款",
+		"生效日期：2026 年 9 月 8 日",
+		"广告主义务",
+		"流量方义务",
+		"隐私与数据",
+		`href="/privacy.zh.html"`,
+	},
 	"www/index.html": {
 		"W8M Advertising and Traffic Integration Platform",
 		"DSP, SSP, and ADX integrated workflow",
@@ -108,9 +130,31 @@ var requiredSnippets = map[string][]string{
 		"Platform Capabilities Across DSP, SSP, and ADX",
 		"Account Entry Points",
 		"Contact Technical Support",
+		`href="/privacy.html"`,
+		`href="/terms.html"`,
 	},
-	"www/manuals/advertiser.en.html": {"Advertiser and Agency Manual", "External DSP / ADX Demand-Side Integration and Bidding"},
-	"www/manuals/publisher.en.html":  {"Publisher Integration Manual", "Get and Deploy Web Ad Code"},
+	"www/manuals/advertiser.en.html": {"Advertiser and Agency Manual", "External DSP / ADX Demand-Side Integration and Bidding", `href="/privacy.html"`, `href="/terms.html"`},
+	"www/manuals/publisher.en.html":  {"Publisher Integration Manual", "Get and Deploy Web Ad Code", `href="/privacy.html"`, `href="/terms.html"`},
+	"www/privacy.html": {
+		"W8M Privacy Policy",
+		"Effective date: September 8, 2026",
+		"advertising requests contextually by default",
+		"gmail.send",
+		"It does not read Gmail messages, contacts, Google Drive files, or Google profile data",
+		"Google API Services User Data Policy",
+		"normally retained for 168 hours",
+		"retained for 30 days by default",
+		"expires after 90 idle days",
+		`href="/terms.html"`,
+	},
+	"www/terms.html": {
+		"W8M Terms of Service",
+		"Effective date: September 8, 2026",
+		"Advertiser Duties",
+		"Publisher Duties",
+		"Privacy and Data",
+		`href="/privacy.html"`,
+	},
 	"www/css/w8m-home.css": {
 		`#capabilities .capability-card,`,
 		`.capability-modal[id^="capability-"] .capability-modal-icon`,
@@ -122,6 +166,9 @@ var requiredSnippets = map[string][]string{
 		`--font-latin: -apple-system`,
 		`html[lang="en"] body {`,
 		`font-size: 15px`,
+		`.site-footer nav {`,
+		`flex-wrap: wrap`,
+		`justify-content: flex-end`,
 	},
 	"www/css/w8m-account.css": {
 		`html[lang="en"] body.w8m-public-account {`,
@@ -140,6 +187,8 @@ var requiredSnippets = map[string][]string{
 		`font-family: -apple-system`,
 		`font-size: 15px`,
 		`line-height: 1.65`,
+		`.manual-footer .container { gap:`,
+		`.manual-footer nav { text-align: right; }`,
 	},
 	"www/admin/dashboard.css": {
 		`html[lang="en"] body,`,
@@ -160,8 +209,12 @@ var requiredSnippets = map[string][]string{
 	"tmpls/web/pub/retrieve.mail.g": {"您好，", "/goto/web/g/pub?action=startreset", "W8M 广告平台"},
 	"tmpls/web/start.g":             {`href="/goto/web/e/{{.Other.Component}}?action={{.Other.Action}}"`, `data-chartag-toggle="e"`},
 	"tmpls/web/start.e":             {`href="/goto/web/g/{{.Other.Component}}?action={{.Other.Action}}"`, `data-chartag-toggle="g"`},
-	"tmpls/web/end.g":               {`[data-chartag-toggle]`, `newChartag !== 'g' && newChartag !== 'e'`, "window.location.href = destination;"},
-	"tmpls/web/end.e":               {`[data-chartag-toggle]`, `newChartag !== 'g' && newChartag !== 'e'`, "window.location.href = destination;"},
+	"tmpls/web/end.g":               {`[data-chartag-toggle]`, `newChartag !== 'g' && newChartag !== 'e'`, "window.location.href = destination;", `href="/privacy.zh.html"`, `href="/terms.zh.html"`},
+	"tmpls/web/end.e":               {`[data-chartag-toggle]`, `newChartag !== 'g' && newChartag !== 'e'`, "window.location.href = destination;", `href="/privacy.html"`, `href="/terms.html"`},
+	"tmpls/web/adv/startnew.g":      {`href="/terms.zh.html" target="_blank" rel="noopener"`, `href="/privacy.zh.html" target="_blank" rel="noopener"`},
+	"tmpls/web/adv/startnew.e":      {`href="/terms.html" target="_blank" rel="noopener"`, `href="/privacy.html" target="_blank" rel="noopener"`},
+	"tmpls/web/pub/startnew.g":      {`href="/terms.zh.html" target="_blank" rel="noopener"`, `href="/privacy.zh.html" target="_blank" rel="noopener"`},
+	"tmpls/web/pub/startnew.e":      {`href="/terms.html" target="_blank" rel="noopener"`, `href="/privacy.html" target="_blank" rel="noopener"`},
 	"summer/adv/filter.go":          {"W8M 广告主账户邮箱验证", "W8M 广告主账户密码重置"},
 	"summer/pub/filter.go":          {"W8M 流量方账户邮箱验证", "W8M 流量方账户密码重置"},
 	"tmpls/web/adv/startreset.g": {
@@ -193,8 +246,8 @@ var requiredSnippets = map[string][]string{
 var stylesheetRevisionContracts = map[string]string{
 	"admin/dashboard.css":   "admin/dashboard.css?v=20260828-1",
 	"css/w8m-account.css":   "css/w8m-account.css?v=20260828-1",
-	"css/w8m-home.css":      "css/w8m-home.css?v=20260828-1",
-	"css/w8m-manual.css":    "css/w8m-manual.css?v=20260828-1",
+	"css/w8m-home.css":      "css/w8m-home.css?v=20260908-1",
+	"css/w8m-manual.css":    "css/w8m-manual.css?v=20260908-1",
 	"css/w8m-workspace.css": "css/w8m-workspace.css?v=20260828-1",
 }
 
@@ -235,6 +288,13 @@ var journeyModalIDs = []string{
 	"journey-publisher-slot",
 	"journey-publisher-integration",
 	"journey-publisher-validation",
+}
+
+var legalSectionIDs = map[string][]string{
+	"www/privacy.zh.html": {"scope", "collection", "use", "advertising", "disclosure", "google", "retention", "rights", "security", "children", "international", "changes", "contact"},
+	"www/privacy.html":    {"scope", "collection", "use", "advertising", "disclosure", "google", "retention", "rights", "security", "children", "international", "changes", "contact"},
+	"www/terms.zh.html":   {"acceptance", "accounts", "roles", "advertisers", "publishers", "prohibited", "delivery", "fees", "privacy", "content", "availability", "termination", "liability", "general", "contact"},
+	"www/terms.html":      {"acceptance", "accounts", "roles", "advertisers", "publishers", "prohibited", "delivery", "fees", "privacy", "content", "availability", "termination", "liability", "general", "contact"},
 }
 
 func main() {
@@ -297,6 +357,10 @@ func check(root string) ([]string, error) {
 		failures = append(failures, copyFailures...)
 		failures = append(failures, checkPublicChartagToggle(rel, file.language, text)...)
 		failures = append(failures, checkStylesheetRevisions(rel, text)...)
+		failures = append(failures, checkLegalLinks(rel, file.language, text)...)
+		if sectionIDs, ok := legalSectionIDs[rel]; ok {
+			failures = append(failures, checkOrderedSectionIDs(rel, text, sectionIDs)...)
+		}
 	}
 
 	for rel, snippets := range requiredSnippets {
@@ -333,6 +397,8 @@ func check(root string) ([]string, error) {
 		{"www/index.zh.html", "www/index.html"},
 		{"www/manuals/advertiser.html", "www/manuals/advertiser.en.html"},
 		{"www/manuals/publisher.html", "www/manuals/publisher.en.html"},
+		{"www/privacy.zh.html", "www/privacy.html"},
+		{"www/terms.zh.html", "www/terms.html"},
 	}
 	for _, pair := range langPairs {
 		chinesePath := filepath.Join(root, pair[0])
@@ -355,6 +421,81 @@ func check(root string) ([]string, error) {
 
 	sort.Strings(failures)
 	return failures, nil
+}
+
+func checkLegalLinks(rel, language, text string) []string {
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
+		return []string{fmt.Sprintf("%s legal links are not parseable: %v", rel, err)}
+	}
+	isFooterSurface := false
+	linkTargets := make(map[string]bool)
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode {
+			if node.Data == "footer" {
+				classes, _ := attribute(node, "class")
+				isFooterSurface = isFooterSurface || hasToken(classes, "site-footer") || hasToken(classes, "manual-footer") || hasToken(classes, "account-footer")
+			}
+			if node.Data == "a" {
+				if href, ok := attribute(node, "href"); ok {
+					linkTargets[href] = true
+				}
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(document)
+
+	isRegistrationSurface := rel == "tmpls/web/adv/startnew.g" || rel == "tmpls/web/adv/startnew.e" ||
+		rel == "tmpls/web/pub/startnew.g" || rel == "tmpls/web/pub/startnew.e"
+	if !isFooterSurface && !isRegistrationSurface {
+		return nil
+	}
+
+	privacyPath := "/privacy.zh.html"
+	termsPath := "/terms.zh.html"
+	if language == "en" {
+		privacyPath = "/privacy.html"
+		termsPath = "/terms.html"
+	}
+
+	var failures []string
+	for label, path := range map[string]string{"privacy policy": privacyPath, "terms of service": termsPath} {
+		if !linkTargets[path] {
+			failures = append(failures, fmt.Sprintf("%s lacks its %s link to %s", rel, label, path))
+		}
+	}
+	sort.Strings(failures)
+	return failures
+}
+
+func checkOrderedSectionIDs(rel, text string, want []string) []string {
+	document, err := html.Parse(strings.NewReader(text))
+	if err != nil {
+		return []string{fmt.Sprintf("%s legal sections are not parseable: %v", rel, err)}
+	}
+
+	var got []string
+	var walk func(*html.Node)
+	walk = func(node *html.Node) {
+		if node.Type == html.ElementNode && node.Data == "section" {
+			if id, ok := attribute(node, "id"); ok {
+				got = append(got, id)
+			}
+		}
+		for child := node.FirstChild; child != nil; child = child.NextSibling {
+			walk(child)
+		}
+	}
+	walk(document)
+
+	if strings.Join(got, "\x00") != strings.Join(want, "\x00") {
+		return []string{fmt.Sprintf("%s legal section IDs are %v, want %v", rel, got, want)}
+	}
+	return nil
 }
 
 func checkStylesheetRevisions(rel, text string) []string {
@@ -721,6 +862,10 @@ func publicFiles(root string) ([]publicFile, error) {
 	files := []publicFile{
 		{path: filepath.Join(root, "www", "index.zh.html"), language: "zh"},
 		{path: filepath.Join(root, "www", "index.html"), language: "en"},
+		{path: filepath.Join(root, "www", "privacy.zh.html"), language: "zh"},
+		{path: filepath.Join(root, "www", "privacy.html"), language: "en"},
+		{path: filepath.Join(root, "www", "terms.zh.html"), language: "zh"},
+		{path: filepath.Join(root, "www", "terms.html"), language: "en"},
 		{path: filepath.Join(root, "www", "manuals", "advertiser.html"), language: "zh"},
 		{path: filepath.Join(root, "www", "manuals", "advertiser.en.html"), language: "en"},
 		{path: filepath.Join(root, "www", "manuals", "publisher.html"), language: "zh"},

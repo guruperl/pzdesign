@@ -42,6 +42,12 @@ Runtime asset groups under `www/`:
 - `www/index.html` is the English static directory index. Its early script
   selects `/index.zh.html` for a Chinese primary browser language only when the
   visible path is `/`; direct requests for either named index file stay literal.
+- `www/privacy.html` and `www/terms.html` are the stable English Privacy Policy
+  and Terms of Service URLs; `.zh.html` siblings provide the Chinese editions.
+  Home, manual, login, error, and registration surfaces link to the matching
+  edition, and registration requires an explicit Terms acknowledgment. Treat
+  the policy text as an operator-owned legal draft: reconcile it with current
+  Aofei data behavior and obtain appropriate legal review before production use.
 - `manuals/` contains the public Chinese and English advertiser/agency and
   publisher/supply-side web manuals.
   Their operational content follows the sibling Aofei references
@@ -162,6 +168,12 @@ maintenance error. Login, activation links already issued, and authenticated
 workspaces remain available. Removing the block is the supported emergency
 email-disable control after credential exposure. Legacy SMTP blocks remain
 compatible.
+
+After the static files are released, use `https://www.w8m.com/privacy.html` as
+the English Google OAuth privacy-policy URL and
+`https://www.w8m.com/terms.html` as the Terms URL. The consent-screen entries
+must match the deployed pages and verified W8M domain; source availability in
+this checkout does not prove that the public URLs have been deployed.
 
 Public account abuse protection is independently default-off. When
 `PUBLIC_ACCOUNT_PROTECTION_ENABLED=true`, `cmd/unify` requires Redis, complete

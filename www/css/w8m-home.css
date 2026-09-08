@@ -1166,6 +1166,8 @@ html[lang="en"] .role-heading h3 {
 
 .site-footer nav {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 1.2rem;
 }
 
@@ -1296,6 +1298,10 @@ html[lang="en"] .role-heading h3 {
 
   .site-footer p {
     margin-bottom: .8rem;
+  }
+
+  .site-footer nav {
+    justify-content: flex-start;
   }
 }
 

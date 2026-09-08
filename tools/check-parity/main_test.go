@@ -141,6 +141,48 @@ func TestStructureAllowsTranslatedCopyAndEditionRoutes(t *testing.T) {
 	}
 }
 
+func TestStructureAllowsApprovedLegalEditionLinks(t *testing.T) {
+	gStructure, err := extractStructure(`<footer><a href="/privacy.zh.html">隐私政策</a><a href="/terms.zh.html">服务条款</a></footer>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	eStructure, err := extractStructure(`<footer><a href="/privacy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></footer>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !slicesEqual(gStructure, eStructure) {
+		t.Fatalf("approved legal link structures differ:\n%v\n%v", gStructure, eStructure)
+	}
+}
+
+func TestStructureRejectsUnapprovedStaticEditionLinks(t *testing.T) {
+	gStructure, err := extractStructure(`<a href="/account.zh.html">账户</a>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	eStructure, err := extractStructure(`<a href="/account.html">Account</a>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if slicesEqual(gStructure, eStructure) {
+		t.Fatal("unapproved static edition links were normalized")
+	}
+}
+
+func TestStructureRejectsModifiedLegalEditionLinks(t *testing.T) {
+	gStructure, err := extractStructure(`<a href="/privacy.zh.html?source=footer">隐私政策</a>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	eStructure, err := extractStructure(`<a href="/privacy.html?source=footer">Privacy Policy</a>`)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if slicesEqual(gStructure, eStructure) {
+		t.Fatal("modified legal edition links were normalized")
+	}
+}
+
 func TestStructureRejectsLegacyLayout(t *testing.T) {
 	gStructure, err := extractStructure(`<main><section class="account"><form method="post"><input name="email"></form></section></main>`)
 	if err != nil {
