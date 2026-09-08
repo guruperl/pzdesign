@@ -27,6 +27,9 @@ func accountProtector(storage map[string]interface{}) (*genelet.AccountProtector
 	if !ok {
 		return nil, false, fmt.Errorf("storage %s has type %T, want *genelet.AccountProtector", AccountProtectionStorageKey, raw)
 	}
+	if protector == nil {
+		return nil, false, nil
+	}
 	return protector, true, nil
 }
 

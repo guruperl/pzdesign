@@ -43,6 +43,17 @@ func testAccountProtectorWithRetirement(t *testing.T, retired bool) *genelet.Acc
 	return protector
 }
 
+func TestTypedNilAccountProtectorIsDisabled(t *testing.T) {
+	var protector *genelet.AccountProtector
+	enabled, err := AccountProtectionEnabled(map[string]interface{}{AccountProtectionStorageKey: protector})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if enabled {
+		t.Fatal("typed-nil account protector was treated as enabled")
+	}
+}
+
 func TestRetiredAccountInsertOmitsPlaintextIdentifierColumn(t *testing.T) {
 	db := openAccountProtectionTestDB(t)
 	if _, err := db.Exec(`CREATE TABLE adv (adv_id INTEGER PRIMARY KEY, email_hmac BLOB NOT NULL UNIQUE, email_cipher TEXT NOT NULL, address_id INTEGER)`); err != nil {

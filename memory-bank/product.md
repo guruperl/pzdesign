@@ -112,6 +112,14 @@ Activation and recovery use purpose-bound one-use tokens rather than email-
 bearing signed URLs when S07 is enabled; the legacy form remains only for the
 default-off rollback path. Administrator-only numeric login-as remains
 available only while the database-backed identity service is disabled.
+The disabled state keeps its storage adapter absent and therefore continues to
+use complete legacy account projections; a typed-nil optional service cannot
+silently activate the protected read path.
+
+Shipping: exact Chinese and English legacy administrator landing URLs redirect
+to the current advertiser-administration list. The alias retains bookmarked and
+post-login entry points while leaving the destination's ordinary administrator
+authentication and authorization intact.
 
 Shipping: the English public edition, including the static front page, manuals,
 advertiser/publisher account lifecycle, account mail, login/error guidance,

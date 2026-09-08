@@ -14,6 +14,8 @@ import (
 
 	"github.com/guruperl/aofei/dsp"
 	"github.com/guruperl/aofei/hostedpayment"
+	"github.com/guruperl/genelet"
+	"github.com/guruperl/pzdesign/summer"
 )
 
 type observingHTTPServer struct {
@@ -40,6 +42,57 @@ func TestDisabledHostedPaymentIsAbsentFromSharedStorage(t *testing.T) {
 	storeHostedPayment(storage, service)
 	if storage["HostedPayment"] != service {
 		t.Fatal("enabled hosted-payment service was not registered")
+	}
+}
+
+func TestDisabledAccountProtectionIsAbsentFromSharedStorage(t *testing.T) {
+	var typedNil *genelet.AccountProtector
+	storage := map[string]interface{}{summer.AccountProtectionStorageKey: typedNil}
+	storeAccountProtection(storage, nil)
+	if _, found := storage[summer.AccountProtectionStorageKey]; found {
+		t.Fatal("disabled account protection remained visible to Summer models")
+	}
+	protector := &genelet.AccountProtector{}
+	storeAccountProtection(storage, protector)
+	if storage[summer.AccountProtectionStorageKey] != protector {
+		t.Fatal("enabled account protection was not registered")
+	}
+}
+
+func TestServeMuxRedirectsOnlyLegacyAdminLandingPages(t *testing.T) {
+	controller := &dsp.Controller{C: &dsp.Config{}}
+	downstream := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})
+	mux := newServeMux(controller, downstream)
+
+	for _, chartag := range []string{"e", "g"} {
+		path := "/goto/admin/" + chartag + "/admin"
+		response := httptest.NewRecorder()
+		mux.ServeHTTP(response, httptest.NewRequest(http.MethodGet, path+"?ignored=value", nil))
+		if response.Code != http.StatusSeeOther {
+			t.Fatalf("GET %s status = %d, want %d", path, response.Code, http.StatusSeeOther)
+		}
+		wantLocation := "/goto/admin/" + chartag + "/adv?action=topics"
+		if got := response.Header().Get("Location"); got != wantLocation {
+			t.Fatalf("GET %s location = %q, want %q", path, got, wantLocation)
+		}
+		if got := response.Header().Get("Cache-Control"); got != "no-store" {
+			t.Fatalf("GET %s Cache-Control = %q, want no-store", path, got)
+		}
+	}
+
+	for _, request := range []*http.Request{
+		httptest.NewRequest(http.MethodPost, "/goto/admin/e/admin", nil),
+		httptest.NewRequest(http.MethodHead, "/goto/admin/e/admin", nil),
+		httptest.NewRequest(http.MethodGet, "/goto/admin/e/admin/extra", nil),
+		httptest.NewRequest(http.MethodGet, "/goto/adv/e/admin", nil),
+	} {
+		response := httptest.NewRecorder()
+		mux.ServeHTTP(response, request)
+		if response.Code != http.StatusNoContent {
+			t.Fatalf("%s %s status = %d, want downstream %d", request.Method, request.URL.Path, response.Code, http.StatusNoContent)
+		}
 	}
 }
 

@@ -94,7 +94,7 @@ func run(ctx context.Context, localFlagSet bool) error {
 		return fmt.Errorf("initialize account protection: %w", err)
 	}
 	gc.AccountProtection = accountProtection
-	gc.Storage[summer.AccountProtectionStorageKey] = accountProtection
+	storeAccountProtection(gc.Storage, accountProtection)
 	if accountProtection != nil {
 		loginThrottle, err := summer.NewRedisLoginThrottle(sc.Redis, accountProtection)
 		if err != nil {
@@ -217,6 +217,14 @@ func storeHostedPayment(storage map[string]interface{}, service *hostedpayment.S
 		return
 	}
 	storage["HostedPayment"] = service
+}
+
+func storeAccountProtection(storage map[string]interface{}, protector *genelet.AccountProtector) {
+	if protector == nil {
+		delete(storage, summer.AccountProtectionStorageKey)
+		return
+	}
+	storage[summer.AccountProtectionStorageKey] = protector
 }
 
 type serviceHealth struct {
@@ -373,8 +381,19 @@ func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, su
 		mux.Handle("POST /webhooks/stripe", paymentService.WebhookHandler())
 	}
 	mux.Handle("/webhooks/", http.NotFoundHandler())
+	mux.Handle("HEAD /goto/admin/e/admin", geneletHandler)
+	mux.Handle("HEAD /goto/admin/g/admin", geneletHandler)
+	mux.HandleFunc("GET /goto/admin/e/admin", legacyAdminLanding("e"))
+	mux.HandleFunc("GET /goto/admin/g/admin", legacyAdminLanding("g"))
 	mux.Handle("/", geneletHandler)
 	return mux
+}
+
+func legacyAdminLanding(chartag string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-store")
+		http.Redirect(w, r, "/goto/admin/"+chartag+"/adv?action=topics", http.StatusSeeOther)
+	}
 }
 
 func pzCORS(next http.HandlerFunc) http.HandlerFunc {

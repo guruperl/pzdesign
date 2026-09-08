@@ -47,6 +47,11 @@ gitleaks git --redact .
 git diff --check
 ```
 
+`cmd/unify` tests pin the exact legacy administrator landing redirects and
+prove that adjacent methods and paths still reach the Genelet catch-all.
+`summer` tests exercise both a real account protector and a typed-nil disabled
+adapter so the default-off S07 projection contract cannot regress.
+
 S07 offline identifier tooling reads the owner-readable Summer configuration
 and the environment key named by `AccountProtection.Current.KeyEnv`. It prints
 counts and numeric row IDs only; `status` validates all retained plaintext

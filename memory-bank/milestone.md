@@ -10,12 +10,17 @@ in English, read English manuals, and operate every role workspace in English.
 English pages use a restrained Latin system type scale while Chinese pages keep
 their established CJK typography.
 
+The active remediation horizon also restores the default-off account projection
+contract and preserves the historical administrator landing URL used by old
+bookmarks and login continuations.
+
 ## Lanes
 
 | Lane | Meaning |
 |---|---|
 | `L` | Language platform — static entry selection, direct toggle, chartag entry links, guards, and policy documents. Reviewed as code. |
 | `T` | Translation — producing the English editions of templates, the landing page, and the manuals. Reviewed as copy, and long-lived through parity maintenance. |
+| `C` | Control-plane correctness — bounded remediation of shipped Summer/unify runtime contracts. Reviewed as code. |
 
 Lane letters `A`, `D`, `I`, `P`, `R`, and `S` are reserved: this repository's
 prose uses them as Aofei milestone identifiers. Lane `M` is reserved as the
@@ -24,7 +29,7 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
@@ -40,6 +45,7 @@ L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06
 | T04 | Authenticated workspace English completion | [status-T04](status-T04.md) | L05 | T05 |
 | T05 | English typography polish | [status-T05](status-T05.md) | T04 | L06 |
 | L06 | Public chartag toggle remediation | [status-L06](status-L06.md) | T05 | — |
+| C01 | Administrator landing and default-off projection repair | [status-C01](status-C01.md) | L06 | — |
 
 ## Acceptance
 
@@ -76,6 +82,13 @@ template structures:
 
 This horizon does not add an authenticated language-toggle control, change
 authorization, run a live account flow, publish a release, or deploy a service.
+
+C01 is a post-horizon corrective milestone prompted by the 2026-09-08 W8M
+administrator login incident. It adds no feature or activation: exact legacy
+administrator landing URLs redirect into the existing authorized workspace,
+and a disabled optional account protector remains absent even when represented
+as a typed-nil Go pointer. Source completion is distinct from the private W8M
+release and deployment record.
 
 ## Candidate Directions
 

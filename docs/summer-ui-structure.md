@@ -165,6 +165,18 @@ Admins assign middleman traffic through
 `/goto/admin/g/midroute?action=topics`, with nested route-bidder and
 route-target actions for `mid_route_bidder` and `mid_route_target`.
 
+The former role-shaped administration landing routes
+`/goto/admin/{g,e}/admin` are compatibility aliases, not component names.
+`cmd/unify` redirects only exact `GET` requests for those two paths to
+`/goto/admin/{g,e}/adv?action=topics`; the normal Genelet route then performs
+authentication and authorization. Other methods, suffixes, roles, and chartags
+remain under the ordinary catch-all rather than being broadly rewritten.
+
+When S07 account-identifier protection is disabled, `cmd/unify` does not
+publish an account-protection storage adapter and Summer treats an injected
+typed-nil pointer as disabled defensively. Only a real initialized protector
+may replace plaintext account projections with their ciphertext equivalents.
+
 Filters should add query restrictions through `extra url.Values`, not by
 concatenating request strings into SQL. Models should use Genelet CRUD helpers
 unless a hand-written query is necessary and all identifiers come from a narrow

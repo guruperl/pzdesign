@@ -174,6 +174,19 @@ the sibling Aofei `docs/public-account-abuse-protection.md` activation,
 monitoring, rotation, and rollback contract; no Cloudflare or Turnstile secret
 belongs in this repository.
 
+S07 account-identifier protection is also default-off. In that state,
+`cmd/unify` omits the account-protection storage adapter so Summer continues to
+read the legacy plaintext projections. A disabled or typed-nil adapter must
+never select encrypted projections. Enabling it remains a separate coordinated
+backfill and activation procedure defined by the sibling Aofei
+`docs/account-identifier-protection.md` contract.
+
+The historical administration landing paths `/goto/admin/g/admin` and
+`/goto/admin/e/admin` redirect to the matching language edition of the current
+advertiser-administration list. This narrow compatibility redirect preserves
+old bookmarks and post-login destinations; the destination remains subject to
+the ordinary Genelet administrator session and authorization checks.
+
 Summer/Genelet identity hardening is optional and the checked-in Aofei example
 keeps it disabled. When enabled after the S02 schema migration, `cmd/unify`
 pairs the signed role cookie with an opaque database session, enforces required

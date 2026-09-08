@@ -32,6 +32,11 @@ A request enters `cmd/unify`'s mux. Exact DSP and measurement routes, the
 metrics endpoint, health, readiness, the management API mount, and the payment
 webhook are matched first; everything else falls through to the Genelet
 controller.
+Exact `GET` requests for the historical `/goto/admin/{e,g}/admin` landing paths
+are the sole control-plane compatibility exception: the mux redirects them to
+the matching `/goto/admin/{e,g}/adv?action=topics` route, where Genelet performs
+the normal administrator authentication and authorization checks. No other
+method, suffix, role, or chartag is rewritten.
 
 For an admin request, Genelet parses `/{script}/{role}/{chartag}/{object}` and
 optional id, maps method to action through `DefaultActions`, and resolves the
@@ -112,6 +117,10 @@ typed one is an explicit error:
 `Identity`, `PublisherAuth`, `DirectSSPTokenIssuer`, `ManagementAPI`,
 `TrafficQuality`, `HostedPayment`, `PublicAccountProtector`, and the two
 reporting-availability booleans probed against the schema at startup.
+Optional pointer adapters are inserted only when initialized. Summer also
+treats a typed-nil `AccountProtection` pointer as absent, preventing Go's
+non-nil interface wrapper from selecting protected projections in a default-off
+deployment.
 
 When S07 `AccountProtection` is enabled, `cmd/unify` also installs Genelet's
 `AccountProtector` and a Summer `RedisLoginThrottle`. The protector owns exact
