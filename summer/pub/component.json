@@ -2,11 +2,11 @@
   "actions" : {
     "startnew" :    {"groups":["web"], "options":["no_db", "no_method"]},
     "insert" :      {"groups":["web"], "validate":["email","passwd","lastname"], "hide_json":["stamp","md5"]},
-    "activate" :    {"groups":["web"], "validate":["pub_id","email","stamp"]},
+    "activate" :    {"groups":["web"], "validate":["pub_id"]},
     "startretrieve":{"groups":["web"], "options":["no_db", "no_method"] },
     "retrieve" :    {"groups":["web"], "validate":["email"]},
-    "startreset":   {"groups":["web"], "validate":["pub_id","email","stamp"], "options":["no_db", "no_method"]},
-    "resetpass" :   {"groups":["web"], "validate":["pub_id","email","stamp"]},
+    "startreset":   {"groups":["web"], "validate":["pub_id"], "options":["no_method"]},
+    "resetpass" :   {"groups":["web"], "validate":["pub_id"]},
 
     "dashboard" :   {"groups":["pub"], "validate":["pub_id"]},
     "edit" :        {"groups":["pub"], "validate":["pub_id"]},
@@ -30,8 +30,8 @@
     ]
   },
 
-  "insert_pars" : ["passwd","pub_id","email","domain","firstname","lastname","address_id","active",          "access_order"],
-  "update_pars" : [         "pub_id","email","domain","firstname","lastname","address_id","active",          "access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
+  "insert_pars" : ["passwd","pub_id","email","email_hmac","email_cipher","domain","firstname","lastname","address_id","active",          "access_order"],
+  "update_pars" : [         "pub_id","email","email_hmac","email_cipher","domain","firstname","lastname","address_id","active",          "access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
   "topics_pars" : [         "pub_id","email","domain","firstname","lastname","address_id","active","created","access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
   "edit_pars" :   [         "pub_id","email","domain","firstname","lastname","address_id","active","created","access_order","seller_id","seller_type","seller_asi","seller_name","seller_domain","seller_authorized"],
 

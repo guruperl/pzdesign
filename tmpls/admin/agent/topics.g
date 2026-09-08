@@ -20,7 +20,7 @@
 			<td>{{.level}}</td>
 			<td>{{.notes}}</td>
 			<td>{{.active}}</td>
-			<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=agent&login={{.login | urlquery}}" target="_blank">进入账户</a></td>
+			<td><form method="post" action="manage" target="_blank"><input type="hidden" name="action" value="login_as"><input type="hidden" name="role" value="agent"><input type="hidden" name="agent_id" value="{{.agent_id}}"><button class="btn btn-sm btn-success" type="submit">进入账户</button></form></td>
 			<td><a href="agent?action=delete&agent_id={{.agent_id}}">删除</a></td>
 			</tr>{{end}}{{end}}
 		</tbody>

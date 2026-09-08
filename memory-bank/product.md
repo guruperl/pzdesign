@@ -102,6 +102,17 @@ without the Summer identity boundary: identity hardening with TOTP and named
 permissions, public account abuse protection, the advertiser management API and
 its credential lifecycle, traffic-quality review, and hosted funding and payout.
 
+In progress and default-off: S07 protects all five interactive account-role
+identifiers with Genelet's dedicated versioned lookup/encryption key ring.
+Summer supplies dual account writes/lifecycle lookups, shared Redis login
+throttling, and offline backfill/rotation tooling while bcrypt remains the only
+password verifier. Plaintext retirement and production activation are separate
+gates owned by Aofei's S07 contract.
+Activation and recovery use purpose-bound one-use tokens rather than email-
+bearing signed URLs when S07 is enabled; the legacy form remains only for the
+default-off rollback path. Administrator-only numeric login-as remains
+available only while the database-backed identity service is disabled.
+
 Shipping: the English public edition, including the static front page, manuals,
 advertiser/publisher account lifecycle, account mail, login/error guidance,
 browser-side front-page selection, and public toggle. The authenticated

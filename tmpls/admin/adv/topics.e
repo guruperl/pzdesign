@@ -27,7 +27,7 @@
 {{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="adv?action=takedown&active=No&adv_id={{.adv_id}}">Deactivate</a>{{end}}
 {{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="adv?action=takedown&active=Yes&adv_id={{.adv_id}}">Re-Activate</a>{{end}}
 </td>
-				<td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=adv&email={{.email | urlquery}}" target="_blank">As</a></td>
+				<td><form method="post" action="manage" target="_blank"><input type="hidden" name="action" value="login_as"><input type="hidden" name="role" value="adv"><input type="hidden" name="adv_id" value="{{.adv_id}}"><button class="btn btn-sm btn-success" type="submit">As</button></form></td>
 			</tr>{{end}}{{end}}
 		</tbody>
 	</table>

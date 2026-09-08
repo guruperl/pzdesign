@@ -113,6 +113,25 @@ typed one is an explicit error:
 `TrafficQuality`, `HostedPayment`, `PublicAccountProtector`, and the two
 reporting-availability booleans probed against the schema at startup.
 
+When S07 `AccountProtection` is enabled, `cmd/unify` also installs Genelet's
+`AccountProtector` and a Summer `RedisLoginThrottle`. The protector owns exact
+normalization, current/previous HMAC lookup candidates, and namespace-bound
+AEAD. The throttle receives only the protected identifier digest and stores a
+second expiring pseudonymous role/provider/login/IP key; when S06 is enabled it
+reuses that service's trusted-proxy client resolver rather than the local HTTP
+proxy address. Missing key material, an incomplete issuer contract, or
+unavailable shared throttle state fails startup/login closed. The default-off
+example retains legacy SQL for rollback.
+Advertiser/publisher action mail uses random expiring proofs whose keyed
+digests alone reach MySQL. Token consumption is atomic with activation or the
+bcrypt reset, and Genelet removes the private mail envelope before serializing
+responses. Protected account updates write each identifier tuple together and
+strip digest/cipher values and password hashes from returned model rows. Every
+create/change path rejects the identifier under Current and all retained
+Previous lookup keys; Current promotion still requires a coordinated writer
+stop so all instances use the same ordered ring. An identifier change clears
+all outstanding activation/reset proofs in that same account update.
+
 ## Optional Services
 
 Identity hardening, public account abuse protection, the management API,

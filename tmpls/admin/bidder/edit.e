@@ -6,7 +6,7 @@
   <input type="hidden" name="bidder_id" value="{{$item.bidder_id}}">
   <div class="form-group">
     <label>Advertiser</label>
-    <p class="form-control-static">{{$item.adv_id}} {{$item.adv_email}}</p>
+    <p class="form-control-static">{{$item.adv_id}}</p>
   </div>
   <div class="form-group">
     <label>Name</label>

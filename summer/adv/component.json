@@ -2,11 +2,11 @@
   "actions" : {
     "startnew" : {"groups":["web"], "options":["no_db", "no_method"]},
     "insert"   : {"groups":["web"], "validate":["lastname", "email", "passwd"]},
-    "activate" : {"groups":["web"], "validate":["adv_id", "email", "stamp"]},
+    "activate" : {"groups":["web"], "validate":["adv_id"]},
     "startretrieve":{"groups":["web"], "options":["no_db", "no_method"]},
     "retrieve" : {"groups":["web"], "validate":["email"]},
-    "startreset":{"groups":["web"], "validate":["adv_id", "email", "stamp"], "options":["no_db", "no_method"]},
-    "resetpass": {"groups":["web"], "validate":["adv_id", "email", "stamp"]},
+    "startreset":{"groups":["web"], "validate":["adv_id"], "options":["no_method"]},
+    "resetpass": {"groups":["web"], "validate":["adv_id"]},
 
     "dashboard": {"groups":["adv"], "validate":["adv_id"]},
     "edit" :     {"groups":["adv"], "validate":["adv_id"]},
@@ -26,7 +26,7 @@
     ]
   },
 
-  "insert_pars" : ["adv_id","domain","email","passwd","address_id","firstname","lastname","address_id","created","active","access_order"],
+  "insert_pars" : ["adv_id","domain","email","email_hmac","email_cipher","passwd","address_id","firstname","lastname","address_id","created","active","access_order"],
   "update_pars" : ["adv_id","domain","address_id","firstname","lastname","address_id","active","access_order"],
   "topics_pars" : ["adv_id","domain","address_id","firstname","lastname","address_id","created","active","access_order"],
   "edit_pars"   : ["adv_id","domain","address_id","firstname","lastname","address_id","created","active","access_order"],

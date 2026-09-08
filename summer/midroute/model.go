@@ -320,28 +320,56 @@ WHERE group_id=?`, groupID); err != nil {
 }
 
 func (self *Model) loadRouteBidders(groupID interface{}) error {
-	return self.SelectSQL(self.LISTS, `
+	projection := "a.email AS adv_email"
+	protected, err := summer.AccountProtectionEnabled(self.Storage)
+	if err != nil {
+		return err
+	}
+	if protected {
+		projection = "a.email_cipher AS adv_email_cipher"
+	}
+	if err := self.SelectSQL(self.LISTS, fmt.Sprintf(`
 SELECT rb.route_bidder_id, rb.group_id, rb.bidder_id, rb.priority, rb.timeout_ms,
 	rb.margin_pct, rb.min_margin_cpm, rb.active, rb.created, rb.updated,
-	b.bidder_name, b.adv_id, a.email AS adv_email, b.credential_status AS bidder_credential_status,
+	b.bidder_name, b.adv_id, %s, b.credential_status AS bidder_credential_status,
 	b.active AS bidder_active
 FROM mid_route_bidder rb
 INNER JOIN adv_bidder b USING (bidder_id)
 INNER JOIN adv a USING (adv_id)
 WHERE rb.group_id=?
-ORDER BY rb.priority ASC, rb.route_bidder_id ASC`, groupID)
+ORDER BY rb.priority ASC, rb.route_bidder_id ASC`, projection), groupID); err != nil {
+		return err
+	}
+	if protected {
+		return summer.DecryptAccountRows(self.Storage, "adv", "adv_email_cipher", "adv_email", *self.LISTS)
+	}
+	return nil
 }
 
 func (self *Model) loadRouteBidderByID(routeBidderID interface{}) error {
-	return self.SelectSQL(self.LISTS, `
+	projection := "a.email AS adv_email"
+	protected, err := summer.AccountProtectionEnabled(self.Storage)
+	if err != nil {
+		return err
+	}
+	if protected {
+		projection = "a.email_cipher AS adv_email_cipher"
+	}
+	if err := self.SelectSQL(self.LISTS, fmt.Sprintf(`
 SELECT rb.route_bidder_id, rb.group_id, rb.bidder_id, rb.priority, rb.timeout_ms,
 	rb.margin_pct, rb.min_margin_cpm, rb.active, rb.created, rb.updated,
-	b.bidder_name, b.adv_id, a.email AS adv_email, b.credential_status AS bidder_credential_status,
+	b.bidder_name, b.adv_id, %s, b.credential_status AS bidder_credential_status,
 	b.active AS bidder_active
 FROM mid_route_bidder rb
 INNER JOIN adv_bidder b USING (bidder_id)
 INNER JOIN adv a USING (adv_id)
-WHERE rb.route_bidder_id=?`, routeBidderID)
+WHERE rb.route_bidder_id=?`, projection), routeBidderID); err != nil {
+		return err
+	}
+	if protected {
+		return summer.DecryptAccountRows(self.Storage, "adv", "adv_email_cipher", "adv_email", *self.LISTS)
+	}
+	return nil
 }
 
 func (self *Model) loadRouteBidderByIDString(routeBidderID string) error {
@@ -370,12 +398,25 @@ WHERE route_bidder_id=?`, routeBidderID); err != nil {
 
 func (self *Model) loadBidderOptions() error {
 	lists := make([]map[string]interface{}, 0)
-	if err := self.SelectSQL(&lists, `
-SELECT b.bidder_id, b.bidder_name, b.adv_id, a.email AS adv_email, b.credential_status, b.active
+	projection := "a.email AS adv_email"
+	protected, err := summer.AccountProtectionEnabled(self.Storage)
+	if err != nil {
+		return err
+	}
+	if protected {
+		projection = "a.email_cipher AS adv_email_cipher"
+	}
+	if err := self.SelectSQL(&lists, fmt.Sprintf(`
+SELECT b.bidder_id, b.bidder_name, b.adv_id, %s, b.credential_status, b.active
 FROM adv_bidder b
 INNER JOIN adv a USING (adv_id)
-ORDER BY b.active DESC, b.credential_status ASC, b.bidder_name ASC`); err != nil {
+ORDER BY b.active DESC, b.credential_status ASC, b.bidder_name ASC`, projection)); err != nil {
 		return err
+	}
+	if protected {
+		if err := summer.DecryptAccountRows(self.Storage, "adv", "adv_email_cipher", "adv_email", lists); err != nil {
+			return err
+		}
 	}
 	(*self.OTHER)["midroute_bidders"] = lists
 	return nil
@@ -642,7 +683,7 @@ SELECT t.target_id, t.group_id, t.entitytype_id, t.entity_id, t.size_id, t.prior
 	t.active, t.created, t.updated,
 	CASE
 		WHEN t.entitytype_id IS NULL THEN 'Global'
-		WHEN t.entitytype_id=3 THEN (SELECT p.email FROM pub p WHERE p.pub_id=t.entity_id)
+		WHEN t.entitytype_id=3 THEN 'Publisher'
 		WHEN t.entitytype_id=31 THEN (SELECT s.site_name FROM pub_site s WHERE s.site_id=t.entity_id)
 		WHEN t.entitytype_id=32 THEN (SELECT sl.slot_name FROM pub_slot sl WHERE sl.slot_id=t.entity_id)
 		ELSE CAST(t.entity_id AS CHAR)

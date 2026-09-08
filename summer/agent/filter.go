@@ -23,7 +23,7 @@ func (self *Filter) Preset() error {
 		who = "admin"
 	}
 
-	if who == "admin" && action == "insert" {
+	if who == "admin" && (action == "insert" || action == "update") && ARGS.Get("passwd") != "" {
 		if err := genelet.ValidatePassword(ARGS.Get("passwd")); err != nil {
 			return err
 		}

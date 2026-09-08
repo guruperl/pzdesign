@@ -6,12 +6,10 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"expvar"
 	"fmt"
 	"io"
 	"net/http"
-	"net/mail"
 	"net/netip"
 	"net/url"
 	"os"
@@ -421,15 +419,7 @@ func (protector *PublicAccountProtector) admit(request *http.Request, config *ge
 }
 
 func normalizePublicAccountEmail(value string) (string, error) {
-	normalized := strings.ToLower(strings.TrimSpace(value))
-	if normalized == "" || len(normalized) > 320 {
-		return "", errors.New("invalid email")
-	}
-	address, err := mail.ParseAddress(normalized)
-	if err != nil || strings.ToLower(address.Address) != normalized {
-		return "", errors.New("invalid email")
-	}
-	return normalized, nil
+	return genelet.NormalizeAccountIdentifier("email", value)
 }
 
 func publicAccountDigest(secret, namespace, value string) string {
@@ -466,6 +456,20 @@ func (protector *PublicAccountProtector) clientIP(request *http.Request) (netip.
 		return chain[0], nil
 	}
 	return peer, nil
+}
+
+// ClientIP exposes the same trusted-proxy resolution used by S06 quotas to
+// Genelet's shared login throttle. It never trusts a forwarding header from an
+// unlisted peer.
+func (protector *PublicAccountProtector) ClientIP(request *http.Request) (string, error) {
+	if protector == nil {
+		return "", fmt.Errorf("public account client-IP resolver is unavailable")
+	}
+	address, err := protector.clientIP(request)
+	if err != nil {
+		return "", err
+	}
+	return address.String(), nil
 }
 
 func parseRemoteAddress(value string) (netip.Addr, error) {

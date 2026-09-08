@@ -46,12 +46,22 @@ func (self *Filter) Preset() error {
 	}
 
 	if who == "web" && (action == "activate" || action == "startreset" || action == "resetpass") {
-		if ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("adv_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
-			return genelet.Err(3102)
+		protected, err := summer.ProtectedAccountActionsEnabled(self.Storage)
+		if err != nil {
+			return err
 		}
-		if self.Identity != nil && (action == "startreset" || action == "resetpass") {
-			if err := self.Identity.ValidateRecoveryTimestamp(ARGS.Get("stamp")); err != nil {
+		if protected {
+			if ARGS.Get("action_token") == "" {
 				return genelet.Err(3102)
+			}
+		} else {
+			if ARGS.Get("email") == "" || ARGS.Get("stamp") == "" || ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("adv_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
+				return genelet.Err(3102)
+			}
+			if self.Identity != nil && (action == "startreset" || action == "resetpass") {
+				if err := self.Identity.ValidateRecoveryTimestamp(ARGS.Get("stamp")); err != nil {
+					return genelet.Err(3102)
+				}
 			}
 		}
 	} else if ARGS.Get("_gadmin") != "1" && action == "update" {
@@ -86,6 +96,14 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 		if err := model.Randomid("adv", "adv_id", 0, 16777216, 10); err != nil {
 			return err
 		}
+	} else if who == "web" && action == "startreset" {
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if protected {
+			return summer.ValidateAccountActionToken(model.Context, model.DB, model.Storage, "adv", self.R.Form.Get("adv_id"), "reset", self.R.Form.Get("action_token"))
+		}
 	}
 
 	return nil
@@ -108,24 +126,52 @@ func (self *Filter) After(model *Model) error {
 		}
 	} else if who == "web" && action == "insert" {
 		email := ARGS.Get("email")
-		ARGS.Set("stamp", ARGS.Get("_gtime"))
-		ARGS.Set("md5", genelet.Digest(self.C.Secret, ARGS.Get("adv_id"), email, ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")))
+		var mailExtra map[string]interface{}
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if protected {
+			token, err := summer.IssueAccountActionToken(model.Context, model.DB, model.Storage, "adv", ARGS.Get("adv_id"), "activate", email)
+			if err != nil {
+				return err
+			}
+			mailExtra = map[string]interface{}{"action_token": token}
+		} else {
+			ARGS.Set("stamp", ARGS.Get("_gtime"))
+			ARGS.Set("md5", genelet.Digest(self.C.Secret, ARGS.Get("adv_id"), email, ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")))
+		}
 		ARGS.Set("serverUrl", self.C.ServerURL)
 		other["_gmail"] = map[string]interface{}{
 			"To":      email,
 			"Subject": "W8M 广告主账户邮箱验证",
-			"file":    self.C.Template + "/" + who + "/adv/insert.mail." + self.ChartagValue}
+			"file":    self.C.Template + "/" + who + "/adv/insert.mail." + self.ChartagValue,
+			"extra":   mailExtra}
 	} else if who == "web" && action == "retrieve" && len(lists) > 0 {
 		item := lists[0]
 		email := item["email"].(string)
 		adv_id := strconv.FormatInt(item["adv_id"].(int64), 10)
-		ARGS.Set("stamp", ARGS.Get("_gtime"))
-		ARGS.Set("md5", genelet.Digest(self.C.Secret, adv_id, email, ARGS.Get("stamp"), item["firstname"].(string), item["lastname"].(string)))
+		var mailExtra map[string]interface{}
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if protected {
+			token, err := summer.IssueAccountActionToken(model.Context, model.DB, model.Storage, "adv", adv_id, "reset", email)
+			if err != nil {
+				return err
+			}
+			mailExtra = map[string]interface{}{"action_token": token}
+		} else {
+			ARGS.Set("stamp", ARGS.Get("_gtime"))
+			ARGS.Set("md5", genelet.Digest(self.C.Secret, adv_id, email, ARGS.Get("stamp"), item["firstname"].(string), item["lastname"].(string)))
+		}
 		ARGS.Set("serverUrl", self.C.ServerURL)
 		other["_gmail"] = map[string]interface{}{
 			"To":      email,
 			"Subject": "W8M 广告主账户密码重置",
-			"file":    self.C.Template + "/" + who + "/adv/retrieve.mail." + self.ChartagValue}
+			"file":    self.C.Template + "/" + who + "/adv/retrieve.mail." + self.ChartagValue,
+			"extra":   mailExtra}
 	}
 
 	return nil

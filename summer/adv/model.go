@@ -22,6 +22,17 @@ func (self *Model) Resetpass(extra ...url.Values) error {
 		ctx = context.Background()
 	}
 	args := self.ARGS
+	protected, err := summer.ProtectedAccountActionsEnabled(self.Storage)
+	if err != nil {
+		return err
+	}
+	if protected {
+		if err := identity.ResetPasswordWithActionToken(ctx, genelet.IdentityAccount{Role: "adv", ID: args.Get("adv_id")}, args.Get("action_token"), args.Get("passwd"), args.Get("recovery_code")); err != nil {
+			return err
+		}
+		args.Del("action_token")
+		return nil
+	}
 	return identity.ResetPassword(ctx, genelet.IdentityAccount{Role: "adv", ID: args.Get("adv_id")}, args.Get("email"), args.Get("passwd"), args.Get("recovery_code"))
 }
 

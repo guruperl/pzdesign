@@ -29,7 +29,7 @@
 {{if eq .active "Yes"}}<a class="btn btn-sm btn-danger" href="pub?action=takedown&active=No&pub_id={{.pub_id}}">Disable</a>{{end}}
 {{if eq .active "No"}}<a class="btn btn-sm btn-warning" href="pub?action=takedown&active=Yes&pub_id={{.pub_id}}">Reactivate</a>{{end}}
 </td>
-                <td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=pub&email={{.email | urlquery}}" target="_blank">Enter Account</a></td>
+                <td><form method="post" action="manage" target="_blank"><input type="hidden" name="action" value="login_as"><input type="hidden" name="role" value="pub"><input type="hidden" name="pub_id" value="{{.pub_id}}"><button class="btn btn-sm btn-success" type="submit">Enter Account</button></form></td>
             </tr>{{end}}{{end}}
             <tr>
             <th colspan=8>Add Publisher (SSP/ADX)</th>
@@ -38,7 +38,7 @@
             <input type=hidden name=action value="insert" />
             <input type=hidden name=active value="Yes" />
             <td> </td>
-            <td><input class="form-input" type=text name=domain /></td>
+            <td><input class="form-input" type=text name=domain placeholder="Domain" /><input class="form-input" type=email name=email placeholder="Account email" required /></td>
             <td><input class="form-input" type=text name=limit_imp /></td>
             <td><input class="form-input" type=hidden name=current_imp value=0 /></td>
             <td colspan=4><button type="submit" class="btn btn-sm btn-primary">Add</button></td>

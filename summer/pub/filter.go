@@ -53,17 +53,27 @@ func (self *Filter) Preset() error {
 	}
 
 	if who == "web" && (action == "activate" || action == "startreset" || action == "resetpass") {
-		if ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("pub_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
-			return genelet.Err(3102)
+		protected, err := summer.ProtectedAccountActionsEnabled(self.Storage)
+		if err != nil {
+			return err
 		}
-		if self.Identity != nil && (action == "startreset" || action == "resetpass") {
-			if err := self.Identity.ValidateRecoveryTimestamp(ARGS.Get("stamp")); err != nil {
+		if protected {
+			if ARGS.Get("action_token") == "" {
 				return genelet.Err(3102)
+			}
+		} else {
+			if ARGS.Get("email") == "" || ARGS.Get("stamp") == "" || ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("pub_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
+				return genelet.Err(3102)
+			}
+			if self.Identity != nil && (action == "startreset" || action == "resetpass") {
+				if err := self.Identity.ValidateRecoveryTimestamp(ARGS.Get("stamp")); err != nil {
+					return genelet.Err(3102)
+				}
 			}
 		}
 	} else if who == "admin" && action == "insert" {
 		// needed for validation but not actually passed to the db
-		for _, str := range []string{"email", "passwd", "firstname", "lastname", "address_id", "active", "access_order"} {
+		for _, str := range []string{"passwd", "firstname", "lastname", "address_id", "active", "access_order"} {
 			ARGS.Set(str, "1")
 		}
 	} else if who != "admin" && action == "update" {
@@ -139,7 +149,31 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 	}
 
 	if who == "admin" && action == "insert" {
-		p, err := adminapi.AddPub(model.DB, ARGS.Get("domain"))
+		email := ARGS.Get("email")
+		if err := summer.EnsureAccountIdentifierAvailable(model.Context, model.DB, model.Storage, "pub", email, ""); err != nil {
+			return err
+		}
+		protected, err := summer.ProtectAccountIdentifier(model.Storage, "pub", email)
+		if err != nil {
+			return err
+		}
+		var digest []byte
+		var encrypted string
+		if protected != nil {
+			email = protected.Get("_normalized_identifier")
+			digest = []byte(protected.Get("email_hmac"))
+			encrypted = protected.Get("email_cipher")
+		}
+		retired, err := summer.AccountPlaintextRetired(model.Storage)
+		if err != nil {
+			return err
+		}
+		var p *acl.Pub
+		if retired {
+			p, err = adminapi.AddPubProtectedAccount(model.DB, ARGS.Get("domain"), digest, encrypted)
+		} else {
+			p, err = adminapi.AddPubAccount(model.DB, ARGS.Get("domain"), email, digest, encrypted)
+		}
 		if err != nil {
 			return err
 		}
@@ -154,6 +188,14 @@ INSERT INTO adv_balance (limit_imp, created) VALUES (?, NOW())`, ARGS.Get("limit
 	} else if who == "web" && action == "insert" {
 		if err := model.Randomid("pub", "pub_id", 0, 16777216, 10); err != nil {
 			return err
+		}
+	} else if who == "web" && action == "startreset" {
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if protected {
+			return summer.ValidateAccountActionToken(model.Context, model.DB, model.Storage, "pub", self.R.Form.Get("pub_id"), "reset", self.R.Form.Get("action_token"))
 		}
 	} else if who != "admin" && action == "update" {
 		model.CurrentTable = "adv_balance"
@@ -204,24 +246,52 @@ func (self *Filter) After(model *Model) error {
 		}
 	} else if who == "web" && action == "insert" {
 		email := ARGS.Get("email")
-		ARGS.Set("stamp", ARGS.Get("_gtime"))
-		ARGS.Set("md5", genelet.Digest(self.C.Secret, ARGS.Get("pub_id"), email, ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")))
+		var mailExtra map[string]interface{}
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if protected {
+			token, err := summer.IssueAccountActionToken(model.Context, model.DB, model.Storage, "pub", ARGS.Get("pub_id"), "activate", email)
+			if err != nil {
+				return err
+			}
+			mailExtra = map[string]interface{}{"action_token": token}
+		} else {
+			ARGS.Set("stamp", ARGS.Get("_gtime"))
+			ARGS.Set("md5", genelet.Digest(self.C.Secret, ARGS.Get("pub_id"), email, ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")))
+		}
 		ARGS.Set("serverUrl", self.C.ServerURL)
 		other["_gmail"] = map[string]interface{}{
 			"To":      email,
 			"Subject": "W8M 流量方账户邮箱验证",
-			"file":    self.C.Template + "/" + who + "/pub/insert.mail." + self.ChartagValue}
+			"file":    self.C.Template + "/" + who + "/pub/insert.mail." + self.ChartagValue,
+			"extra":   mailExtra}
 	} else if who == "web" && action == "retrieve" && len(lists) > 0 {
 		item := lists[0]
 		email := item["email"].(string)
 		pubID := strconv.FormatInt(item["pub_id"].(int64), 10)
-		ARGS.Set("stamp", ARGS.Get("_gtime"))
-		ARGS.Set("md5", genelet.Digest(self.C.Secret, pubID, email, ARGS.Get("stamp"), item["firstname"].(string), item["lastname"].(string)))
+		var mailExtra map[string]interface{}
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if protected {
+			token, err := summer.IssueAccountActionToken(model.Context, model.DB, model.Storage, "pub", pubID, "reset", email)
+			if err != nil {
+				return err
+			}
+			mailExtra = map[string]interface{}{"action_token": token}
+		} else {
+			ARGS.Set("stamp", ARGS.Get("_gtime"))
+			ARGS.Set("md5", genelet.Digest(self.C.Secret, pubID, email, ARGS.Get("stamp"), item["firstname"].(string), item["lastname"].(string)))
+		}
 		ARGS.Set("serverUrl", self.C.ServerURL)
 		other["_gmail"] = map[string]interface{}{
 			"To":      email,
 			"Subject": "W8M 流量方账户密码重置",
-			"file":    self.C.Template + "/" + who + "/pub/retrieve.mail." + self.ChartagValue}
+			"file":    self.C.Template + "/" + who + "/pub/retrieve.mail." + self.ChartagValue,
+			"extra":   mailExtra}
 	}
 
 	return nil

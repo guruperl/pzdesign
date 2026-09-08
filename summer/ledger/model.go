@@ -618,8 +618,16 @@ ORDER BY margin_spend DESC LIMIT ?`,
 
 func (self *Model) TopicsMidTopPublishers(extra ...url.Values) error {
 	ARGS := self.ARGS
-	return self.SelectSQL(self.LISTS,
-		`SELECT m.pub_id, p.email AS pub_email, ANY_VALUE(m.site_id) AS site_id, ANY_VALUE(m.slot_id) AS slot_id,
+	projection := "ANY_VALUE(p.email) AS pub_email"
+	protected, err := summer.AccountProtectionEnabled(self.Storage)
+	if err != nil {
+		return err
+	}
+	if protected {
+		projection = "ANY_VALUE(p.email_cipher) AS pub_email_cipher"
+	}
+	if err := self.SelectSQL(self.LISTS,
+		fmt.Sprintf(`SELECT m.pub_id, %s, ANY_VALUE(m.site_id) AS site_id, ANY_VALUE(m.slot_id) AS slot_id,
 SUM(m.wins) AS wins, SUM(m.losses) AS losses, SUM(m.imps) AS imps, SUM(m.clis) AS clis,
 SUM(m.charge_spend) AS charge_spend, SUM(m.pay_spend) AS pay_spend, SUM(m.margin_spend) AS margin_spend,
 COALESCE(SUM(m.margin_spend)/NULLIF(SUM(m.charge_spend),0), 0) AS margin_rate,
@@ -628,7 +636,13 @@ FROM daily_mid m
 INNER JOIN daily_log l USING (log_id)
 LEFT JOIN pub p USING (pub_id)
 WHERE l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?
-GROUP BY m.pub_id, p.email
-ORDER BY charge_spend DESC LIMIT ?`,
-		ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+GROUP BY m.pub_id
+ORDER BY charge_spend DESC LIMIT ?`, projection),
+		ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top")); err != nil {
+		return err
+	}
+	if protected {
+		return summer.DecryptAccountRows(self.Storage, "pub", "pub_email_cipher", "pub_email", *self.LISTS)
+	}
+	return nil
 }

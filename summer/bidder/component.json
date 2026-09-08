@@ -23,13 +23,11 @@
   "current_id_auto" : "bidder_id",
 
   "current_tables" : [
-    {"name":"adv_bidder", "alias":"b"},
-    {"name":"adv", "alias":"a", "type":"INNER", "using":"adv_id"}
+    {"name":"adv_bidder", "alias":"b"}
   ],
   "topics_hash" : {
     "b.bidder_id":"bidder_id",
     "b.adv_id":"adv_id",
-    "a.email":"adv_email",
     "b.synthetic_campaign_id":"synthetic_campaign_id",
     "b.synthetic_item_id":"synthetic_item_id",
     "b.synthetic_creative_id":"synthetic_creative_id",

@@ -47,6 +47,25 @@ gitleaks git --redact .
 git diff --check
 ```
 
+S07 offline identifier tooling reads the owner-readable Summer configuration
+and the environment key named by `AccountProtection.Current.KeyEnv`. It prints
+counts and numeric row IDs only; `status` validates all retained plaintext
+sources, and `backfill` preflights every account table for invalid source data
+or partial pairs before any mutation. Rotation authenticates ciphertext and
+requires matching current/previous digest provenance. Writes require the
+explicit `-write` gate:
+
+```bash
+GOWORK=off SUMMER=/owner/readable/summer.json go run ./cmd/account-data -mode=status
+GOWORK=off SUMMER=/owner/readable/summer.json go run ./cmd/account-data -mode=backfill -write
+GOWORK=off SUMMER=/owner/readable/summer.json go run ./cmd/account-data -mode=verify -limit=100000
+```
+
+Activation proofs expire after 24 hours and reset proofs after one hour. Keep
+the prior S07 key through that drain window. The application marks proof pages
+no-store/no-referrer and redacts its own logs; the exact proxy access-log gate
+belongs to the private environment runbook.
+
 Database-backed admin tests need a generated Summer config and skip without one:
 
 ```bash

@@ -22,6 +22,17 @@ func (self *Model) Resetpass(extra ...url.Values) error {
 		ctx = context.Background()
 	}
 	args := self.ARGS
+	protected, err := summer.ProtectedAccountActionsEnabled(self.Storage)
+	if err != nil {
+		return err
+	}
+	if protected {
+		if err := identity.ResetPasswordWithActionToken(ctx, genelet.IdentityAccount{Role: "pub", ID: args.Get("pub_id")}, args.Get("action_token"), args.Get("passwd"), args.Get("recovery_code")); err != nil {
+			return err
+		}
+		args.Del("action_token")
+		return nil
+	}
 	return identity.ResetPassword(ctx, genelet.IdentityAccount{Role: "pub", ID: args.Get("pub_id")}, args.Get("email"), args.Get("passwd"), args.Get("recovery_code"))
 }
 
@@ -42,4 +53,8 @@ func (self *Model) Insert(extra ...url.Values) error {
 UPDATE pub SET total_balance_id=? WHERE pub_id=?`, ARGS.Get("total_balance_id"), ARGS.Get("pub_id"))
 	}
 	return self.Model.Insert(extra...)
+}
+
+func (self *Model) Update(extra ...url.Values) error {
+	return self.Model.UpdateProtectedAccount("pub", extra...)
 }

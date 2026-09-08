@@ -20,7 +20,7 @@
             <td>{{.level}}</td>
             <td>{{.notes}}</td>
             <td>{{.active}}</td>
-            <td><a class="btn btn-sm btn-success" href="manage?action=login_as&role=agent&login={{.login | urlquery}}" target="_blank">Enter Account</a></td>
+            <td><form method="post" action="manage" target="_blank"><input type="hidden" name="action" value="login_as"><input type="hidden" name="role" value="agent"><input type="hidden" name="agent_id" value="{{.agent_id}}"><button class="btn btn-sm btn-success" type="submit">Enter Account</button></form></td>
             <td><a href="agent?action=delete&agent_id={{.agent_id}}">Delete</a></td>
             </tr>{{end}}{{end}}
         </tbody>

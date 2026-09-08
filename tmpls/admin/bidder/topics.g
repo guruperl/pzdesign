@@ -20,7 +20,7 @@
     <tbody>{{ with .Lists }}{{ range . }}
       <tr>
         <td>{{.bidder_id}}</td>
-        <td>{{.adv_id}} {{.adv_email}}</td>
+        <td>{{.adv_id}}</td>
         <td>{{.bidder_name}}</td>
         <td>{{.endpoint_url}}</td>
         <td>{{.credential_status}}</td>

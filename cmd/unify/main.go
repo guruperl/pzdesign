@@ -87,6 +87,20 @@ func run(ctx context.Context, localFlagSet bool) error {
 	}
 	if publicAccountProtector != nil {
 		gc.Storage[summer.PublicAccountProtectorStorageKey] = publicAccountProtector
+		gc.ClientIPResolver = publicAccountProtector
+	}
+	accountProtection, err := genelet.NewAccountProtector(gc.C)
+	if err != nil {
+		return fmt.Errorf("initialize account protection: %w", err)
+	}
+	gc.AccountProtection = accountProtection
+	gc.Storage[summer.AccountProtectionStorageKey] = accountProtection
+	if accountProtection != nil {
+		loginThrottle, err := summer.NewRedisLoginThrottle(sc.Redis, accountProtection)
+		if err != nil {
+			return fmt.Errorf("initialize shared login throttle: %w", err)
+		}
+		gc.LoginThrottle = loginThrottle
 	}
 	gc.Storage[summer.ActionReportingStorageKey] = actionReportingAvailable(ctx, sc.DB)
 	gc.Storage[summer.MarketplaceReportingStorageKey] = marketplaceReportingAvailable(ctx, sc.DB)
@@ -108,6 +122,9 @@ func run(ctx context.Context, localFlagSet bool) error {
 	}
 	if apiService != nil && identity == nil {
 		return fmt.Errorf("management API requires the Summer identity boundary")
+	}
+	if apiService != nil && accountProtection != nil {
+		apiService.SetIdentifierDecryptor(accountProtection)
 	}
 	gc.Storage["ManagementAPI"] = apiService
 	qualityService, err := trafficquality.NewService(sc.C.TrafficQuality, sc.DB)

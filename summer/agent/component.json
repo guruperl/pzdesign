@@ -7,10 +7,10 @@
     "delete" : {}
   },
 
-  "insert_pars"    : [            "login", "passwd", "address_id", "level", "notes", "active", "created" ],
-  "update_pars"    : ["agent_id", "login", "passwd", "address_id", "level", "notes", "active", "created" ],
-  "topics_pars"    : ["agent_id", "login", "passwd", "address_id", "level", "notes", "active", "created" ],
-  "edit_pars"      : ["agent_id", "login", "passwd", "address_id", "level", "notes", "active", "created" ],
+  "insert_pars"    : [            "login", "login_hmac", "login_cipher", "passwd", "address_id", "level", "notes", "active", "created" ],
+  "update_pars"    : ["agent_id", "login", "login_hmac", "login_cipher", "passwd", "address_id", "level", "notes", "active", "created" ],
+  "topics_pars"    : ["agent_id", "login",           "address_id", "level", "notes", "active", "created" ],
+  "edit_pars"      : ["agent_id", "login",           "address_id", "level", "notes", "active", "created" ],
 
   "current_table"   : "agent",
   "current_key"     : "agent_id",

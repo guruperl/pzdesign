@@ -25,6 +25,7 @@ const (
 	ActionReportingStorageKey      = "ActionReportingEnabled"
 	MarketplaceReportingStorageKey = "MarketplaceReportingEnabled"
 	DirectSSPTokenIssuerStorageKey = "DirectSSPTokenIssuer"
+	AccountProtectionStorageKey    = "AccountProtection"
 )
 
 func ActionReportingEnabled(storage map[string]interface{}) bool {

@@ -1,7 +1,7 @@
 Hello, {{index .ARGS.lastname 0}} {{index .ARGS.firstname 0}}:
 
 You are registering a W8M publisher account. Use the following link to verify your email and complete account registration:
-{{index .ARGS.serverUrl 0}}/goto/web/e/pub?action=activate&pub_id={{index .ARGS.pub_id 0}}&email={{index .ARGS.email 0 | urlquery }}&stamp={{index .ARGS.stamp 0}}&md5={{index .ARGS.md5 0}}&firstname={{index .ARGS.firstname 0 | urlquery }}&lastname={{index .ARGS.lastname 0 | urlquery }}
+{{with .Extra.action_token}}{{index $.ARGS.serverUrl 0}}/goto/web/e/pub?action=activate&pub_id={{index $.ARGS.pub_id 0}}&action_token={{.|urlquery}}{{else}}{{index $.ARGS.serverUrl 0}}/goto/web/e/pub?action=activate&pub_id={{index $.ARGS.pub_id 0}}&email={{index $.ARGS.email 0|urlquery}}&stamp={{index $.ARGS.stamp 0}}&md5={{index $.ARGS.md5 0}}&firstname={{index $.ARGS.firstname 0|urlquery}}&lastname={{index $.ARGS.lastname 0|urlquery}}{{end}}
 
 If you did not initiate this request, you can ignore this email.
 
