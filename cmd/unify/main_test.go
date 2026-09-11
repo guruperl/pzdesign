@@ -150,6 +150,48 @@ func TestServeMuxDoesNotSpecialCaseFrontLanguagePaths(t *testing.T) {
 	}
 }
 
+func TestServeMuxRepairsOnlyLegacyAccountMailEscapedSpaces(t *testing.T) {
+	controller := &dsp.Controller{C: &dsp.Config{}}
+	downstream := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if strings.Contains(r.URL.RawQuery, ";") || strings.Contains(r.RequestURI, ";") {
+			t.Errorf("downstream request still contains a semicolon")
+		}
+		if err := r.ParseForm(); err != nil {
+			t.Errorf("downstream ParseForm: %v", err)
+		}
+		if r.Form.Get("firstname") != "Two Words" {
+			t.Errorf("firstname = %q, want reconstructed space", r.Form.Get("firstname"))
+		}
+		w.WriteHeader(http.StatusNoContent)
+	})
+	mux := newServeMux(controller, downstream)
+
+	for _, path := range []string{
+		"/goto/web/e/adv?action=activate&adv_id=7&email=owner%40example.test&stamp=123&md5=proof&firstname=Two&%2343;Words&lastname=Last",
+		"/goto/web/g/pub?action=startreset&pub_id=7&email=owner%40example.test&stamp=123&md5=proof&firstname=Two&%2343;Words&lastname=Last",
+	} {
+		response := httptest.NewRecorder()
+		mux.ServeHTTP(response, httptest.NewRequest(http.MethodGet, path, nil))
+		if response.Code != http.StatusNoContent {
+			t.Fatalf("GET %s status = %d, want %d", path, response.Code, http.StatusNoContent)
+		}
+	}
+}
+
+func TestLegacyAccountMailRepairRejectsUnscopedOrIncompleteQueries(t *testing.T) {
+	for _, request := range []*http.Request{
+		httptest.NewRequest(http.MethodPost, "/goto/web/e/adv?action=activate&adv_id=7&email=x&stamp=1&md5=p&firstname=Two&%2343;Words&lastname=Last", nil),
+		httptest.NewRequest(http.MethodGet, "/goto/adv/e/adv?action=activate&adv_id=7&email=x&stamp=1&md5=p&firstname=Two&%2343;Words&lastname=Last", nil),
+		httptest.NewRequest(http.MethodGet, "/goto/web/e/adv?action=topics&adv_id=7&email=x&stamp=1&md5=p&firstname=Two&%2343;Words&lastname=Last", nil),
+		httptest.NewRequest(http.MethodGet, "/goto/web/e/adv?action=activate&adv_id=7&email=x&stamp=1&firstname=Two&%2343;Words&lastname=Last", nil),
+		httptest.NewRequest(http.MethodGet, "/goto/web/e/adv?action=activate&adv_id=7&email=x&stamp=1&md5=p&firstname=Two&%2343;Words&lastname=Last&action_token=opaque", nil),
+	} {
+		if repaired, ok := repairLegacyAccountMailQuery(request); ok || repaired != "" {
+			t.Fatalf("unexpected repair for %s %s", request.Method, request.URL.String())
+		}
+	}
+}
+
 func (s *observingHTTPServer) Shutdown(ctx context.Context) error {
 	close(s.shutdownCalled)
 	return s.Server.Shutdown(ctx)

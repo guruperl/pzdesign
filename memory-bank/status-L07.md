@@ -15,6 +15,7 @@ those documents, and prevent language, link, or disclosure drift.
 | L07.1 Add bilingual policy documents | `[+]` | Added English `/privacy.html` and `/terms.html` plus Chinese `.zh.html` siblings, with reciprocal language metadata and matching section order. Privacy copy follows the current Aofei privacy/data-governance behavior and discloses Gmail API `gmail.send`-only use. |
 | L07.2 Link the public account journey | `[+]` | Advertiser and publisher registration now link the matching Terms and Privacy editions; home, manuals, login, error, and shared public account footers expose both documents. |
 | L07.3 Guard, verify, and review | `[+]` | The copy checker requires all legal pages, core disclosures, stable language-specific links, reciprocal alternates, safe registration new-tab links, and ordered section parity. The parity guard permits only the exact approved legal URL pairs. Repository-wide verification and review pass. |
+| Post-closeout plain-text account links | `[+]` | A live English advertiser registration exposed that HTML template rendering changed a URL-escaped space into an HTML character reference inside a `text/plain` Gmail message. Genelet now renders mail files as text templates; all eight advertiser/publisher activation/reset templates prove both legacy and opaque-token query strings parse and round-trip names, addresses, and proofs without semicolon-bearing fragments. The exact public account routes reconstruct that artifact in already issued complete legacy proof URLs before the existing signed-digest validation. |
 
 ## Acceptance
 
@@ -58,6 +59,19 @@ those documents, and prevent language, link, or disclosure drift.
   P1/P2-or-higher source issue. The documents use no runtime data, user input,
   new script, secret, or unsafe rendering boundary; registration action and
   field contracts remain unchanged.
+- Post-closeout iteration 3 found the live plain-text link compatibility
+  defect and one P2 in the first correction: selecting text-template rendering
+  for every file-backed message would remove contextual escaping from an
+  explicitly `text/html` message. It also required the outstanding-link seam
+  to keep the downstream URL and request-target views consistent and match
+  only the four exact public account paths.
+- Post-closeout iteration 4 is clean. Genelet selects text or HTML rendering
+  from the effective message content type, all browser templates retain their
+  existing contextual HTML escaping, and both mail modes have regression
+  coverage. The already-issued-link seam is restricted to GET activation/reset
+  requests carrying the complete legacy shape and cannot bypass its downstream
+  digest validation. Both languages, roles, and default-off legacy/opaque
+  branches are covered without activating S07.
 
 ## Verification evidence
 

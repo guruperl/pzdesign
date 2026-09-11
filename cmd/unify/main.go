@@ -11,8 +11,10 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
+	"strings"
 	"sync/atomic"
 	"syscall"
 	"time"
@@ -385,8 +387,64 @@ func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, su
 	mux.Handle("HEAD /goto/admin/g/admin", geneletHandler)
 	mux.HandleFunc("GET /goto/admin/e/admin", legacyAdminLanding("e"))
 	mux.HandleFunc("GET /goto/admin/g/admin", legacyAdminLanding("g"))
-	mux.Handle("/", geneletHandler)
+	mux.Handle("/", legacyAccountMailQueryCompatibility(geneletHandler))
 	return mux
+}
+
+// legacyAccountMailQueryCompatibility repairs only the plain-text account
+// links emitted before Genelet switched mail files from html/template to
+// text/template. html/template represented a URL-escaped space as "&#43;";
+// mail clients encoded its '#' and sent the resulting "&%2343;" fragment as
+// a query separator. Existing signed links remain valid after this exact
+// reconstruction and still pass the ordinary legacy digest check downstream.
+func legacyAccountMailQueryCompatibility(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		repaired, ok := repairLegacyAccountMailQuery(r)
+		if ok {
+			copyRequest := r.Clone(r.Context())
+			copyURL := *r.URL
+			copyURL.RawQuery = repaired
+			copyRequest.URL = &copyURL
+			copyRequest.RequestURI = copyURL.RequestURI()
+			r = copyRequest
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func repairLegacyAccountMailQuery(r *http.Request) (string, bool) {
+	if r == nil || r.URL == nil || r.Method != http.MethodGet {
+		return "", false
+	}
+	var accountRole string
+	switch r.URL.Path {
+	case "/goto/web/e/adv", "/goto/web/g/adv":
+		accountRole = "adv"
+	case "/goto/web/e/pub", "/goto/web/g/pub":
+		accountRole = "pub"
+	default:
+		return "", false
+	}
+	raw := r.URL.RawQuery
+	repaired := strings.ReplaceAll(strings.ReplaceAll(raw, "&%2343;", "+"), "&#43;", "+")
+	if repaired == raw {
+		return "", false
+	}
+	query, err := url.ParseQuery(repaired)
+	if err != nil || query.Get("action_token") != "" {
+		return "", false
+	}
+	action := query.Get("action")
+	if action != "activate" && action != "startreset" {
+		return "", false
+	}
+	idField := accountRole + "_id"
+	for _, field := range []string{idField, "email", "stamp", "md5", "firstname", "lastname"} {
+		if query.Get(field) == "" {
+			return "", false
+		}
+	}
+	return repaired, true
 }
 
 func legacyAdminLanding(chartag string) http.HandlerFunc {

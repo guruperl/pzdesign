@@ -59,7 +59,14 @@ The chartag — the second path segment — selects the language edition, and
 Genelet resolves `<Template>/<role>/<object>/<action>.<chartag>` composed with
 the role glob `<Template>/<role>/*.<chartag>`. `g` is Chinese and `e` is
 English; both are configured `text/html`. No framework change is needed to
-switch language, and account mail already follows the request's chartag.
+switch language, and account mail already follows the request's chartag. Mail
+bodies are `text/plain`, so Genelet renders `.mail.*` files with
+`text/template`; this preserves `urlquery` output as a valid plain-text URL
+instead of introducing HTML character references into linkified query strings.
+The combined service narrowly repairs the encoded `&#43;` artifact in already
+issued legacy advertiser/publisher activation and reset URLs only when the
+complete rollback-era proof shape parses; the ordinary signed-digest check
+remains authoritative downstream.
 
 The public front page is static and therefore outside that mechanism. The
 ordinary document-root directory index serves `index.html` for `/`. An early

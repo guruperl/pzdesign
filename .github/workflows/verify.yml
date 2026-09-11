@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: guruperl/genelet
-          ref: d7ae11c483c6f4146ff3b19fc093e85b8b41b399
+          ref: fdeff9732d9e5856298c7c89fd7e4cc5b9a7d10a
           path: genelet
       - uses: actions/setup-go@v5
         with:
