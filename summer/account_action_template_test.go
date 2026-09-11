@@ -86,8 +86,11 @@ func TestLegacyAccountMailLinksRemainAvailableWhileProtectionIsOff(t *testing.T)
 				lists := []map[string]interface{}{{idField: int64(7), "firstname": "First Name", "lastname": "Last Name"}}
 				rendered := renderAccountMail(t, filepath.Join(root, name), genelet.Tmpl{ARGS: args, Lists: lists, Success: true})
 				query := accountMailURL(t, rendered).Query()
-				if query.Get("email") != "owner+demo@example.test" || query.Get("firstname") != "First Name" || query.Get("lastname") != "Last Name" || query.Get("stamp") != "123" || query.Get("md5") != "legacy-proof" {
+				if query.Get("email") != "owner+demo@example.test" || query.Get("stamp") != "123" || query.Get("md5") != "legacy-proof" {
 					t.Fatalf("%s legacy rollback query = %v", name, query)
+				}
+				if query.Has("firstname") || query.Has("lastname") {
+					t.Fatalf("%s legacy rollback link repeated account names: %v", name, query)
 				}
 				if query.Get("action_token") != "" || strings.Contains(rendered, "&#") {
 					t.Fatalf("%s legacy rollback link used the wrong encoding", name)

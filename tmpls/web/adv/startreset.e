@@ -20,7 +20,7 @@
     <form id="advReset" action="adv" method="post">
       <input type="hidden" name="action" value="resetpass">
       <input type="hidden" name="adv_id" value="{{index .ARGS.adv_id 0}}">
-      {{with .ARGS.action_token}}<input type="hidden" name="action_token" value="{{index . 0}}">{{else}}<input type="hidden" name="email" value="{{index $.ARGS.email 0}}"><input type="hidden" name="stamp" value="{{index $.ARGS.stamp 0}}"><input type="hidden" name="md5" value="{{index $.ARGS.md5 0}}"><input type="hidden" name="firstname" value="{{index $.ARGS.firstname 0}}"><input type="hidden" name="lastname" value="{{index $.ARGS.lastname 0}}">{{end}}
+      {{with .ARGS.action_token}}<input type="hidden" name="action_token" value="{{index . 0}}">{{else}}<input type="hidden" name="email" value="{{index $.ARGS.email 0}}"><input type="hidden" name="stamp" value="{{index $.ARGS.stamp 0}}"><input type="hidden" name="md5" value="{{index $.ARGS.md5 0}}">{{end}}
       <div class="account-field">
         <label for="passwd">New Password</label>
         <div class="account-control"><i class="fa fa-lock" aria-hidden="true"></i><input type="password" name="passwd" id="passwd" class="form-control" placeholder="Enter new password" autocomplete="new-password" minlength="12" required></div>

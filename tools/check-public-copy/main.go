@@ -222,8 +222,6 @@ var requiredSnippets = map[string][]string{
 		`name="adv_id"`,
 		`name="email"`,
 		`name="stamp"`,
-		`name="firstname"`,
-		`name="lastname"`,
 		`name="md5"`,
 	},
 	"tmpls/web/pub/startreset.g": {
@@ -231,8 +229,6 @@ var requiredSnippets = map[string][]string{
 		`name="pub_id"`,
 		`name="email"`,
 		`name="stamp"`,
-		`name="firstname"`,
-		`name="lastname"`,
 		`name="md5"`,
 	},
 	"tmpls/web/adv/retrieve.e":      {"Password Reset Email Sent", "If this email address is registered"},

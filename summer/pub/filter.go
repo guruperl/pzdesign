@@ -62,7 +62,7 @@ func (self *Filter) Preset() error {
 				return genelet.Err(3102)
 			}
 		} else {
-			if ARGS.Get("email") == "" || ARGS.Get("stamp") == "" || ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("pub_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
+			if ARGS.Get("email") == "" || ARGS.Get("stamp") == "" || ARGS.Get("md5") == "" {
 				return genelet.Err(3102)
 			}
 			if self.Identity != nil && (action == "startreset" || action == "resetpass") {
@@ -136,6 +136,17 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 	ARGS := self.R.Form
 	if ARGS.Get("_gadmin") == "1" {
 		who = "admin"
+	}
+	if who == "web" && (action == "activate" || action == "startreset" || action == "resetpass") {
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if !protected {
+			if err := summer.ValidateLegacyAccountActionProof(model.Context, model.DB, "pub", ARGS.Get("pub_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("md5"), self.C.Secret); err != nil {
+				return err
+			}
+		}
 	}
 	if action == "update" && hasAnySellerField(ARGS) {
 		if who == "admin" && strings.TrimSpace(ARGS.Get("reason")) == "" {

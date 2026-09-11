@@ -15,7 +15,7 @@ those documents, and prevent language, link, or disclosure drift.
 | L07.1 Add bilingual policy documents | `[+]` | Added English `/privacy.html` and `/terms.html` plus Chinese `.zh.html` siblings, with reciprocal language metadata and matching section order. Privacy copy follows the current Aofei privacy/data-governance behavior and discloses Gmail API `gmail.send`-only use. |
 | L07.2 Link the public account journey | `[+]` | Advertiser and publisher registration now link the matching Terms and Privacy editions; home, manuals, login, error, and shared public account footers expose both documents. |
 | L07.3 Guard, verify, and review | `[+]` | The copy checker requires all legal pages, core disclosures, stable language-specific links, reciprocal alternates, safe registration new-tab links, and ordered section parity. The parity guard permits only the exact approved legal URL pairs. Repository-wide verification and review pass. |
-| Post-closeout plain-text account links | `[+]` | A live English advertiser registration exposed that HTML template rendering changed a URL-escaped space into an HTML character reference inside a `text/plain` Gmail message. Genelet now renders mail files as text templates; all eight advertiser/publisher activation/reset templates prove both legacy and opaque-token query strings parse and round-trip names, addresses, and proofs without semicolon-bearing fragments. The exact public account routes reconstruct that artifact in already issued complete legacy proof URLs before the existing signed-digest validation. |
+| Post-closeout plain-text account links | `[+]` | A live English advertiser registration exposed that HTML template rendering changed a URL-escaped space into an HTML character reference inside a `text/plain` Gmail message. Genelet now renders mail files as text templates. All eight advertiser/publisher activation/reset templates prove both legacy and opaque-token query strings parse; new legacy URLs omit name fields, and legacy proof verification reconstructs its original signed name inputs from the authoritative account row. The exact public account routes still repair the known artifact in already issued links, including links whose trailing name fields were discarded by a mail client. |
 
 ## Acceptance
 
@@ -65,13 +65,23 @@ those documents, and prevent language, link, or disclosure drift.
   explicitly `text/html` message. It also required the outstanding-link seam
   to keep the downstream URL and request-target views consistent and match
   only the four exact public account paths.
-- Post-closeout iteration 4 is clean. Genelet selects text or HTML rendering
-  from the effective message content type, all browser templates retain their
-  existing contextual HTML escaping, and both mail modes have regression
-  coverage. The already-issued-link seam is restricted to GET activation/reset
-  requests carrying the complete legacy shape and cannot bypass its downstream
-  digest validation. Both languages, roles, and default-off legacy/opaque
-  branches are covered without activating S07.
+- Post-closeout iteration 4 was clean for the first correction. Genelet selects
+  text or HTML rendering from the effective message content type, browser
+  templates retain contextual HTML escaping, and both mail modes have
+  regression coverage.
+- Subsequent live evidence exposed a second P1 compatibility defect rather than
+  a new review iteration: after the parser repair, a mail client discarded the
+  trailing name fields and the request-derived digest check returned 3102 even
+  though the core signed fields arrived intact. The correction moves legacy
+  proof validation behind database setup, retrieves its email and name inputs
+  from the account row, removes names from new legacy URLs/forms, and keeps
+  constant-time proof comparison.
+- Post-closeout iteration 5 is clean. The complete corrected account-link
+  boundary was reviewed again. The
+  already-issued-link seam remains restricted to exact GET activation/reset
+  paths with the core legacy proof shape and cannot bypass the downstream
+  database-backed digest validation. Both languages, roles, and default-off
+  legacy/opaque branches are covered without activating S07.
 
 ## Verification evidence
 
@@ -95,3 +105,10 @@ Observed results: build, tests, vet, race, and staticcheck pass; all 342 action
 templates parse with zero failures; parity and public-copy report zero failures;
 the public-data guard passes; Gitleaks reports no leaks across 181 commits; the
 referenced local legal-page assets exist; and diff hygiene passes.
+
+The 2026-09-11 3102 follow-up reran build, repository-wide tests and vet,
+focused account/unify race tests, pinned staticcheck, all 342 template checks,
+parity, public-copy, public-data, Gitleaks across 183 commits, and diff hygiene;
+every gate passed. Regression coverage proves stored-name verification rejects
+wrong account/email/proof values and all eight new legacy mail links omit names
+while retaining valid core proof queries.

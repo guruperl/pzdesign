@@ -65,8 +65,11 @@ bodies are `text/plain`, so Genelet renders `.mail.*` files with
 instead of introducing HTML character references into linkified query strings.
 The combined service narrowly repairs the encoded `&#43;` artifact in already
 issued legacy advertiser/publisher activation and reset URLs only when the
-complete rollback-era proof shape parses; the ordinary signed-digest check
-remains authoritative downstream.
+core rollback-era proof shape parses. Legacy proof validation loads the
+authoritative email and name inputs from the account row instead of trusting
+or requiring the mail client's copy of those names; new rollback-mode URLs
+therefore omit the name fields, while the signed digest remains authoritative
+downstream.
 
 The public front page is static and therefore outside that mechanism. The
 ordinary document-root directory index serves `index.html` for `/`. An early

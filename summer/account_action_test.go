@@ -14,8 +14,11 @@ func newAccountActionTestDB(t *testing.T) *sql.DB {
 	db := openAccountProtectionTestDB(t)
 	if _, err := db.Exec(`CREATE TABLE adv (
 		adv_id INTEGER PRIMARY KEY,
+		email TEXT NOT NULL,
 		email_hmac BLOB NOT NULL UNIQUE,
 		passwd TEXT NOT NULL,
+		firstname TEXT,
+		lastname TEXT,
 		active TEXT NOT NULL,
 		activation_token_digest BLOB,
 		activation_token_expires DATETIME,
@@ -35,8 +38,32 @@ func insertAccountActionTestAccount(t *testing.T, db *sql.DB, protector *genelet
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := db.Exec(`INSERT INTO adv (adv_id,email_hmac,passwd,active) VALUES (1,?,'original',?)`, digest, active); err != nil {
+	if _, err := db.Exec(`INSERT INTO adv (adv_id,email,email_hmac,passwd,firstname,lastname,active) VALUES (1,?,?, 'original','First Name','Last Name',?)`, accountActionTestEmail, digest, active); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestLegacyAccountActionProofUsesStoredNames(t *testing.T) {
+	db := newAccountActionTestDB(t)
+	protector := testAccountProtector(t)
+	insertAccountActionTestAccount(t, db, protector, "New")
+	const secret = "legacy-proof-secret"
+	const stamp = "1789092000"
+	proof := genelet.Digest(secret, "1", accountActionTestEmail, stamp, "First Name", "Last Name")
+
+	if err := ValidateLegacyAccountActionProof(context.Background(), db, "adv", "1", accountActionTestEmail, stamp, proof, secret); err != nil {
+		t.Fatalf("stored-name proof was rejected: %v", err)
+	}
+	for name, test := range map[string][3]string{
+		"wrong account": {"2", accountActionTestEmail, proof},
+		"wrong email":   {"1", "changed@example.test", proof},
+		"wrong proof":   {"1", accountActionTestEmail, proof + "x"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			if err := ValidateLegacyAccountActionProof(context.Background(), db, "adv", test[0], test[1], stamp, test[2], secret); err == nil {
+				t.Fatal("invalid legacy proof was accepted")
+			}
+		})
 	}
 }
 

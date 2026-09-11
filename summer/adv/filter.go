@@ -55,7 +55,7 @@ func (self *Filter) Preset() error {
 				return genelet.Err(3102)
 			}
 		} else {
-			if ARGS.Get("email") == "" || ARGS.Get("stamp") == "" || ARGS.Get("md5") != genelet.Digest(self.C.Secret, ARGS.Get("adv_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("firstname"), ARGS.Get("lastname")) {
+			if ARGS.Get("email") == "" || ARGS.Get("stamp") == "" || ARGS.Get("md5") == "" {
 				return genelet.Err(3102)
 			}
 			if self.Identity != nil && (action == "startreset" || action == "resetpass") {
@@ -89,6 +89,18 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 
 	action := self.Action
 	who := self.RoleValue
+	if who == "web" && (action == "activate" || action == "startreset" || action == "resetpass") {
+		protected, err := summer.ProtectedAccountActionsEnabled(model.Storage)
+		if err != nil {
+			return err
+		}
+		if !protected {
+			ARGS := self.R.Form
+			if err := summer.ValidateLegacyAccountActionProof(model.Context, model.DB, "adv", ARGS.Get("adv_id"), ARGS.Get("email"), ARGS.Get("stamp"), ARGS.Get("md5"), self.C.Secret); err != nil {
+				return err
+			}
+		}
+	}
 
 	if who == "agent" && action == "topics" {
 		extra.Set("active", "Yes")

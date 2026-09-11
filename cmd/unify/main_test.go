@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"reflect"
 	"strings"
 	"sync"
@@ -175,6 +176,21 @@ func TestServeMuxRepairsOnlyLegacyAccountMailEscapedSpaces(t *testing.T) {
 		if response.Code != http.StatusNoContent {
 			t.Fatalf("GET %s status = %d, want %d", path, response.Code, http.StatusNoContent)
 		}
+	}
+}
+
+func TestLegacyAccountMailRepairAllowsTruncatedNameSuffix(t *testing.T) {
+	request := httptest.NewRequest(http.MethodGet, "/goto/web/e/adv?action=activate&adv_id=7&email=owner%40example.test&stamp=123&md5=proof&lastname=Last&%2343;Name", nil)
+	repaired, ok := repairLegacyAccountMailQuery(request)
+	if !ok {
+		t.Fatal("legacy link with a truncated name suffix was not repaired")
+	}
+	query, err := url.ParseQuery(repaired)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if query.Get("lastname") != "Last Name" {
+		t.Fatalf("lastname = %q, want reconstructed suffix", query.Get("lastname"))
 	}
 }
 

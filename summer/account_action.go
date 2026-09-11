@@ -2,6 +2,7 @@ package summer
 
 import (
 	"context"
+	"crypto/hmac"
 	"crypto/rand"
 	"database/sql"
 	"encoding/base64"
@@ -177,6 +178,46 @@ func ValidateAccountActionToken(ctx context.Context, db *sql.DB, storage map[str
 		}
 	}
 	return genelet.Err(3102)
+}
+
+// ValidateLegacyAccountActionProof validates an identifier-bearing account
+// action link using the account names stored in MySQL. Older links included
+// those names in the URL, where mail clients could reinterpret an escaped
+// space and truncate the query before the request reached W8M. The stored
+// values are the authoritative inputs used when the proof was issued, so the
+// request does not need to repeat them.
+func ValidateLegacyAccountActionProof(ctx context.Context, db *sql.DB, role, accountID, identifier, stamp, proof, secret string) error {
+	if db == nil {
+		return fmt.Errorf("account-action database is unavailable")
+	}
+	contract, err := accountActionColumns(role, "activate")
+	if err != nil {
+		return err
+	}
+	id, err := parseAccountActionID(accountID)
+	if err != nil || identifier == "" || stamp == "" || proof == "" || secret == "" {
+		return genelet.Err(3102)
+	}
+
+	var storedEmail string
+	var firstname, lastname sql.NullString
+	query := `SELECT email, firstname, lastname FROM ` + contract.table + ` WHERE ` + contract.idColumn + `=?`
+	err = db.QueryRowContext(accountActionContext(ctx), query, id).Scan(&storedEmail, &firstname, &lastname)
+	if err == sql.ErrNoRows {
+		return genelet.Err(3102)
+	}
+	if err != nil {
+		return err
+	}
+	if storedEmail != identifier {
+		return genelet.Err(3102)
+	}
+
+	want := genelet.Digest(secret, accountID, storedEmail, stamp, firstname.String, lastname.String)
+	if !hmac.Equal([]byte(proof), []byte(want)) {
+		return genelet.Err(3102)
+	}
+	return nil
 }
 
 func consumeAccountAction(ctx context.Context, db *sql.DB, storage map[string]interface{}, role, accountID, purpose, token string, passwordHash string) error {

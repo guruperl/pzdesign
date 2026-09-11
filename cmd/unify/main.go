@@ -395,8 +395,9 @@ func newServeMuxWithServices(sc *dsp.Controller, geneletHandler http.Handler, su
 // links emitted before Genelet switched mail files from html/template to
 // text/template. html/template represented a URL-escaped space as "&#43;";
 // mail clients encoded its '#' and sent the resulting "&%2343;" fragment as
-// a query separator. Existing signed links remain valid after this exact
-// reconstruction and still pass the ordinary legacy digest check downstream.
+// a query separator. The downstream legacy proof check reconstructs its
+// signed name inputs from the authoritative account row, so a repaired link
+// remains valid even when the mail client discarded its trailing name fields.
 func legacyAccountMailQueryCompatibility(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		repaired, ok := repairLegacyAccountMailQuery(r)
@@ -439,7 +440,7 @@ func repairLegacyAccountMailQuery(r *http.Request) (string, bool) {
 		return "", false
 	}
 	idField := accountRole + "_id"
-	for _, field := range []string{idField, "email", "stamp", "md5", "firstname", "lastname"} {
+	for _, field := range []string{idField, "email", "stamp", "md5"} {
 		if query.Get(field) == "" {
 			return "", false
 		}
