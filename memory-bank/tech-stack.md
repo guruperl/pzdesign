@@ -28,6 +28,7 @@ resolution.
 # Build and test
 GOWORK=off go build ./...
 GOWORK=off go test ./...
+GOWORK=off go test -count=1 ./summer/campaign -run TestCampaignDashboard
 GOWORK=off go test -race ./cmd/unify
 
 # Static analysis

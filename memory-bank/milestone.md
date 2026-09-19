@@ -34,7 +34,7 @@ archive lane in `memory-bank/architecture.md`.
 ## Execution order
 
 ```text
-L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01 -> L07
+L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01 -> L07 -> C02
 ```
 
 | ID | Milestone | Status file | Depends on | Downstream |
@@ -51,7 +51,8 @@ L01 -> L02 -> L03 -> T02 -> T01 -> L04 -> T03 -> L05 -> T04 -> T05 -> L06 -> C01
 | T05 | English typography polish | [status-T05](status-T05.md) | T04 | L06 |
 | L06 | Public chartag toggle remediation | [status-L06](status-L06.md) | T05 | C01 |
 | C01 | Administrator landing and default-off projection repair | [status-C01](status-C01.md) | L06 | L07 |
-| L07 | Bilingual public Privacy Policy and Terms | [status-L07](status-L07.md) | C01 | — |
+| L07 | Bilingual public Privacy Policy and Terms | [status-L07](status-L07.md) | C01 | C02 |
+| C02 | Campaign dashboard template mapping | [status-C02](status-C02.md) | L07 | — |
 
 ## Acceptance
 

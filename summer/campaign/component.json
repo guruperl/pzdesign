@@ -1,7 +1,7 @@
 {
   "actions":{ 
     "startnew": {"groups":["adv"]},
-    "dashboard":{"groups":["adv"]},
+    "dashboard":{"groups":["adv"], "template":["topics"]},
     "topics":   {"groups":["agent","adv"]},
     "insert":   {"groups":["adv"], "validate":["campaign_name"]},
     "edit"  :   {"groups":["adv"], "validate":["campaign_id"]},

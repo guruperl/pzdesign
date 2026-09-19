@@ -53,6 +53,11 @@ Filters shape request args and side effects; models run queries through Genelet
 CRUD helpers. Request-derived values stay in `url.Values` so Genelet validates
 and parameterizes them, and only validated identifiers are ever interpolated.
 
+The campaign component maps dashboard rendering to the topics template using
+Genelet’s action-level `template` override. The original dashboard action still
+controls authorization, model dispatch and filters; the override changes only
+template selection. No global GET default or route rewrite is introduced.
+
 ## Language Editions And Negotiation
 
 The chartag — the second path segment — selects the language edition, and

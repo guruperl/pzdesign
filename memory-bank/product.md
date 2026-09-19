@@ -22,6 +22,10 @@ analyst, or a publisher sees and edits.
 | `admin` | Full maintenance, approvals, routing configuration, cache publication triggers, and operational health views |
 | public `web` | Chinese and English landing pages, manuals, Privacy Policy, Terms of Service, registration, activation, password recovery, and reset for advertisers and publishers |
 
+The advertiser campaign landing without an action query renders the existing
+campaign list in either language. The normal public login link continues to use
+`action=topics`; the fallback keeps its existing dashboard action semantics.
+
 ## Domain Terminology
 
 Advertiser is `adv` — never 商家 or 商户. Publisher is 流量方 (`pub`) — never
