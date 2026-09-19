@@ -29,7 +29,7 @@ and stable public URLs.
 
 Lane letters `A`, `D`, `I`, `P`, `R`, and `S` are reserved: this repository's
 prose uses them as Aofei milestone identifiers. Lane `M` is reserved as the
-archive lane in `memory-bank/architecture.md`.
+archive lane in `tabilet/memory-bank/architecture.md`.
 
 ## Execution order
 
