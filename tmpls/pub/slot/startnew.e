@@ -14,14 +14,14 @@
 <div class="form-group row">
     <label for="inputSlotName" class="col-sm-3 col-form-label text-right">Ad Slot Name:</label>
     <div class="col-sm-3">
-        <input type=text class="form-control" name="slot_name" placeholder="Name" />
+        <input type=text class="form-control" id="inputSlotName" name="slot_name" placeholder="Name" />
     </div>
-    <label for="inputSizeID" class="col-sm-2 col-form-label text-right">Size:</label>
+    <label for="inputWidth" class="col-sm-2 col-form-label text-right">Size:</label>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="w" value="64" />
+        <input type=text class="form-control" id="inputWidth" name="w" value="64" />
     </div>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="h" value="64" />
+        <input type=text class="form-control" id="inputHeight" name="h" value="64" />
     </div>
 </div>
 
@@ -56,8 +56,8 @@
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_language }}
       <div class="form-check form-check-inline mr-1">
-        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_language" {{if eq $item.which "EN"}}checked{{end}}>
-        <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+        <input class="form-check-input" type="radio" id="qa_lang_{{$item.which}}" value="{{$item.which}}" name="qa_language" {{if eq $item.which "EN"}}checked{{end}}>
+        <label class="form-check-label" for="qa_lang_{{$item.which}}">{{$item.label}}</label>
       </div>{{end}}
     </div>
 </div>
@@ -68,8 +68,8 @@
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_device }}
       <div class="form-check form-check-inline mr-1">
-        <input class="form-check-input" type="radio" id="qa_{{$item.which}}" value="{{$item.which}}" name="qa_device" {{if eq $item.which "0"}}checked{{end}}>
-        <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+        <input class="form-check-input" type="radio" id="qa_dev_{{$item.which}}" value="{{$item.which}}" name="qa_device" {{if eq $item.which "0"}}checked{{end}}>
+        <label class="form-check-label" for="qa_dev_{{$item.which}}">{{$item.label}}</label>
       </div>{{end}}
     </div>
 </div>
@@ -80,8 +80,8 @@
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.qa_position }}
         <div class="form-check form-check-inline mr-1">
-           <input class="form-check-input" id="qa_{{$item.which}}" type=radio name=qa_position value="{{$item.which}}" {{if eq $item.which "0"}}checked{{end}} >
-           <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+           <input class="form-check-input" id="qa_pos_{{$item.which}}" type=radio name=qa_position value="{{$item.which}}" {{if eq $item.which "0"}}checked{{end}} >
+           <label class="form-check-label" for="qa_pos_{{$item.which}}">{{$item.label}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -92,8 +92,8 @@
     <label class="col-sm-3 col-form-label text-right"></label>
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.fl_mime }}
         <div class="form-check form-check-inline mr-1">
-        <input type=checkbox class="form-check-input" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
-        <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+        <input type=checkbox class="form-check-input" id="fl_mime_{{$item.which}}" name="fl_mime" value="{{$item.which}}" {{if $item.default}}checked{{end}}>
+        <label class="form-check-label" for="fl_mime_{{$item.which}}">{{$item.label}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -105,7 +105,7 @@
     <div class="col-sm-9">{{ range $item := .Other.fl_creative }}
         <div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="creative_{{$item.which}}" type=checkbox name=fl_creative value="{{$item.which}}" {{if $item.default}}checked{{end}} >
-           <label>{{$item.label}}</label>
+           <label for="creative_{{$item.which}}">{{$item.label}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -118,7 +118,7 @@
     <div class="col-sm-9 col-form-label">{{ range $item := .Other.fl_expnd }}
         <div class="form-check form-check-inline mr-1">
            <input class="form-check-input" id="expnd_{{$item.which}}" type=checkbox name=fl_expnd value="{{$item.which}}" {{if $item.default}}checked{{end}} >
-           <label class="form-check-label" for="inline-radio1">{{$item.label}}</label>
+           <label class="form-check-label" for="expnd_{{$item.which}}">{{$item.label}}</label>
         </div>{{end}}
     </div>
 </div>
@@ -179,7 +179,7 @@
 <td class="text-center"><input class="form-control-inline" name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input class="form-control-inline" name=ac_ids type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
             </div>

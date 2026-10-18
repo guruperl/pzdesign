@@ -60,7 +60,7 @@
           </div>{{end}}
 
           <form method="post" action="{{ .LoginName }}">
-            <input type="hidden" name="{{ .GoURIName }}" value="{{ .GoURI }}">
+            <input type="hidden" name="{{ .GoURIName }}" value="{{ if .GoURI }}{{ .GoURI }}{{ else }}/goto/pub/e/site?action=topics{{ end }}">
             <div class="account-field">
               <label for="pub-login-email">Email</label>
               <div class="account-control"><i class="fa fa-envelope-o" aria-hidden="true"></i><input id="pub-login-email" class="form-control" name="{{ .Login }}" type="email" placeholder="name@example.com" autocomplete="username" autofocus required></div>

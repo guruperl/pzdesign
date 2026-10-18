@@ -31,7 +31,7 @@
 <td>{{if .browser_code}}<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">网页广告码</button>{{end}}</td>
 <td>{{if .api_code}}<button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">App SDK / API 接入代码</button>{{end}}</td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告位“{{.slot_name}}”吗？此操作不可撤销。')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}">删除</a></td>
-{{end}}</tobdy>
+{{end}}</tbody>
 
 </table>
 </div>

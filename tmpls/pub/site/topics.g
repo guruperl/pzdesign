@@ -31,7 +31,7 @@
 <td><a class="btn btn-sm btn-info" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&site_type={{.site_type | urlquery}}">所有广告位</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除流量源“{{.site_name}}”吗？此操作不可撤销。')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">删除</a></td>
 </tr>
-{{end}}{{end}}</tobdy>
+{{end}}{{end}}</tbody>
 </table>
 </div>
 

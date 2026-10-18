@@ -22,7 +22,7 @@
                 </tr>
               </thead>
               <tbody>{{ range .Lists }}
-<tr><td><a href="#" data-title="Update Ad Slot: {{.slot_name}}" data-href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}" id="editPopup">{{.slot_name}}</a></td>
+<tr><td><a class="editPopup" href="#" data-title="Update Ad Slot: {{.slot_name}}" data-href="slot?action=edit&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}&slot_id={{.slot_id}}&slot_md5={{.slot_md5}}&slot_name={{.slot_name | urlquery}}" id="editPopup">{{.slot_name}}</a></td>
 <td>{{.qa_device}}</td>
 <td>{{.media_intent}} / {{.placement}}</td>
 <td>{{.bidfloor}}</td>
@@ -31,7 +31,8 @@
 <td>{{if .browser_code}}<button class="btn btn-sm btn-info" type="button" data-toggle="modal" data-target="#modal{{.slot_id}}">Browser Ad Tag</button>{{end}}</td>
 <td>{{if .api_code}}<button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAPI{{.slot_id}}">App SDK / API Integration Code</button>{{end}}</td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Delete ad slot “{{.slot_name}}”? This action cannot be undone.')) ? true : false;" href="slot?action=delete&slot_id={{.slot_id}}&site_id={{index $.ARGS.site_id 0}}&site_md5={{index $.ARGS.site_md5 0}}&site_name={{index $.ARGS.site_name 0 | urlquery}}&site_type={{index $.ARGS.site_type 0 | urlquery}}">Delete</a></td>
-{{end}}</tobdy>
+</tr>
+{{end}}</tbody>
 
 </table>
 </div>
@@ -111,7 +112,7 @@
 {{ template "footer" }}
 <script>
   $(document).ready(function(){
-    $('#startnewPopup,#editPopup').on('click',function(){
+    $('#startnewPopup,#editPopup,.editPopup').on('click',function(){
       var dataTITLE = $(this).attr('data-title');
       var dataURL = $(this).attr('data-href');
       $('#d-title').text(dataTITLE);

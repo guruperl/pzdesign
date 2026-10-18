@@ -22,7 +22,7 @@
               </thead>
               <tbody>{{ with .Lists }}{{ range . }}
 <tr>
-<td><a href="#" data-title="Update Traffic Source: {{.site_name}}" data-href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}" id="editPopup">{{.site_name}}</a></td>
+<td><a class="editPopup" href="#" data-title="Update Traffic Source: {{.site_name}}" data-href="site?action=edit&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}" id="editPopup">{{.site_name}}</a></td>
 <td>{{.site_url}}</td>
 <td>{{.inventory_environment}}</td>
 <td>{{.integration_mode}}</td>
@@ -31,7 +31,7 @@
 <td><a class="btn btn-sm btn-info" href="slot?action=topics&site_id={{.site_id}}&site_md5={{.site_md5}}&site_name={{.site_name | urlquery }}&site_type={{.site_type | urlquery}}">All Ad Slots</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Delete traffic source “{{.site_name}}”? This action cannot be undone.')) ? true : false;" href="site?action=delete&site_id={{.site_id}}">Delete</a></td>
 </tr>
-{{end}}{{end}}</tobdy>
+{{end}}{{end}}</tbody>
 </table>
 </div>
 
@@ -63,7 +63,7 @@
 {{ template "footer" }}
 <script>
   $(document).ready(function(){
-    $('#startnewPopup,#editPopup').on('click',function(){
+    $('#startnewPopup,#editPopup,.editPopup').on('click',function(){
       var dataTITLE = $(this).attr('data-title');
       var dataURL = $(this).attr('data-href');
       $('#d-title').text(dataTITLE);

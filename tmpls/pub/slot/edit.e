@@ -175,7 +175,7 @@ MIME:</label>
 <td class="text-center"><input class="form-control-inline" name=belong_ids {{if .chbelong_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
 <td class="text-center"><input class="form-control-inline" name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
             </div>

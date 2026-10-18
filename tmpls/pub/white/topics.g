@@ -32,7 +32,7 @@
 <td> </td>
 <td><input type=checkbox class="form-check-input" name=item_id value="{{.item_id}}">
 </tr>{{end}}{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
 <button class="btn btn-primary" type=submit>提交</button>

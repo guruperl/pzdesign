@@ -54,7 +54,7 @@
 <td><a href="#" data-title="{{.campaign_name}}" data-href="item?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name|urlquery}}" class="openPopup">{{.campaign_name}}</a></td>
 <td><input class="form-inline" type=checkbox name=campaign_ids {{if .othertype_id}}{{if eq 41 .othertype_id}}checked{{end}}{{end}} value="{{.campaign_id}}"></td>
 </tr>{{end}}{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
 <button type="submit" class="btn btn-primary">提交审核结果</button>
