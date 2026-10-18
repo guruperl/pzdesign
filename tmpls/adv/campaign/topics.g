@@ -34,7 +34,7 @@
 <td><a class="btn btn-sm btn-info" href="#" data-title="活动预算：{{.campaign_name}}" data-href="balance?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}&entitytype_id=41" id="balancePopup">活动预算</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('确认删除广告活动“{{.campaign_name}}”吗？此操作不可撤销。')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">删除</a></td>
 </tr>
-{{end}}{{end}}</tobdy>
+{{end}}{{end}}</tbody>
                                 </table>
                             </div>
                             <!-- /.table-responsive -->

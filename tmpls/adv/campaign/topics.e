@@ -34,7 +34,7 @@
 <td><a class="btn btn-sm btn-info" href="#" data-title="Campaign Budget: {{.campaign_name}}" data-href="balance?action=topics&campaign_id={{.campaign_id}}&campaign_md5={{.campaign_md5}}&campaign_name={{.campaign_name | urlquery}}&entitytype_id=41" id="balancePopup">Campaign Budget</a></td>
 <td><a class="btn btn-sm btn-danger" onClick="return (confirm('Delete campaign “{{.campaign_name}}”? This action cannot be undone.')) ? true : false;" href="campaign?action=delete&campaign_id={{.campaign_id}}">Delete</a></td>
 </tr>
-{{end}}{{end}}</tobdy>
+{{end}}{{end}}</tbody>
                                 </table>
                             </div>
                             <!-- /.table-responsive -->

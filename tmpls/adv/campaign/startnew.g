@@ -87,7 +87,7 @@
 <tr><td>{{.channel_name_g}}</td>
 <td class="text-center"><input class="form-control-inline" name=belong_ids type=checkbox value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
 			</div>

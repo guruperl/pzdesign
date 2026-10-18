@@ -33,7 +33,7 @@
 <td><input name=belong_ids type=checkbox {{if .chbelong_id}}checked{{end}} value="{{.channel_id}}" /></td>
 <td><input name=ac_ids type=checkbox {{if .chac_id}}checked{{end}} value="{{.channel_id}}" /></td>
 </tr>{{end}}{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
 <input class="btn btn-primary" type=submit value=" 保存并更新 " />

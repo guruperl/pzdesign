@@ -59,7 +59,7 @@
 <td>{{$item.site_url}}</td>
 <td><a onClick="return (confirm('Delete this entry?')) ? true : false;" href="ac?action=delete&ac_id={{.ac_id}}&{{if eq "41" (index $.ARGS.entitytype_id 0)}}campaign_id={{index $.ARGS.campaign_id 0}}&campaign_md5={{index $.ARGS.campaign_md5 0}}&campaign_name={{index $.ARGS.campaign_name 0 | urlquery}}&entitytype_id=41{{else}}entitytype_id=4{{end}}">Delete</a></td>
 </tr>{{end}}
-</tobdy>
+</tbody>
 </table>
 </div>
 

@@ -18,50 +18,50 @@
 
 
 <div class="form-group row">
-    <label for="inputCampaigName" class="col-sm-1 col-form-label text-right">Ad Group Name</label>
+    <label for="inputItemName" class="col-sm-1 col-form-label text-right">Ad Group Name</label>
     <div class="col-sm-3">
-        <input type=text class="form-control" name="item_name" placeholder="Enter an ad group name" />
+        <input type=text class="form-control" id="inputItemName" name="item_name" placeholder="Enter an ad group name" />
     </div>
-    <label for="costType" class="col-sm-2 col-form-label text-right">Pricing Model:</label>
+    <label class="col-sm-2 col-form-label text-right">Pricing Model:</label>
     <div class="col-sm-3">
         <input type=hidden name=cost_type value=CPM>
         <span class="form-control-plaintext">CPM (USD per thousand impressions)</span>
     </div>
-    <label for="inputEndx" class="col-sm-1 col-form-label text-right">CPM Bid</label>
+    <label for="inputCost" class="col-sm-1 col-form-label text-right">CPM Bid</label>
     <div class="col-sm-2">
-        <input type=text class="form-control" name="cost" placeholder="1.23" />
+        <input type=text class="form-control" id="inputCost" name="cost" placeholder="1.23" />
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputLanding" class="col-sm-2 col-form-label text-right">Landing Page:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="item_click" placeholder="https://advertiser.example/landing (macros may be used in query parameters)"></textarea>
+        <textarea class="form-control" id="inputLanding" rows=2 name="item_click" placeholder="https://advertiser.example/landing (macros may be used in query parameters)"></textarea>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">Impression Tracking URLs:</label>
+    <label for="inputImpUrl" class="col-sm-2 col-form-label text-right">Impression Tracking URLs:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="imp_url" placeholder="Optional; separate multiple HTTPS/HTTP URLs with commas"></textarea>
+        <textarea class="form-control" id="inputImpUrl" rows=2 name="imp_url" placeholder="Optional; separate multiple HTTPS/HTTP URLs with commas"></textarea>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="inputLanding" class="col-sm-2 col-form-label text-right">Click Tracking URLs:</label>
+    <label for="inputClickUrl" class="col-sm-2 col-form-label text-right">Click Tracking URLs:</label>
     <div class="col-sm-10">
-        <textarea class="form-control" rows=2 name="click_url" placeholder="Optional; separate multiple HTTPS/HTTP URLs with commas"></textarea>
+        <textarea class="form-control" id="inputClickUrl" rows=2 name="click_url" placeholder="Optional; separate multiple HTTPS/HTTP URLs with commas"></textarea>
     </div>
 </div>
 
 <div class="form-group row">
     <label for="inputStartx" class="col-sm-2 col-form-label text-right">Start Time:</label>
     <div class="col-sm-4">
-        <input type=text class="form-control" name="startx" value="">
+        <input type=text class="form-control" id="inputStartx" name="startx" value="">
     </div>
     <label for="inputEndx" class="col-sm-2 col-form-label text-right">End Time:</label>
     <div class="col-sm-4">
-        <input type=text class="form-control" name="endx" value="">
+        <input type=text class="form-control" id="inputEndx" name="endx" value="">
     </div>
 </div>
 
@@ -69,13 +69,13 @@
 
 
 <div class="form-group row">
-    <label for="inputEndx" class="col-sm-2 col-form-label text-right">Creative Rendering Mode:</label>
+    <label class="col-sm-2 col-form-label text-right">Creative Rendering Mode:</label>
     <div class="col-sm-10">Choose XHTML Banner for mobile; choose Iframe for other devices.</div>
 </div>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label text-right"> </label>
     <div class="col-sm-10">{{ range $item := .Other.qa_mime }}
-<input class="form-check-input" type=radio name=qa_mime value="{{$item.which}}" {{if eq $item.which "4"}}checked{{end}} />{{$item.label}}{{end}}
+<input class="form-check-input" type=radio id="qa_mime_{{$item.which}}" name=qa_mime value="{{$item.which}}" {{if eq $item.which "4"}}checked{{end}} /><label for="qa_mime_{{$item.which}}" class="form-check-label">{{$item.label}}</label>{{end}}
     </div>
 </div>
 

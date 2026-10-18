@@ -39,12 +39,12 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App,Web"}}checked{{end }} value="App,Web" />
-                        <label class="form-check-label">All</label>
-                        <input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App"}}checked{{end }} value="App" />
-                        <label class="form-check-label">App</label>
-                        <input class="form-check-input" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "Web"}}checked{{end }} value="Web" />
-                        <label class="form-check-label">Website</label>
+                        <input class="form-check-input" id="fl_sitetypes_all" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App,Web"}}checked{{end }} value="App,Web" />
+                        <label for="fl_sitetypes_all" class="form-check-label">All</label>
+                        <input class="form-check-input" id="fl_sitetypes_app" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "App"}}checked{{end }} value="App" />
+                        <label for="fl_sitetypes_app" class="form-check-label">App</label>
+                        <input class="form-check-input" id="fl_sitetypes_web" type=radio name=fl_sitetypes {{if eq .Other.aclSiteTypes "Web"}}checked{{end }} value="Web" />
+                        <label for="fl_sitetypes_web" class="form-check-label">Website</label>
                     </div>
                 </div>
             </div>
@@ -52,18 +52,18 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type=radio name=acess_order {{if eq .Other.orderSiteTypes "White"}}checked{{end }} value="White" />
-                        <label class="form-check-label">Allowlist</label>
-                        <input class="form-check-input" type=radio name=access_order {{if eq .Other.orderSiteTypes "Black"}}checked{{end }} value="Black" />
-                        <label class="form-check-label">Blocklist</label>
-                        <input class="form-check-input" type=radio name=access_order {{if eq .Other.orderSiteTypes "Inherit"}}checked{{end }} value="Inherit" />
-                        <label class="form-check-label">Inherit Campaign Setting</label>
+                        <input class="form-check-input" id="access_order_white" type=radio name=access_order {{if eq .Other.orderSiteTypes "White"}}checked{{end }} value="White" />
+                        <label for="access_order_white" class="form-check-label">Allowlist</label>
+                        <input class="form-check-input" id="access_order_black" type=radio name=access_order {{if eq .Other.orderSiteTypes "Black"}}checked{{end }} value="Black" />
+                        <label for="access_order_black" class="form-check-label">Blocklist</label>
+                        <input class="form-check-input" id="access_order_inherit" type=radio name=access_order {{if eq .Other.orderSiteTypes "Inherit"}}checked{{end }} value="Inherit" />
+                        <label for="access_order_inherit" class="form-check-label">Inherit Campaign Setting</label>
                     </div>
                 </div>{{range $k, $v := .Other.acl}}
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type=checkbox name=site_id {{if index $v 0}}checked{{end }} value="{{$k}}" />
-                        <label class="form-check-label">{{index $v 1}} <em>{{index $v 2 }}</em>  <strong style="color:red">{{index $v 3}}</strong></label>
+                        <input class="form-check-input" id="site_id_{{$k}}" type=checkbox name=site_id {{if index $v 0}}checked{{end }} value="{{$k}}" />
+                        <label for="site_id_{{$k}}" class="form-check-label">{{index $v 1}} <em>{{index $v 2 }}</em>  <strong style="color:red">{{index $v 3}}</strong></label>
                     </div>
                 </div>{{end}}
             </div>
@@ -81,8 +81,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">
-                       <input class="form-control-inline" name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" />
-                        <label class="form-check-label">{{.channel_name}}</label>
+                       <input class="form-control-inline" id="ac_{{.channel_id}}" name=ac_ids {{if .chac_id}}checked{{end}} type=checkbox value="{{.channel_id}}" />
+                        <label for="ac_{{.channel_id}}" class="form-check-label">{{.channel_name}}</label>
                     </div>
                 </div>
             </div>{{end}}
@@ -94,8 +94,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.country}}
-                        <input class="form-check-input" type=checkbox name=country value="{{$k}}" {{if index $v 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="country_{{$k}}" type=checkbox name=country value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label for="country_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>
@@ -104,8 +104,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.state}}
-                        <input class="form-check-input" type=checkbox name=state value="{{$k}}" {{if index $v 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="state_{{$k}}" type=checkbox name=state value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label for="state_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>
@@ -123,8 +123,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.isp}}
-                        <input class="form-check-input" type=checkbox name=isp value="{{$k}}" {{if index $v 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="isp_{{$k}}" type=checkbox name=isp value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label for="isp_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>
@@ -135,8 +135,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v := $val}}
-                        <input class="form-check-input" type=checkbox name={{$key}} {{if index $v 1}}checked{{end }} value="{{$k}}" />
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="ua_{{$key}}_{{$k}}" type=checkbox name={{$key}} {{if index $v 1}}checked{{end }} value="{{$k}}" />
+                        <label for="ua_{{$key}}_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>{{end}}
@@ -147,8 +147,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name="{{$key}}" {{if index $v 1}}checked{{end}} value="{{$k}}" />
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="demo_{{$key}}_{{$k}}" type=checkbox name="{{$key}}" {{if index $v 1}}checked{{end}} value="{{$k}}" />
+                        <label for="demo_{{$key}}_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>{{end}}
@@ -159,8 +159,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type={{if eq $key "utcoffset"}}radio{{else}}checkbox{{end}} name="{{$key}}" {{if index $v 1}}checked{{end}} value="{{$k}}" />
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="dt_{{$key}}_{{$k}}" type={{if eq $key "utcoffset"}}radio{{else}}checkbox{{end}} name="{{$key}}" {{if index $v 1}}checked{{end}} value="{{$k}}" />
+                        <label for="dt_{{$key}}_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>{{end}}
@@ -171,8 +171,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= .Other.upload}}
-                        <input class="form-check-input" type=checkbox name="uploads" {{if index $v 1}}checked{{end}} value="{{$k}}" />
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="upload_{{$k}}" type=checkbox name="uploads" {{if index $v 1}}checked{{end}} value="{{$k}}" />
+                        <label for="upload_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>
@@ -184,8 +184,8 @@
             <div class="form-group row">
                 <div class="col-sm-12">
                     <div class="form-check form-check-inline">{{range $k, $v:= $val}}
-                        <input class="form-check-input" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
-                        <label class="form-check-label">{{index $v 0}}</label>{{end}}
+                        <input class="form-check-input" id="custom_{{$key}}_{{$k}}" type=checkbox name="{{$key}}" value="{{$k}}" {{if index $v 1}}checked{{end}}>
+                        <label for="custom_{{$key}}_{{$k}}" class="form-check-label">{{index $v 0}}</label>{{end}}
                     </div>
                 </div>
             </div>{{end}}

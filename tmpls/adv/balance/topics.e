@@ -33,7 +33,7 @@
 <td>{{ .current_imp}}</td>
 <td>{{ .current_cli}}</td>
 <td></td>
-</tr> </tobdy>
+</tr> </tbody>
 </table>{{end}}{{end}}{{end}}
 </div>
 
@@ -48,7 +48,7 @@
 <td><input type=text size=8 name=limit_imp /></td>
 <td><input type=text size=8 name=limit_cli /></td>
 <td><button type=submit class="btn btn-primary btn-sm">Add</button></td>
-</tr> </tobdy>
+</tr> </tbody>
 </table>
 </div>
 {{end}}
@@ -84,7 +84,7 @@
 <td>{{ .current_imp}}</td>
 <td>{{ .current_cli}}</td>
 <td> </td>
-</tr> </tobdy>
+</tr> </tbody>
 </table>{{end}}{{end}}{{end}}
 </div>
 
@@ -99,7 +99,7 @@
 <td><input type=text size=8 name=limit_imp></td>
 <td><input type=text size=8 name=limit_cli></td>
 <td><button type=submit class="btn btn-primary btn-sm">Add</button></td>
-</tr> </tobdy>
+</tr> </tbody>
 </table>
 </div>
 
