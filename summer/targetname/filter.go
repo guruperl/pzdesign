@@ -117,18 +117,23 @@ WHERE item_id = ?`, ARGS.Get("item_id")).Scan(&channelOrder)
 		dmas := make(map[string]map[uint32][]interface{})
 
 		if other["targetname_editACL"] != nil {
-			item := other["targetname_editACL"].([]map[string]interface{})[0]
-			other["orderSiteTypes"] = item["access_order"]
-			other["aclSiteTypes"] = item["fl_sitetypes"]
+			aclList, ok := other["targetname_editACL"].([]map[string]interface{})
+			if ok && len(aclList) > 0 {
+				item := aclList[0]
+				other["orderSiteTypes"] = item["access_order"]
+				other["aclSiteTypes"] = item["fl_sitetypes"]
+			}
 			delete(other, "targetname_editACL")
 			aclChinese := make(map[uint32][]any)
-			for _, item := range other["targetname_topicsACL"].([]map[string]interface{}) {
-				siteID := uint32(item["site_id"].(int64))
-				aclChinese[siteID] = []any{item["other_id"], item["site_type"], item["domain"], item["foreign_id"]}
+			if aclTopics, ok := other["targetname_topicsACL"].([]map[string]interface{}); ok && aclTopics != nil {
+				for _, item := range aclTopics {
+					siteID := uint32(item["site_id"].(int64))
+					aclChinese[siteID] = []any{item["other_id"], item["site_type"], item["domain"], item["foreign_id"]}
+				}
+				delete(other, "targetname_topicsACL")
 			}
 			other["aclChinese"] = aclChinese
 			other["acl"] = aclChinese
-			delete(other, "targetname_topicsACL")
 		}
 
 		if other["targetname_topicsIsps"] != nil {
