@@ -68,12 +68,11 @@ WHERE t.active='Yes' AND s.active='Yes' AND t.slot_id=?`, slotID).Scan(
 	// publisher's site 31, can block advertiser 4, campaign 41
 
 	str := `-- main gives the list of adv and camaigns that ALLOW this site!
-SELECT main.adv_id, main.campaign_id, main.campaign_name, main.channel_order,
+SELECT c.adv_id, c.campaign_id, c.campaign_name, i.channel_order,
 	i.startx, i.endx, i.item_name, i.item_id, i.cost_type, i.cost
 FROM adv_item i
 INNER JOIN adv_campaign c USING (campaign_id)
 INNER JOIN adv a USING (adv_id)
-	SELECT adv_id, campaign_id, channel_order, campaign_name
 	LEFT JOIN ac ON
 		(ac.entitytype_id=4 AND ac.entity_id=c.adv_id AND (` + rightPub + `)
 

@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/guruperl/aofei/acl"
 	"github.com/guruperl/aofei/adminapi"
@@ -26,6 +27,18 @@ func (self *Filter) Preset() error {
 	ARGS := self.R.Form
 	action := self.Action
 	who := self.RoleValue
+
+	if who == "pub" && action == "dashboard" {
+		if ARGS.Get("day") == "" {
+			ARGS.Set("day", time.Now().UTC().AddDate(0, 0, -1).Format("2006-01-02"))
+		}
+		if ARGS.Get("idays") == "" {
+			ARGS.Set("idays", "0")
+		}
+		if ARGS.Get("top") == "" {
+			ARGS.Set("top", "200")
+		}
+	}
 	if err := summer.VerifyPublicAccountHuman(self.Storage, self.R, who, "pub", action); err != nil {
 		return err
 	}

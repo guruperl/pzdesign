@@ -229,18 +229,20 @@ func (self *Model) Startnew(extra ...url.Values) error {
 	if ARGS.Get("access_order") == "Inherit" {
 		return nil
 	}
-	_, idname, err := self.accessTarget()
-	if err != nil {
+	if _, _, err := self.accessTarget(); err != nil {
 		return err
 	}
 
 	err = self.SelectSQL(self.LISTS, `
-SELECT campaign_id, ANY_VALUE(campaign_name) AS campaign_name,
-	ANY_VALUE(adv_id) AS adv_id, ANY_VALUE(adv_name) AS adv_name,
-	ANY_VALUE(othertype_id) AS othertype_id, ANY_VALUE(other_id) AS other_id,
-	ANY_VALUE(ac_id) AS ac_id
-FROM ViewSlotOpen WHERE `+idname+`=?
-GROUP BY campaign_id`, ARGS.Get("entity_id"))
+SELECT c.campaign_id, c.campaign_name,
+       a.adv_id, COALESCE(addr.company, addr.contact, CONCAT('Advertiser #', a.adv_id)) AS adv_name,
+       ac.othertype_id, ac.other_id, ac.ac_id
+FROM adv_campaign c
+INNER JOIN adv a USING (adv_id)
+LEFT JOIN add_address addr ON (a.address_id=addr.address_id)
+LEFT JOIN ac ON (ac.entitytype_id=? AND ac.entity_id=? AND ((ac.othertype_id=41 AND ac.other_id=c.campaign_id) OR (ac.othertype_id=4 AND ac.other_id=a.adv_id)))
+WHERE c.active='Yes'
+ORDER BY a.adv_id, c.campaign_id`, ARGS.Get("entitytype_id"), ARGS.Get("entity_id"))
 	if err != nil {
 		return err
 	}

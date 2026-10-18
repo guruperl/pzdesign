@@ -49,7 +49,13 @@ func (self *Filter) Before(model *Model, extra url.Values, nextextra url.Values)
 	ARGS := self.R.Form
 	action := self.Action
 	if self.RoleValue == "adv" && ARGS.Get("item_id") != "" {
-		if err := ensureAdvertiserOwnsItem(model, ARGS.Get("adv_id"), ARGS.Get("item_id")); err != nil {
+		advID := ARGS.Get("adv_id")
+		if advID == "" {
+			if principal, ok := self.VerifiedPrincipal(); ok && principal.Role == "adv" {
+				advID = principal.AccountID
+			}
+		}
+		if err := ensureAdvertiserOwnsItem(model, advID, ARGS.Get("item_id")); err != nil {
 			return err
 		}
 	}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
+	"time"
 
 	"github.com/guruperl/aofei/advice"
 	"github.com/guruperl/pzdesign/summer"
@@ -13,17 +14,33 @@ type Model struct {
 	summer.Model
 }
 
+func reportWindowParams(args url.Values) (day, idays, top string) {
+	day = args.Get("day")
+	if day == "" {
+		day = time.Now().UTC().AddDate(0, 0, -1).Format("2006-01-02")
+	}
+	idays = args.Get("idays")
+	if idays == "" {
+		idays = "0"
+	}
+	top = args.Get("top")
+	if top == "" {
+		top = "200"
+	}
+	return day, idays, top
+}
+
 func (self *Model) TopicsPub24Hours(extra ...url.Values) error {
 	ARGS := self.ARGS
-	//`SELECT DATE_FORMAT(MIN(l.timely), '%Y-%m-%d %H:%i:00') AS hours,
+	day, idays, _ := reportWindowParams(ARGS)
 	if err := self.SelectSQL(self.LISTS,
 		`SELECT DATE_FORMAT(MIN(l.timely), '%H:%i:00') AS hours,
-SUM(p.imps) AS imps, SUM(p.clis) AS clis, SUM(p.spend) AS spend
+SUM(p.imps) AS imps, SUM(p.clis) AS clis, CAST(SUM(p.spend) AS DOUBLE) AS spend
 FROM ledger_pub p
 INNER JOIN ledger_log l USING (log_id)
 WHERE p.pub_id=? AND (timely BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 GROUP BY FLOOR(UNIX_TIMESTAMP(timely) / 3600)`,
-		ARGS.Get("pub_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day")+" 23:59:59"); err != nil {
+		ARGS.Get("pub_id"), day, idays, day+" 23:59:59"); err != nil {
 		return err
 	}
 
@@ -32,20 +49,31 @@ GROUP BY FLOOR(UNIX_TIMESTAMP(timely) / 3600)`,
 
 func (self *Model) TopicsPubTopSlots(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, top := reportWindowParams(ARGS)
 	return self.SelectSQL(self.LISTS,
-		`SELECT p.slot_id, s.slot_name, p.site_id, p.pub_id, p.imps, p.clis, p.spend, (p.spend*1000/p.imps) AS cpm, (p.spend/p.clis) AS cpc, (p.clis/p.imps) AS ctr
+		`SELECT p.slot_id, s.slot_name, p.site_id, p.pub_id, p.imps, p.clis,
+       CAST(p.spend AS DOUBLE) AS spend,
+       CAST(p.spend*1000/NULLIF(p.imps,0) AS DOUBLE) AS cpm,
+       CAST(p.spend/NULLIF(p.clis,0) AS DOUBLE) AS cpc,
+       CAST(p.clis/NULLIF(p.imps,0) AS DOUBLE) AS ctr
 FROM daily_pub p
 INNER JOIN daily_log l USING (log_id)
 INNER JOIN pub_slot s USING (slot_id)
 WHERE pub_id=? AND (l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 ORDER BY p.spend DESC LIMIT ?`,
-		ARGS.Get("pub_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+		ARGS.Get("pub_id"), day, idays, day, top)
 }
 
 func (self *Model) TopicsPubTopCampaigns(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, top := reportWindowParams(ARGS)
 	return self.SelectSQL(self.LISTS,
-		`SELECT a.campaign_id, c.campaign_name, ANY_VALUE(a.adv_id) AS adv_id, SUM(pa.spend) AS spend, SUM(pa.imps) AS imps, SUM(pa.clis) AS clis, (SUM(pa.spend)*1000/SUM(pa.imps)) AS cpm, (SUM(pa.spend)/SUM(pa.clis)) AS cpc, (SUM(pa.clis)/SUM(pa.imps)) AS ctr
+		`SELECT a.campaign_id, c.campaign_name, ANY_VALUE(a.adv_id) AS adv_id,
+       CAST(SUM(pa.spend) AS DOUBLE) AS spend,
+       SUM(pa.imps) AS imps, SUM(pa.clis) AS clis,
+       CAST(SUM(pa.spend)*1000/NULLIF(SUM(pa.imps),0) AS DOUBLE) AS cpm,
+       CAST(SUM(pa.spend)/NULLIF(SUM(pa.clis),0) AS DOUBLE) AS cpc,
+       CAST(SUM(pa.clis)/NULLIF(SUM(pa.imps),0) AS DOUBLE) AS ctr
 FROM daily_pub_adv pa
 INNER JOIN daily_pub p USING (lp_id)
 INNER JOIN daily_log l ON (p.log_id=l.log_id)
@@ -53,19 +81,20 @@ INNER JOIN daily_adv a USING (la_id)
 INNER JOIN adv_campaign c USING (campaign_id)
 WHERE pub_id=? AND (l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 GROUP BY a.campaign_id ORDER BY spend DESC LIMIT ?`,
-		ARGS.Get("pub_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+		ARGS.Get("pub_id"), day, idays, day, top)
 }
 
 func (self *Model) TopicsAdv24Hours(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, _ := reportWindowParams(ARGS)
 	if err := self.SelectSQL(self.LISTS,
 		`SELECT DATE_FORMAT(MIN(l.timely), '%H:%i') AS hours,
-SUM(a.imps) AS imps, SUM(a.clis) AS clis, SUM(a.spend) AS spend
+SUM(a.imps) AS imps, SUM(a.clis) AS clis, CAST(SUM(a.spend) AS DOUBLE) AS spend
 FROM ledger_adv a
 INNER JOIN ledger_log l USING (log_id)
 WHERE a.adv_id=? AND (timely BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 GROUP BY FLOOR(UNIX_TIMESTAMP(timely) / 3600)`,
-		ARGS.Get("adv_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day")+" 23:59:59"); err != nil {
+		ARGS.Get("adv_id"), day, idays, day+" 23:59:59"); err != nil {
 		return err
 	}
 	return self.ProcessAfter("topicsAdv24Hours", extra...)
@@ -73,20 +102,31 @@ GROUP BY FLOOR(UNIX_TIMESTAMP(timely) / 3600)`,
 
 func (self *Model) TopicsAdvTopItems(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, top := reportWindowParams(ARGS)
 	return self.SelectSQL(self.LISTS,
-		`SELECT a.item_id, i.item_name, a.campaign_id, a.adv_id, a.imps, a.clis, a.spend, (a.spend*1000/a.imps) AS cpm, (a.spend/a.clis) AS cpc, (a.clis/a.imps) AS ctr
+		`SELECT a.item_id, i.item_name, a.campaign_id, a.adv_id, a.imps, a.clis,
+       CAST(a.spend AS DOUBLE) AS spend,
+       CAST(a.spend*1000/NULLIF(a.imps,0) AS DOUBLE) AS cpm,
+       CAST(a.spend/NULLIF(a.clis,0) AS DOUBLE) AS cpc,
+       CAST(a.clis/NULLIF(a.imps,0) AS DOUBLE) AS ctr
 FROM daily_adv a
 INNER JOIN daily_log l USING (log_id)
 INNER JOIN adv_item i USING (item_id)
 WHERE adv_id=? AND (l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 ORDER BY a.spend DESC LIMIT ?`,
-		ARGS.Get("adv_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+		ARGS.Get("adv_id"), day, idays, day, top)
 }
 
 func (self *Model) TopicsAdvTopSlots(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, top := reportWindowParams(ARGS)
 	return self.SelectSQL(self.LISTS,
-		`SELECT p.slot_id, s.slot_name, ANY_VALUE(p.site_id) AS site_id, ANY_VALUE(p.pub_id) AS pub_id, SUM(pa.spend) AS spend, SUM(pa.imps) AS imps, SUM(pa.clis) AS clis, (SUM(pa.spend)*1000/SUM(pa.imps)) AS cpm, (SUM(pa.spend)/SUM(pa.clis)) AS cpc, (SUM(pa.clis)/SUM(pa.imps)) AS ctr
+		`SELECT p.slot_id, s.slot_name, ANY_VALUE(p.site_id) AS site_id, ANY_VALUE(p.pub_id) AS pub_id,
+       CAST(SUM(pa.spend) AS DOUBLE) AS spend,
+       SUM(pa.imps) AS imps, SUM(pa.clis) AS clis,
+       CAST(SUM(pa.spend)*1000/NULLIF(SUM(pa.imps),0) AS DOUBLE) AS cpm,
+       CAST(SUM(pa.spend)/NULLIF(SUM(pa.clis),0) AS DOUBLE) AS cpc,
+       CAST(SUM(pa.clis)/NULLIF(SUM(pa.imps),0) AS DOUBLE) AS ctr
 FROM daily_pub_adv pa
 INNER JOIN daily_adv a USING (la_id)
 INNER JOIN daily_log l ON (a.log_id=l.log_id)
@@ -94,7 +134,7 @@ INNER JOIN daily_pub p USING (lp_id)
 INNER JOIN pub_slot s USING (slot_id)
 WHERE adv_id=? AND (l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 GROUP BY p.slot_id ORDER BY spend DESC LIMIT ?`,
-		ARGS.Get("adv_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+		ARGS.Get("adv_id"), day, idays, day, top)
 }
 
 // TopicsAdvActions reconciles analytical action facts with delivery reporting
@@ -548,20 +588,21 @@ func (self *Model) processMiddlemanAfter() error {
 
 func (self *Model) TopicsMidTopBidders(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, top := reportWindowParams(ARGS)
 	if self.isAdvertiserMiddlemanReport() {
 		return self.SelectSQL(self.LISTS,
 			`SELECT m.bidder_id, b.bidder_name, m.adv_id,
-SUM(m.pay_spend) AS spend, SUM(m.imps) AS imps, SUM(m.clis) AS clis,
-COALESCE(SUM(m.pay_spend)*1000/NULLIF(SUM(m.imps),0), 0) AS cpm,
-COALESCE(SUM(m.pay_spend)/NULLIF(SUM(m.clis),0), 0) AS cpc,
-COALESCE(SUM(m.clis)/NULLIF(SUM(m.imps),0), 0) AS ctr
+CAST(SUM(m.pay_spend) AS DOUBLE) AS spend, SUM(m.imps) AS imps, SUM(m.clis) AS clis,
+CAST(COALESCE(SUM(m.pay_spend)*1000/NULLIF(SUM(m.imps),0), 0) AS DOUBLE) AS cpm,
+CAST(COALESCE(SUM(m.pay_spend)/NULLIF(SUM(m.clis),0), 0) AS DOUBLE) AS cpc,
+CAST(COALESCE(SUM(m.clis)/NULLIF(SUM(m.imps),0), 0) AS DOUBLE) AS ctr
 FROM daily_mid m
 INNER JOIN daily_log l USING (log_id)
 LEFT JOIN adv_bidder b USING (bidder_id)
 WHERE m.adv_id=? AND (l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 GROUP BY m.bidder_id, b.bidder_name, m.adv_id
 ORDER BY spend DESC LIMIT ?`,
-			ARGS.Get("adv_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+			ARGS.Get("adv_id"), day, idays, day, top)
 	}
 	return self.SelectSQL(self.LISTS,
 		`SELECT m.bidder_id, b.bidder_name, ANY_VALUE(m.adv_id) AS adv_id,
@@ -575,7 +616,7 @@ LEFT JOIN adv_bidder b USING (bidder_id)
 WHERE l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?
 GROUP BY m.bidder_id, b.bidder_name
 ORDER BY margin_spend DESC LIMIT ?`,
-		ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+		day, idays, day, top)
 }
 
 func (self *Model) isAdvertiserMiddlemanReport() bool {
@@ -584,19 +625,20 @@ func (self *Model) isAdvertiserMiddlemanReport() bool {
 
 func (self *Model) TopicsMidTopSlots(extra ...url.Values) error {
 	ARGS := self.ARGS
+	day, idays, top := reportWindowParams(ARGS)
 	return self.SelectSQL(self.LISTS,
 		`SELECT m.slot_id, s.slot_name, ANY_VALUE(m.site_id) AS site_id, ANY_VALUE(m.pub_id) AS pub_id,
-SUM(m.pay_spend) AS spend, SUM(m.imps) AS imps, SUM(m.clis) AS clis,
-COALESCE(SUM(m.pay_spend)*1000/NULLIF(SUM(m.imps),0), 0) AS cpm,
-COALESCE(SUM(m.pay_spend)/NULLIF(SUM(m.clis),0), 0) AS cpc,
-COALESCE(SUM(m.clis)/NULLIF(SUM(m.imps),0), 0) AS ctr
+CAST(SUM(m.pay_spend) AS DOUBLE) AS spend, SUM(m.imps) AS imps, SUM(m.clis) AS clis,
+CAST(COALESCE(SUM(m.pay_spend)*1000/NULLIF(SUM(m.imps),0), 0) AS DOUBLE) AS cpm,
+CAST(COALESCE(SUM(m.pay_spend)/NULLIF(SUM(m.clis),0), 0) AS DOUBLE) AS cpc,
+CAST(COALESCE(SUM(m.clis)/NULLIF(SUM(m.imps),0), 0) AS DOUBLE) AS ctr
 FROM daily_mid m
 INNER JOIN daily_log l USING (log_id)
 LEFT JOIN pub_slot s USING (slot_id)
 WHERE m.adv_id=? AND (l.daily BETWEEN DATE_SUB(?, INTERVAL ? DAY) AND ?)
 GROUP BY m.slot_id, s.slot_name
 ORDER BY spend DESC LIMIT ?`,
-		ARGS.Get("adv_id"), ARGS.Get("day"), ARGS.Get("idays"), ARGS.Get("day"), ARGS.Get("top"))
+		ARGS.Get("adv_id"), day, idays, day, top)
 }
 
 func (self *Model) TopicsMidTopRoutes(extra ...url.Values) error {

@@ -411,6 +411,7 @@ func (self *Filter) After(model *Model) error {
 	}
 
 	if genelet.Grep([]string{"item", "slot"}, obj) && genelet.Grep([]string{"startnew", "edit"}, action) {
+		other["slots"] = GetSlotNames()
 		other["slotsChinese"] = Translate(other["slots"])
 		other["slotsDefault"] = CreateSlot("", "", "", "", "", "", "", "", "", "", "").InHash()
 		other["slotAttrs"] = GetSlotAttrs()
